@@ -2,12 +2,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 
-import { AppComponent } from './app.component';
-import { AreaComponent } from './area/start/area.component';
-import { StartComponent } from './area/start/start.component';
-import { BattleComponent } from './area/battle/battle.component';
-import { EndComponent } from './area/end/end.component';
-import { PuzzleComponent } from './area/puzzle/puzzle.component';
+import { AppComponent } from '../app.component';
+import { AreaComponent } from './area.component';
+import { StartComponent } from './start/start.component';
+import { BattleComponent } from './battle/battle.component';
+import { EndComponent } from './end/end.component';
+import { PuzzleComponent } from './puzzle/puzzle.component';
 
 
 @NgModule({
@@ -17,7 +17,7 @@ import { PuzzleComponent } from './area/puzzle/puzzle.component';
     StartComponent,
     BattleComponent,
     EndComponent,
-    PuzzleComponent
+    PuzzleComponent,
   ],
   imports: [
     BrowserModule
