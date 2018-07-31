@@ -1,3 +1,10 @@
 {
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+
+//Git Bash
+    "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
+    // start a login shell to pick up aliases from .bash_profile
+    "terminal.integrated.shellArgs.windows": [
+        "--login"
+    ]
 }
