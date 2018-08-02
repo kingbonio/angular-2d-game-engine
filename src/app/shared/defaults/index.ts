@@ -16,5 +16,9 @@ export default {
     },
     initialAreaSettings: {
         type: 'start'
+    },
+    dialogue: {
+        textOnScreenTimeMultiplyer: 0.1,
+        minimumOnScreenTime: 30,
     }
 };
