@@ -8,7 +8,6 @@ import { Locations } from '../shared/enums';
   styleUrls: ['./area.component.scss']
 })
 export class AreaComponent implements OnInit {
-  public locations: Locations;
 
   constructor(public areaStateService: AreaStateService) {
   }

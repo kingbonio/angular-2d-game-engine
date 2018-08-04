@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuStateService } from '../shared/services/menu-state.service';
+import { MenuSettingTypes } from '../shared/enums';
 
 @Component({
   selector: 'app-menu',

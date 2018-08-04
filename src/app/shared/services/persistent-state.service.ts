@@ -4,7 +4,7 @@ import { PlayerStateService } from './player-state.service';
 import { DialogueService } from './dialogue.service';
 import { InventoryManagerService } from './inventory-manager.service';
 import { GameStateService } from './game-state.service';
-import { IStateData, IGameState, IAreaStateData, IPlayerStateData, IDialogueStateData, IInventoryStateData } from '../interfaces';
+import { IStateData, IAreaStateData, IPlayerStateData, IDialogueStateData, IInventoryStateData, IGameStateData } from '../interfaces';
 
 @Injectable()
 export class PersistentStateService {
@@ -41,17 +41,6 @@ export class PersistentStateService {
   }
 
   /**
-   * Apply the loaded state data to the services;
-   */
-  private applyToStates() {
-    this.gameStateService.applyState(this.state.gameState as IGameState);
-    this.areaStateService.applyState(this.state.area as IAreaStateData);
-    this.playerStateService.applyState(this.state.player as IPlayerStateData);
-    this.dialogueStateService.applyState(this.state.dialogue as IDialogueStateData);
-    this.inventoryManagerService.applyState(this.state.inventory as IInventoryStateData);
-  }
-
-  /**
    * Set storage medium to retain current state
    */
   private applyToStorage() {
@@ -63,6 +52,17 @@ export class PersistentStateService {
    */
   private gatherFromStorage() {
     this.state = JSON.parse(localStorage.getItem("state"));
+  }
+
+  /**
+   * Apply the loaded state data to the services;
+   */
+  private applyToStates() {
+    this.gameStateService.applyState(this.state.gameState as IGameStateData);
+    this.areaStateService.applyState(this.state.area as IAreaStateData);
+    this.playerStateService.applyState(this.state.player as IPlayerStateData);
+    this.dialogueStateService.applyState(this.state.dialogue as IDialogueStateData);
+    this.inventoryManagerService.applyState(this.state.inventory as IInventoryStateData);
   }
 
 }

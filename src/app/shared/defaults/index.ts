@@ -25,6 +25,18 @@ export default {
         minimumOnScreenTime: 30,
     },
     gameMenu: {
-        menuOpenAtLoad: true
+        menuOpenAtLoad: true,
+        pages: [
+            {
+                title: "main",
+                settings: [
+                    {
+                        name: "Example Option",
+                        description: "Allows you to pick a setting for game play",
+                        type: "checkbox"
+                    }
+                ]
+            }
+        ]
     }
 };

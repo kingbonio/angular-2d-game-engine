@@ -6,13 +6,11 @@ import { Character } from '../shared/enums';
   templateUrl: './character.component.html',
   styleUrls: ['./character.component.scss']
 })
-export abstract class CharacterComponent implements OnInit {
+export class CharacterComponent implements OnInit {
 
   constructor() { }
 
   ngOnInit() {
   }
-
-  abstract speak(text: string, character: Character);
 
 }
