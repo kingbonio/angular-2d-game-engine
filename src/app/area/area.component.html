@@ -1,1 +1,5 @@
-<app-start></app-start>
+<app-start *ngIf="areaStateService.currentLocation = locations.start"></app-start>
+<app-puzzle *ngIf="areaStateService.currentLocation = locations.puzzle"></app-puzzle>
+<app-battle *ngIf="areaStateService.currentLocation = locations.battle"></app-battle>
+<app-end *ngIf="areaStateService.currentLocation = locations.end"></app-end>
+

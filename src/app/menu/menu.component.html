@@ -1,0 +1,8 @@
+<div class="menu">
+  <div class="menu-title">
+    <div *ngRepeat="menuPages menuPage" *ngIf="menuPage === menuStateService.currentPage">
+      <!-- TODO: Set up menu pages -->
+      <div class="menu-page-title">{{ menuTitles.menuPage }}</div>
+    </div>
+  </div>
+</div>

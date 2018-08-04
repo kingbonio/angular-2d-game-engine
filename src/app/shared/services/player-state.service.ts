@@ -1,6 +1,7 @@
 import defaults from '../defaults';
 import { Injectable } from '@angular/core';
 import { Direction } from '../enums';
+import { IPlayerStateData } from '../interfaces';
 
 @Injectable()
 export class PlayerStateService {
@@ -70,7 +71,7 @@ export class PlayerStateService {
   set magicka(newMagicka) {
     this._magicka = newMagicka;
   }
-  
+
   get exp() {
     return this._exp;
   }
@@ -101,5 +102,37 @@ export class PlayerStateService {
 
   set direction(newDirection) {
     this._direction = newDirection;
+  }
+
+  get inventoryCapacity() {
+    return this._strength * defaults.playerMultiplyers.inventoryStorageMultiplyer;
+  }
+
+  /**
+   * Return the player state for storage
+   */
+  public gatherState(): IPlayerStateData {
+    return {
+      health: this.health,
+      maxHealth: this.maxHealth,
+      strength: this.strength,
+      dexterity: this.dexterity,
+      magicka: this.magicka,
+      exp: this.exp,
+      locationX: this.locationX,
+      locationY: this.locationY,
+      direction: this.direction
+    };
+  }
+
+  /**
+   * Applies state data to this service
+   */
+  public applyState(newState: IPlayerStateData) {
+    for (const stateSetting in newState) {
+      if (this.hasOwnProperty(stateSetting)) {
+        this[stateSetting] = newState[stateSetting];
+      }
+    }
   }
 }

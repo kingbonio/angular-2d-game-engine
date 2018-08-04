@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MenuStateService } from './shared/services/menu-state.service';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +9,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'app';
 
-  constructor() { }
+  constructor(private menuStateService: MenuStateService) {}
+
+
 }

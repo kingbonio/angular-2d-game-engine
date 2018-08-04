@@ -15,6 +15,8 @@ import { WeaponComponent } from './item/weapon/weapon.component';
 import { PotionComponent } from './item/potion/potion.component';
 import { KeyComponent } from './item/key/key.component';
 import { ArmourComponent } from './item/armour/armour.component';
+import { CharacterComponent } from './character/character.component';
+import { MenuComponent } from './menu/menu.component';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { ArmourComponent } from './item/armour/armour.component';
     WeaponComponent,
     PotionComponent,
     KeyComponent,
-    ArmourComponent
+    ArmourComponent,
+    CharacterComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule

@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogueService } from '../../shared/services/dialogue.service';
 import { Character } from '../../shared/enums';
+import { CharacterComponent } from '../character.component';
 
 @Component({
   selector: 'app-npc',
   templateUrl: './npc.component.html',
   styleUrls: ['./npc.component.scss']
 })
-export class NpcComponent implements OnInit {
+export class NpcComponent extends CharacterComponent implements OnInit {
 
-  constructor(private dialogueService: DialogueService) { }
+  constructor(private dialogueService: DialogueService) {
+    super();
+  }
 
   ngOnInit() {
 
@@ -26,7 +29,5 @@ export class NpcComponent implements OnInit {
       character
     });
   }
-
-
 
 }

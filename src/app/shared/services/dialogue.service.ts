@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Character } from '../enums';
 import defaults from '../defaults';
-import { ISpeech } from '../interfaces';
+import { ISpeech, IDialogueStateData } from '../interfaces';
 
 @Injectable()
 export class DialogueService {
@@ -16,7 +16,7 @@ export class DialogueService {
    * Set the current on-screen dialogue
    * Set the timer to close the current message once expires
    */
-  displaySpeech(speechDetails: ISpeech) {
+  public displaySpeech(speechDetails: ISpeech) {
     this.whoIsSpeaking = speechDetails.character;
     if (this.dialogueVisible) {
       this.pendingMessages.push(speechDetails);
@@ -31,10 +31,10 @@ export class DialogueService {
    * Sets a timer based on the length of the text on screen, with a minimum duration
    * Process the next message on the pending messages when timer ends
    */
-  setTimer() {
+  private setTimer() {
     const timerDuration = this.textOnScreen.text.length < defaults.dialogue.minimumOnScreenTime ?
-                          this.textOnScreen.text.length * defaults.dialogue.textOnScreenTimeMultiplyer :
-                          defaults.dialogue.minimumOnScreenTime;
+      this.textOnScreen.text.length * defaults.dialogue.textOnScreenTimeMultiplyer :
+      defaults.dialogue.minimumOnScreenTime;
     setTimeout(timerDuration, () => {
       this.dialogueVisible = false;
       if (this.pendingMessages.length) {
@@ -45,4 +45,26 @@ export class DialogueService {
     });
   }
 
+  /**
+   * Return the dialogue state for storage
+   */
+  public gatherState(): IDialogueStateData {
+    return {
+      textOnScreen: this.textOnScreen,
+      whoIsSpeaking: this.whoIsSpeaking,
+      pendingMessages: this.pendingMessages,
+      dialogueVisible: this.dialogueVisible
+    };
+  }
+
+  /**
+   * Applies state data to this service
+   */
+  public applyState(newState: IDialogueStateData) {
+    for (const stateSetting in newState) {
+      if(this.hasOwnProperty(stateSetting)) {
+        this[stateSetting] = newState[stateSetting];
+      }
+    }
+  }
 }

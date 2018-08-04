@@ -14,11 +14,17 @@ export default {
         locationY: '2',
         direction: Direction.up
     },
+    playerMultiplyers: {
+        inventoryStorageMultiplyer: 30
+    },
     initialAreaSettings: {
         type: 'start'
     },
     dialogue: {
         textOnScreenTimeMultiplyer: 0.1,
         minimumOnScreenTime: 30,
+    },
+    gameMenu: {
+        menuOpenAtLoad: true
     }
 };
