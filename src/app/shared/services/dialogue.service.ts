@@ -64,7 +64,7 @@ export class DialogueService {
    */
   public applyState(newState: IDialogueStateData): void {
     for (const stateSetting in newState) {
-      if(this.hasOwnProperty(stateSetting)) {
+      if (this.hasOwnProperty(stateSetting)) {
         this[stateSetting] = newState[stateSetting];
       }
     }

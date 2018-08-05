@@ -17,12 +17,18 @@ export class PersistentStateService {
     private inventoryManagerService: InventoryManagerService
   ) { }
 
-  public save() {
+  /**
+   * Gather states from all state-based services and write to storage
+   */
+  public save(): void {
     this.collectStates();
     this.applyToStorage();
   }
 
-  public load() {
+  /**
+   * Gather state from storage and apply to all state-based services
+   */
+  public load(): void {
     this.gatherFromStorage();
     this.applyToStates();
   }
