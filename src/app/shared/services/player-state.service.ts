@@ -1,7 +1,8 @@
 import defaults from '../defaults';
 import { Injectable } from '@angular/core';
-import { Direction } from '../enums';
-import { IPlayerStateData } from '../interfaces';
+import { Direction, InteractionTarget, ItemClass } from '../enums';
+import { IPlayerStateData, IInventoryItem } from '../interfaces';
+import { InventoryManagerService } from './inventory-manager.service';
 
 @Injectable()
 export class PlayerStateService {
@@ -16,7 +17,7 @@ export class PlayerStateService {
   private _direction: Direction;
 
 
-  constructor() {
+  constructor(private inventoryManagerService: InventoryManagerService) {
   }
 
   onInit() {
@@ -106,6 +107,14 @@ export class PlayerStateService {
 
   get inventoryCapacity() {
     return this._strength * defaults.playerMultiplyers.inventoryStorageMultiplyer;
+  }
+
+  get level() {
+    return defaults.playerMultiplyers.levelCalculation(this.exp);
+  }
+
+  public itemTooHighLevel(item: IInventoryItem): boolean {
+    return item.level > this.level;
   }
 
   /**

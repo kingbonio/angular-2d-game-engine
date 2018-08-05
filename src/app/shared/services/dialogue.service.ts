@@ -15,6 +15,7 @@ export class DialogueService {
   /**
    * Set the current on-screen dialogue
    * Set the timer to close the current message once expires
+   * @param speechDetails text and speaker details
    */
   public displaySpeech(speechDetails: ISpeech): void {
     this.whoIsSpeaking = speechDetails.character;
