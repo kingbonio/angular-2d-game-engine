@@ -18,7 +18,7 @@ export class EquipmentManagerService {
   public setArmourType(newArmour: IInventoryItem): void {
     if (newArmour.class !== ItemClass.armour) {
       // TODO: build recipient of this and insert translation service
-      // this.notificationsService("Item is not a shield");
+      // this.notificationsService("Item is not armour");
     } else {
       if (this.armour[newArmour.armourSlot]) {
         this.inventoryManagerService.addItemToInventory(this.armour[newArmour.armourSlot]);
@@ -34,7 +34,7 @@ export class EquipmentManagerService {
   public setWeaponType(newWeapon: IInventoryItem): void {
     if (newWeapon.class !== ItemClass.weapon) {
       // TODO: build recipient of this and insert translation service
-      // this.notificationsService("Item is not a shield");
+      // this.notificationsService("Item is not a weapon");
     } else {
       this.weapons[newWeapon.weaponSlot] = newWeapon;
     }
