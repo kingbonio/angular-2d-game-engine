@@ -30,7 +30,7 @@ export class PersistentStateService {
   /**
    * Gather states from all relevant services
    */
-  private collectStates() {
+  private collectStates(): void {
     this.state = {
       gameState: this.gameStateService.gatherState(),
       area: this.areaStateService.gatherState(),
@@ -43,21 +43,21 @@ export class PersistentStateService {
   /**
    * Set storage medium to retain current state
    */
-  private applyToStorage() {
+  private applyToStorage(): void {
     localStorage.setItem("state", JSON.stringify(this.state));
   }
 
   /**
    * Get state data from storage medium
    */
-  private gatherFromStorage() {
+  private gatherFromStorage(): void {
     this.state = JSON.parse(localStorage.getItem("state"));
   }
 
   /**
    * Apply the loaded state data to the services;
    */
-  private applyToStates() {
+  private applyToStates(): void {
     this.gameStateService.applyState(this.state.gameState as IGameStateData);
     this.areaStateService.applyState(this.state.area as IAreaStateData);
     this.playerStateService.applyState(this.state.player as IPlayerStateData);
