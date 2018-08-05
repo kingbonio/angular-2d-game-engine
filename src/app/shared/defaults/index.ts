@@ -15,7 +15,8 @@ export default {
         direction: Direction.up
     },
     playerMultiplyers: {
-        inventoryStorageMultiplyer: 30
+        inventoryStorageMultiplyer: 30,
+        inventoryCapacityMultiplyer: 30
     },
     initialAreaSettings: {
         type: 'start'

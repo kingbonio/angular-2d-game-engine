@@ -5,3 +5,5 @@ export * from "./iarea-state-data";
 export * from "./iplayer-state-data";
 export * from "./idialogue-state-data";
 export * from "./iinventory-state-data";
+export * from "./iinventory-item";
+export * from "./iitem-properties";
