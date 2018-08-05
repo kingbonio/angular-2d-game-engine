@@ -1,10 +1,13 @@
-import { ItemClass } from "../enums";
+import { ItemClass, ArmourType } from "../enums";
 import { IItemProperties } from ".";
+import { WeaponType } from "../enums/weapon-type";
 
 
 export interface IInventoryItem {
       name: string;
       class: ItemClass;
+      armourSlot: ArmourType | null;
+      weaponSlot: WeaponType | null;
       usable: boolean;
       equipment: boolean;
       level: number;

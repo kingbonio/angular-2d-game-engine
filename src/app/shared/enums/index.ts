@@ -5,3 +5,4 @@ export * from './menu-setting-types';
 export * from './item-class';
 export * from './magic-ability';
 export * from './interaction-target';
+export * from './armour-type';

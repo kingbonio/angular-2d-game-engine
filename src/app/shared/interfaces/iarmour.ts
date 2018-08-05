@@ -7,5 +7,4 @@ export interface IArmour {
       torso: IInventoryItem;
       legs: IInventoryItem;
       boots: IInventoryItem;
-      shield: IInventoryItem;
 }
