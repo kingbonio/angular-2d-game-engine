@@ -7,3 +7,4 @@ export * from "./idialogue-state-data";
 export * from "./iinventory-state-data";
 export * from "./iinventory-item";
 export * from "./iitem-properties";
+export * from "./iarmour";

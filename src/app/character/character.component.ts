@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Character } from '../shared/enums';
 
 @Component({
   selector: 'app-character',
@@ -12,5 +11,6 @@ export class CharacterComponent implements OnInit {
 
   ngOnInit() {
   }
+
 
 }

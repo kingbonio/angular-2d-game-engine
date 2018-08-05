@@ -1,4 +1,6 @@
 export enum MagicAbility {
       strengthIncrease,
-      strengthDecrease
+      strengthDecrease,
+      healthIncrease,
+      healthDecrease
 }

@@ -46,7 +46,7 @@ export class InventoryManagerService {
    * @param itemName the terms to search for
    * @returns array of items found matching search terms
    */
-  public searchForItem(itemName: string): IInventoryItem[] {
+  public searchForItems(itemName: string): IInventoryItem[] {
     return this.contents.filter(item => item.name === itemName);
   }
 
@@ -55,7 +55,7 @@ export class InventoryManagerService {
    * @param itemName the terms to search for
    * @returns index of first item found or null if none found
    */
-  private getIndexOfItem(itemName: string): number | null {
+  public getIndexOfItem(itemName: string): number | null {
     for (let i = 0; i < this.contents.length; ++i) {
       if (this.contents[i].name === itemName) {
         return i;
@@ -74,7 +74,7 @@ export class InventoryManagerService {
       this.contents.splice(indexOfItem, 1);
     } else {
       // TODO: build recipient of this and insert translation service
-      // this.notificationsService("Item cannot be found in inventory);
+      // this.notificationsService("Item cannot be found in inventory");
     }
   }
 

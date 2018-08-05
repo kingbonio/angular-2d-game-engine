@@ -16,7 +16,10 @@ export default {
     },
     playerMultiplyers: {
         inventoryStorageMultiplyer: 30,
-        inventoryCapacityMultiplyer: 30
+        inventoryCapacityMultiplyer: 30,
+        levelCalculation: (exp) => {
+            return exp / 3000;
+        }
     },
     initialAreaSettings: {
         type: 'start'
