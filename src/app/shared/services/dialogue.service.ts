@@ -16,7 +16,7 @@ export class DialogueService {
    * Set the current on-screen dialogue
    * Set the timer to close the current message once expires
    */
-  public displaySpeech(speechDetails: ISpeech) {
+  public displaySpeech(speechDetails: ISpeech): void {
     this.whoIsSpeaking = speechDetails.character;
     if (this.dialogueVisible) {
       this.pendingMessages.push(speechDetails);
@@ -31,7 +31,7 @@ export class DialogueService {
    * Sets a timer based on the length of the text on screen, with a minimum duration
    * Process the next message on the pending messages when timer ends
    */
-  private setTimer() {
+  private setTimer(): void {
     const timerDuration = this.textOnScreen.text.length < defaults.dialogue.minimumOnScreenTime ?
       this.textOnScreen.text.length * defaults.dialogue.textOnScreenTimeMultiplyer :
       defaults.dialogue.minimumOnScreenTime;
@@ -47,6 +47,7 @@ export class DialogueService {
 
   /**
    * Return the dialogue state for storage
+   * @returns the state data relevant to this service
    */
   public gatherState(): IDialogueStateData {
     return {
@@ -59,10 +60,11 @@ export class DialogueService {
 
   /**
    * Applies state data to this service
+   * @param newState settings from storage to push to this state service
    */
-  public applyState(newState: IDialogueStateData) {
+  public applyState(newState: IDialogueStateData): void {
     for (const stateSetting in newState) {
-      if(this.hasOwnProperty(stateSetting)) {
+      if (this.hasOwnProperty(stateSetting)) {
         this[stateSetting] = newState[stateSetting];
       }
     }

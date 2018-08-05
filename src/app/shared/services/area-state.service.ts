@@ -29,6 +29,7 @@ export class AreaStateService {
 
   /**
    * Return the area state for storage
+   * @returns the state data relevant to this service
    */
   public gatherState(): IAreaStateData {
     return {
@@ -39,8 +40,9 @@ export class AreaStateService {
 
   /**
    * Applies state data to this service
+   * @param newState settings from storage to push to this state service
    */
-  public applyState(newState: IAreaStateData) {
+  public applyState(newState: IAreaStateData): void {
     for (const stateSetting in newState) {
       if (this.hasOwnProperty(stateSetting)) {
         this[stateSetting] = newState[stateSetting];

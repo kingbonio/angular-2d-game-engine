@@ -110,6 +110,7 @@ export class PlayerStateService {
 
   /**
    * Return the player state for storage
+   * @returns the state data relevant to this service
    */
   public gatherState(): IPlayerStateData {
     return {
@@ -127,8 +128,9 @@ export class PlayerStateService {
 
   /**
    * Applies state data to this service
+   * @param newState settings from storage to push to this state service
    */
-  public applyState(newState: IPlayerStateData) {
+  public applyState(newState: IPlayerStateData): void {
     for (const stateSetting in newState) {
       if (this.hasOwnProperty(stateSetting)) {
         this[stateSetting] = newState[stateSetting];
