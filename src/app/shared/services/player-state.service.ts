@@ -13,7 +13,7 @@ export class PlayerStateService {
   private _magicka: number;
   private _exp: number;
   private _locationX: string;
-  private _locationY: string;
+  private _locationY: number;
   private _direction: Direction;
 
 

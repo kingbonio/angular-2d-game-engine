@@ -1,7 +1,6 @@
 export * from "./ispeech";
 export * from "./istate-data";
 export * from "./igame-state-data";
-export * from "./iarea-state-data";
 export * from "./iplayer-state-data";
 export * from "./idialogue-state-data";
 export * from "./iinventory-state-data";
@@ -9,3 +8,4 @@ export * from "./iinventory-item";
 export * from "./iitem-properties";
 export * from "./iarmour";
 export * from "./iweapons";
+export * from "./imonster";
