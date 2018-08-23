@@ -11,7 +11,7 @@ export default {
         exp: 0,
         imageLocation: 'src/assets/images/player-image.jpg',
         locationX: 'B',
-        locationY: '2',
+        locationY: 2,
         direction: Direction.up
     },
     playerMultiplyers: {

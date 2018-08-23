@@ -8,6 +8,6 @@ export interface IPlayerStateData {
       magicka: number;
       exp: number;
       locationX: string;
-      locationY: string;
+      locationY: number;
       direction: Direction;
 }

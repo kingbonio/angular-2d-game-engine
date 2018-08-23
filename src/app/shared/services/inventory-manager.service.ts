@@ -38,6 +38,7 @@ export class InventoryManagerService {
     } else {
       // TODO: build recipient of this and insert translation service
       // this.notificationsService("Your inventory is full");
+      // Maybe drop the item or overload capacity
     }
   }
 

@@ -1,0 +1,40 @@
+import { IAreaElement } from "./iarea-element";
+
+export interface IGridReferences {
+      a1: IAreaElement;
+      a2: IAreaElement;
+      a3: IAreaElement;
+      a4: IAreaElement;
+      a5: IAreaElement;
+      a6: IAreaElement;
+      b1: IAreaElement;
+      b2: IAreaElement;
+      b3: IAreaElement;
+      b4: IAreaElement;
+      b5: IAreaElement;
+      b6: IAreaElement;
+      c1: IAreaElement;
+      c2: IAreaElement;
+      c3: IAreaElement;
+      c4: IAreaElement;
+      c5: IAreaElement;
+      c6: IAreaElement;
+      d1: IAreaElement;
+      d2: IAreaElement;
+      d3: IAreaElement;
+      d4: IAreaElement;
+      d5: IAreaElement;
+      d6: IAreaElement;
+      e1: IAreaElement;
+      e2: IAreaElement;
+      e3: IAreaElement;
+      e4: IAreaElement;
+      e5: IAreaElement;
+      e6: IAreaElement;
+      f1: IAreaElement;
+      f2: IAreaElement;
+      f3: IAreaElement;
+      f4: IAreaElement;
+      f5: IAreaElement;
+      f6: IAreaElement;
+}
