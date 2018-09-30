@@ -1,12 +1,12 @@
-<div class="menu">
+<!-- <div class="menu">
   <div class="menu-title">
     <div *ngFor="let menuPages of gameMenu.pages" *ngIf="menuPage === menuStateService.currentPage">
       <div class="menu-page-title">{{ menuPage.title }}</div>
       <div *ngFor="let setting of menuPage.settings">
         <h1>{{ settings.title }}</h1>
-        <h3>{{ settings.description }}</h3>
+        <h3>{{ settings.description }}</h3> -->
         <!-- TODO Fit in the settings here -->
-        <div *ngIf="option.type === checkbox">
+        <!-- <div *ngIf="option.type === checkbox">
         </div>
         <div *ngIf="option.type === dropdown">
         </div>
@@ -14,5 +14,22 @@
         </div>
       </div>
     </div>
+  </div>
+</div> -->
+
+<div class="main-menu">
+  <div class="game-options">
+    <div class="new-game">
+      
+    </div>
+    <div class="load-game">
+
+    </div>
+    <div class="delete-saved-game">
+
+    </div>
+  </div>
+  <div class="game-settings">
+    
   </div>
 </div>
