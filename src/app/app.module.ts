@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AppRoutingModule } from './app-routing.module';
 
-import routes from "./app.router";
 import { AppComponent } from './app.component';
 import { PlayerComponent } from './character/player/player.component';
 import { NpcComponent } from './character/npc/npc.component';
@@ -33,9 +33,8 @@ import { GameMenuComponent } from './game-menu/game-menu.component';
     GameMenuComponent
   ],
   imports: [
-    // Always import router first, enableTracing logs routing events to console
-    RouterModule.forRoot(routes, { enableTracing: true }),
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

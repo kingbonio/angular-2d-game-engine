@@ -1,14 +1,16 @@
-import { Routes } from "@angular/router";
+import { Routes, RouterModule } from "@angular/router";
 import { AreaComponent } from "./area/area.component";
 import { MainMenuComponent } from "./main-menu/main-menu.component";
+import { NgModule } from "@angular/core";
 
-export default [
+const appRoutes = [
       {
             path: 'level/:id',
             component: AreaComponent
       },
       {
             path: '',
+            pathMatch: "full",
             component: MainMenuComponent
       },
       // {
@@ -26,3 +28,16 @@ export default [
             redirectTo: ''
       }
 ] as Routes;
+
+@NgModule({
+      imports: [
+            RouterModule.forRoot(
+                  appRoutes,
+                  { enableTracing: true }
+            )
+      ],
+      exports: [
+            RouterModule
+      ]
+})
+export class AppRoutingModule { }
