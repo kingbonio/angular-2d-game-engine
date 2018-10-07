@@ -1,11 +1,10 @@
 import { Routes, RouterModule } from "@angular/router";
-import { AreaComponent } from "./area/area.component";
 import { MainMenuComponent } from "./main-menu/main-menu.component";
 import { NgModule } from "@angular/core";
 
 const appRoutes = [
       {
-            path: 'level/:id',
+            path: 'game',
             component: AreaComponent
       },
       {
