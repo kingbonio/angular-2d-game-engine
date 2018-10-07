@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PlayerStateService } from '../../../shared/services/player-state.service';
+import { PlayerStateService } from './player-state.service';
 import { IInventoryStateData, IInventoryItem } from '../interfaces';
 import defaults from '../../../shared/defaults';
 
