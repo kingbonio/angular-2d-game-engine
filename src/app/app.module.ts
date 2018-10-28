@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { InGameMenuComponent } from './in-game-menu/in-game-menu.component';
 import { GameModule } from './game/game.module';
+import { MenuStateService } from './shared/services/menu-state.service';
+import { UserInputService } from './shared/services/user-input.service';
 
 
 @NgModule({
@@ -20,7 +22,10 @@ import { GameModule } from './game/game.module';
     MainMenuComponent,
     InGameMenuComponent
   ],
-  providers: [],
+  providers: [
+    MenuStateService,
+    UserInputService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

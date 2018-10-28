@@ -1,5 +1,5 @@
-import { ItemClass, ArmourType } from "../enums";
-import { IItemProperties } from ".";
+import { ItemClass, ArmourType } from "../../shared/enums";
+import { IItemProperties } from "../../shared/interfaces";
 import { WeaponType } from "../enums/weapon-type";
 
 

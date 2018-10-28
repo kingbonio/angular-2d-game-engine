@@ -1,4 +1,4 @@
-import { IInventoryItem } from "../../shared/interfaces/iinventory-item";
+import { IInventoryItem } from "../../item/interfaces/iinventory-item";
 
 export interface IPuzzle {
       difficulty: number;

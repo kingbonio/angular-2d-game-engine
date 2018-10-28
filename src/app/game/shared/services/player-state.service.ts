@@ -2,7 +2,6 @@ import defaults from '../../../shared/defaults';
 import { Injectable } from '@angular/core';
 import { Direction, InteractionTarget, ItemClass } from '../enums';
 import { IPlayerStateData, IInventoryItem } from '../interfaces';
-import { InventoryManagerService } from './inventory-manager.service';
 
 @Injectable()
 export class PlayerStateService {
@@ -17,7 +16,7 @@ export class PlayerStateService {
   private _direction: Direction;
 
 
-  constructor(private inventoryManagerService: InventoryManagerService) {
+  constructor() {
   }
 
   onInit() {

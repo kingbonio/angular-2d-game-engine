@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IArmour, IInventoryItem } from '../interfaces';
 import { ItemClass, ArmourType } from '../enums';
 import { WeaponType } from '../enums/weapon-type';
-import { InventoryManagerService } from './inventory-manager.service';
+import { InventoryManagerService } from '../../shared/services/inventory-manager.service';
 
 @Injectable()
 export class EquipmentManagerService {

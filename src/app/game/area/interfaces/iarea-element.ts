@@ -1,5 +1,5 @@
 import { IMonster } from "../../shared/interfaces/imonster";
-import { IInventoryItem } from "../../shared/interfaces/iinventory-item";
+import { IInventoryItem } from "../../item/interfaces/iinventory-item";
 import { Direction } from "../../shared/enums";
 import { IPlayer, IPuzzleElement } from ".";
 

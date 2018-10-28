@@ -1,4 +1,4 @@
-import { IInventoryItem } from "../../../shared/interfaces/iinventory-item";
+import { IInventoryItem } from '.';
 
 export interface IArmour {
       head: IInventoryItem;

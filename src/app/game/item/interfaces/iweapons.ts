@@ -1,4 +1,4 @@
-import { IInventoryItem } from "./iinventory-item";
+import { IInventoryItem } from ".";
 
 export interface IWeapons {
       primary: IInventoryItem;

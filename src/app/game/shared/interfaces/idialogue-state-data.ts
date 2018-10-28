@@ -1,5 +1,5 @@
 import { ISpeech } from ".";
-import { Character } from "./enums
+import { Character } from "../enums";
 
 export interface IDialogueStateData {
       textOnScreen: ISpeech | null;

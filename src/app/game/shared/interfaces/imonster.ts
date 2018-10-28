@@ -1,5 +1,5 @@
 import { MonsterClass, Direction } from "../enums";
-import { IInventoryItem } from "./iinventory-item";
+import { IInventoryItem } from "../../item/interfaces/iinventory-item";
 
 export interface IMonster {
       asleep: boolean;

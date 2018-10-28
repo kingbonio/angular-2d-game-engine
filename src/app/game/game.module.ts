@@ -11,6 +11,8 @@ import { PotionComponent } from './item/potion/potion.component';
 import { KeyComponent } from './item/key/key.component';
 import { ArmourComponent } from './item/armour/armour.component';
 import { CharacterComponent } from './character/character.component';
+import { DialogueComponent } from './dialogue/dialogue.component';
+import { GameComponent } from './game.component';
 
 @NgModule({
   imports: [
@@ -18,6 +20,7 @@ import { CharacterComponent } from './character/character.component';
     GameRoutingModule
   ],
   declarations: [
+    GameComponent,
     PlayerComponent,
     NpcComponent,
     EnemyComponent,
@@ -27,6 +30,7 @@ import { CharacterComponent } from './character/character.component';
     KeyComponent,
     ArmourComponent,
     CharacterComponent,
+    DialogueComponent,
   ]
 })
 export class GameModule { }

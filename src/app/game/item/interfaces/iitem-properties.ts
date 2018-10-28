@@ -1,4 +1,4 @@
-import { MagicAbility } from "../enums";
+import { MagicAbility } from "../../shared/enums";
 
 export interface IItemProperties {
       damage?: number;

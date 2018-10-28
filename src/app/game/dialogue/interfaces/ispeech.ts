@@ -1,4 +1,4 @@
-import { Character } from "../enums";
+import { Character } from "../../shared/enums";
 
 export interface ISpeech {
       text: string;

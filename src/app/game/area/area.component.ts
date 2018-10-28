@@ -5,6 +5,7 @@ import { IAreaElement, IGridReferences, IPuzzle } from './interfaces';
 import { copyConfig } from '@angular/router/src/config';
 import { ILevelData } from './interfaces/ilevel-data';
 import { AreaType } from './enums/area-type';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-area',
@@ -13,6 +14,7 @@ import { AreaType } from './enums/area-type';
 })
 export class AreaComponent implements OnInit {
 
+  private levelId: number;
   private items: IInventoryItem[];
   private monsters: IMonster[];
   private puzzle: IPuzzle;
@@ -20,12 +22,24 @@ export class AreaComponent implements OnInit {
   private isEnd: boolean;
   private locations: IGridReferences;
 
-  constructor(public areaStateService: AreaStateService) {
+  constructor(
+    public areaStateService: AreaStateService,
+    private route: ActivatedRoute
+    ) {
     // TODO: Maybe we should have a generic area which has properties of
     // puzzle, enemy, design, potential items etc.
   }
 
   ngOnInit() {
+    // Set the observable to see the level ID
+    this.route.paramMap.subscribe(
+      paramMap => {
+        // Convert from string to number with '+'
+        this.levelId = +paramMap.get('id');
+        // Update the current level
+        // TODO: ^^^
+      }
+    );
     // Build the area
     // Set Items first
 

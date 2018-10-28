@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Locations } from '../enums';
 import { IAreaStateData } from '../interfaces';
 
 @Injectable()
 export class AreaStateService {
-  private _currentLocation: Locations;
+  // Stores the location ID
+  private _currentLocation: number;
   private _areaCompleted = false;
 
   constructor() {
-    this._currentLocation = Locations.start;
+    // Set the state to be the first level before anything
+    this._currentLocation = 0;
   }
 
   get currentLocation() {
