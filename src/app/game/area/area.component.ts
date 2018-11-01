@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AreaStateService } from '../shared/services/area-state.service';
 import { IInventoryItem, IMonster } from '../shared/interfaces';
 import { IAreaElement, IGridReferences, IPuzzle } from './interfaces';
 import { copyConfig } from '@angular/router/src/config';
 import { ILevelData } from './interfaces/ilevel-data';
 import { AreaType } from './enums/area-type';
 import { ActivatedRoute } from '@angular/router';
+import { AreaStateService } from '../shared/services/area-state.service';
 
 @Component({
   selector: 'app-area',

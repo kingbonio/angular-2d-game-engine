@@ -3,7 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { AreaComponent } from './area/area.component';
 
 const routes: Routes = [
-  { path: ':id', component: AreaComponent }
+  {
+    path: ':id',
+    component: AreaComponent
+  }
 ];
 
 @NgModule({

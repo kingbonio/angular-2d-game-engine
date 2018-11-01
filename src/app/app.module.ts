@@ -9,6 +9,7 @@ import { InGameMenuComponent } from './in-game-menu/in-game-menu.component';
 import { GameModule } from './game/game.module';
 import { MenuStateService } from './shared/services/menu-state.service';
 import { UserInputService } from './shared/services/user-input.service';
+import { AreaStateService } from './game/shared/services/area-state.service';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { UserInputService } from './shared/services/user-input.service';
     InGameMenuComponent
   ],
   providers: [
+    AreaStateService,
     MenuStateService,
     UserInputService
   ],
