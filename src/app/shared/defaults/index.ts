@@ -1,4 +1,4 @@
-import { Direction } from '../enums';
+import { Direction } from '../../game/shared/enums';
 
 export default {
     // Player defaults

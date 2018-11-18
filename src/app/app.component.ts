@@ -9,7 +9,9 @@ import { MenuStateService } from './shared/services/menu-state.service';
 export class AppComponent {
   title = 'app';
 
-  constructor(private menuStateService: MenuStateService) {}
+  constructor(private menuStateService: MenuStateService) {
+    // TODO: Look for a way to check menu on site load
+  }
 
 
 }

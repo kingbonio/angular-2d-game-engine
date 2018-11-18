@@ -1,46 +1,33 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { RouterModule } from '@angular/router';
+import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { PlayerComponent } from './character/player/player.component';
-import { NpcComponent } from './character/npc/npc.component';
-import { EnemyComponent } from './character/enemy/enemy.component';
-import { AreaComponent } from './area/area.component';
-import { StartComponent } from './area/start/start.component';
-import { BattleComponent } from './area/battle/battle.component';
-import { EndComponent } from './area/end/end.component';
-import { PuzzleComponent } from './area/puzzle/puzzle.component';
-import { WeaponComponent } from './item/weapon/weapon.component';
-import { PotionComponent } from './item/potion/potion.component';
-import { KeyComponent } from './item/key/key.component';
-import { ArmourComponent } from './item/armour/armour.component';
-import { CharacterComponent } from './character/character.component';
-import { MenuComponent } from './menu/menu.component';
+import { MainMenuComponent } from './main-menu/main-menu.component';
+import { InGameMenuComponent } from './in-game-menu/in-game-menu.component';
+import { GameModule } from './game/game.module';
+import { MenuStateService } from './shared/services/menu-state.service';
+import { UserInputService } from './shared/services/user-input.service';
+import { AreaStateService } from './game/shared/services/area-state.service';
 
 
 @NgModule({
+  imports: [
+    BrowserModule,
+    GameModule,
+    AppRoutingModule,
+  ],
   declarations: [
     AppComponent,
-    PlayerComponent,
-    NpcComponent,
-    EnemyComponent,
-    AreaComponent,
-    StartComponent,
-    BattleComponent,
-    EndComponent,
-    PuzzleComponent,
-    WeaponComponent,
-    PotionComponent,
-    KeyComponent,
-    ArmourComponent,
-    CharacterComponent,
-    MenuComponent
+    MainMenuComponent,
+    InGameMenuComponent
   ],
-  imports: [
-    BrowserModule
+  providers: [
+    AreaStateService,
+    MenuStateService,
+    UserInputService
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
