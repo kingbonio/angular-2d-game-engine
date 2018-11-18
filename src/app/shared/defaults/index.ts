@@ -12,7 +12,7 @@ export default {
         imageLocation: 'src/assets/images/player-image.jpg',
         locationX: 'B',
         locationY: 2,
-        direction: Direction.up
+        direction: Direction.Up
     },
     playerMultiplyers: {
         inventoryStorageMultiplyer: 30,

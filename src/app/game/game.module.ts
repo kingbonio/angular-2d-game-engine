@@ -13,6 +13,7 @@ import { ArmourComponent } from './item/armour/armour.component';
 import { CharacterComponent } from './character/character.component';
 import { DialogueComponent } from './dialogue/dialogue.component';
 import { GameComponent } from './game.component';
+import { AreaConfigProviderService } from './shared/services/area-config-provider.service';
 
 @NgModule({
   imports: [
@@ -31,6 +32,9 @@ import { GameComponent } from './game.component';
     ArmourComponent,
     CharacterComponent,
     DialogueComponent,
+  ],
+  providers: [
+    AreaConfigProviderService
   ]
 })
 export class GameModule { }

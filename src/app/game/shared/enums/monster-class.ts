@@ -1,7 +1,7 @@
 export enum MonsterClass {
-      rat = "rat",
-      bear = "bear",
-      giantSpider = "giant spider",
-      wraith = "wraith",
+      Rat = "rat",
+      Bear = "bear",
+      GiantSpider = "giant spider",
+      Wraith = "wraith",
       // TODO: etc.
 }
