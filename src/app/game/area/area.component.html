@@ -1,13 +1,9 @@
-<div>
-      <!-- Area accepts properties -->
-      Here is where the game will be displayed
-</div>
-
 <div class="grid-container">
-      <div *ngFor="let key of objectKeys(locations)" class="grid-box">
+      <div *ngFor="let key of locationKeys(this.areaStateService.locations)" class="grid-box">
             <!-- <div *ngIf="element">Has element</div> -->
-            <div *ngIf="locations[key]">{{ key + ' : ' + locations[key].elementClass.name }}</div>
-            <div *ngIf="!locations[key]">{{ key + ' : ' }} Empty</div>
-
+            <div class="grid-item">
+                  <div style="color: red" *ngIf="locations[key]">{{ key + ' : ' + locations[key].elementClass.name }}</div>
+                  <div *ngIf="!locations[key]">{{ key + ' : ' }} Empty</div>
+            </div>
       </div>
 </div>

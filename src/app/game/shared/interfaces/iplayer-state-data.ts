@@ -7,7 +7,7 @@ export interface IPlayerStateData {
       dexterity: number;
       magicka: number;
       exp: number;
-      locationX: string;
-      locationY: number;
+      locationX: number;
+      locationY: string;
       direction: Direction;
 }

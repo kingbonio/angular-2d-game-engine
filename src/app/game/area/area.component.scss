@@ -1,7 +1,12 @@
 .grid-container {
+      width: 492px;
+      display: flex;
+      flex-wrap: wrap;
+
       .grid-box {
             width: 80px;
             height: 80px;
-            border: slid 1px red;
+            border: solid 1px red;
       }
 }
+

@@ -18,7 +18,7 @@ export default {
                   },
                   startingPositionX: "c",
                   startingPositionY: 3,
-                  direction: Direction.Up
+                  direction: Direction.N
             }
       ] as IAreaElement[],
       areaCompleteRequirements: {
