@@ -8,6 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 import { AreaStateService } from '../shared/services/area-state.service';
 import { AreaConfigProviderService } from '../shared/services/area-config-provider.service';
 import { IAreaConfig } from '../../game-config/interfaces';
+import { Character } from '../shared/enums';
+import { PlayerStateService } from '../shared/services/player-state.service';
 
 @Component({
   selector: 'app-area',
@@ -23,11 +25,13 @@ export class AreaComponent implements OnInit {
   private puzzle: IPuzzle;
   private isStart: boolean;
   private isEnd: boolean;
+  public character = Character;
 
   constructor(
     public areaStateService: AreaStateService,
     private route: ActivatedRoute,
-    private areaConfigProvider: AreaConfigProviderService
+    private areaConfigProvider: AreaConfigProviderService,
+    private playerStateService: PlayerStateService
   ) {
   }
 
@@ -49,6 +53,10 @@ export class AreaComponent implements OnInit {
   private prepareArea(): void {
     // get the config from the provider
     this.areaConfig = this.areaConfigProvider.getConfig(this.areaStateService.currentLocation);
+    // Set the player location
+    // TODO This won't work, needs moving into the loop with a check on player
+    this.playerStateService.locationY = this.areaConfig.default.areaElements[0].startingPositionY;
+    this.playerStateService.locationX = this.areaConfig.default.areaElements[0].startingPositionX;
     // Set the monsters
     this.addElementsToGrid(this.areaConfig.default.areaElements);
   }

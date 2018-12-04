@@ -5,7 +5,7 @@ import { IPlayer, IPuzzleElement } from ".";
 
 export interface IAreaElement {
       elementClass: IMonster | IPlayer | IInventoryItem | IPuzzleElement;
-      startingPositionX: string;
-      startingPositionY: number;
+      startingPositionX: number;
+      startingPositionY: string;
       direction: Direction;
 }

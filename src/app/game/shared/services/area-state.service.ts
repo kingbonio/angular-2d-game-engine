@@ -78,13 +78,13 @@ export class AreaStateService {
    * @param location the grid reference for the location
    */
   isLocationFree(location: string): boolean {
-    return (!!this.locations[location]);
+    return (!this.locations[location]);
   }
 
-  public movePlayer(newLocation: string, currentLocation: string) {
-    this.locations[currentLocation] = null;
+  public moveCharacter(newLocation: string, currentLocation: string) {
     // TODO: We need to store a reference to the player object here
-    this.locations[newLocation] = Character.player;
+    this.locations[newLocation] = this.locations[currentLocation];
+    this.locations[currentLocation] = null;
   }
 
   /**

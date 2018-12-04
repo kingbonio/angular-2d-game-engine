@@ -16,8 +16,8 @@ export default {
                               allowKey: false
                         },
                   },
-                  startingPositionX: "C",
-                  startingPositionY: 3,
+                  startingPositionY: "c",
+                  startingPositionX: 3,
                   direction: Direction.N
             }
       ] as IAreaElement[],
