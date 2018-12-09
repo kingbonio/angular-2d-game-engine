@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { IGameStateData } from '../interfaces';
 
 @Injectable()
 export class GameStateService {
   _isGameFinishedBooting;
   _gamePaused;
+  @Output() performComputerMove: EventEmitter<any> = new EventEmitter();
 
   constructor() {
     this.isGameFinishedBooting = true;
@@ -24,6 +25,11 @@ export class GameStateService {
 
   set gamePaused(newPauseState) {
     this._gamePaused = newPauseState;
+  }
+
+  public takeComputerTurn() {
+    // TODO: Build this event emitter to update any subscribers to perform a "computer move"
+    this.performComputerMove.emit();
   }
 
   /**

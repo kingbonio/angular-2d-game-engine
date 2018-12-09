@@ -141,8 +141,8 @@ export class PlayerStateService {
     let newLocationX;
     switch (direction) {
       case Direction.N:
-        // Make sure the location isn't off the edge of the grid and get new reference
-        newLocationY = this.previousYReference(this.locationY);
+      newLocationY = this.previousYReference(this.locationY);
+      // Make sure the location isn't off the edge of the grid and get new reference
         if (newLocationY && this.areaStateService.isLocationFree(newLocationY + this.locationX)) {
           // Update area state
           this.areaStateService.moveCharacter(newLocationY + this.locationX, this.locationY + this.locationX);
@@ -150,11 +150,10 @@ export class PlayerStateService {
           this.locationY = newLocationY;
         }
         break;
-      // TODO: notify player cannot move that way or silently fail
       case Direction.E:
-        // Make sure the location isn't off the edge of the grid and get new reference
-        newLocationX = this.nextXReference(this.locationX);
-        if (newLocationX && this.areaStateService.isLocationFree(this.locationY + newLocationX) {
+      newLocationX = this.nextXReference(this.locationX);
+      // Make sure the location isn't off the edge of the grid and get new reference
+        if (newLocationX && this.areaStateService.isLocationFree(this.locationY + newLocationX)) {
           // Update area state
           this.areaStateService.moveCharacter(this.locationY + newLocationX, this.locationY + this.locationX);
           // Update player state
@@ -162,8 +161,8 @@ export class PlayerStateService {
         }
         break;
       case Direction.S:
-        // Make sure the location isn't off the edge of the grid and get new reference
-        newLocationY = this.nextYReference(this.locationY);
+      newLocationY = this.nextYReference(this.locationY);
+      // Make sure the location isn't off the edge of the grid and get new reference
         if (newLocationY && this.areaStateService.isLocationFree(newLocationY + this.locationX)) {
           // Update area state
           this.areaStateService.moveCharacter(newLocationY + this.locationX, this.locationY + this.locationX);
@@ -172,8 +171,8 @@ export class PlayerStateService {
         }
         break;
       case Direction.W:
-        // Make sure the location isn't off the edge of the grid and get new reference
-        newLocationX = this.previousXReference(this.locationX);
+      newLocationX = this.previousXReference(this.locationX);
+      // Make sure the location isn't off the edge of the grid and get new reference
         if (newLocationX && this.areaStateService.isLocationFree(this.locationY + newLocationX)) {
           // Update area state
           this.areaStateService.moveCharacter(this.locationY + newLocationX, this.locationY + this.locationX);
@@ -196,7 +195,7 @@ export class PlayerStateService {
   }
 
   private nextYReference(yReference: string): string {
-    if (yReference === "f") {
+    if (yReference === "g") {
       return null;
     }
     return String.fromCharCode(yReference.charCodeAt(0) + 1);
@@ -210,7 +209,7 @@ export class PlayerStateService {
   }
 
   private nextXReference(xReference: number): number {
-    if (xReference === 6) {
+    if (xReference === 7) {
       return null;
     }
     return xReference + 1;

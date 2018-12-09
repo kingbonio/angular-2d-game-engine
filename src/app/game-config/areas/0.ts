@@ -5,9 +5,9 @@ export default {
       areaElements: [
             {
                   elementClass: {
-                        asleep: true,
+                        asleep: false,
                         level: 1,
-                        name: "Darren",
+                        name: "RatFace",
                         class: MonsterClass.Rat,
                         lootParameters: {
                               level: 6,
@@ -17,7 +17,16 @@ export default {
                         },
                   },
                   startingPositionY: "c",
-                  startingPositionX: 3,
+                  startingPositionX: 4,
+                  direction: Direction.S
+            },
+            {
+                  elementClass: {
+                        name: "Smelly Jeremy",
+                        imageName: "player1.jpg"
+                  },
+                  startingPositionY: "g",
+                  startingPositionX: 4,
                   direction: Direction.N
             }
       ] as IAreaElement[],
