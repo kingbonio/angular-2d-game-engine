@@ -1,7 +1,9 @@
 import defaults from '../../../shared/defaults';
 import { Injectable } from '@angular/core';
-import { Direction, InteractionTarget, ItemClass } from '../enums';
+import { Direction, InteractionTarget, ItemClass, Character } from '../enums';
 import { IPlayerStateData, IInventoryItem } from '../interfaces';
+import { AreaStateService } from './area-state.service';
+import { IGridReferences } from '../../area/interfaces';
 
 @Injectable()
 export class PlayerStateService {
@@ -11,12 +13,13 @@ export class PlayerStateService {
   private _dexterity: number;
   private _magicka: number;
   private _exp: number;
-  private _locationX: string;
-  private _locationY: number;
+  public locationX: number;
+  public locationY: string;
   private _direction: Direction;
+  // public location: string;
 
 
-  constructor() {
+  constructor(private areaStateService: AreaStateService) {
   }
 
   onInit() {
@@ -27,8 +30,6 @@ export class PlayerStateService {
     this._dexterity = defaults.initialPlayerStats.dexterity;
     this._magicka = defaults.initialPlayerStats.magicka;
     this._exp = defaults.initialPlayerStats.exp;
-    this._locationX = defaults.initialPlayerStats.locationX;
-    this._locationY = defaults.initialPlayerStats.locationY;
     this._direction = defaults.initialPlayerStats.direction;
   }
 
@@ -80,22 +81,6 @@ export class PlayerStateService {
     this._exp = newExp;
   }
 
-  get locationX() {
-    return this._locationX;
-  }
-
-  set locationX(newLocationX) {
-    this._locationX = newLocationX;
-  }
-
-  get locationY() {
-    return this._locationY;
-  }
-
-  set locationY(newLocationY) {
-    this._locationY = newLocationY;
-  }
-
   get direction() {
     return this._direction;
   }
@@ -144,5 +129,96 @@ export class PlayerStateService {
         this[stateSetting] = newState[stateSetting];
       }
     }
+  }
+
+  /**
+   * Attempts to move the character in a direction
+   * @param direction The direction to attempt to move
+   */
+  public move(direction: Direction) {
+    // Attempt movement
+    let newLocationY;
+    let newLocationX;
+    switch (direction) {
+      case Direction.N:
+      newLocationY = this.previousYReference(this.locationY);
+      // Make sure the location isn't off the edge of the grid and get new reference
+        if (newLocationY && this.areaStateService.isLocationFree(newLocationY + this.locationX)) {
+          // Update area state
+          this.areaStateService.moveCharacter(newLocationY + this.locationX, this.locationY + this.locationX);
+          // Update player state
+          this.locationY = newLocationY;
+        }
+        break;
+      case Direction.E:
+      newLocationX = this.nextXReference(this.locationX);
+      // Make sure the location isn't off the edge of the grid and get new reference
+        if (newLocationX && this.areaStateService.isLocationFree(this.locationY + newLocationX)) {
+          // Update area state
+          this.areaStateService.moveCharacter(this.locationY + newLocationX, this.locationY + this.locationX);
+          // Update player state
+          this.locationX = newLocationX;
+        }
+        break;
+      case Direction.S:
+      newLocationY = this.nextYReference(this.locationY);
+      // Make sure the location isn't off the edge of the grid and get new reference
+        if (newLocationY && this.areaStateService.isLocationFree(newLocationY + this.locationX)) {
+          // Update area state
+          this.areaStateService.moveCharacter(newLocationY + this.locationX, this.locationY + this.locationX);
+          // Update player state
+          this.locationY = newLocationY;
+        }
+        break;
+      case Direction.W:
+      newLocationX = this.previousXReference(this.locationX);
+      // Make sure the location isn't off the edge of the grid and get new reference
+        if (newLocationX && this.areaStateService.isLocationFree(this.locationY + newLocationX)) {
+          // Update area state
+          this.areaStateService.moveCharacter(this.locationY + newLocationX, this.locationY + this.locationX);
+          // Update player state
+          this.locationX = newLocationX;
+        }
+        break;
+    }
+    // Always update the facing direction
+    this.direction = direction;
+  }
+
+  // TODO: Might want to move these somewhere more reusable
+  private previousYReference(yReference: string | null): string {
+    // TODO: Should really just check if it exists in grid somehow
+    if (yReference === "a") {
+      return null;
+    }
+    return String.fromCharCode(yReference.charCodeAt(0) - 1);
+  }
+
+  private nextYReference(yReference: string): string {
+    if (yReference === "g") {
+      return null;
+    }
+    return String.fromCharCode(yReference.charCodeAt(0) + 1);
+  }
+
+  private previousXReference(xReference: number): number {
+    if (xReference === 1) {
+      return null;
+    }
+    return xReference - 1;
+  }
+
+  private nextXReference(xReference: number): number {
+    if (xReference === 7) {
+      return null;
+    }
+    return xReference + 1;
+  }
+
+  /**
+   * Checks if grid reference is empty
+   */
+  private isGridReferenceEmpty(gridReference) {
+
   }
 }

@@ -10,9 +10,9 @@ export default {
         magicka: 10,
         exp: 0,
         imageLocation: 'src/assets/images/player-image.jpg',
-        locationX: 'B',
-        locationY: 2,
-        direction: Direction.up
+        locationX: 2,
+        locationY: 'B',
+        direction: Direction.N
     },
     playerMultiplyers: {
         inventoryStorageMultiplyer: 30,

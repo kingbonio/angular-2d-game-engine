@@ -6,6 +6,10 @@ import { ILevelData } from './interfaces/ilevel-data';
 import { AreaType } from './enums/area-type';
 import { ActivatedRoute } from '@angular/router';
 import { AreaStateService } from '../shared/services/area-state.service';
+import { AreaConfigProviderService } from '../shared/services/area-config-provider.service';
+import { IAreaConfig } from '../../game-config/interfaces';
+import { Character } from '../shared/enums';
+import { PlayerStateService } from '../shared/services/player-state.service';
 
 @Component({
   selector: 'app-area',
@@ -14,45 +18,59 @@ import { AreaStateService } from '../shared/services/area-state.service';
 })
 export class AreaComponent implements OnInit {
 
+  private areaConfig: any;
   private levelId: number;
   private items: IInventoryItem[];
   private monsters: IMonster[];
   private puzzle: IPuzzle;
   private isStart: boolean;
   private isEnd: boolean;
-  private locations: IGridReferences;
+  public character = Character;
 
   constructor(
     public areaStateService: AreaStateService,
-    private route: ActivatedRoute
-    ) {
-    // TODO: Maybe we should have a generic area which has properties of
-    // puzzle, enemy, design, potential items etc.
+    private route: ActivatedRoute,
+    private areaConfigProvider: AreaConfigProviderService,
+    private playerStateService: PlayerStateService
+  ) {
   }
 
   ngOnInit() {
-    // Set the observable to see the level ID
-    this.route.paramMap.subscribe(
-      paramMap => {
-        // Convert from string to number with '+'
-        this.levelId = +paramMap.get('id');
-        // Update the current level
-        // TODO: ^^^
-      }
-    );
-    // Build the area
-    // Set Items first
-
+    // // Set the observable to see the level ID
+    // this.route.paramMap.subscribe(
+    //   paramMap => {
+    //     // Convert from string to number with '+'
+    //     this.levelId = +paramMap.get('id');
+    //     // Update the current level
+    //     // TODO: ^^^
+    //   }
+    // );
+    // // Build the area
+    // // Set Items first
+    this.prepareArea();
   }
 
-  private addElementsToGrid(element: IAreaElement): void {
-    // Check element's preferred grid reference and attempt to add it there
-    const gridReference = element.startingPositionX + element.startingPositionY;
-    if (!this.locations[gridReference]) {
-      this.locations[gridReference] = element;
-    } else {
-      // TODO: Move them to another position, up to x amount (need to block overcrowding)
-    }
+  private prepareArea(): void {
+    // get the config from the provider
+    this.areaConfig = this.areaConfigProvider.getConfig(this.areaStateService.currentLocation);
+    // Set the player location
+    // TODO This won't work, needs moving into the loop with a check on player
+    this.playerStateService.locationY = this.areaConfig.default.areaElements[0].startingPositionY;
+    this.playerStateService.locationX = this.areaConfig.default.areaElements[0].startingPositionX;
+    // Set the monsters
+    this.addElementsToGrid(this.areaConfig.default.areaElements);
+  }
+
+  private addElementsToGrid(elements: IAreaElement[]): void {
+    elements.forEach(element => {
+      // Check element's preferred grid reference and attempt to add it there
+      const gridReference = element.startingPositionY + element.startingPositionX;
+      if (!this.areaStateService.locations[gridReference]) {
+        this.areaStateService.locations[gridReference] = element;
+      } else {
+        // TODO: Move them to another position, up to x amount (need to block overcrowding)
+      }
+    });
   }
 
   /**

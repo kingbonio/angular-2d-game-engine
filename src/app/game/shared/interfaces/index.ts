@@ -10,3 +10,4 @@ export * from "./iitem-properties";
 export * from "./iarmour";
 export * from "./iweapons";
 export * from "./imonster";
+export * from "./ilootParameters";

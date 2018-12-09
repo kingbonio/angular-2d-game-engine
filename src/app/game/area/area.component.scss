@@ -1,0 +1,12 @@
+.grid-container {
+      width: 574px;
+      display: flex;
+      flex-wrap: wrap;
+
+      .grid-box {
+            width: 80px;
+            height: 80px;
+            border: solid 1px black;
+      }
+}
+
