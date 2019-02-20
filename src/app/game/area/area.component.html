@@ -2,7 +2,7 @@
       <div *ngFor="let key of areaStateService.locationKeys(areaStateService.locations)" class="grid-box">
             <!-- <div *ngIf="element">Has element</div> -->
             <div class="grid-item">
-                  <div style="color: red" *ngIf="areaStateService.locations[key]">{{ key + ' : ' + areaStateService.locations[key].elementClass.name }}</div>
+                  <div style="color: red" *ngIf="areaStateService.locations[key]">{{ key + ' : ' + areaStateService.locations[key].name }}</div>
                   <!-- <div *ngIf="!areaStateService.locations[key]">{{ key + ' : ' }} Empty</div> -->
                   <div *ngIf="areaStateService.locations[key] === character.player">
                         Player

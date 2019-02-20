@@ -4,6 +4,16 @@ import { IAreaElement } from "../../game/area/interfaces";
 export default {
       areaElements: [
             {
+                  type: Character.player,
+                  elementClass: {
+                        name: "Smelly Jeremy",
+                        imageName: "player1.jpg"
+                  },
+                  startingPositionX: 4,
+                  startingPositionY: "g",
+                  direction: Direction.N
+            },
+            {
                   type: Character.monster,
                   elementClass: {
                         asleep: false,
@@ -21,16 +31,6 @@ export default {
                   startingPositionY: "c",
                   direction: Direction.S
             },
-            {
-                  type: Character.player,
-                  elementClass: {
-                        name: "Smelly Jeremy",
-                        imageName: "player1.jpg"
-                  },
-                  startingPositionX: 4,
-                  startingPositionY: "g",
-                  direction: Direction.N
-            }
       ] as IAreaElement[],
       areaCompleteRequirements: {
             item: false,

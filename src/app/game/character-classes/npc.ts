@@ -1,11 +1,16 @@
 import { Character } from "./character";
 
 export class NPC extends Character {
-      private element: any;
+      name: string;
+      class: NPC;
+      imageName: string;
 
-      constructor(element) {
+      constructor(characterDetails: any) {
+            // TODO: Resolve any
             super();
-            this.element = element;
+            this.name = characterDetails.name;
+            this.class = characterDetails.class;
+            this.imageName = characterDetails.imageName;
       }
 
 }

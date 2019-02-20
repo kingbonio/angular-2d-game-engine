@@ -70,19 +70,19 @@ export class AreaComponent implements OnInit {
         // We want to create instances of each character in the config
         switch (element.type) {
           case Character.monster:
-            this.areaStateService.locations[gridReference] = new Enemy(element);
+            this.areaStateService.locations[gridReference] = new Enemy(element.elementClass);
             break;
           case Character.player:
-            this.areaStateService.locations[gridReference] = new Player(element);
+            this.areaStateService.locations[gridReference] = new Player(element.elementClass);
             break;
           case Character.npc:
-            this.areaStateService.locations[gridReference] = new NPC(element);
+            this.areaStateService.locations[gridReference] = new NPC(element.elementClass);
             break;
           default:
             this.areaStateService.locations[gridReference] = element;
         }
+        console.log(this.areaStateService.locations);
       } else {
-        
         // TODO: Move them to another position, up to x amount (need to block overcrowding)
       }
     });

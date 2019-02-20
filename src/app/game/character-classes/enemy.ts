@@ -1,10 +1,16 @@
 import { Character } from "./character";
+import { MonsterClass } from "../shared/enums";
 
 export class Enemy extends Character {
-      private element: any;
+      name: string;
+      class: MonsterClass;
+      imageName: string;
 
-      constructor(element) {
+      constructor(characterDetails: any) {
+            // TODO: Resolve any
             super();
-            this.element = element;
+            this.name = characterDetails.name;
+            this.class = characterDetails.class;
+            this.imageName = characterDetails.imageName;
       }
 }
