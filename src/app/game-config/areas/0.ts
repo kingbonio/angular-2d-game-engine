@@ -1,9 +1,10 @@
-import { MonsterClass, Direction } from "../../game/shared/enums";
+import { MonsterClass, Direction, Character } from "../../game/shared/enums";
 import { IAreaElement } from "../../game/area/interfaces";
 
 export default {
       areaElements: [
             {
+                  type: Character.monster,
                   elementClass: {
                         asleep: false,
                         level: 1,
@@ -16,17 +17,18 @@ export default {
                               allowKey: false
                         },
                   },
-                  startingPositionY: "c",
                   startingPositionX: 4,
+                  startingPositionY: "c",
                   direction: Direction.S
             },
             {
+                  type: Character.player,
                   elementClass: {
                         name: "Smelly Jeremy",
                         imageName: "player1.jpg"
                   },
-                  startingPositionY: "g",
                   startingPositionX: 4,
+                  startingPositionY: "g",
                   direction: Direction.N
             }
       ] as IAreaElement[],

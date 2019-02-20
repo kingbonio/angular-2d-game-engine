@@ -10,6 +10,7 @@ import { AreaConfigProviderService } from '../shared/services/area-config-provid
 import { IAreaConfig } from '../../game-config/interfaces';
 import { Character } from '../shared/enums';
 import { PlayerStateService } from '../shared/services/player-state.service';
+import { Enemy, NPC, Player } from '../character-classes/';
 
 @Component({
   selector: 'app-area',
@@ -66,8 +67,22 @@ export class AreaComponent implements OnInit {
       // Check element's preferred grid reference and attempt to add it there
       const gridReference = element.startingPositionY + element.startingPositionX;
       if (!this.areaStateService.locations[gridReference]) {
-        this.areaStateService.locations[gridReference] = element;
+        // We want to create instances of each character in the config
+        switch (element.type) {
+          case Character.monster:
+            this.areaStateService.locations[gridReference] = new Enemy(element);
+            break;
+          case Character.player:
+            this.areaStateService.locations[gridReference] = new Player(element);
+            break;
+          case Character.npc:
+            this.areaStateService.locations[gridReference] = new NPC(element);
+            break;
+          default:
+            this.areaStateService.locations[gridReference] = element;
+        }
       } else {
+        
         // TODO: Move them to another position, up to x amount (need to block overcrowding)
       }
     });

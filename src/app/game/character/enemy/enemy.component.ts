@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
 
 @Component({
   selector: 'app-enemy',
@@ -6,8 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./enemy.component.scss']
 })
 export class EnemyComponent implements OnInit {
+  @ViewChild('componentHolder', { read: ViewContainerRef }) componentHolder: ViewContainerRef;
 
-  constructor() { }
+  constructor(private componentFactoryResolver: ComponentFactoryResolver) {
+  }
+
+  public createComponent() {
+  }
 
   ngOnInit() {
   }

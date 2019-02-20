@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ComponentFactoryResolver } from '@angular/core';
 import { IAreaStateData } from '../interfaces';
 import { IGridReferences } from '../../area/interfaces';
 import { Character } from '../enums';
+import { EnemyComponent } from '../../character/enemy/enemy.component';
 
 @Injectable()
 export class AreaStateService {
@@ -11,7 +12,7 @@ export class AreaStateService {
   public locationKeys: any;
   public locations: IGridReferences;
 
-  constructor() {
+  constructor(private componentFactoryResolver: ComponentFactoryResolver) {
     // Set the state to be the first level before anything
     this._currentLocation = 0;
     this.locations = {
@@ -68,6 +69,7 @@ export class AreaStateService {
     this.locationKeys = Object.keys;
     // TODO: Maybe we should have a generic area which has properties of
     // puzzle, enemy, design, potential items etc.
+
   }
 
   get currentLocation() {
