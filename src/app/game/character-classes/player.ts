@@ -4,7 +4,7 @@ import { PlayerClass } from "../shared/enums";
 
 export class Player extends Character {
       name: string;
-      class: PlayerClass;
+      class: PlayerClass.fighter;
       imageName: string;
 
       constructor(characterDetails: any) {

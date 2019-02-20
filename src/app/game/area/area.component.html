@@ -4,8 +4,9 @@
             <div class="grid-item">
                   <div style="color: red" *ngIf="areaStateService.locations[key]">{{ key + ' : ' + areaStateService.locations[key].name }}</div>
                   <!-- <div *ngIf="!areaStateService.locations[key]">{{ key + ' : ' }} Empty</div> -->
-                  <div *ngIf="areaStateService.locations[key] === character.player">
-                        Player
+                  <div *ngIf="areaStateService.locations[key]">
+                        {{ areaStateService.locations[key].hp }}HP
+                        {{ areaStateService.locations[key].xp }}XP
                   </div>
             </div>
       </div>
