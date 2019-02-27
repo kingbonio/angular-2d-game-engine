@@ -1,10 +1,11 @@
 import { IMonster } from "../../shared/interfaces/imonster";
 import { IInventoryItem } from "../../item/interfaces/iinventory-item";
-import { Direction } from "../../shared/enums";
-import { IPlayer, IPuzzleElement } from ".";
+import { Direction, Character } from "../../shared/enums";
+import { IPlayer, IPuzzleElement, INpc } from ".";
 
 export interface IAreaElement {
-      elementClass: IMonster | IPlayer | IInventoryItem | IPuzzleElement;
+      type: Character;
+      elementClass: IMonster | IPlayer | INpc | IInventoryItem | IPuzzleElement;
       startingPositionX: number;
       startingPositionY: string;
       direction: Direction;
