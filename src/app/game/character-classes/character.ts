@@ -1,7 +1,10 @@
+import { CharacterType } from "../shared/enums";
+
 export class Character {
       hp: number;
       xp: number;
       asleep: boolean;
+      type: CharacterType;
 
       constructor() {
             // TODO: Set this manually

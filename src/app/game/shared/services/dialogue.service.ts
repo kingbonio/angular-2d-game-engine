@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Character } from '../enums';
+import { CharacterType } from '../enums';
 import defaults from '../../../shared/defaults';
 import { ISpeech, IDialogueStateData } from '../interfaces';
 
 @Injectable()
 export class DialogueService {
   textOnScreen: ISpeech;
-  whoIsSpeaking: Character;
+  whoIsSpeaking: CharacterType;
   pendingMessages: ISpeech[];
   dialogueVisible = false;
 

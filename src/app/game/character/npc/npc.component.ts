@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogueService } from '../../shared/services/dialogue.service';
-import { Character } from '../../shared/enums';
+import { CharacterType } from '../../shared/enums';
 import { CharacterComponent } from '../character.component';
 
 @Component({
@@ -23,7 +23,7 @@ export class NpcComponent extends CharacterComponent implements OnInit {
    * @param text the speech to be displayed
    * @param character who is speaking for dialogue box styling
    */
-  speak(text: string, character: Character) {
+  speak(text: string, character: CharacterType) {
     this.dialogueService.displaySpeech({
       text,
       character

@@ -6,7 +6,23 @@
       .grid-box {
             width: 80px;
             height: 80px;
-            border: solid 1px black;
+            border: solid black 1px;
+            .grid-item {
+                  width: 100%;
+                  height: 100%;
+                  &.direction-n {
+                        border-top: solid red 2px;
+                  }
+                  &.direction-e {
+                        border-right: solid red 2px;
+                  }
+                  &.direction-s {
+                        border-bottom: solid red 2px;
+                  }
+                  &.direction-w {
+                        border-left: solid red 2px;
+                  }
+            }
       }
 }
 

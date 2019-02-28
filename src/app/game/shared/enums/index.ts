@@ -1,5 +1,5 @@
 export * from './direction';
-export * from './characters';
+export * from './characterType';
 export * from '../../../shared/enums/menu-setting-types';
 export * from '../../item/enums/item-class';
 export * from '../../item/enums/magic-ability';

@@ -1,6 +1,6 @@
 import defaults from '../../../shared/defaults';
 import { Injectable } from '@angular/core';
-import { Direction, InteractionTarget, ItemClass, Character } from '../enums';
+import { Direction, InteractionTarget, ItemClass, CharacterType } from '../enums';
 import { IPlayerStateData, IInventoryItem } from '../interfaces';
 import { AreaStateService } from './area-state.service';
 import { IGridReferences } from '../../area/interfaces';
@@ -15,7 +15,7 @@ export class PlayerStateService {
   private _exp: number;
   public locationX: number;
   public locationY: string;
-  private _direction: Direction;
+  public direction: Direction = Direction.N;
   // public location: string;
 
 
@@ -30,7 +30,7 @@ export class PlayerStateService {
     this._dexterity = defaults.initialPlayerStats.dexterity;
     this._magicka = defaults.initialPlayerStats.magicka;
     this._exp = defaults.initialPlayerStats.exp;
-    this._direction = defaults.initialPlayerStats.direction;
+    this.direction = defaults.initialPlayerStats.direction;
   }
 
   get health() {
@@ -81,14 +81,6 @@ export class PlayerStateService {
     this._exp = newExp;
   }
 
-  get direction() {
-    return this._direction;
-  }
-
-  set direction(newDirection) {
-    this._direction = newDirection;
-  }
-
   get inventoryCapacity() {
     return this._strength * defaults.playerMultiplyers.inventoryStorageMultiplyer;
   }
@@ -136,53 +128,74 @@ export class PlayerStateService {
    * @param direction The direction to attempt to move
    */
   public move(direction: Direction) {
+
+    console.log(this.areaStateService.locations);
+
+    const newLocation = this.getnextLocation(this.locationY + this.locationX, direction);
+
+    // Update area state
+    if (newLocation.locationX && newLocation.locationY) {
+      this.areaStateService.moveCharacter(newLocation.locationY + newLocation.locationX, this.locationY + this.locationX);
+    }
+
+    this.locationY = newLocation.locationY;
+    this.locationX = newLocation.locationX;
+  }
+
+  public changeDirection(direction: Direction) {
+    this.direction = direction;
+    console.log(this.direction);
+  }
+
+  // TODO Maybe update this location interface/enum
+  private getnextLocation(location: string, direction: Direction): { locationY: string, locationX: number } | null {
+
     // Attempt movement
     let newLocationY;
     let newLocationX;
     switch (direction) {
       case Direction.N:
-      newLocationY = this.previousYReference(this.locationY);
-      // Make sure the location isn't off the edge of the grid and get new reference
+        newLocationY = this.previousYReference(this.locationY);
+        newLocationX = this.locationX;
+        // Make sure the location isn't off the edge of the grid and get new reference
         if (newLocationY && this.areaStateService.isLocationFree(newLocationY + this.locationX)) {
-          // Update area state
-          this.areaStateService.moveCharacter(newLocationY + this.locationX, this.locationY + this.locationX);
-          // Update player state
-          this.locationY = newLocationY;
+          return { locationY: newLocationY, locationX: newLocationX };
         }
-        break;
+        return null;
       case Direction.E:
-      newLocationX = this.nextXReference(this.locationX);
-      // Make sure the location isn't off the edge of the grid and get new reference
+        newLocationX = this.nextXReference(this.locationX);
+        newLocationY = this.locationY;
+        // Make sure the location isn't off the edge of the grid and get new reference
         if (newLocationX && this.areaStateService.isLocationFree(this.locationY + newLocationX)) {
-          // Update area state
-          this.areaStateService.moveCharacter(this.locationY + newLocationX, this.locationY + this.locationX);
-          // Update player state
-          this.locationX = newLocationX;
+          return { locationY: newLocationY, locationX: newLocationX };
         }
-        break;
+        return null;
       case Direction.S:
-      newLocationY = this.nextYReference(this.locationY);
-      // Make sure the location isn't off the edge of the grid and get new reference
+        newLocationY = this.nextYReference(this.locationY);
+        newLocationX = this.locationX;
+        // Make sure the location isn't off the edge of the grid and get new reference
         if (newLocationY && this.areaStateService.isLocationFree(newLocationY + this.locationX)) {
-          // Update area state
-          this.areaStateService.moveCharacter(newLocationY + this.locationX, this.locationY + this.locationX);
-          // Update player state
-          this.locationY = newLocationY;
+          return { locationY: newLocationY, locationX: newLocationX };
         }
-        break;
+        return null;
       case Direction.W:
-      newLocationX = this.previousXReference(this.locationX);
-      // Make sure the location isn't off the edge of the grid and get new reference
+        newLocationX = this.previousXReference(this.locationX);
+        newLocationY = this.locationY;
+        // Make sure the location isn't off the edge of the grid and get new reference
         if (newLocationX && this.areaStateService.isLocationFree(this.locationY + newLocationX)) {
-          // Update area state
-          this.areaStateService.moveCharacter(this.locationY + newLocationX, this.locationY + this.locationX);
-          // Update player state
-          this.locationX = newLocationX;
+          return { locationY: newLocationY, locationX: newLocationX };
         }
-        break;
+        return null;
+      default:
+        return null;
     }
-    // Always update the facing direction
-    this.direction = direction;
+  }
+
+  /**
+   * Perform an attack in the direction player is facing
+   */
+  public attack() {
+
   }
 
   // TODO: Might want to move these somewhere more reusable

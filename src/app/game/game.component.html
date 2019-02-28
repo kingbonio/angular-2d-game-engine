@@ -6,6 +6,7 @@
       <div class="bottom-menu">
             <div class="left-controls">
                   <div class="direction-controls">
+                        Move
                         <span class="north" (click)="playerStateService.move('n')">N</span>
                         <!-- <span class="north-east">NE</span> -->
                         <span class="east" (click)="playerStateService.move('e')">E</span>
@@ -20,7 +21,20 @@
 
             </div>
             <div class="right-controls">
-                  
+                  <div class="direction-controls">
+                        Direction
+                        <span class="north" (click)="playerStateService.changeDirection('n')">N</span>
+                        <!-- <span class="north-east">NE</span> -->
+                        <span class="east" (click)="playerStateService.changeDirection('e')">E</span>
+                        <!-- <span class="south-east">SE</span> -->
+                        <span class="south" (click)="playerStateService.changeDirection('s')">S</span>
+                        <!-- <span class="south-west">SW</span> -->
+                        <span class="west" (click)="playerStateService.changeDirection('w')">W</span>
+                        <!-- <span class="north-west">NW</span> -->
+                  </div>
+                  <div class="attack-controls">
+                        <span class="north" (click)="playerStateService.attack()">Attack</span>
+                  </div>
             </div>
       </div>
 </div>

@@ -8,9 +8,10 @@ import { ActivatedRoute } from '@angular/router';
 import { AreaStateService } from '../shared/services/area-state.service';
 import { AreaConfigProviderService } from '../shared/services/area-config-provider.service';
 import { IAreaConfig } from '../../game-config/interfaces';
-import { Character } from '../shared/enums';
+import { CharacterType, Direction } from '../shared/enums';
 import { PlayerStateService } from '../shared/services/player-state.service';
 import { Enemy, NPC, Player } from '../character-classes/';
+import { Character } from '../character-classes/character';
 
 @Component({
   selector: 'app-area',
@@ -26,7 +27,8 @@ export class AreaComponent implements OnInit {
   private puzzle: IPuzzle;
   private isStart: boolean;
   private isEnd: boolean;
-  public character = Character;
+  public character = CharacterType;
+  public direction = Direction;
 
   constructor(
     public areaStateService: AreaStateService,
@@ -51,6 +53,11 @@ export class AreaComponent implements OnInit {
     this.prepareArea();
   }
 
+  public getDirectionClass(gridCharacter) {
+    return gridCharacter.type === CharacterType.player ? 'direction-' + this.playerStateService.direction : "";
+
+  }
+
   private prepareArea(): void {
     // get the config from the provider
     this.areaConfig = this.areaConfigProvider.getConfig(this.areaStateService.currentLocation);
@@ -69,13 +76,13 @@ export class AreaComponent implements OnInit {
       if (!this.areaStateService.locations[gridReference]) {
         // We want to create instances of each character in the config
         switch (element.type) {
-          case Character.monster:
+          case CharacterType.enemy:
             this.areaStateService.locations[gridReference] = new Enemy(element.elementClass);
             break;
-          case Character.player:
+          case CharacterType.player:
             this.areaStateService.locations[gridReference] = new Player(element.elementClass);
             break;
-          case Character.npc:
+          case CharacterType.npc:
             this.areaStateService.locations[gridReference] = new NPC(element.elementClass);
             break;
           default:

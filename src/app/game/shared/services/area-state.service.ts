@@ -1,7 +1,7 @@
 import { Injectable, ComponentFactoryResolver } from '@angular/core';
 import { IAreaStateData } from '../interfaces';
 import { IGridReferences } from '../../area/interfaces';
-import { Character } from '../enums';
+import { CharacterType, Direction } from '../enums';
 import { EnemyComponent } from '../../character/enemy/enemy.component';
 
 @Injectable()
@@ -101,6 +101,10 @@ export class AreaStateService {
     // TODO: We need to store a reference to the player object here
     this.locations[newLocation] = this.locations[currentLocation];
     this.locations[currentLocation] = null;
+  }
+
+  public getNextGridLocation(direction: Direction) {
+
   }
 
   /**

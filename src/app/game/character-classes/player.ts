@@ -1,11 +1,12 @@
 import { Character } from "./character";
 import { IAreaElement, IPlayer } from "../area/interfaces";
-import { PlayerClass } from "../shared/enums";
+import { PlayerClass, CharacterType } from "../shared/enums";
 
 export class Player extends Character {
-      name: string;
-      class: PlayerClass.fighter;
-      imageName: string;
+      public type = CharacterType.player;
+      public name: string;
+      public class: PlayerClass.fighter;
+      public imageName: string;
 
       constructor(characterDetails: any) {
             // TODO: Resolve any

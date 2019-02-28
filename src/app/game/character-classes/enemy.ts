@@ -1,10 +1,11 @@
 import { Character } from "./character";
-import { MonsterClass } from "../shared/enums";
+import { MonsterClass, CharacterType } from "../shared/enums";
 
 export class Enemy extends Character {
-      name: string;
-      class: MonsterClass;
-      imageName: string;
+      public type = CharacterType.enemy;
+      public name: string;
+      public class: MonsterClass;
+      public imageName: string;
 
       constructor(characterDetails: any) {
             // TODO: Resolve any

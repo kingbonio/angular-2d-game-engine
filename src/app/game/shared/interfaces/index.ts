@@ -9,5 +9,6 @@ export * from "../../item/interfaces/iinventory-item";
 export * from "./iitem-properties";
 export * from "./iarmour";
 export * from "./iweapons";
-export * from "./imonster";
+export * from "../../area/interfaces/ienemy";
 export * from "./ilootParameters";
+export * from "./iLocation";
