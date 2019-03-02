@@ -236,6 +236,13 @@ export class PlayerStateService {
   }
 
   /**
+   * Guard against an attack from the direction you are facing
+   */
+  public guard() {
+
+  }
+
+  /**
    * speak to the object in the direction player is facing
    */
   public speak() {
