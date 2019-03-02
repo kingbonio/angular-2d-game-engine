@@ -1,9 +1,11 @@
 import { Character } from "./character";
+import { CharacterType } from "../shared/enums";
 
 export class NPC extends Character {
-      name: string;
-      class: NPC;
-      imageName: string;
+      public type = CharacterType.npc;
+      public name: string;
+      public class: NPC;
+      public imageName: string;
 
       constructor(characterDetails: any) {
             // TODO: Resolve any

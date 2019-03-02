@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Character } from '../enums';
+import { CharacterType } from '../enums';
 import defaults from '../../../shared/defaults';
 import { ISpeech, IDialogueStateData } from '../interfaces';
 
 @Injectable()
 export class DialogueService {
   textOnScreen: ISpeech;
-  whoIsSpeaking: Character;
+  whoIsSpeaking: CharacterType;
   pendingMessages: ISpeech[];
   dialogueVisible = false;
 
@@ -36,14 +36,14 @@ export class DialogueService {
     const timerDuration = this.textOnScreen.text.length < defaults.dialogue.minimumOnScreenTime ?
       this.textOnScreen.text.length * defaults.dialogue.textOnScreenTimeMultiplyer :
       defaults.dialogue.minimumOnScreenTime;
-    setTimeout(timerDuration, () => {
+    setTimeout(() => {
       this.dialogueVisible = false;
       if (this.pendingMessages.length) {
         const nextMessage = this.pendingMessages[0];
         this.pendingMessages.shift();
         this.displaySpeech(nextMessage);
       }
-    });
+    }, timerDuration);
   }
 
   /**

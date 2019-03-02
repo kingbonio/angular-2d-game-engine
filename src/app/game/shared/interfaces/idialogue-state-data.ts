@@ -1,9 +1,9 @@
 import { ISpeech } from ".";
-import { Character } from "../enums";
+import { CharacterType } from "../enums";
 
 export interface IDialogueStateData {
       textOnScreen: ISpeech | null;
-      whoIsSpeaking: Character| null;
+      whoIsSpeaking: CharacterType| null;
       pendingMessages: ISpeech[];
       dialogueVisible: boolean;
 }

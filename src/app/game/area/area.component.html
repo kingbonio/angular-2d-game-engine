@@ -1,12 +1,15 @@
 <div class="grid-container">
       <div *ngFor="let key of areaStateService.locationKeys(areaStateService.locations)" class="grid-box">
             <!-- <div *ngIf="element">Has element</div> -->
-            <div class="grid-item">
-                  <div style="color: red" *ngIf="areaStateService.locations[key]">{{ key + ' : ' + areaStateService.locations[key].name }}</div>
-                  <!-- <div *ngIf="!areaStateService.locations[key]">{{ key + ' : ' }} Empty</div> -->
-                  <div *ngIf="areaStateService.locations[key]">
-                        {{ areaStateService.locations[key].hp }}HP
-                        {{ areaStateService.locations[key].xp }}XP
+            <div class="grid-item" *ngIf="areaStateService.locations[key]" [ngClass]="getDirectionClass(areaStateService.locations[key])">
+                  <div style="color: red" >
+                        {{ key + ' : ' + areaStateService.locations[key].name }}
+                        
+                        <!-- <div *ngIf="!areaStateService.locations[key]">{{ key + ' : ' }} Empty</div> -->
+                        <div *ngIf="areaStateService.locations[key]">
+                              {{ areaStateService.locations[key].hp }}HP
+                              {{ areaStateService.locations[key].xp }}XP
+                        </div>
                   </div>
             </div>
       </div>
