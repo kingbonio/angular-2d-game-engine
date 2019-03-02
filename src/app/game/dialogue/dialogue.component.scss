@@ -1,0 +1,18 @@
+.dialogue-text {
+
+}
+.character-name {
+      color: blue;
+
+      &.enemy {
+            color: red;
+      }
+
+      &.npc {
+            color: green;
+      }
+
+}
+.dialogue {
+      display: inline-block
+}

@@ -1,4 +1,3 @@
-export * from "./ispeech";
 export * from "./istate-data";
 export * from "./iarea-state-data";
 export * from "./igame-state-data";

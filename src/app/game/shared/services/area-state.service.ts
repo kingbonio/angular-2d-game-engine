@@ -93,7 +93,6 @@ export class AreaStateService {
    * @param location the grid reference for the location
    */
   isLocationFree(location: string): boolean {
-    console.log(`Checking location ${location} is free: ${!this.locations[location]}`);
     return (!this.locations[location]);
   }
 

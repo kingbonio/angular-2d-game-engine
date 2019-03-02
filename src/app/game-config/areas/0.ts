@@ -7,11 +7,11 @@ export default {
                   type: CharacterType.player,
                   elementClass: {
                         name: "Smelly Jeremy",
-                        imageName: "player1.jpg"
+                        imageName: "player1.jpg",
                   },
                   startingPositionX: 4,
                   startingPositionY: "g",
-                  direction: Direction.N
+                  direction: Direction.N,
             },
             {
                   type: CharacterType.enemy,
@@ -20,16 +20,35 @@ export default {
                         level: 1,
                         name: "RatFace",
                         class: MonsterClass.Rat,
+                        speechResponse: "Grr argh",
                         lootParameters: {
                               level: 6,
                               allowWeapon: true,
                               allowPotion: false,
-                              allowKey: false
+                              allowKey: false,
                         },
                   },
                   startingPositionX: 4,
                   startingPositionY: "c",
                   direction: Direction.S
+            },
+            {
+                  type: CharacterType.npc,
+                  elementClass: {
+                        asleep: false,
+                        level: 1,
+                        name: "David",
+                        speechResponse: "Stop bothering me, you fool!",
+                        lootParameters: {
+                              level: 6,
+                              allowWeapon: true,
+                              allowPotion: false,
+                              allowKey: false,
+                        },
+                  },
+                  startingPositionX: 3,
+                  startingPositionY: "e",
+                  direction: Direction.E,
             },
       ] as IAreaElement[],
       areaCompleteRequirements: {
