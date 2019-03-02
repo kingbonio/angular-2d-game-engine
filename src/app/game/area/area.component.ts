@@ -88,7 +88,6 @@ export class AreaComponent implements OnInit {
           default:
             this.areaStateService.locations[gridReference] = element;
         }
-        console.log(this.areaStateService.locations);
       } else {
         // TODO: Move them to another position, up to x amount (need to block overcrowding)
       }

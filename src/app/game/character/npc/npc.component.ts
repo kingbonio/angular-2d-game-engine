@@ -23,10 +23,11 @@ export class NpcComponent extends CharacterComponent implements OnInit {
    * @param text the speech to be displayed
    * @param character who is speaking for dialogue box styling
    */
-  speak(text: string, character: CharacterType) {
+  speak(text: string, character: CharacterType, name: string) {
     this.dialogueService.displaySpeech({
       text,
-      character
+      character,
+      name
     });
   }
 

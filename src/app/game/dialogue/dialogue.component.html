@@ -1,3 +1,4 @@
-<p>
-  notifications works!
-</p>
+<div *ngIf="dialogueService.dialogueVisible" class="dialogue-text">
+  <span class="character-name" [ngClass]="dialogueService.textOnScreen.character">{{ dialogueService.textOnScreen.name }}: </span>
+  <span class="dialogue">{{ dialogueService.textOnScreen.text }}</span>
+</div>

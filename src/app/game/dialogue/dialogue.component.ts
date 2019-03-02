@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DialogueService } from '../shared/services/dialogue.service';
 
 @Component({
   selector: 'app-dialogue',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DialogueComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialogueService: DialogueService) { }
 
   ngOnInit() {
   }

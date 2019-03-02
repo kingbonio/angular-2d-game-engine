@@ -21,9 +21,9 @@ export class PlayerStateService {
 
 
   constructor(
-      private areaStateService: AreaStateService,
-      private dialogueService: DialogueService
-    ) {
+    private areaStateService: AreaStateService,
+    private dialogueService: DialogueService
+  ) {
   }
 
   onInit() {
@@ -133,27 +133,34 @@ export class PlayerStateService {
    */
   public move(direction: Direction) {
 
-    console.log(this.areaStateService.locations);
-
-    const newLocation = this.getnextLocation(this.locationY + this.locationX, direction);
+    const newLocation = this.getNextLocation(this.locationY + this.locationX, direction);
 
     // Update area state
-    if (newLocation.locationX && newLocation.locationY) {
+    if (newLocation.locationX && newLocation.locationY && newLocation.isLocationFree) {
       this.areaStateService.moveCharacter(newLocation.locationY + newLocation.locationX, this.locationY + this.locationX);
+      this.locationY = newLocation.locationY;
+      this.locationX = newLocation.locationX;
+    } else {
+      this.dialogueService.displaySpeech(
+        {
+          text: defaults.dialogue.nullElementResponse,
+          character: defaults.dialogue.computerCharacterType,
+          name: defaults.dialogue.computerName
+        }
+      );
     }
 
-    this.locationY = newLocation.locationY;
-    this.locationX = newLocation.locationX;
   }
 
   public changeDirection(direction: Direction) {
     this.direction = direction;
-    console.log(this.direction);
   }
 
   // TODO Maybe update this location interface/enum
   // TODO Look into direction being used from the service
-  private getnextLocation(location: string, direction: Direction): { locationY: string, locationX: number } | null {
+  // TODO Could refactor this switch statement
+  // tslint:disable-next-line:max-line-length
+  private getNextLocation(location: string, direction: Direction): { locationY: string, locationX: number, isLocationFree: boolean } | null {
 
     // Attempt movement
     let newLocationY;
@@ -163,32 +170,48 @@ export class PlayerStateService {
         newLocationY = this.previousYReference(this.locationY);
         newLocationX = this.locationX;
         // Make sure the location isn't off the edge of the grid and get new reference
-        if (newLocationY && this.areaStateService.isLocationFree(newLocationY + this.locationX)) {
-          return { locationY: newLocationY, locationX: newLocationX };
+        if (newLocationY) {
+          return {
+            locationY: newLocationY,
+            locationX: newLocationX,
+            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX)
+          };
         }
         return null;
       case Direction.E:
         newLocationX = this.nextXReference(this.locationX);
         newLocationY = this.locationY;
         // Make sure the location isn't off the edge of the grid and get new reference
-        if (newLocationX && this.areaStateService.isLocationFree(this.locationY + newLocationX)) {
-          return { locationY: newLocationY, locationX: newLocationX };
+        if (newLocationY) {
+          return {
+            locationY: newLocationY,
+            locationX: newLocationX,
+            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX)
+          };
         }
         return null;
       case Direction.S:
         newLocationY = this.nextYReference(this.locationY);
         newLocationX = this.locationX;
         // Make sure the location isn't off the edge of the grid and get new reference
-        if (newLocationY && this.areaStateService.isLocationFree(newLocationY + this.locationX)) {
-          return { locationY: newLocationY, locationX: newLocationX };
+        if (newLocationY) {
+          return {
+            locationY: newLocationY,
+            locationX: newLocationX,
+            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX)
+          };
         }
         return null;
       case Direction.W:
         newLocationX = this.previousXReference(this.locationX);
         newLocationY = this.locationY;
         // Make sure the location isn't off the edge of the grid and get new reference
-        if (newLocationX && this.areaStateService.isLocationFree(this.locationY + newLocationX)) {
-          return { locationY: newLocationY, locationX: newLocationX };
+        if (newLocationY) {
+          return {
+            locationY: newLocationY,
+            locationX: newLocationX,
+            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX)
+          };
         }
         return null;
       default:
@@ -216,9 +239,28 @@ export class PlayerStateService {
    * speak to the object in the direction player is facing
    */
   public speak() {
-    const nextGridLocation = this.getnextLocation(this.locationY + this.locationX, this.direction);
-    const response = this.areaStateService.locations[nextGridLocation.locationY + nextGridLocation.locationX];
-    this.dialogueService.displaySpeech({ text: response, character: CharacterType.enemy});
+    const nextGridLocation = this.getNextLocation(this.locationY + this.locationX, this.direction);
+    // TODO rename this
+    if (nextGridLocation) {
+      const elementInGridReference = this.areaStateService.locations[nextGridLocation.locationY + nextGridLocation.locationX];
+      if (!elementInGridReference) {
+        this.dialogueService.displaySpeech(
+          {
+            text: defaults.dialogue.nullElementResponse,
+            character: defaults.dialogue.computerCharacterType,
+            name: defaults.dialogue.computerName
+          }
+        );
+      } else {
+        this.dialogueService.displaySpeech(
+          {
+            text: elementInGridReference.getSpeechResponse(),
+            character: elementInGridReference.type,
+            name: elementInGridReference.name
+          }
+        );
+      }
+    }
   }
 
   // TODO: Might want to move these somewhere more reusable
