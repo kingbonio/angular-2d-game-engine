@@ -16,11 +16,12 @@ export default {
             {
                   type: CharacterType.enemy,
                   elementClass: {
-                        asleep: false,
+                        asleep: true,
                         level: 1,
                         name: "RatFace",
                         class: MonsterClass.Rat,
                         speechResponse: "Grr argh",
+                        sleepResponse: "Zzzzzzzzzzzzzzzz",
                         lootParameters: {
                               level: 6,
                               allowWeapon: true,

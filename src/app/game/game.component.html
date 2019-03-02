@@ -1,4 +1,4 @@
-<div class="game-container">
+<div class="game-container" (keydown)="onKeyDown($event)">
       <div class="top-menu">
 
       </div>
@@ -37,6 +37,12 @@
                   </div>
                   <div class="speech-controls">
                         <span class="speak game-control" (click)="playerStateService.speak()">Speak</span>
+                  </div>
+                  <div class="interact-controls">
+                        <span class="game-control" (click)="playerStateService.interact()">Interact</span>
+                  </div>
+                  <div class="guard-controls">
+                        <span class="guard game-control" (click)="playerStateService.guard()">Guard</span>
                   </div>
             </div>
       </div>

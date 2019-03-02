@@ -45,5 +45,20 @@ export default {
                 ]
             }
         ]
+    },
+    keyMap: {
+        // https://keycode.info
+        38: { type: "move", direction: "n" },
+        39: { type: "move", direction: "e" },
+        40: { type: "move", direction: "s" },
+        37: { type: "move", direction: "w" },
+        87: { type: "direction", direction: "n" },
+        68: { type: "direction", direction: "e" },
+        83: { type: "direction", direction: "s" },
+        65: { type: "direction", direction: "w" },
+        32: { type: "interaction", interaction: "attack" },
+        17: { type: "interaction", interaction: "guard" },
+        69: { type: "interaction", interaction: "interact" },
+        81: { type: "interaction", interaction: "speak" },
     }
 };

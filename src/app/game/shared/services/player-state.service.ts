@@ -141,14 +141,16 @@ export class PlayerStateService {
       this.locationY = newLocation.locationY;
       this.locationX = newLocation.locationX;
     } else {
-      this.dialogueService.displaySpeech(
-        {
-          text: defaults.dialogue.nullElementResponse,
-          character: defaults.dialogue.computerCharacterType,
-          name: defaults.dialogue.computerName
-        }
-      );
+      // TODO: Possibly inform user you cannot move here
+      // this.dialogueService.displaySpeech(
+      //   {
+      //     text: defaults.dialogue.nullElementResponse,
+      //     character: defaults.dialogue.computerCharacterType,
+      //     name: defaults.dialogue.computerName
+      //   }
+      // );
     }
+    this.direction = direction;
 
   }
 
@@ -232,6 +234,13 @@ export class PlayerStateService {
    * Interact with the object in the direction player is facing
    */
   public interact() {
+
+  }
+
+  /**
+   * Guard against an attack from the direction you are facing
+   */
+  public guard() {
 
   }
 
