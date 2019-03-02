@@ -36,14 +36,14 @@ export class DialogueService {
     const timerDuration = this.textOnScreen.text.length < defaults.dialogue.minimumOnScreenTime ?
       this.textOnScreen.text.length * defaults.dialogue.textOnScreenTimeMultiplyer :
       defaults.dialogue.minimumOnScreenTime;
-    setTimeout(timerDuration, () => {
+    setTimeout(() => {
       this.dialogueVisible = false;
       if (this.pendingMessages.length) {
         const nextMessage = this.pendingMessages[0];
         this.pendingMessages.shift();
         this.displaySpeech(nextMessage);
       }
-    });
+    }, timerDuration);
   }
 
   /**

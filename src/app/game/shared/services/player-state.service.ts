@@ -4,6 +4,7 @@ import { Direction, InteractionTarget, ItemClass, CharacterType } from '../enums
 import { IPlayerStateData, IInventoryItem } from '../interfaces';
 import { AreaStateService } from './area-state.service';
 import { IGridReferences } from '../../area/interfaces';
+import { DialogueService } from './dialogue.service';
 
 @Injectable()
 export class PlayerStateService {
@@ -19,7 +20,10 @@ export class PlayerStateService {
   // public location: string;
 
 
-  constructor(private areaStateService: AreaStateService) {
+  constructor(
+      private areaStateService: AreaStateService,
+      private dialogueService: DialogueService
+    ) {
   }
 
   onInit() {
@@ -148,6 +152,7 @@ export class PlayerStateService {
   }
 
   // TODO Maybe update this location interface/enum
+  // TODO Look into direction being used from the service
   private getnextLocation(location: string, direction: Direction): { locationY: string, locationX: number } | null {
 
     // Attempt movement
@@ -191,11 +196,29 @@ export class PlayerStateService {
     }
   }
 
+  // TODO Maybe move these somewhere so this service is polluted
+
   /**
    * Perform an attack in the direction player is facing
    */
   public attack() {
 
+  }
+
+  /**
+   * Interact with the object in the direction player is facing
+   */
+  public interact() {
+
+  }
+
+  /**
+   * speak to the object in the direction player is facing
+   */
+  public speak() {
+    const nextGridLocation = this.getnextLocation(this.locationY + this.locationX, this.direction);
+    const response = this.areaStateService.locations[nextGridLocation.locationY + nextGridLocation.locationX];
+    this.dialogueService.displaySpeech({ text: response, character: CharacterType.enemy});
   }
 
   // TODO: Might want to move these somewhere more reusable
