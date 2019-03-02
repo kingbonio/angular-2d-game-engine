@@ -12,7 +12,6 @@ export class UserInputService {
   public keyDownEventHandler($e: KeyboardEvent) {
     // TODO This will need updating from user config
     const characterAction: IUserAction = defaults.keyMap[$e.keyCode];
-    console.log(characterAction);
     if (characterAction) {
       switch (characterAction.type) {
 
