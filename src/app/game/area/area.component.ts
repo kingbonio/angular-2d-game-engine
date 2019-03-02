@@ -34,7 +34,7 @@ export class AreaComponent implements OnInit {
     public areaStateService: AreaStateService,
     private route: ActivatedRoute,
     private areaConfigProvider: AreaConfigProviderService,
-    private playerStateService: PlayerStateService
+    public playerStateService: PlayerStateService
   ) {
   }
 
@@ -53,9 +53,12 @@ export class AreaComponent implements OnInit {
     this.prepareArea();
   }
 
-  public getDirectionClass(gridCharacter) {
+  public getDirectionClass(gridCharacter: Character) {
     return gridCharacter.type === CharacterType.player ? 'direction-' + this.playerStateService.direction : "";
+  }
 
+  public getCharacterType(gridCharacter: Character) {
+    return gridCharacter.type;
   }
 
   private prepareArea(): void {

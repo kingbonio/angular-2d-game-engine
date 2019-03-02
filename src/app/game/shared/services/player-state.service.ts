@@ -136,7 +136,7 @@ export class PlayerStateService {
     const newLocation = this.getNextLocation(this.locationY + this.locationX, direction);
 
     // Update area state
-    if (newLocation.locationX && newLocation.locationY && newLocation.isLocationFree) {
+    if (newLocation && newLocation.locationX && newLocation.locationY && newLocation.isLocationFree) {
       this.areaStateService.moveCharacter(newLocation.locationY + newLocation.locationX, this.locationY + this.locationX);
       this.locationY = newLocation.locationY;
       this.locationX = newLocation.locationX;
@@ -150,7 +150,7 @@ export class PlayerStateService {
       //   }
       // );
     }
-    this.direction = direction;
+    // this.direction = direction;
 
   }
 
@@ -172,7 +172,7 @@ export class PlayerStateService {
         newLocationY = this.previousYReference(this.locationY);
         newLocationX = this.locationX;
         // Make sure the location isn't off the edge of the grid and get new reference
-        if (newLocationY) {
+        if (newLocationY && newLocationX) {
           return {
             locationY: newLocationY,
             locationX: newLocationX,
@@ -184,7 +184,7 @@ export class PlayerStateService {
         newLocationX = this.nextXReference(this.locationX);
         newLocationY = this.locationY;
         // Make sure the location isn't off the edge of the grid and get new reference
-        if (newLocationY) {
+        if (newLocationY && newLocationX) {
           return {
             locationY: newLocationY,
             locationX: newLocationX,
@@ -196,7 +196,7 @@ export class PlayerStateService {
         newLocationY = this.nextYReference(this.locationY);
         newLocationX = this.locationX;
         // Make sure the location isn't off the edge of the grid and get new reference
-        if (newLocationY) {
+        if (newLocationY && newLocationX) {
           return {
             locationY: newLocationY,
             locationX: newLocationX,
@@ -208,7 +208,7 @@ export class PlayerStateService {
         newLocationX = this.previousXReference(this.locationX);
         newLocationY = this.locationY;
         // Make sure the location isn't off the edge of the grid and get new reference
-        if (newLocationY) {
+        if (newLocationY && newLocationX) {
           return {
             locationY: newLocationY,
             locationX: newLocationX,
