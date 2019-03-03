@@ -10,7 +10,6 @@ export class BattleCalculatorComponent {
   constructor() { }
 
   public isDead(hp: number): boolean {
-    console.log("reducing da health", hp);
     return (hp <= 0);
   }
 

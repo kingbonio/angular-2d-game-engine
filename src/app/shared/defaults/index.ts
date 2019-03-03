@@ -33,7 +33,7 @@ export default {
         maximumMessagesOnScreen: 2,
         attackSuccess: "Your attack hits with damage: ",
         attackFailure: "Your attack fails",
-        targetDead: "You have killed your target",
+        targetDead: "You have killed ",
     },
     gameMenu: {
         menuOpenAtLoad: true,
