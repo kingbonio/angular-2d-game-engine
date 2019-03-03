@@ -18,9 +18,9 @@ export default {
                   elementClass: {
                         asleep: true,
                         level: 1,
-                        name: "RatFace",
-                        class: MonsterClass.Rat,
-                        speechResponse: "Grr argh",
+                        name: "Gary The Dick",
+                        class: MonsterClass.Human,
+                        speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
                         lootParameters: {
                               level: 6,
