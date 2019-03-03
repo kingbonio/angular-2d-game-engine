@@ -20,6 +20,7 @@ export default {
                         level: 1,
                         name: "Gary The Dick",
                         class: MonsterClass.Human,
+                        direction: Direction.S,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
                         lootParameters: {
@@ -31,7 +32,6 @@ export default {
                   },
                   startingPositionX: 4,
                   startingPositionY: "c",
-                  direction: Direction.S
             },
             {
                   type: CharacterType.npc,
@@ -39,7 +39,9 @@ export default {
                         asleep: false,
                         level: 1,
                         name: "David",
+                        direction: Direction.E,
                         speechResponse: "Stop bothering me, you fool!",
+                        sleepResponse: "Zzzzzzzzzzzzzzzz",
                         lootParameters: {
                               level: 6,
                               allowWeapon: true,
@@ -49,7 +51,6 @@ export default {
                   },
                   startingPositionX: 3,
                   startingPositionY: "e",
-                  direction: Direction.E,
             },
       ] as IAreaElement[],
       areaCompleteRequirements: {

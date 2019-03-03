@@ -16,6 +16,7 @@ import { GameComponent } from './game.component';
 import { AreaConfigProviderService } from './shared/services/area-config-provider.service';
 import { PlayerStateService } from './shared/services/player-state.service';
 import { DialogueService } from './shared/services/dialogue.service';
+import { MovementComponent } from './shared/util/movement/movement.component';
 
 @NgModule({
   imports: [
@@ -34,11 +35,13 @@ import { DialogueService } from './shared/services/dialogue.service';
     ArmourComponent,
     CharacterComponent,
     DialogueComponent,
+    MovementComponent,
   ],
   providers: [
     AreaConfigProviderService,
     PlayerStateService,
     DialogueService,
+    MovementComponent,
   ]
 })
 export class GameModule { }

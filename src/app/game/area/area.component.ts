@@ -54,7 +54,12 @@ export class AreaComponent implements OnInit {
   }
 
   public getDirectionClass(gridCharacter: Character) {
-    return gridCharacter.type === CharacterType.player ? 'direction-' + this.playerStateService.direction : "";
+    // TODO this is proving strange, might want to come back to directions
+    const isPlayer = (gridCharacter && gridCharacter.type === CharacterType.player);
+    if (isPlayer) {
+      return 'direction-' + this.playerStateService.direction;
+    }
+    return gridCharacter ? 'direction-' + gridCharacter.direction : "";
   }
 
   public getCharacterType(gridCharacter: Character) {

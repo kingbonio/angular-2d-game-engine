@@ -1,7 +1,9 @@
 import { Character } from "./character";
-import { MonsterClass, CharacterType } from "../shared/enums";
+import { MonsterClass, CharacterType, Direction } from "../shared/enums";
+import { UserInteractionTypes } from "../../shared/enums";
 
 export class Enemy extends Character {
+      // private movement: Movement;
       public type = CharacterType.enemy;
       public name: string;
       public class: MonsterClass;
@@ -9,6 +11,7 @@ export class Enemy extends Character {
       public speechResponse: string;
       public sleepResponse: string;
       public isAsleep: boolean;
+      public direction: Direction;
 
       constructor(characterDetails: any) {
             // TODO: Resolve any
@@ -19,13 +22,21 @@ export class Enemy extends Character {
             this.speechResponse = characterDetails.speechResponse;
             this.sleepResponse = characterDetails.sleepResponse;
             this.isAsleep = characterDetails.asleep;
+            this.direction = characterDetails.direction;
       }
 
-      public getSpeechResponse() {
-            return this.isAsleep ? this.sleepResponse : this.speechResponse;
-      }
-
-      public getInteractResponse() {
-
+      public respond(interaction: UserInteractionTypes, directionToFace: Direction) {
+            switch (interaction) {
+                  case UserInteractionTypes.speak:
+                        if (!this.isAsleep) {
+                              this.direction = directionToFace;
+                              return this.speechResponse;
+                        } else {
+                              return this.sleepResponse;
+                        }
+                  case UserInteractionTypes.attack:
+                        this.direction = directionToFace;
+                        return this.isAsleep ? this.sleepResponse : this.speechResponse;
+            }
       }
 }
