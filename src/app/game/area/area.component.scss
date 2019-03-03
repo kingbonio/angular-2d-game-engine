@@ -1,28 +1,68 @@
 .grid-container {
-      width: 574px;
+      width: 560px;
       display: flex;
       flex-wrap: wrap;
+      -moz-box-shadow:    inset 0 0 20px 10px #000000;
+      -webkit-box-shadow: inset 0 0 20px 10px #000000;
+      box-shadow:         inset 0 0 20px 10px #000000;
 
       .grid-box {
+            z-index: -1;
             width: 80px;
             height: 80px;
-            border: solid black 1px;
+            background-image: url("../shared/resources/pavement.png");
             .grid-item {
                   width: 100%;
                   height: 100%;
+
                   &.direction-n {
-                        border-top: solid red 2px;
+                        transform: rotate(0deg);
                   }
+                  
                   &.direction-e {
-                        border-right: solid red 2px;
+                        transform: rotate(90deg);
                   }
+                  
                   &.direction-s {
-                        border-bottom: solid red 2px;
+                        transform: rotate(180deg);
                   }
+                  
                   &.direction-w {
-                        border-left: solid red 2px;
+                        transform: rotate(270deg);
+                  }
+
+                  .player {
+                        background-image: url("../shared/resources/shadow-player.png");
+                  }
+                  .enemy {
+                        background-image: url("../shared/resources/shadow-enemy.png");
+                  }
+                  .npc {
+                        background-image: url("../shared/resources/shadow-npc.png");
+                  }
+                  // &.direction-n {
+                  //       border-top: solid red 2px;
+                  // }
+                  // &.direction-e {
+                  //       border-right: solid red 2px;
+                  // }
+                  // &.direction-s {
+                  //       border-bottom: solid red 2px;
+                  // }
+                  // &.direction-w {
+                  //       border-left: solid red 2px;
+                  // }
+                  .character-type {
+                        width: 80px;
+                        height: 80px;
+                        
+                        .character {
+                              width: 80px;
+                              height: 80px;
+                        }
                   }
             }
+
+
       }
 }
-

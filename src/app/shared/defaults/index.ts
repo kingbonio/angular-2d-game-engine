@@ -25,11 +25,12 @@ export default {
         type: 'start'
     },
     dialogue: {
-        textOnScreenTimeMultiplyer: 500,
-        minimumOnScreenTime: 3000,
+        textOnScreenTimeMultiplyer: 200,
+        minimumOnScreenTime: 4000,
         nullElementResponse: "There is no response",
         computerName: "Computer",
         computerCharacterType: "computer",
+        maximumMessagesOnScreen: 2,
     },
     gameMenu: {
         menuOpenAtLoad: true,
@@ -48,14 +49,14 @@ export default {
     },
     keyMap: {
         // https://keycode.info
-        38: { type: "move", direction: "n" },
-        39: { type: "move", direction: "e" },
-        40: { type: "move", direction: "s" },
-        37: { type: "move", direction: "w" },
-        87: { type: "direction", direction: "n" },
-        68: { type: "direction", direction: "e" },
-        83: { type: "direction", direction: "s" },
-        65: { type: "direction", direction: "w" },
+        87: { type: "move", direction: "n" },
+        68: { type: "move", direction: "e" },
+        83: { type: "move", direction: "s" },
+        65: { type: "move", direction: "w" },
+        38: { type: "direction", direction: "n" },
+        39: { type: "direction", direction: "e" },
+        40: { type: "direction", direction: "s" },
+        37: { type: "direction", direction: "w" },
         32: { type: "interaction", interaction: "attack" },
         17: { type: "interaction", interaction: "guard" },
         69: { type: "interaction", interaction: "interact" },

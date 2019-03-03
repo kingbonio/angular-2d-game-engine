@@ -6,43 +6,44 @@ import { ISpeech } from '../../dialogue/interfaces';
 
 @Injectable()
 export class DialogueService {
-  textOnScreen: ISpeech;
-  whoIsSpeaking: CharacterType | string;
+  messagesOnScreen: ISpeech[] = [];
   pendingMessages: ISpeech[] = [];
-  dialogueVisible = false;
 
   constructor() { }
 
   /**
-   * Set the current on-screen dialogue
-   * Set the timer to close the current message once expires
-   * @param speechDetails text and speaker details
+   * Add the message to either pending or messages on screen and set timer to remove
+   * @param message data about the message
    */
-  public displaySpeech(speechDetails: ISpeech): void {
-    this.whoIsSpeaking = speechDetails.character;
-    if (this.dialogueVisible) {
-      this.pendingMessages.push(speechDetails);
-    } else {
-      this.textOnScreen = speechDetails;
-      this.dialogueVisible = true;
-      this.setTimer();
+  public displayDialogueMessage(message: ISpeech) {
+    if (message) {
+      if (this.messagesOnScreen.length >= defaults.dialogue.maximumMessagesOnScreen) {
+        this.pendingMessages.push(message);
+      } else {
+        this.messagesOnScreen.push(message);
+      }
+      this.setTimer(message);
     }
   }
 
   /**
-   * Sets a timer based on the length of the text on screen, with a minimum duration
-   * Process the next message on the pending messages when timer ends
+   * Set the wait until the oldest message should be removed from the dialogue screen
+   * @param message data about the message
    */
-  private setTimer(): void {
-    const timerDuration = this.textOnScreen.text.length < defaults.dialogue.minimumOnScreenTime ?
-      this.textOnScreen.text.length * defaults.dialogue.textOnScreenTimeMultiplyer :
+  // TODO: This will need tidying up as it counts from the point of getting the message, not the time it's loaded
+  private setTimer(message: ISpeech) {
+    const timerDuration: number = message.text.length < defaults.dialogue.minimumOnScreenTime ?
+      message.text.length * defaults.dialogue.textOnScreenTimeMultiplyer :
       defaults.dialogue.minimumOnScreenTime;
     setTimeout(() => {
-      this.dialogueVisible = false;
-      if (this.pendingMessages.length) {
-        const nextMessage = this.pendingMessages[0];
-        this.pendingMessages.shift();
-        this.displaySpeech(nextMessage);
+      // Remove the oldest message on screen and pull in any pending messages
+      if (this.messagesOnScreen.length > 0) {
+        this.messagesOnScreen.splice(0, 1);
+        if (this.pendingMessages.length) {
+          const nextMessage: ISpeech = this.pendingMessages[0];
+          this.pendingMessages.splice(0, 1);
+          this.displayDialogueMessage(nextMessage);
+        }
       }
     }, timerDuration);
   }
@@ -53,10 +54,8 @@ export class DialogueService {
    */
   public gatherState(): IDialogueStateData {
     return {
-      textOnScreen: this.textOnScreen,
-      whoIsSpeaking: this.whoIsSpeaking,
       pendingMessages: this.pendingMessages,
-      dialogueVisible: this.dialogueVisible
+      messagesOnScreen: this.messagesOnScreen,
     };
   }
 
