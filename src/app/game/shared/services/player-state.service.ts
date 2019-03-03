@@ -196,9 +196,6 @@ export class PlayerStateService {
         name: defaults.dialogue.computerName
       });
     }
-
-
-    console.log()
   }
 
   /**
@@ -223,6 +220,16 @@ export class PlayerStateService {
     // TODO rename this
     if (nextGridLocation) {
       const target = this.areaStateService.locations[nextGridLocation.locationY + nextGridLocation.locationX];
+
+      if (this.battleCalculator.isDead(target.currentHp)) {
+        this.dialogueService.displayDialogueMessage({
+          text: defaults.dialogue.nullElementResponse,
+          character: defaults.dialogue.computerCharacterType,
+          name: defaults.dialogue.computerName
+        });
+        return;
+      }
+
       if (!target) {
         this.dialogueService.displayDialogueMessage(
           {
