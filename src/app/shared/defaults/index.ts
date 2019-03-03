@@ -25,11 +25,12 @@ export default {
         type: 'start'
     },
     dialogue: {
-        textOnScreenTimeMultiplyer: 500,
-        minimumOnScreenTime: 3000,
+        textOnScreenTimeMultiplyer: 200,
+        minimumOnScreenTime: 4000,
         nullElementResponse: "There is no response",
         computerName: "Computer",
         computerCharacterType: "computer",
+        maximumMessagesOnScreen: 2,
     },
     gameMenu: {
         menuOpenAtLoad: true,

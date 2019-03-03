@@ -1,4 +1,6 @@
-<div *ngIf="dialogueService.dialogueVisible" class="dialogue-text">
-  <span class="character-name" [ngClass]="dialogueService.textOnScreen.character">{{ dialogueService.textOnScreen.name }}: </span>
-  <span class="dialogue">{{ dialogueService.textOnScreen.text }}</span>
+<div class="dialogue-text">
+  <div *ngFor="let message of dialogueService.messagesOnScreen" class="text-block">
+    <span class="character-name" [ngClass]="message.character">{{ message.name }}: </span>
+    <span class="dialogue">{{ message.text }}</span>
+  </div>
 </div>

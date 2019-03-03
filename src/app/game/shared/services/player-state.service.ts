@@ -253,7 +253,7 @@ export class PlayerStateService {
     if (nextGridLocation) {
       const elementInGridReference = this.areaStateService.locations[nextGridLocation.locationY + nextGridLocation.locationX];
       if (!elementInGridReference) {
-        this.dialogueService.displaySpeech(
+        this.dialogueService.displayDialogueMessage(
           {
             text: defaults.dialogue.nullElementResponse,
             character: defaults.dialogue.computerCharacterType,
@@ -261,7 +261,7 @@ export class PlayerStateService {
           }
         );
       } else {
-        this.dialogueService.displaySpeech(
+        this.dialogueService.displayDialogueMessage(
           {
             text: elementInGridReference.getSpeechResponse(),
             character: elementInGridReference.type,

@@ -24,7 +24,7 @@ export class NpcComponent extends CharacterComponent implements OnInit {
    * @param character who is speaking for dialogue box styling
    */
   speak(text: string, character: CharacterType, name: string) {
-    this.dialogueService.displaySpeech({
+    this.dialogueService.displayDialogueMessage({
       text,
       character,
       name
