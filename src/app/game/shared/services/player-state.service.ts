@@ -7,6 +7,7 @@ import { IGridReferences } from '../../area/interfaces';
 import { DialogueService } from './dialogue.service';
 import { UserActionTypes, UserInteractionTypes } from '../../../shared/enums';
 import { MovementComponent } from '../util/movement/movement.component';
+import { BattleCalculatorComponent } from '../util/battle-calculator/battle-calculator.component';
 
 @Injectable()
 export class PlayerStateService {
@@ -25,7 +26,8 @@ export class PlayerStateService {
   constructor(
     private areaStateService: AreaStateService,
     private dialogueService: DialogueService,
-    private movement: MovementComponent
+    private movement: MovementComponent,
+    private battleCalculator: BattleCalculatorComponent
   ) {
   }
 
@@ -167,7 +169,36 @@ export class PlayerStateService {
   public attack() {
     const targetReference = this.movement.getNextLocation(this.locationY, this.locationX, this.direction);
     const target = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
-    const response = target.respond(UserInteractionTypes.attack, this.direction);
+
+    if (this.battleCalculator.isDead(target.currentHp)) {
+      this.dialogueService.displayDialogueMessage({
+        text: defaults.dialogue.nullElementResponse,
+        character: defaults.dialogue.computerCharacterType,
+        name: defaults.dialogue.computerName
+      });
+      return;
+    }
+
+    const damage = this.battleCalculator.calculateDamage(target);
+    // TODO this can possibly just be target.currentHp
+    const targetCurrentHp = target.respond(UserInteractionTypes.attack, this.movement.getDirectionToFace(this.direction), damage);
+
+    this.dialogueService.displayDialogueMessage({
+      text: damage > 0 ? defaults.dialogue.attackSuccess + damage : defaults.dialogue.attackFailure,
+      character: defaults.dialogue.computerCharacterType,
+      name: defaults.dialogue.computerName
+    });
+
+    if (this.battleCalculator.isDead(targetCurrentHp)) {
+      this.dialogueService.displayDialogueMessage({
+        text: defaults.dialogue.targetDead,
+        character: defaults.dialogue.computerCharacterType,
+        name: defaults.dialogue.computerName
+      });
+    }
+
+
+    console.log()
   }
 
   /**

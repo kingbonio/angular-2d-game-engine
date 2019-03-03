@@ -31,6 +31,9 @@ export default {
         computerName: "Computer",
         computerCharacterType: "computer",
         maximumMessagesOnScreen: 2,
+        attackSuccess: "Your attack hits with damage: ",
+        attackFailure: "Your attack fails",
+        targetDead: "You have killed your target",
     },
     gameMenu: {
         menuOpenAtLoad: true,

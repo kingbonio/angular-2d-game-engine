@@ -18,9 +18,10 @@ export default {
                   elementClass: {
                         asleep: true,
                         level: 1,
+                        maxHp: 10,
                         name: "Gary The Dick",
                         class: MonsterClass.Human,
-                        direction: Direction.S,
+                        direction: Direction.N,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
                         lootParameters: {
@@ -38,6 +39,7 @@ export default {
                   elementClass: {
                         asleep: false,
                         level: 1,
+                        maxHp: 10,
                         name: "David",
                         direction: Direction.E,
                         speechResponse: "Stop bothering me, you fool!",

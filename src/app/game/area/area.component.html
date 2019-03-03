@@ -1,12 +1,21 @@
 <div class="grid-container">
       <div *ngFor="let key of areaStateService.locationKeys(areaStateService.locations)" class="grid-box">
             <!-- <div *ngIf="element">Has element</div> -->
-            <div class="grid-item" *ngIf="areaStateService.locations[key]" [ngClass]="getDirectionClass(areaStateService.locations[key])">
-                  <div class="character-type" [ngClass]="getCharacterType(areaStateService.locations[key])" [ngClass]="playerStateService.direction" >
-                  <!-- <div style="color: red" > -->
-                        <div class="character" >
+            <div class="grid-item"
+                 *ngIf="areaStateService.locations[key]"
+                 [ngClass]="getDirectionClass(areaStateService.locations[key])">
 
-                        </div>
+                  <div class="character-type"
+                       [ngClass]="getCharacterType(areaStateService.locations[key])">
+
+                       <div class="overlay"
+                            [ngClass]="getDeadClass(areaStateService.locations[key])">
+
+                       </div>
+                  <!-- <div style="color: red" > -->
+                        <!-- <div class="character" >
+
+                        </div> -->
                         <!-- {{ areaStateService.locations[key].name }} -->
                         
                         <!-- <div *ngIf="!areaStateService.locations[key]">{{ key + ' : ' }} Empty</div> -->

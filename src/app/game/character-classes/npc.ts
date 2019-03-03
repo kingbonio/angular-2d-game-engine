@@ -6,6 +6,8 @@ export class NPC extends Character {
       public type = CharacterType.npc;
       public name: string;
       public class: NPC;
+      public maxHp: number;
+      public currentHp: number;
       public imageName: string;
       public speechResponse: string;
       public sleepResponse: string;
@@ -22,16 +24,25 @@ export class NPC extends Character {
             this.isAsleep = characterDetails.asleep;
             this.speechResponse = characterDetails.speechResponse;
             this.direction = characterDetails.direction;
+            this.maxHp = characterDetails.maxHp;
+            this.currentHp = this.maxHp;
+            this.xp = 0;
       }
 
-      public respond(interaction: UserInteractionTypes, directionToFace: Direction) {
+      public respond(interaction: UserInteractionTypes, directionToFace: Direction, damage: number) {
             switch (interaction) {
                   case UserInteractionTypes.speak:
-                        this.direction = directionToFace;
-                        return this.isAsleep ? this.sleepResponse : this.speechResponse;
+                        if (!this.isAsleep) {
+                              this.direction = directionToFace;
+                              return this.speechResponse;
+                        } else {
+                              return this.sleepResponse;
+                        }
                   case UserInteractionTypes.attack:
+                        this.isAsleep = false;
                         this.direction = directionToFace;
-                        return this.isAsleep ? this.sleepResponse : this.speechResponse;
+                        this.currentHp -= damage;
+                        return this.currentHp;
             }
       }
 

@@ -7,6 +7,8 @@ export class Enemy extends Character {
       public type = CharacterType.enemy;
       public name: string;
       public class: MonsterClass;
+      public maxHp: number;
+      public currentHp: number;
       public imageName: string;
       public speechResponse: string;
       public sleepResponse: string;
@@ -23,9 +25,13 @@ export class Enemy extends Character {
             this.sleepResponse = characterDetails.sleepResponse;
             this.isAsleep = characterDetails.asleep;
             this.direction = characterDetails.direction;
+            // TODO: Set this manually
+            this.maxHp = characterDetails.maxHp;
+            this.currentHp = this.maxHp;
+            this.xp = 0;
       }
 
-      public respond(interaction: UserInteractionTypes, directionToFace: Direction) {
+      public respond(interaction: UserInteractionTypes, directionToFace: Direction, damage: number) {
             switch (interaction) {
                   case UserInteractionTypes.speak:
                         if (!this.isAsleep) {
@@ -35,8 +41,10 @@ export class Enemy extends Character {
                               return this.sleepResponse;
                         }
                   case UserInteractionTypes.attack:
+                        this.isAsleep = false;
                         this.direction = directionToFace;
-                        return this.isAsleep ? this.sleepResponse : this.speechResponse;
+                        this.currentHp -= damage;
+                        return this.currentHp;
             }
       }
 }
