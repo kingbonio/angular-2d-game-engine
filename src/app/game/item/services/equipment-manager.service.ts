@@ -53,6 +53,6 @@ export class EquipmentManagerService {
    * @param type for selecting weapon slot
    */
   public getWeaponType(type: WeaponType): IInventoryItem {
-    return this.armour[type];
+    return this.weapons[type];
   }
 }

@@ -19,7 +19,8 @@ export default {
         inventoryCapacityMultiplyer: 30,
         levelCalculation: (exp) => {
             return exp / 3000;
-        }
+        },
+        levelStatMultiplyer: 1.2
     },
     initialAreaSettings: {
         type: 'start'

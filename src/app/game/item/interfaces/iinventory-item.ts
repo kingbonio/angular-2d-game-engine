@@ -9,13 +9,12 @@ export interface IInventoryItem {
       armourSlot: ArmourType | null;
       weaponSlot: WeaponType | null;
       usable: boolean;
-      equipment: boolean;
-      level: number;
-      weight: number;
+      level?: number;
+      weight?: number;
       inventoryHeight?: number;
       inventoryWidth?: number;
       value: number;
-      imageFileName: string;
+      imageFileName?: string;
       // TODO: May be a better way of assigning class-based properties
       properties: IItemProperties;
 }

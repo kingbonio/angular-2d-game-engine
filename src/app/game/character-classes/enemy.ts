@@ -1,6 +1,7 @@
 import { Character } from "./character";
 import { MonsterClass, CharacterType, Direction } from "../shared/enums";
 import { UserInteractionTypes } from "../../shared/enums";
+import { IArmour } from "../shared/interfaces";
 
 export class Enemy extends Character {
       // private movement: Movement;
@@ -14,6 +15,7 @@ export class Enemy extends Character {
       public sleepResponse: string;
       public isAsleep: boolean;
       public direction: Direction;
+      public armour: IArmour;
 
       constructor(characterDetails: any) {
             // TODO: Resolve any
@@ -29,6 +31,7 @@ export class Enemy extends Character {
             this.maxHp = characterDetails.maxHp;
             this.currentHp = this.maxHp;
             this.xp = 0;
+            this.armour = characterDetails.equippedArmour;
       }
 
       public respond(interaction: UserInteractionTypes, directionToFace: Direction, damage: number) {
