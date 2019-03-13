@@ -7,7 +7,7 @@ import defaults from '../../../shared/defaults';
 export class InventoryManagerService {
   public contents: IInventoryItem[];
 
-  constructor(private playerStateService: PlayerStateService) { }
+  constructor() { }
 
 
   onInit() { }
@@ -23,9 +23,9 @@ export class InventoryManagerService {
     return contentsWeight;
   }
 
-  get capacity(): number {
-    return this.playerStateService.strength * defaults.playerMultiplyers.inventoryCapacityMultiplyer;
-  }
+  // get capacity(): number {
+  //   return this.playerStateService.strength * defaults.playerMultiplyers.inventoryCapacityMultiplyer;
+  // }
 
   /**
    * Adds an inventory item to the inventory is there is space,
@@ -33,13 +33,13 @@ export class InventoryManagerService {
    * @param newItem item added to the inventory from the game
    */
   public addItemToInventory(newItem: IInventoryItem): void {
-    if (this.contentsWeight + newItem.weight > this.capacity) {
+    // if (this.contentsWeight + newItem.weight > this.capacity) {
       this.contents.push(newItem);
-    } else {
+    // } else {
       // TODO: build recipient of this and insert translation service
       // this.notificationsService("Your inventory is full");
       // Maybe drop the item or overload capacity
-    }
+    // }
   }
 
   /**
@@ -85,7 +85,8 @@ export class InventoryManagerService {
    */
   public gatherState(): IInventoryStateData {
     return {
-      capacity: this.capacity
+      // revert to this.capacity
+      capacity: 11
     };
   }
 

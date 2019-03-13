@@ -1,0 +1,66 @@
+<div class="character-section">
+  <!-- Click on item on character to set in inventory -->
+  <div class="armour">
+    <div class="head">
+      <span class="slot">
+        {{ equipmentManagerService.armour.head ? equipmentManagerService.armour.head.name : "" }}
+      </span>
+    </div>
+    <div class="arms">
+      <span class="slot">
+        {{ equipmentManagerService.armour.arms ? equipmentManagerService.armour.arms.name : "" }}
+      </span>
+    </div>
+    <div class="hands">
+      <span class="slot">
+        {{ equipmentManagerService.armour.hands ? equipmentManagerService.armour.hands.name : "" }}
+      </span>
+    </div>
+    <div class="torso">
+      <span class="slot">
+        {{ equipmentManagerService.armour.torso ? equipmentManagerService.armour.torso.name : "" }}
+      </span>
+    </div>
+    <div class="legs">
+      <span class="slot">
+        {{ equipmentManagerService.armour.legs ? equipmentManagerService.armour.legs.name : "" }}
+      </span>
+    </div>
+    <div class="boots">
+      <span class="slot">
+        {{ equipmentManagerService.armour.boots ? equipmentManagerService.armour.boots.name : "" }}
+      </span>
+    </div>
+  </div>
+
+  <div class="weapons">
+
+    <div class="primary">
+      <span class="slot">
+        {{ equipmentManagerService.weapons.primary ? equipmentManagerService.weapons.primary.name : "" }}
+      </span>
+    </div>
+
+    <div class="secondary">
+      <span class="slot">
+        {{ equipmentManagerService.weapons.secondary ? equipmentManagerService.weapons.secondary.name : "" }}
+      </span>
+    </div>
+
+    <div class="concealed">
+      <span class="slot">
+        {{ equipmentManagerService.weapons.concealed ? equipmentManagerService.weapons.concealed.name : "" }}
+      </span>
+    </div>
+
+    <div class="shield">
+      <span class="slot">
+        {{ equipmentManagerService.weapons.shield ? equipmentManagerService.weapons.shield.name : "" }}
+      </span>
+    </div>
+
+  </div>
+</div>
+<div class="inventory-section">
+  <!-- Click on item in inventory to place on character -->
+</div>

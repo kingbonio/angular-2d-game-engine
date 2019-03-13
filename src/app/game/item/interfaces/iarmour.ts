@@ -1,10 +1,10 @@
 import { IInventoryItem } from '.';
 
 export interface IArmour {
-      head: IInventoryItem;
-      arms: IInventoryItem;
-      hands: IInventoryItem;
-      torso: IInventoryItem;
-      legs: IInventoryItem;
-      boots: IInventoryItem;
+      head: IInventoryItem | null;
+      arms: IInventoryItem | null;
+      hands: IInventoryItem | null;
+      torso: IInventoryItem | null;
+      legs: IInventoryItem | null;
+      boots: IInventoryItem | null;
 }

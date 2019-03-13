@@ -17,7 +17,10 @@ import { AreaConfigProviderService } from './shared/services/area-config-provide
 import { PlayerStateService } from './shared/services/player-state.service';
 import { DialogueService } from './shared/services/dialogue.service';
 import { MovementComponent } from './shared/util/movement/movement.component';
-import { BattleCalculatorComponent } from './shared/util/battle-calculator/battle-calculator.component';
+import { BattleCalculatorService } from './shared/services/battle-calculator.service';
+import { EquipmentComponent } from './equipment/equipment.component';
+import { EquipmentManagerService } from './item/services/equipment-manager.service';
+import { InventoryManagerService } from './shared/services/inventory-manager.service';
 
 @NgModule({
   imports: [
@@ -37,14 +40,16 @@ import { BattleCalculatorComponent } from './shared/util/battle-calculator/battl
     CharacterComponent,
     DialogueComponent,
     MovementComponent,
-    BattleCalculatorComponent,
+    EquipmentComponent,
   ],
   providers: [
     AreaConfigProviderService,
     PlayerStateService,
     DialogueService,
+    BattleCalculatorService,
     MovementComponent,
-    BattleCalculatorComponent,
+    EquipmentManagerService,
+    InventoryManagerService,
   ]
 })
 export class GameModule { }

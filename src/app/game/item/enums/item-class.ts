@@ -1,7 +1,7 @@
 export enum ItemClass {
-      weapon,
-      potion,
-      armour,
-      shield,
-      misc
+      weapon = "weapon",
+      potion = "potion",
+      armour = "armour",
+      shield = "shield",
+      misc = "misc",
 }

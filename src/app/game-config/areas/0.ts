@@ -2,76 +2,10 @@ import { MonsterClass, Direction, CharacterType, ItemClass, ArmourType } from ".
 import { IAreaElement } from "../../game/area/interfaces";
 import { IArmour } from "../../game/shared/interfaces";
 import { WeaponType } from "../../game/item/enums";
+import { Armour, Weapons } from "../items";
+import { IWeapons } from "../../game/item/interfaces";
 
 export default {
-      weapons: [
-            {
-                  name: "Basic Knife",
-                  class: ItemClass.weapon,
-                  armourSlot: null,
-                  weaponSlot: WeaponType.primary,
-                  usable: false,
-                  level: 1,
-                  weight: 2,
-                  inventoryHeight: 2,
-                  inventoryWidth: 1,
-                  value: 100,
-                  imageFileName: "",
-                  properties: {
-                        damage: 10,
-                  },
-            },
-            {
-                  name: "Cuthroat Razor",
-                  class: ItemClass.weapon,
-                  armourSlot: null,
-                  weaponSlot: WeaponType.primary,
-                  usable: false,
-                  level: 1,
-                  weight: 2,
-                  inventoryHeight: 2,
-                  inventoryWidth: 1,
-                  value: 100,
-                  imageFileName: "",
-                  properties: {
-                        damage: 12,
-                  },
-            },
-      ],
-      armour: [
-            {
-                  name: "Leather Helmet",
-                  class: ItemClass.armour,
-                  armourSlot: null,
-                  weaponSlot: ArmourType.head,
-                  usable: false,
-                  level: 1,
-                  weight: 1,
-                  inventoryHeight: 1,
-                  inventoryWidth: 1,
-                  value: 100,
-                  imageFileName: "",
-                  properties: {
-                        damage: 10,
-                  },
-            },
-            {
-                  name: "Leather Boots",
-                  class: ItemClass.armour,
-                  armourSlot: null,
-                  weaponSlot: ArmourType.boots,
-                  usable: false,
-                  level: 1,
-                  weight: 2,
-                  inventoryHeight: 2,
-                  inventoryWidth: 2,
-                  value: 100,
-                  imageFileName: "",
-                  properties: {
-                        damage: 12,
-                  },
-            },
-      ],
       areaElements: [
             {
                   type: CharacterType.player,
@@ -101,13 +35,19 @@ export default {
                               allowKey: false,
                         },
                         armour: {
-                              head: this.helmet,
-                              arms: IInventoryItem;
-                              hands: IInventoryItem;
-                              torso: IInventoryItem;
-                              legs: IInventoryItem;
-                              boots: IInventoryItem;
-                        } as IArmour,
+                              head: Armour.leatherHelmet,
+                              arms: null,
+                              hands: null,
+                              torso: null,
+                              legs: null,
+                              boots: Armour.leatherBoots,
+                        },
+                        weapons: {
+                              primary: Weapons.basicKnife,
+                              secondary: null,
+                              concealed: null,
+                              shield: null,
+                        } as IWeapons,
                   },
                   startingPositionX: 4,
                   startingPositionY: "c",

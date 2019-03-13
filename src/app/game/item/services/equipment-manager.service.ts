@@ -1,13 +1,25 @@
 import { Injectable } from '@angular/core';
-import { IArmour, IInventoryItem } from '../interfaces';
+import { IArmour, IInventoryItem, IWeapons } from '../interfaces';
 import { ItemClass, ArmourType } from '../enums';
 import { WeaponType } from '../enums/weapon-type';
 import { InventoryManagerService } from '../../shared/services/inventory-manager.service';
 
 @Injectable()
 export class EquipmentManagerService {
-  armour: IArmour;
-  weapons: IInventoryItem;
+  public armour: IArmour = {
+    head: null,
+    arms: null,
+    hands: null,
+    torso: null,
+    legs: null,
+    boots: null,
+  };
+  public weapons: IWeapons = {
+    primary: null,
+    secondary: null,
+    concealed: null,
+    shield: null,
+  };
 
   constructor(private inventoryManagerService: InventoryManagerService) { }
 
