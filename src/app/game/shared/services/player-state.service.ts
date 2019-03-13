@@ -5,6 +5,10 @@ import { IPlayerStateData, IInventoryItem } from '../interfaces';
 import { AreaStateService } from './area-state.service';
 import { IGridReferences } from '../../area/interfaces';
 import { DialogueService } from './dialogue.service';
+import { UserActionTypes, UserInteractionTypes } from '../../../shared/enums';
+import { MovementComponent } from '../util/movement/movement.component';
+import { BattleCalculatorComponent } from '../util/battle-calculator/battle-calculator.component';
+import { Character } from '../../character-classes/character';
 
 @Injectable()
 export class PlayerStateService {
@@ -22,7 +26,9 @@ export class PlayerStateService {
 
   constructor(
     private areaStateService: AreaStateService,
-    private dialogueService: DialogueService
+    private dialogueService: DialogueService,
+    private movement: MovementComponent,
+    private battleCalculator: BattleCalculatorComponent
   ) {
   }
 
@@ -133,7 +139,7 @@ export class PlayerStateService {
    */
   public move(direction: Direction) {
 
-    const newLocation = this.getNextLocation(this.locationY + this.locationX, direction);
+    const newLocation = this.movement.getNextLocation(this.locationY, this.locationX, direction);
 
     // Update area state
     if (newLocation && newLocation.locationX && newLocation.locationY && newLocation.isLocationFree) {
@@ -158,76 +164,41 @@ export class PlayerStateService {
     this.direction = direction;
   }
 
-  // TODO Maybe update this location interface/enum
-  // TODO Look into direction being used from the service
-  // TODO Could refactor this switch statement
-  // tslint:disable-next-line:max-line-length
-  private getNextLocation(location: string, direction: Direction): { locationY: string, locationX: number, isLocationFree: boolean } | null {
-
-    // Attempt movement
-    let newLocationY;
-    let newLocationX;
-    switch (direction) {
-      case Direction.N:
-        newLocationY = this.previousYReference(this.locationY);
-        newLocationX = this.locationX;
-        // Make sure the location isn't off the edge of the grid and get new reference
-        if (newLocationY && newLocationX) {
-          return {
-            locationY: newLocationY,
-            locationX: newLocationX,
-            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX)
-          };
-        }
-        return null;
-      case Direction.E:
-        newLocationX = this.nextXReference(this.locationX);
-        newLocationY = this.locationY;
-        // Make sure the location isn't off the edge of the grid and get new reference
-        if (newLocationY && newLocationX) {
-          return {
-            locationY: newLocationY,
-            locationX: newLocationX,
-            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX)
-          };
-        }
-        return null;
-      case Direction.S:
-        newLocationY = this.nextYReference(this.locationY);
-        newLocationX = this.locationX;
-        // Make sure the location isn't off the edge of the grid and get new reference
-        if (newLocationY && newLocationX) {
-          return {
-            locationY: newLocationY,
-            locationX: newLocationX,
-            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX)
-          };
-        }
-        return null;
-      case Direction.W:
-        newLocationX = this.previousXReference(this.locationX);
-        newLocationY = this.locationY;
-        // Make sure the location isn't off the edge of the grid and get new reference
-        if (newLocationY && newLocationX) {
-          return {
-            locationY: newLocationY,
-            locationX: newLocationX,
-            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX)
-          };
-        }
-        return null;
-      default:
-        return null;
-    }
-  }
-
-  // TODO Maybe move these somewhere so this service is polluted
-
   /**
    * Perform an attack in the direction player is facing
    */
   public attack() {
+    const targetReference = this.movement.getNextLocation(this.locationY, this.locationX, this.direction);
+    const target = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
 
+    if (target) {
+      if (this.battleCalculator.isDead(target.currentHp)) {
+        this.dialogueService.displayDialogueMessage({
+          text: defaults.dialogue.nullElementResponse,
+          character: defaults.dialogue.computerCharacterType,
+          name: defaults.dialogue.computerName
+        });
+        return;
+      }
+
+      const damage = this.battleCalculator.calculateDamage(target);
+      // TODO this can possibly just be target.currentHp
+      const targetCurrentHp = target.respond(UserInteractionTypes.attack, this.movement.getDirectionToFace(this.direction), damage);
+
+      this.dialogueService.displayDialogueMessage({
+        text: damage > 0 ? defaults.dialogue.attackSuccess + damage : defaults.dialogue.attackFailure,
+        character: defaults.dialogue.computerCharacterType,
+        name: defaults.dialogue.computerName
+      });
+
+      if (this.battleCalculator.isDead(targetCurrentHp)) {
+        this.dialogueService.displayDialogueMessage({
+          text: defaults.dialogue.targetDead + target.name,
+          character: defaults.dialogue.computerCharacterType,
+          name: defaults.dialogue.computerName
+        });
+      }
+    }
   }
 
   /**
@@ -248,11 +219,21 @@ export class PlayerStateService {
    * speak to the object in the direction player is facing
    */
   public speak() {
-    const nextGridLocation = this.getNextLocation(this.locationY + this.locationX, this.direction);
+    const nextGridLocation = this.movement.getNextLocation(this.locationY, this.locationX, this.direction);
     // TODO rename this
     if (nextGridLocation) {
-      const elementInGridReference = this.areaStateService.locations[nextGridLocation.locationY + nextGridLocation.locationX];
-      if (!elementInGridReference) {
+      const target = this.areaStateService.locations[nextGridLocation.locationY + nextGridLocation.locationX];
+
+      if (this.battleCalculator.isDead(target.currentHp)) {
+        this.dialogueService.displayDialogueMessage({
+          text: defaults.dialogue.nullElementResponse,
+          character: defaults.dialogue.computerCharacterType,
+          name: defaults.dialogue.computerName
+        });
+        return;
+      }
+
+      if (!target) {
         this.dialogueService.displayDialogueMessage(
           {
             text: defaults.dialogue.nullElementResponse,
@@ -263,49 +244,12 @@ export class PlayerStateService {
       } else {
         this.dialogueService.displayDialogueMessage(
           {
-            text: elementInGridReference.getSpeechResponse(),
-            character: elementInGridReference.type,
-            name: elementInGridReference.name
+            text: target.respond(UserInteractionTypes.speak, this.movement.getDirectionToFace(this.direction)),
+            character: target.type,
+            name: target.name
           }
         );
       }
     }
-  }
-
-  // TODO: Might want to move these somewhere more reusable
-  private previousYReference(yReference: string | null): string {
-    // TODO: Should really just check if it exists in grid somehow
-    if (yReference === "a") {
-      return null;
-    }
-    return String.fromCharCode(yReference.charCodeAt(0) - 1);
-  }
-
-  private nextYReference(yReference: string): string {
-    if (yReference === "g") {
-      return null;
-    }
-    return String.fromCharCode(yReference.charCodeAt(0) + 1);
-  }
-
-  private previousXReference(xReference: number): number {
-    if (xReference === 1) {
-      return null;
-    }
-    return xReference - 1;
-  }
-
-  private nextXReference(xReference: number): number {
-    if (xReference === 7) {
-      return null;
-    }
-    return xReference + 1;
-  }
-
-  /**
-   * Checks if grid reference is empty
-   */
-  private isGridReferenceEmpty(gridReference) {
-
   }
 }

@@ -19,7 +19,8 @@ export default {
         inventoryCapacityMultiplyer: 30,
         levelCalculation: (exp) => {
             return exp / 3000;
-        }
+        },
+        levelStatMultiplyer: 1.2
     },
     initialAreaSettings: {
         type: 'start'
@@ -31,6 +32,9 @@ export default {
         computerName: "Computer",
         computerCharacterType: "computer",
         maximumMessagesOnScreen: 2,
+        attackSuccess: "Your attack hits with damage: ",
+        attackFailure: "Your attack fails",
+        targetDead: "You have killed ",
     },
     gameMenu: {
         menuOpenAtLoad: true,

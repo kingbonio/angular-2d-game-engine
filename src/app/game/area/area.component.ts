@@ -12,6 +12,7 @@ import { CharacterType, Direction } from '../shared/enums';
 import { PlayerStateService } from '../shared/services/player-state.service';
 import { Enemy, NPC, Player } from '../character-classes/';
 import { Character } from '../character-classes/character';
+import { BattleCalculatorComponent } from '../shared/util/battle-calculator/battle-calculator.component';
 
 @Component({
   selector: 'app-area',
@@ -34,7 +35,8 @@ export class AreaComponent implements OnInit {
     public areaStateService: AreaStateService,
     private route: ActivatedRoute,
     private areaConfigProvider: AreaConfigProviderService,
-    public playerStateService: PlayerStateService
+    public playerStateService: PlayerStateService,
+    public battleCalculator: BattleCalculatorComponent,
   ) {
   }
 
@@ -54,7 +56,18 @@ export class AreaComponent implements OnInit {
   }
 
   public getDirectionClass(gridCharacter: Character) {
-    return gridCharacter.type === CharacterType.player ? 'direction-' + this.playerStateService.direction : "";
+    // TODO this is proving strange, might want to come back to directions
+    const isPlayer = (gridCharacter && gridCharacter.type === CharacterType.player);
+    if (isPlayer) {
+      return 'direction-' + this.playerStateService.direction;
+    }
+    return gridCharacter ? 'direction-' + gridCharacter.direction : "";
+  }
+
+  public getDeadClass(character: Character): string {
+    if (character.type !== CharacterType.player) {
+      return character.currentHp > 0 ? "" : "dead";
+    }
   }
 
   public getCharacterType(gridCharacter: Character) {

@@ -1,16 +1,15 @@
-import { CharacterType } from "../shared/enums";
+import { CharacterType, Direction } from "../shared/enums";
+import { IArmour } from "../shared/interfaces";
 
 export class Character {
-      hp: number;
+      currentHp: number;
+      maxHp: number;
       xp: number;
       asleep: boolean;
       type: CharacterType;
+      direction: Direction;
+      armour?: IArmour;
 
       constructor() {
-            // TODO: Set this manually
-            this.hp = 10;
-            this.xp = 0;
       }
-
-
 }

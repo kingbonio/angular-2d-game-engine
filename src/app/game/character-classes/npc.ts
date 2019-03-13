@@ -1,24 +1,52 @@
 import { Character } from "./character";
-import { CharacterType } from "../shared/enums";
+import { CharacterType, Direction } from "../shared/enums";
+import { UserInteractionTypes } from "../../shared/enums";
+import { IArmour } from "../shared/interfaces";
 
 export class NPC extends Character {
       public type = CharacterType.npc;
       public name: string;
       public class: NPC;
+      public maxHp: number;
+      public currentHp: number;
       public imageName: string;
       public speechResponse: string;
+      public sleepResponse: string;
+      public isAsleep: boolean;
+      public direction: Direction;
+      public armour: IArmour;
 
       constructor(characterDetails: any) {
             // TODO: Resolve any
             super();
             this.name = characterDetails.name;
             this.class = characterDetails.class;
+            // TODO Need to figure out how to use this in the css
             this.imageName = characterDetails.imageName;
+            this.isAsleep = characterDetails.asleep;
             this.speechResponse = characterDetails.speechResponse;
+            this.direction = characterDetails.direction;
+            this.maxHp = characterDetails.maxHp;
+            this.currentHp = this.maxHp;
+            this.xp = 0;
+            this.armour = characterDetails.equippedArmour;
       }
 
-      public getSpeechResponse() {
-            return this.speechResponse;
+      public respond(interaction: UserInteractionTypes, directionToFace: Direction, damage: number) {
+            switch (interaction) {
+                  case UserInteractionTypes.speak:
+                        if (!this.isAsleep) {
+                              this.direction = directionToFace;
+                              return this.speechResponse;
+                        } else {
+                              return this.sleepResponse;
+                        }
+                  case UserInteractionTypes.attack:
+                        this.isAsleep = false;
+                        this.direction = directionToFace;
+                        this.currentHp -= damage;
+                        return this.currentHp;
+            }
       }
 
 }

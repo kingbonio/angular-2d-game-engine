@@ -40,6 +40,13 @@
                   .npc {
                         background-image: url("../shared/resources/shadow-npc.png");
                   }
+                  .dead {
+                        height: 80px;
+                        width: 80px;
+                        border-radius: 50%;
+                        display: inline-block;
+                        background-color: rgba(255, 0, 0, 0.6);
+                  }
                   // &.direction-n {
                   //       border-top: solid red 2px;
                   // }
@@ -62,7 +69,5 @@
                         }
                   }
             }
-
-
       }
 }
