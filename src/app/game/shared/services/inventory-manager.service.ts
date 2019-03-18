@@ -2,12 +2,45 @@ import { Injectable } from '@angular/core';
 import { PlayerStateService } from './player-state.service';
 import { IInventoryStateData, IInventoryItem } from '../interfaces';
 import defaults from '../../../shared/defaults';
+import { IGridReferences } from '../../area/interfaces';
+import { IInventoryReferences } from '../../item/inventory/interfaces';
 
 @Injectable()
 export class InventoryManagerService {
-  public contents: IInventoryItem[];
+  // public contents: IInventoryItem[];
+  public locationKeys: any;
+  public locations: IInventoryReferences;
 
-  constructor() { }
+  constructor() {
+    this.locations = {
+      a1: null,
+      a2: null,
+      a3: null,
+      a4: null,
+      a5: null,
+      b1: null,
+      b2: null,
+      b3: null,
+      b4: null,
+      b5: null,
+      c1: null,
+      c2: null,
+      c3: null,
+      c4: null,
+      c5: null,
+      d1: null,
+      d2: null,
+      d3: null,
+      d4: null,
+      d5: null,
+      e1: null,
+      e2: null,
+      e3: null,
+      e4: null,
+      e5: null,
+    };
+    this.locationKeys = Object.keys;
+  }
 
 
   onInit() { }
@@ -17,9 +50,11 @@ export class InventoryManagerService {
    */
   get contentsWeight(): number {
     let contentsWeight = 0;
-    this.contents.forEach(item => {
-      contentsWeight += item.weight;
-    });
+    for (const location in this.locations) {
+      if (this.locations.hasOwnProperty(location) && this.locations[location] !== null) {
+        contentsWeight += this.locations[location].weight;
+      }
+    }
     return contentsWeight;
   }
 
@@ -34,7 +69,7 @@ export class InventoryManagerService {
    */
   public addItemToInventory(newItem: IInventoryItem): void {
     // if (this.contentsWeight + newItem.weight > this.capacity) {
-      this.contents.push(newItem);
+      // this.contents.push(newItem);
     // } else {
       // TODO: build recipient of this and insert translation service
       // this.notificationsService("Your inventory is full");
@@ -48,7 +83,9 @@ export class InventoryManagerService {
    * @returns array of items found matching search terms
    */
   public searchForItems(itemName: string): IInventoryItem[] {
-    return this.contents.filter(item => item.name === itemName);
+    // return this.contents.filter(item => item.name === itemName);
+    // TODO remove this
+    return [];
   }
 
   /**
@@ -57,11 +94,11 @@ export class InventoryManagerService {
    * @returns index of first item found or null if none found
    */
   public getIndexOfItem(itemName: string): number | null {
-    for (let i = 0; i < this.contents.length; ++i) {
-      if (this.contents[i].name === itemName) {
-        return i;
-      }
-    }
+    // for (let i = 0; i < this.contents.length; ++i) {
+    //   if (this.contents[i].name === itemName) {
+    //     return i;
+    //   }
+    // }
     return null;
   }
 
@@ -70,13 +107,13 @@ export class InventoryManagerService {
    * @param itemName the terms to search for
    */
   public removeItem(itemName: string): void {
-    const indexOfItem = this.getIndexOfItem(itemName);
-    if (indexOfItem) {
-      this.contents.splice(indexOfItem, 1);
-    } else {
-      // TODO: build recipient of this and insert translation service
-      // this.notificationsService("Item cannot be found in inventory");
-    }
+    // const indexOfItem = this.getIndexOfItem(itemName);
+    // if (indexOfItem) {
+    //   this.contents.splice(indexOfItem, 1);
+    // } else {
+    //   // TODO: build recipient of this and insert translation service
+    //   // this.notificationsService("Item cannot be found in inventory");
+    // }
   }
 
   /**

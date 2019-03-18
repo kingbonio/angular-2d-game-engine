@@ -1,7 +1,13 @@
 .character-section {
       border: solid 1px black;
 
-      .armour {
+      .armour, .weapons {
+            border: solid 1px black;
+
+            .title {
+                  display: inline-block;
+                  width: 100px;
+            }
 
             .slot {
                   display: inline-block;

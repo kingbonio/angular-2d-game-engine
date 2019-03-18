@@ -21,7 +21,9 @@ export class EquipmentManagerService {
     shield: null,
   };
 
-  constructor(private inventoryManagerService: InventoryManagerService) { }
+  constructor(
+    private inventoryManagerService: InventoryManagerService
+    ) { }
 
   /**
    * Adds an item to its relevant armour slot
