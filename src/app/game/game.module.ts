@@ -17,7 +17,7 @@ import { MovementComponent } from './shared/util/movement/movement.component';
 import { BattleCalculatorService } from './shared/services/battle-calculator.service';
 import { EquipmentComponent } from './item/equipment/equipment.component';
 import { EquipmentManagerService } from './item/services/equipment-manager.service';
-import { InventoryManagerService } from './shared/services/inventory-manager.service';
+import { InventoryManagerService } from './item/services/inventory-manager.service';
 import { InventoryComponent } from './item/inventory/inventory.component';
 
 @NgModule({

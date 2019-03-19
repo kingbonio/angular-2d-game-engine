@@ -4,8 +4,8 @@ export const Armour = {
       leatherHelmet: {
             name: "Leather Helmet",
             class: ItemClass.armour,
-            armourSlot: null,
-            weaponSlot: ArmourType.head,
+            armourSlot: ArmourType.head,
+            weaponSlot: null,
             usable: false,
             level: 1,
             weight: 1,
@@ -20,8 +20,8 @@ export const Armour = {
       leatherBoots: {
             name: "Leather Boots",
             class: ItemClass.armour,
-            armourSlot: null,
-            weaponSlot: ArmourType.boots,
+            armourSlot: ArmourType.boots,
+            weaponSlot: null,
             usable: false,
             level: 1,
             weight: 2,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { InventoryManagerService } from '../../shared/services/inventory-manager.service';
+import { InventoryManagerService } from '../../item/services/inventory-manager.service';
 import { InteractionTarget, ItemClass } from '../../shared/enums';
 import { PlayerStateService } from '../../shared/services/player-state.service';
 

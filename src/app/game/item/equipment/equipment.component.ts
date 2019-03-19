@@ -13,4 +13,10 @@ export class EquipmentComponent implements OnInit {
   ngOnInit() {
   }
 
+  public useItem(itemSlot: string) {
+    if (this.equipmentManagerService.locations[itemSlot]) {
+      // TODO Do this?
+    }
+  }
+
 }

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { PlayerStateService } from './player-state.service';
-import { IInventoryStateData, IInventoryItem } from '../interfaces';
+import { PlayerStateService } from '../../shared/services/player-state.service';
+import { IInventoryStateData, IInventoryItem } from '../../shared/interfaces';
 import defaults from '../../../shared/defaults';
 import { IGridReferences } from '../../area/interfaces';
-import { IInventoryReferences } from '../../item/inventory/interfaces';
+import { IInventoryReferences } from '../inventory/interfaces';
+import { DialogueService } from '../../shared/services/dialogue.service';
 
 @Injectable()
 export class InventoryManagerService {
@@ -11,7 +12,9 @@ export class InventoryManagerService {
   public locationKeys: any;
   public locations: IInventoryReferences;
 
-  constructor() {
+  constructor(
+    private dialogueService: DialogueService
+  ) {
     this.locations = {
       a1: null,
       a2: null,
@@ -68,13 +71,17 @@ export class InventoryManagerService {
    * @param newItem item added to the inventory from the game
    */
   public addItemToInventory(newItem: IInventoryItem): void {
-    // if (this.contentsWeight + newItem.weight > this.capacity) {
-      // this.contents.push(newItem);
-    // } else {
-      // TODO: build recipient of this and insert translation service
-      // this.notificationsService("Your inventory is full");
-      // Maybe drop the item or overload capacity
-    // }
+    for (const itemSlot in this.locations) {
+      if (this.locations.hasOwnProperty(itemSlot) && !this.locations[itemSlot]) {
+        this.locations[itemSlot] = newItem;
+        return;
+      }
+    }
+    this.dialogueService.displayDialogueMessage({
+      text: defaults.dialogue.inventoryFull,
+      character: defaults.dialogue.computerCharacterType,
+      name: defaults.dialogue.computerName
+    });
   }
 
   /**

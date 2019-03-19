@@ -2,8 +2,8 @@
   <div *ngFor="let itemSlot of inventoryManagerService.locationKeys(inventoryManagerService.locations)" class="inventory-box">
     <!-- Click on item in inventory to place on character -->
     <div class="inventory-slot">
-      <div class="item" *ngIf="itemSlot">
-        {{ itemSlot.name }}
+      <div class="item" *ngIf="inventoryManagerService.locations[itemSlot]" (click)="useItem(itemSlot)">
+        {{ inventoryManagerService.locations[itemSlot].name }}
       </div>
     </div>
   </div>

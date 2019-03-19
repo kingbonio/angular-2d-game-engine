@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IArmour, IInventoryItem, IWeapons } from '../interfaces';
 import { ItemClass, ArmourType } from '../enums';
 import { WeaponType } from '../enums/weapon-type';
-import { InventoryManagerService } from '../../shared/services/inventory-manager.service';
+import { InventoryManagerService } from './inventory-manager.service';
 
 @Injectable()
 export class EquipmentManagerService {
@@ -52,6 +52,18 @@ export class EquipmentManagerService {
     } else {
       this.weapons[newWeapon.weaponSlot] = newWeapon;
     }
+  }
+
+  public switchArmourType(item: IInventoryItem): IInventoryItem {
+    const returnItem = this.armour[item.armourSlot];
+    this.armour[item.armourSlot] = item;
+    return returnItem;
+  }
+
+  public switchWeaponType(item: IInventoryItem): IInventoryItem {
+    const returnItem = this.weapons[item.weaponSlot];
+    this.weapons[item.weaponSlot] = item;
+    return returnItem;
   }
 
   /**

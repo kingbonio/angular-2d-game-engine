@@ -3,7 +3,7 @@ import { IAreaConfig } from '../../../game-config/interfaces';
 import * as areaConfig from "../../../game-config/areas";
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
 import { Weapons, Armour } from '../../../game-config/items';
-import { InventoryManagerService } from './inventory-manager.service';
+import { InventoryManagerService } from '../../item/services/inventory-manager.service';
 
 @Injectable()
 export class AreaConfigProviderService {
@@ -22,12 +22,13 @@ export class AreaConfigProviderService {
 
   private assignEquipmentToPlayer() {
     // TODO This might be useful when properly setting equipment
-    this.equipmentManagerService.setWeaponType(Weapons.cuthroatRazor);
+    // this.equipmentManagerService.setWeaponType(Weapons.cuthroatRazor);
   }
 
   private assignItemsToInventory() {
     // TODO This might be useful when properly setting equipment
     this.inventoryManagerService.addItemToInventory(Weapons.cuthroatRazor);
+    this.inventoryManagerService.addItemToInventory(Armour.leatherHelmet);
   }
 
   /**
