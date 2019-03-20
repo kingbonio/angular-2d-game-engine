@@ -14,7 +14,23 @@ export const Armour = {
             value: 100,
             imageFileName: "",
             properties: {
-                  damage: 10,
+                  defense: 10,
+            },
+      },
+      fedora: {
+            name: "Fedora",
+            class: ItemClass.armour,
+            armourSlot: ArmourType.head,
+            weaponSlot: null,
+            usable: false,
+            level: 1,
+            weight: 1,
+            inventoryHeight: 1,
+            inventoryWidth: 1,
+            value: 10,
+            imageFileName: "",
+            properties: {
+                  defense: 0,
             },
       },
       leatherBoots: {
@@ -30,7 +46,7 @@ export const Armour = {
             value: 100,
             imageFileName: "",
             properties: {
-                  damage: 12,
+                  defense: 12,
             },
       },
 };

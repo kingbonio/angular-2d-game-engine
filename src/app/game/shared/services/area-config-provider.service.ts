@@ -29,6 +29,7 @@ export class AreaConfigProviderService {
     // TODO This might be useful when properly setting equipment
     this.inventoryManagerService.addItemToInventory(Weapons.cuthroatRazor);
     this.inventoryManagerService.addItemToInventory(Armour.leatherHelmet);
+    this.inventoryManagerService.addItemToInventory(Armour.fedora);
   }
 
   /**
