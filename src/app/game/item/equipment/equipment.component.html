@@ -5,49 +5,49 @@
 
     <div class="head">
       <span class="title">Head: </span>
-      <span class="slot" (click)="removeItem(equipmentManagerService.armour.head)">
+      <span class="slot" (click)="removeArmour(equipmentManagerService.armour.head)">
         {{ equipmentManagerService.armour.head ? equipmentManagerService.armour.head.name : "" }}
       </span>
     </div>
 
     <div class="arms">
       <span class="title">Arms: </span>
-      <span class="slot" (click)="removeItem(equipmentManagerService.armour.arms)">
+      <span class="slot" (click)="removeArmour(equipmentManagerService.armour.arms)">
         {{ equipmentManagerService.armour.arms ? equipmentManagerService.armour.arms.name : "" }}
       </span>
     </div>
 
     <div class="hands">
       <span class="title">Hands: </span>
-      <span class="slot" (click)="removeItem(equipmentManagerService.armour.hands)">
+      <span class="slot" (click)="removeArmour(equipmentManagerService.armour.hands)">
         {{ equipmentManagerService.armour.hands ? equipmentManagerService.armour.hands.name : "" }}
       </span>
     </div>
 
     <div class="torso">
       <span class="title">Torso: </span>
-      <span class="slot" (click)="removeItem(equipmentManagerService.armour.torso)">
+      <span class="slot" (click)="removeArmour(equipmentManagerService.armour.torso)">
         {{ equipmentManagerService.armour.torso ? equipmentManagerService.armour.torso.name : "" }}
       </span>
     </div>
 
     <div class="legs">
       <span class="title">Legs: </span>
-      <span class="slot" (click)="removeItem(equipmentManagerService.armour.legs)">
+      <span class="slot" (click)="removeArmour(equipmentManagerService.armour.legs)">
         {{ equipmentManagerService.armour.legs ? equipmentManagerService.armour.legs.name : "" }}
       </span>
     </div>
 
     <div class="boots">
       <span class="title">Boots: </span>
-      <span class="slot" (click)="removeItem(equipmentManagerService.armour.boots)">
+      <span class="slot" (click)="removeArmour(equipmentManagerService.armour.boots)">
         {{ equipmentManagerService.armour.boots ? equipmentManagerService.armour.boots.name : "" }}
       </span>
     </div>
     
     <div class="shield">
       <span class="title">Shield: </span>
-      <span class="slot" (click)="removeItem(equipmentManagerService.armour.shield)">
+      <span class="slot" (click)="removeArmour(equipmentManagerService.armour.shield)">
         {{ equipmentManagerService.armour.shield ? equipmentManagerService.armour.shield.name : "" }}
       </span>
     </div>
@@ -58,21 +58,21 @@
     
     <div class="primary">
       <span class="title">Primary: </span>
-      <span class="slot" (click)="removeItem(equipmentManagerService.weapons.primary)">
+      <span class="slot" (click)="removeWeapon(equipmentManagerService.weapons.primary)">
         {{ equipmentManagerService.weapons.primary ? equipmentManagerService.weapons.primary.name : "" }}
       </span>
     </div>
 
     <div class="secondary">
       <span class="title">Secondary: </span>
-      <span class="slot" (click)="removeItem(equipmentManagerService.weapons.secondary)">
+      <span class="slot" (click)="removeWeapon(equipmentManagerService.weapons.secondary)">
         {{ equipmentManagerService.weapons.secondary ? equipmentManagerService.weapons.secondary.name : "" }}
       </span>
     </div>
 
     <div class="concealed">
       <span class="title">Concealed: </span>
-      <span class="slot" (click)="removeItem(equipmentManagerService.weapons.concealed)">
+      <span class="slot" (click)="removeWeapon(equipmentManagerService.weapons.concealed)">
         {{ equipmentManagerService.weapons.concealed ? equipmentManagerService.weapons.concealed.name : "" }}
       </span>
     </div>

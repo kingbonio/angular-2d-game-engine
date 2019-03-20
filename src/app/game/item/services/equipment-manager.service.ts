@@ -66,6 +66,14 @@ export class EquipmentManagerService {
     return returnItem;
   }
 
+  public removeArmour(armourSlot: ArmourType) {
+    this.armour[armourSlot] = null;
+  }
+
+  public removeWeapon(weaponSlot: WeaponType) {
+    this.weapons[weaponSlot] = null;
+  }
+
   /**
    * Returns the armour item in the *type* slot
    * @param type for selecting armour slot

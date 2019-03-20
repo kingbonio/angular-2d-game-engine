@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EquipmentManagerService } from '../services/equipment-manager.service';
+import { IInventoryItem } from '../interfaces';
+import { InventoryManagerService } from '../services/inventory-manager.service';
 
 @Component({
   selector: 'app-equipment',
@@ -8,14 +10,25 @@ import { EquipmentManagerService } from '../services/equipment-manager.service';
 })
 export class EquipmentComponent implements OnInit {
 
-  constructor(public equipmentManagerService: EquipmentManagerService) { }
+  constructor(
+    public equipmentManagerService: EquipmentManagerService,
+    public inventoryManagerService: InventoryManagerService,
+  ) { }
 
   ngOnInit() {
   }
 
-  public useItem(itemSlot: string) {
-    if (this.equipmentManagerService.locations[itemSlot]) {
-      // TODO Do this?
+  public removeArmour(item: IInventoryItem) {
+    if (item) {
+      this.inventoryManagerService.addItemToInventory(item);
+      this.equipmentManagerService.removeArmour(item.armourSlot);
+    }
+  }
+
+  public removeWeapon(item: IInventoryItem) {
+    if (item) {
+      this.inventoryManagerService.addItemToInventory(item);
+      this.equipmentManagerService.removeWeapon(item.weaponSlot);
     }
   }
 
