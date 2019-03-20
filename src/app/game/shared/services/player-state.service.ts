@@ -7,8 +7,10 @@ import { IGridReferences } from '../../area/interfaces';
 import { DialogueService } from './dialogue.service';
 import { UserActionTypes, UserInteractionTypes } from '../../../shared/enums';
 import { MovementComponent } from '../util/movement/movement.component';
-import { BattleCalculatorComponent } from '../util/battle-calculator/battle-calculator.component';
 import { Character } from '../../character-classes/character';
+import { BattleCalculatorService } from './battle-calculator.service';
+import { IWeapons } from '../../item/interfaces';
+import { WeaponType } from '../../item/enums';
 
 @Injectable()
 export class PlayerStateService {
@@ -21,6 +23,7 @@ export class PlayerStateService {
   public locationX: number;
   public locationY: string;
   public direction: Direction = Direction.N;
+  public selectedWeaponSlot: WeaponType;
   // public location: string;
 
 
@@ -28,7 +31,7 @@ export class PlayerStateService {
     private areaStateService: AreaStateService,
     private dialogueService: DialogueService,
     private movement: MovementComponent,
-    private battleCalculator: BattleCalculatorComponent
+    private battleCalculatorService: BattleCalculatorService
   ) {
   }
 
@@ -41,6 +44,8 @@ export class PlayerStateService {
     this._magicka = defaults.initialPlayerStats.magicka;
     this._exp = defaults.initialPlayerStats.exp;
     this.direction = defaults.initialPlayerStats.direction;
+    // TODO default
+    this.selectedWeaponSlot = WeaponType.primary;
   }
 
   get health() {
@@ -97,6 +102,10 @@ export class PlayerStateService {
 
   get level() {
     return defaults.playerMultiplyers.levelCalculation(this.exp);
+  }
+
+  get levelMultiplyer(): number {
+    return this.level * defaults.playerMultiplyers.levelStatMultiplyer;
   }
 
   public itemTooHighLevel(item: IInventoryItem): boolean {
@@ -172,7 +181,7 @@ export class PlayerStateService {
     const target = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
 
     if (target) {
-      if (this.battleCalculator.isDead(target.currentHp)) {
+      if (this.battleCalculatorService.isDead(target.currentHp)) {
         this.dialogueService.displayDialogueMessage({
           text: defaults.dialogue.nullElementResponse,
           character: defaults.dialogue.computerCharacterType,
@@ -181,7 +190,7 @@ export class PlayerStateService {
         return;
       }
 
-      const damage = this.battleCalculator.calculateDamage(target);
+      const damage = this.battleCalculatorService.calculateDamageToEnemy(target, this.selectedWeaponSlot, this.levelMultiplyer);
       // TODO this can possibly just be target.currentHp
       const targetCurrentHp = target.respond(UserInteractionTypes.attack, this.movement.getDirectionToFace(this.direction), damage);
 
@@ -191,7 +200,7 @@ export class PlayerStateService {
         name: defaults.dialogue.computerName
       });
 
-      if (this.battleCalculator.isDead(targetCurrentHp)) {
+      if (this.battleCalculatorService.isDead(targetCurrentHp)) {
         this.dialogueService.displayDialogueMessage({
           text: defaults.dialogue.targetDead + target.name,
           character: defaults.dialogue.computerCharacterType,
@@ -224,7 +233,7 @@ export class PlayerStateService {
     if (nextGridLocation) {
       const target = this.areaStateService.locations[nextGridLocation.locationY + nextGridLocation.locationX];
 
-      if (this.battleCalculator.isDead(target.currentHp)) {
+      if (this.battleCalculatorService.isDead(target.currentHp)) {
         this.dialogueService.displayDialogueMessage({
           text: defaults.dialogue.nullElementResponse,
           character: defaults.dialogue.computerCharacterType,

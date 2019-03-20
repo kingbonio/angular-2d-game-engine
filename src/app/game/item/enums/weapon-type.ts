@@ -1,6 +1,5 @@
 export enum WeaponType {
-      primary,
-      secondary,
-      concealed,
-      shield,
+      primary = "primary",
+      secondary = "secondary",
+      concealed = "concealed"
 }

@@ -1,15 +1,29 @@
 import { Injectable } from '@angular/core';
-import { IArmour, IInventoryItem } from '../interfaces';
+import { IArmour, IInventoryItem, IWeapons } from '../interfaces';
 import { ItemClass, ArmourType } from '../enums';
 import { WeaponType } from '../enums/weapon-type';
-import { InventoryManagerService } from '../../shared/services/inventory-manager.service';
+import { InventoryManagerService } from './inventory-manager.service';
 
 @Injectable()
 export class EquipmentManagerService {
-  armour: IArmour;
-  weapons: IInventoryItem;
+  public armour: IArmour = {
+    head: null,
+    arms: null,
+    hands: null,
+    torso: null,
+    legs: null,
+    boots: null,
+  };
+  public weapons: IWeapons = {
+    primary: null,
+    secondary: null,
+    concealed: null,
+    shield: null,
+  };
 
-  constructor(private inventoryManagerService: InventoryManagerService) { }
+  constructor(
+    private inventoryManagerService: InventoryManagerService
+    ) { }
 
   /**
    * Adds an item to its relevant armour slot
@@ -38,6 +52,26 @@ export class EquipmentManagerService {
     } else {
       this.weapons[newWeapon.weaponSlot] = newWeapon;
     }
+  }
+
+  public switchArmourType(item: IInventoryItem): IInventoryItem {
+    const returnItem = this.armour[item.armourSlot];
+    this.armour[item.armourSlot] = item;
+    return returnItem;
+  }
+
+  public switchWeaponType(item: IInventoryItem): IInventoryItem {
+    const returnItem = this.weapons[item.weaponSlot];
+    this.weapons[item.weaponSlot] = item;
+    return returnItem;
+  }
+
+  public removeArmour(armourSlot: ArmourType) {
+    this.armour[armourSlot] = null;
+  }
+
+  public removeWeapon(weaponSlot: WeaponType) {
+    this.weapons[weaponSlot] = null;
   }
 
   /**

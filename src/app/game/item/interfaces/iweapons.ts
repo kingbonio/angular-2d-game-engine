@@ -1,8 +1,8 @@
 import { IInventoryItem } from ".";
 
 export interface IWeapons {
-      primary: IInventoryItem;
-      secondary: IInventoryItem;
-      concealed: IInventoryItem;
-      shield: IInventoryItem;
+      primary: IInventoryItem | null;
+      secondary: IInventoryItem | null;
+      concealed: IInventoryItem | null;
+      shield: IInventoryItem | null;
 }

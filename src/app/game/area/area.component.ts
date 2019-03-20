@@ -12,7 +12,7 @@ import { CharacterType, Direction } from '../shared/enums';
 import { PlayerStateService } from '../shared/services/player-state.service';
 import { Enemy, NPC, Player } from '../character-classes/';
 import { Character } from '../character-classes/character';
-import { BattleCalculatorComponent } from '../shared/util/battle-calculator/battle-calculator.component';
+import { BattleCalculatorService } from '../shared/services/battle-calculator.service';
 
 @Component({
   selector: 'app-area',
@@ -36,7 +36,7 @@ export class AreaComponent implements OnInit {
     private route: ActivatedRoute,
     private areaConfigProvider: AreaConfigProviderService,
     public playerStateService: PlayerStateService,
-    public battleCalculator: BattleCalculatorComponent,
+    public battleCalculatorService: BattleCalculatorService,
   ) {
   }
 

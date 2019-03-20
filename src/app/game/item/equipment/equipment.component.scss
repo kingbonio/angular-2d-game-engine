@@ -1,0 +1,20 @@
+.character-section {
+      border: solid 1px black;
+
+      .armour, .weapons {
+            border: solid 1px black;
+
+            .title {
+                  display: inline-block;
+                  width: 100px;
+            }
+
+            .slot {
+                  display: inline-block;
+                  border: solid 1px red;
+                  min-width: 20px;
+                  height: 20px;
+                  cursor: pointer;
+            }
+      }
+}

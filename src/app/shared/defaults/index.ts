@@ -8,7 +8,7 @@ export default {
         strength: 10,
         dexterity: 10,
         magicka: 10,
-        exp: 0,
+        exp: 1,
         imageLocation: 'src/assets/images/player-image.jpg',
         locationX: 2,
         locationY: 'B',
@@ -35,6 +35,7 @@ export default {
         attackSuccess: "Your attack hits with damage: ",
         attackFailure: "Your attack fails",
         targetDead: "You have killed ",
+        inventoryFull: "Your inventory is full"
     },
     gameMenu: {
         menuOpenAtLoad: true,

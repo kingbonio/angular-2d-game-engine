@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AreaStateService } from './area-state.service';
 import { PlayerStateService } from './player-state.service';
 import { DialogueService } from './dialogue.service';
-import { InventoryManagerService } from './inventory-manager.service';
+import { InventoryManagerService } from '../../item/services/inventory-manager.service';
 import { GameStateService } from './game-state.service';
 import { IStateData, IAreaStateData, IPlayerStateData, IDialogueStateData, IInventoryStateData, IGameStateData } from '../interfaces';
 
