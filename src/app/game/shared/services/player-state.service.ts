@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Direction, InteractionTarget, ItemClass, CharacterType } from '../enums';
 import { IPlayerStateData, IInventoryItem } from '../interfaces';
 import { AreaStateService } from './area-state.service';
-import { IGridReferences } from '../../area/interfaces';
+import { IGridReferences, IAreaElement } from '../../area/interfaces';
 import { DialogueService } from './dialogue.service';
 import { UserActionTypes, UserInteractionTypes } from '../../../shared/enums';
 import { MovementComponent } from '../util/movement/movement.component';
@@ -214,7 +214,17 @@ export class PlayerStateService {
    * Interact with the object in the direction player is facing
    */
   public interact() {
-
+    const targetReference = this.movement.getNextLocation(this.locationY, this.locationX, this.direction);
+    // TODO Types
+    const target = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
+    if (target && (target.class === CharacterType.npc || target.class === CharacterType.enemy)) {
+      // Loot body if dead
+      if (this.battleCalculatorService.isDead(target.currentHp)) {
+        // this.areaStateService
+        return;
+      }
+      // TODO else...
+    }
   }
 
   /**

@@ -1,16 +1,2 @@
 .inventory-section {
-      width: 160px;
-      display: flex;
-      flex-wrap: wrap;
-      -moz-box-shadow:    inset 0 0 5px 5px #000000;
-      -webkit-box-shadow: inset 0 0 5px 5px #000000;
-      box-shadow:         inset 0 0 5px 5px #000000;
-
-      .slot {
-            width: 30px;
-            height: 30px;
-            border: solid 1px purple;
-            overflow: hidden;
-            cursor: pointer;
-      }
 }

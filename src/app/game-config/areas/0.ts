@@ -1,7 +1,5 @@
-import { MonsterClass, Direction, CharacterType, ItemClass, ArmourType } from "../../game/shared/enums";
+import { MonsterClass, Direction, CharacterType } from "../../game/shared/enums";
 import { IAreaElement } from "../../game/area/interfaces";
-import { IArmour } from "../../game/shared/interfaces";
-import { WeaponType } from "../../game/item/enums";
 import { Armour, Weapons } from "../items";
 import { IWeapons } from "../../game/item/interfaces";
 
@@ -48,6 +46,7 @@ export default {
                               concealed: null,
                               shield: null,
                         } as IWeapons,
+                        items: [],
                   },
                   startingPositionX: 4,
                   startingPositionY: "c",
@@ -68,6 +67,21 @@ export default {
                               allowPotion: false,
                               allowKey: false,
                         },
+                        armour: {
+                              head: null,
+                              arms: null,
+                              hands: null,
+                              torso: null,
+                              legs: null,
+                              boots: null,
+                        },
+                        weapons: {
+                              primary: null,
+                              secondary: null,
+                              concealed: null,
+                              shield: null,
+                        } as IWeapons,
+                        loot: [],
                   },
                   startingPositionX: 3,
                   startingPositionY: "e",

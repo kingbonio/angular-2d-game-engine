@@ -3,8 +3,8 @@ import { IGameStateData } from '../interfaces';
 
 @Injectable()
 export class GameStateService {
-  _isGameFinishedBooting;
-  _gamePaused;
+  _isGameFinishedBooting: boolean;
+  _gamePaused: boolean;
   @Output() performComputerMove: EventEmitter<any> = new EventEmitter();
 
   constructor() {

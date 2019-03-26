@@ -1,10 +1,7 @@
 <div class="inventory-section">
-  <div *ngFor="let itemSlot of inventoryManagerService.locationKeys(inventoryManagerService.locations)" class="inventory-box">
-    <!-- Click on item in inventory to place on character -->
-    <div class="slot">
-      <div class="item" *ngIf="inventoryManagerService.locations[itemSlot]" (click)="useItem(itemSlot)">
-        {{ inventoryManagerService.locations[itemSlot].name }}
-      </div>
-    </div>
-  </div>
+  <app-item-grid
+    [gridLocationKeys]="inventoryManagerService.locationKeys(inventoryManagerService.locations)"
+    [gridLocations]="inventoryManagerService.locations"
+    (clickItem)="useItem($event)">
+  </app-item-grid>
 </div>

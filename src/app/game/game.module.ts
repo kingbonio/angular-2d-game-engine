@@ -19,6 +19,8 @@ import { EquipmentComponent } from './item/equipment/equipment.component';
 import { EquipmentManagerService } from './item/services/equipment-manager.service';
 import { InventoryManagerService } from './item/services/inventory-manager.service';
 import { InventoryComponent } from './item/inventory/inventory.component';
+import { LootComponent } from './item/loot/loot.component';
+import { ItemGridComponent } from './item/item-grid/item-grid.component';
 
 @NgModule({
   imports: [
@@ -37,6 +39,8 @@ import { InventoryComponent } from './item/inventory/inventory.component';
     MovementComponent,
     EquipmentComponent,
     InventoryComponent,
+    LootComponent,
+    ItemGridComponent,
   ],
   providers: [
     AreaConfigProviderService,

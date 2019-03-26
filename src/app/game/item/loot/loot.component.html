@@ -1,0 +1,85 @@
+<div class="loot-container">
+  <div class="armour">
+    Armour:
+
+    <div class="head">
+      <span class="title">Head: </span>
+      <span class="slot" (click)="takeArmour(character.armour.head)">
+        {{ character.armour.head ? character.armour.head.name : "" }}
+      </span>
+    </div>
+
+    <div class="arms">
+      <span class="title">Arms: </span>
+      <span class="slot" (click)="takeArmour(character.armour.arms)">
+        {{ character.armour.arms ? character.armour.arms.name : "" }}
+      </span>
+    </div>
+
+    <div class="hands">
+      <span class="title">Hands: </span>
+      <span class="slot" (click)="takeArmour(character.armour.hands)">
+        {{ character.armour.hands ? character.armour.hands.name : "" }}
+      </span>
+    </div>
+
+    <div class="torso">
+      <span class="title">Torso: </span>
+      <span class="slot" (click)="takeArmour(character.armour.torso)">
+        {{ character.armour.torso ? character.armour.torso.name : "" }}
+      </span>
+    </div>
+
+    <div class="legs">
+      <span class="title">Legs: </span>
+      <span class="slot" (click)="takeArmour(character.armour.legs)">
+        {{ character.armour.legs ? character.armour.legs.name : "" }}
+      </span>
+    </div>
+
+    <div class="boots">
+      <span class="title">Boots: </span>
+      <span class="slot" (click)="takeArmour(character.armour.boots)">
+        {{ character.armour.boots ? character.armour.boots.name : "" }}
+      </span>
+    </div>
+
+    <div class="shield">
+      <span class="title">Shield: </span>
+      <span class="slot" (click)="takeArmour(character.armour.shield)">
+        {{ character.armour.shield ? character.armour.shield.name : "" }}
+      </span>
+    </div>
+  </div>
+
+  <div class="weapons">
+    Weapons:
+
+    <div class="primary">
+      <span class="title">Primary: </span>
+      <span class="slot" (click)="takeWeapon(character.weapons.primary)">
+        {{ character.weapons.primary ? character.weapons.primary.name : "" }}
+      </span>
+    </div>
+
+    <div class="secondary">
+      <span class="title">Secondary: </span>
+      <span class="slot" (click)="takeWeapon(character.weapons.secondary)">
+        {{ character.weapons.secondary ? character.weapons.secondary.name : "" }}
+      </span>
+    </div>
+
+    <div class="concealed">
+      <span class="title">Concealed: </span>
+      <span class="slot" (click)="takeWeapon(character.weapons.concealed)">
+        {{ character.weapons.concealed ? character.weapons.concealed.name : "" }}
+      </span>
+    </div>
+
+  </div>
+  <div class="items">
+    <div class="loot-item">
+
+    </div>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 import { Character } from "./character";
 import { MonsterClass, CharacterType, Direction } from "../shared/enums";
 import { UserInteractionTypes } from "../../shared/enums";
-import { IArmour } from "../shared/interfaces";
+import { IArmour, IWeapons, IInventoryItem } from "../item/interfaces";
 
 export class Enemy extends Character {
       // private movement: Movement;
@@ -16,6 +16,8 @@ export class Enemy extends Character {
       public isAsleep: boolean;
       public direction: Direction;
       public armour: IArmour;
+      public weapons: IWeapons;
+      public loot: IInventoryItem[];
 
       constructor(characterDetails: any) {
             // TODO: Resolve any
@@ -32,6 +34,8 @@ export class Enemy extends Character {
             this.currentHp = this.maxHp;
             this.xp = 0;
             this.armour = characterDetails.equippedArmour;
+            this.weapons = characterDetails.equippedWeapons;
+            this.loot = characterDetails.loot;
       }
 
       public respond(interaction: UserInteractionTypes, directionToFace: Direction, damage: number) {
