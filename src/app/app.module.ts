@@ -23,7 +23,7 @@ import { MovementComponent } from './util/movement/movement.component';
     AppComponent,
     MainMenuComponent,
     InGameMenuComponent,
-    MovementComponent
+    MovementComponent,
   ],
   providers: [
     AreaStateService,
