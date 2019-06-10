@@ -33,8 +33,8 @@ export class Enemy extends Character {
             this.maxHp = characterDetails.maxHp;
             this.currentHp = this.maxHp;
             this.xp = 0;
-            this.armour = characterDetails.equippedArmour;
-            this.weapons = characterDetails.equippedWeapons;
+            this.armour = characterDetails.armour;
+            this.weapons = characterDetails.weapons;
             this.loot = characterDetails.loot;
       }
 

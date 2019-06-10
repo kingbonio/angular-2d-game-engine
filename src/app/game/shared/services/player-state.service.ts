@@ -11,6 +11,7 @@ import { Character } from '../../character-classes/character';
 import { BattleCalculatorService } from './battle-calculator.service';
 import { IWeapons } from '../../item/interfaces';
 import { WeaponType } from '../../item/enums';
+import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
 
 @Injectable()
 export class PlayerStateService {
@@ -19,11 +20,13 @@ export class PlayerStateService {
   private _strength: number;
   private _dexterity: number;
   private _magicka: number;
-  private _exp: number;
+  private _exp: number = defaults.initialPlayerStats.exp;
   public locationX: number;
   public locationY: string;
   public direction: Direction = Direction.N;
-  public selectedWeaponSlot: WeaponType;
+  // TODO default (maybe even scrap the whole options for now)
+  // TODO maybe move this to equipment manager
+  public selectedWeaponSlot: WeaponType = WeaponType.primary;
   // public location: string;
 
 
@@ -31,7 +34,8 @@ export class PlayerStateService {
     private areaStateService: AreaStateService,
     private dialogueService: DialogueService,
     private movement: MovementComponent,
-    private battleCalculatorService: BattleCalculatorService
+    private battleCalculatorService: BattleCalculatorService,
+    private equipmentManagerService: EquipmentManagerService,
   ) {
   }
 
@@ -42,10 +46,7 @@ export class PlayerStateService {
     this._strength = defaults.initialPlayerStats.strength;
     this._dexterity = defaults.initialPlayerStats.dexterity;
     this._magicka = defaults.initialPlayerStats.magicka;
-    this._exp = defaults.initialPlayerStats.exp;
     this.direction = defaults.initialPlayerStats.direction;
-    // TODO default
-    this.selectedWeaponSlot = WeaponType.primary;
   }
 
   get health() {
@@ -177,36 +178,49 @@ export class PlayerStateService {
    * Perform an attack in the direction player is facing
    */
   public attack() {
-    const targetReference = this.movement.getNextLocation(this.locationY, this.locationX, this.direction);
-    const target = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
+    if (this.equipmentManagerService.getWeaponType(this.selectedWeaponSlot)) {
+      const targetReference = this.movement.getNextLocation(this.locationY, this.locationX, this.direction);
+      const target = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
 
-    if (target) {
-      if (this.battleCalculatorService.isDead(target.currentHp)) {
-        this.dialogueService.displayDialogueMessage({
-          text: defaults.dialogue.nullElementResponse,
+      if (target) {
+        if (this.battleCalculatorService.isDead(target.currentHp)) {
+          this.dialogueService.displayDialogueMessage({
+            text: defaults.dialogue.nullElementResponse,
+            character: defaults.dialogue.computerCharacterType,
+            name: defaults.dialogue.computerName
+          });
+          return;
+        }
+
+        const damage = this.battleCalculatorService.calculateDamageToEnemy(target, this.selectedWeaponSlot, this.levelMultiplyer);
+
+        if (damage) {
+          // TODO this can possibly just be target.currentHp
+          const targetCurrentHp = target.respond(UserInteractionTypes.attack, this.movement.getDirectionToFace(this.direction), damage);
+
+          this.dialogueService.displayDialogueMessage({
+            text: defaults.dialogue.attackSuccess + damage,
+            character: defaults.dialogue.computerCharacterType,
+            name: defaults.dialogue.computerName
+          });
+
+          if (this.battleCalculatorService.isDead(targetCurrentHp)) {
+            this.dialogueService.displayDialogueMessage({
+              text: defaults.dialogue.targetDead + target.name,
+              character: defaults.dialogue.computerCharacterType,
+              name: defaults.dialogue.computerName
+            });
+          }
+        }
+      }
+    } else {
+      this.dialogueService.displayDialogueMessage(
+        {
+          text: defaults.dialogue.noWeaponEquipped,
           character: defaults.dialogue.computerCharacterType,
           name: defaults.dialogue.computerName
-        });
-        return;
-      }
-
-      const damage = this.battleCalculatorService.calculateDamageToEnemy(target, this.selectedWeaponSlot, this.levelMultiplyer);
-      // TODO this can possibly just be target.currentHp
-      const targetCurrentHp = target.respond(UserInteractionTypes.attack, this.movement.getDirectionToFace(this.direction), damage);
-
-      this.dialogueService.displayDialogueMessage({
-        text: damage > 0 ? defaults.dialogue.attackSuccess + damage : defaults.dialogue.attackFailure,
-        character: defaults.dialogue.computerCharacterType,
-        name: defaults.dialogue.computerName
-      });
-
-      if (this.battleCalculatorService.isDead(targetCurrentHp)) {
-        this.dialogueService.displayDialogueMessage({
-          text: defaults.dialogue.targetDead + target.name,
-          character: defaults.dialogue.computerCharacterType,
-          name: defaults.dialogue.computerName
-        });
-      }
+        }
+      );
     }
   }
 
