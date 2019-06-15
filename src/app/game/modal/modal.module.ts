@@ -11,6 +11,8 @@ import { InsertionDirective } from './directives/insertion.directive';
     ModalComponent,
     InsertionDirective,
   ],
-  entryComponents: [ModalComponent],
+  entryComponents: [
+    ModalComponent
+  ],
 })
 export class ModalModule { }
