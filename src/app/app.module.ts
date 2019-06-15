@@ -11,7 +11,6 @@ import { MenuStateService } from './shared/services/menu-state.service';
 import { UserInputService } from './shared/services/user-input.service';
 import { AreaStateService } from './game/shared/services/area-state.service';
 import { MovementComponent } from './util/movement/movement.component';
-import { ExampleComponent } from './example/example.component';
 
 
 @NgModule({
@@ -25,7 +24,6 @@ import { ExampleComponent } from './example/example.component';
     MainMenuComponent,
     InGameMenuComponent,
     MovementComponent,
-    ExampleComponent,
   ],
   providers: [
     AreaStateService,

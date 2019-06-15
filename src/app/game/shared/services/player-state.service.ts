@@ -12,7 +12,6 @@ import { BattleCalculatorService } from './battle-calculator.service';
 import { IWeapons } from '../../item/interfaces';
 import { WeaponType } from '../../item/enums';
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
-import { ModalService } from '../../modal/services/modal.service';
 
 @Injectable()
 export class PlayerStateService {
@@ -37,7 +36,6 @@ export class PlayerStateService {
     private movement: MovementComponent,
     private battleCalculatorService: BattleCalculatorService,
     private equipmentManagerService: EquipmentManagerService,
-    private modalService: ModalService,
   ) {
   }
 

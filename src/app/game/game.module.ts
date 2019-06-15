@@ -21,7 +21,6 @@ import { InventoryManagerService } from './item/services/inventory-manager.servi
 import { InventoryComponent } from './item/inventory/inventory.component';
 import { LootComponent } from './item/loot/loot.component';
 import { ItemGridComponent } from './item/item-grid/item-grid.component';
-import { ModalService } from './modal/services/modal.service';
 
 @NgModule({
   imports: [
@@ -51,7 +50,6 @@ import { ModalService } from './modal/services/modal.service';
     MovementComponent,
     EquipmentManagerService,
     InventoryManagerService,
-    ModalService,
   ]
 })
 export class GameModule { }
