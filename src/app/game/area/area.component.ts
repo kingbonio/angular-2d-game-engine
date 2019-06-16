@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IInventoryItem, IMonster } from '../shared/interfaces';
 import { IAreaElement, IGridReferences, IPuzzle } from './interfaces';
-import { copyConfig } from '@angular/router/src/config';
 import { ILevelData } from './interfaces/ilevel-data';
 import { AreaType } from './enums/area-type';
 import { ActivatedRoute } from '@angular/router';
@@ -34,7 +33,7 @@ export class AreaComponent implements OnInit {
   constructor(
     public areaStateService: AreaStateService,
     private route: ActivatedRoute,
-    private areaConfigProvider: AreaConfigProviderService,
+    public areaConfigProviderService: AreaConfigProviderService,
     public playerStateService: PlayerStateService,
     public battleCalculatorService: BattleCalculatorService,
   ) {
@@ -76,7 +75,7 @@ export class AreaComponent implements OnInit {
 
   private prepareArea(): void {
     // get the config from the provider
-    this.areaConfig = this.areaConfigProvider.getConfig(this.areaStateService.currentLocation);
+    this.areaConfig = this.areaConfigProviderService.getConfig(this.areaStateService.currentLocation);
     // Set the player location
     // TODO This won't work, needs moving into the loop with a check on player
     this.playerStateService.locationY = this.areaConfig.default.areaElements[0].startingPositionY;

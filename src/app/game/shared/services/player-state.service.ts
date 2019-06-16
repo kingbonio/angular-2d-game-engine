@@ -236,6 +236,8 @@ export class PlayerStateService {
       if (this.battleCalculatorService.isDead(target.currentHp)) {
         // Load a modal with the contents of the character's inventory
         // this.modalService.open("type");
+        
+        // TODO
         // this.areaStateService
         return;
       }
