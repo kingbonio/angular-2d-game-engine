@@ -7,7 +7,6 @@ import { Observable } from 'rxjs/Observable';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Subscription } from 'rxjs/Subscription';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { LootingComponent } from './item/looting/looting.component';
 
 @Component({
   selector: 'app-game-root',
@@ -22,7 +21,6 @@ export class GameComponent implements OnInit, OnDestroy {
     public playerStateService: PlayerStateService,
     public dialogueService: DialogueService,
     public userInputService: UserInputService,
-    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -31,21 +29,6 @@ export class GameComponent implements OnInit, OnDestroy {
     });
   }
 
-  openDialog(data = { message: "hello" }) {
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true; // Maybe not necessary
-    dialogConfig.hasBackdrop = false;
-    dialogConfig.data = data;
-
-    const dialogRef = this.dialog.open(LootingComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(returnData => {
-      console.log("some data: ", returnData);
-    });
-
-  }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();

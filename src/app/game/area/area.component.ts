@@ -12,6 +12,8 @@ import { PlayerStateService } from '../shared/services/player-state.service';
 import { Enemy, NPC, Player } from '../character-classes/';
 import { Character } from '../character-classes/character';
 import { BattleCalculatorService } from '../shared/services/battle-calculator.service';
+import { MatDialogConfig, MatDialog, MatDialogRef } from '@angular/material';
+import { LootingComponent } from '../item/looting/looting.component';
 
 @Component({
   selector: 'app-area',
@@ -29,6 +31,7 @@ export class AreaComponent implements OnInit {
   private isEnd: boolean;
   public character = CharacterType;
   public direction = Direction;
+  private modalRef: MatDialogRef<any>;
 
   constructor(
     public areaStateService: AreaStateService,
@@ -36,7 +39,11 @@ export class AreaComponent implements OnInit {
     public areaConfigProviderService: AreaConfigProviderService,
     public playerStateService: PlayerStateService,
     public battleCalculatorService: BattleCalculatorService,
+    private dialog: MatDialog,
   ) {
+    this.playerStateService.openLootingModal.subscribe((target: Character) => {
+      this.openLootingModal(target);
+    });
   }
 
   ngOnInit() {
@@ -52,6 +59,28 @@ export class AreaComponent implements OnInit {
     // // Build the area
     // // Set Items first
     this.prepareArea();
+    // TODO Event listener with handler openLootingModal()
+  }
+
+  /**
+   * Opens the looting component modal allowing manipulation of target's inventory
+   * @param items The character we want to loot
+   */
+  private openLootingModal(target: Character) {
+    if (!this.modalRef) {
+      const modalConfig = new MatDialogConfig();
+
+      modalConfig.disableClose = true;
+      modalConfig.autoFocus = true; // Maybe not necessary
+      modalConfig.hasBackdrop = false;
+      modalConfig.data = target;
+
+      this.modalRef = this.dialog.open(LootingComponent, modalConfig);
+
+      // this.modalRef.afterClosed().subscribe(returnData => {
+      //   console.log("some data: ", returnData);
+      // });
+    }
   }
 
   public getDirectionClass(gridCharacter: Character) {

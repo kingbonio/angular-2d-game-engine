@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
@@ -16,6 +17,7 @@ import { MovementComponent } from './util/movement/movement.component';
 @NgModule({
   imports: [
     BrowserModule,
+    NoopAnimationsModule,
     GameModule,
     AppRoutingModule,
   ],

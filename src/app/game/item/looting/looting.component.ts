@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { IInventoryItem } from '../interfaces';
+import { Weapons } from '../../../game-config/items';
 
 @Component({
   selector: 'app-looting',
@@ -8,30 +9,18 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   styleUrls: ['./looting.component.scss']
 })
 export class LootingComponent implements OnInit {
-  form: FormGroup;
-  description: string;
+  items: IInventoryItem[];
 
   constructor(
     private dialogRef: MatDialogRef<LootingComponent>,
-    private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) data,
   ) {
-    this.description = data.description;
+    this.items = data.loot;
+    // TODO Remove this
+    this.items.push(Weapons.basicKnife);
   }
 
   ngOnInit() {
-    this.form = this.fb.group({
-      description: [this.description, []],
-      // ...
-    });
-  }
-
-  public save() {
-    this.dialogRef.close(this.form.value);
-  }
-
-  public close() {
-    this.dialogRef.close();
   }
 
 }
