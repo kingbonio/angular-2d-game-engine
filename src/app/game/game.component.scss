@@ -2,16 +2,30 @@
     width: 568px;
 
     app-area {
-        display: block;
+        display: inline-block;
+        float: left;
         height: 560px;
         border: solid #000 4px;
     }
     
     .dialogue-area {
-        width: 100%;
+        position: relative;
+        display: inline-block;
+        float: left;
+        width: 567px;
         height: 60px;
         border: solid #000 1px;
-        border-radius: 5px;
+        z-index: 2;
+        background-color: #cccc33;
+    }
+
+    .player-menu {
+        position: absolute;
+        display: inline-block;
+        height: 608px;
+        padding: 10px;  
+        border: solid #000 1px;
+        background-color: #ffff66;
     }
 
     .game-control {

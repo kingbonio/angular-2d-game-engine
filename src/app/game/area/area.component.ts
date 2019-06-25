@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { IInventoryItem, IMonster } from '../shared/interfaces';
 import { IAreaElement, IGridReferences, IPuzzle } from './interfaces';
 import { ILevelData } from './interfaces/ilevel-data';
@@ -12,8 +12,9 @@ import { PlayerStateService } from '../shared/services/player-state.service';
 import { Enemy, NPC, Player } from '../character-classes/';
 import { Character } from '../character-classes/character';
 import { BattleCalculatorService } from '../shared/services/battle-calculator.service';
-import { MatDialogConfig, MatDialog, MatDialogRef } from '@angular/material';
-import { LootingComponent } from '../item/looting/looting.component';
+import { MatDialogConfig, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Weapons } from '../../game-config/items';
+import { LootingModalComponent } from '../item/looting/looting-modal.component';
 
 @Component({
   selector: 'app-area',
@@ -70,16 +71,20 @@ export class AreaComponent implements OnInit {
     if (!this.modalRef) {
       const modalConfig = new MatDialogConfig();
 
-      modalConfig.disableClose = true;
+      modalConfig.disableClose = false;
       modalConfig.autoFocus = true; // Maybe not necessary
-      modalConfig.hasBackdrop = false;
+      modalConfig.hasBackdrop = true;
+      modalConfig.width = '300px';
+      modalConfig.height = '200px';
       modalConfig.data = target;
+      modalConfig.panelClass = "looting-modal";
 
-      this.modalRef = this.dialog.open(LootingComponent, modalConfig);
 
-      // this.modalRef.afterClosed().subscribe(returnData => {
-      //   console.log("some data: ", returnData);
-      // });
+      this.modalRef = this.dialog.open(LootingModalComponent, modalConfig);
+
+      this.modalRef.afterClosed().subscribe(returnData => {
+        this.modalRef = null;
+      });
     }
   }
 
@@ -151,5 +156,26 @@ export class AreaComponent implements OnInit {
       type: AreaType.puzzle
     } as ILevelData;
   }
-
 }
+
+// @Component({
+//   selector: 'app-looting',
+//   templateUrl: './looting-modal.component.html',
+// })
+// export class LootingModalComponent implements OnInit {
+//   items: IInventoryItem[];
+
+//   constructor(
+//     private dialogRef: MatDialogRef<LootingModalComponent>,
+//     @Inject(MAT_DIALOG_DATA) data,
+//   ) {
+//     this.items = data.loot;
+//     // TODO Remove this
+//     this.items.push(Weapons.basicKnife);
+//   }
+
+//   ngOnInit() {
+//   }
+
+// }
+

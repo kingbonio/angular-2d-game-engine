@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LootingComponent } from './looting.component';
+import { LootingModalComponent } from './looting-modal.component';
 
 describe('LootingComponent', () => {
-  let component: LootingComponent;
-  let fixture: ComponentFixture<LootingComponent>;
+  let component: LootingModalComponent;
+  let fixture: ComponentFixture<LootingModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LootingComponent ]
+      declarations: [ LootingModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LootingComponent);
+    fixture = TestBed.createComponent(LootingModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

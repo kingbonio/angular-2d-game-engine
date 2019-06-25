@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    margin: 0px;
+}
+
+app-area {
+      position: relative;
+}
+
+.cdk-overlay-container {
+      left: 144px;
+      top: 200px;
+      position: absolute;
+      padding-top: 0px;
+
+}
+
+.dk-overlay-container.mat-dialog-container {
+      display: block;
+      padding: 0px;
+      border-radius: 0px;
+      box-sizing: border-box;
+      overflow: auto;
+      outline: 0;
+      width: 100%;
+      height: 100%;
+      min-height: inherit;
+      max-height: inherit;
+}
+
+.looting-modal {
+      background-color: #ec8013;
+}

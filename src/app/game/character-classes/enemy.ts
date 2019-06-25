@@ -35,7 +35,18 @@ export class Enemy extends Character {
             this.xp = 0;
             this.armour = characterDetails.armour;
             this.weapons = characterDetails.weapons;
+            // TODO this could be more efficient
             this.loot = characterDetails.loot;
+            if (this.loot) {
+                  characterDetails.loot.forEach((item: IInventoryItem) => {
+                        for (const slot in this.inventoryLocations) {
+                              if (this.inventoryLocations.hasOwnProperty(slot) && !this.inventoryLocations[slot]) {
+                                    this.inventoryLocations[slot] = item;
+                                    return;
+                              }
+                        }
+                  });
+            }
       }
 
       public respond(interaction: UserInteractionTypes, directionToFace: Direction, damage: number) {

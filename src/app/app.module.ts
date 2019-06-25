@@ -2,7 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
@@ -18,6 +19,7 @@ import { MovementComponent } from './util/movement/movement.component';
   imports: [
     BrowserModule,
     NoopAnimationsModule,
+    MatDialogModule,
     GameModule,
     AppRoutingModule,
   ],
@@ -32,6 +34,6 @@ import { MovementComponent } from './util/movement/movement.component';
     MenuStateService,
     UserInputService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
