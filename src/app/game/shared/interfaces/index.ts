@@ -6,8 +6,6 @@ export * from "./idialogue-state-data";
 export * from "./iinventory-state-data";
 export * from "../../item/interfaces/iinventory-item";
 export * from "./iitem-properties";
-export * from "./iarmour";
-export * from "./iweapons";
 export * from "../../area/interfaces/ienemy";
 export * from "./ilootParameters";
 export * from "./iLocation";

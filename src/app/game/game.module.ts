@@ -19,11 +19,20 @@ import { EquipmentComponent } from './item/equipment/equipment.component';
 import { EquipmentManagerService } from './item/services/equipment-manager.service';
 import { InventoryManagerService } from './item/services/inventory-manager.service';
 import { InventoryComponent } from './item/inventory/inventory.component';
+import { LootComponent } from './item/loot/loot.component';
+import { ItemGridComponent } from './item/item-grid/item-grid.component';
+import { LootingModalComponent } from './item/looting/looting-modal.component';
+import { MatDialogModule } from '@angular/material';
+import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   imports: [
+    BrowserModule,
     CommonModule,
-    GameRoutingModule
+    NoopAnimationsModule,
+    MatDialogModule,
+    GameRoutingModule,
   ],
   declarations: [
     GameComponent,
@@ -37,6 +46,9 @@ import { InventoryComponent } from './item/inventory/inventory.component';
     MovementComponent,
     EquipmentComponent,
     InventoryComponent,
+    LootComponent,
+    ItemGridComponent,
+    LootingModalComponent,
   ],
   providers: [
     AreaConfigProviderService,
@@ -46,6 +58,9 @@ import { InventoryComponent } from './item/inventory/inventory.component';
     MovementComponent,
     EquipmentManagerService,
     InventoryManagerService,
-  ]
+  ],
+  entryComponents: [
+    LootingModalComponent,
+  ],
 })
 export class GameModule { }

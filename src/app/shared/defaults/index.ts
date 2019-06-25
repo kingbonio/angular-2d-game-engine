@@ -35,7 +35,8 @@ export default {
         attackSuccess: "Your attack hits with damage: ",
         attackFailure: "Your attack fails",
         targetDead: "You have killed ",
-        inventoryFull: "Your inventory is full"
+        inventoryFull: "Your inventory is full",
+        noWeaponEquipped: "You have no weapon equipped to attack with"
     },
     gameMenu: {
         menuOpenAtLoad: true,

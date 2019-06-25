@@ -1,7 +1,5 @@
-import { MonsterClass, Direction, CharacterType, ItemClass, ArmourType } from "../../game/shared/enums";
+import { MonsterClass, Direction, CharacterType } from "../../game/shared/enums";
 import { IAreaElement } from "../../game/area/interfaces";
-import { IArmour } from "../../game/shared/interfaces";
-import { WeaponType } from "../../game/item/enums";
 import { Armour, Weapons } from "../items";
 import { IWeapons } from "../../game/item/interfaces";
 
@@ -22,7 +20,7 @@ export default {
                   elementClass: {
                         asleep: true,
                         level: 1,
-                        maxHp: 10,
+                        maxHp: 2,
                         name: "Gary The Dick",
                         class: MonsterClass.Human,
                         direction: Direction.N,
@@ -48,6 +46,9 @@ export default {
                               concealed: null,
                               shield: null,
                         } as IWeapons,
+                        loot: [
+                              Armour.leatherBoots,
+                        ],
                   },
                   startingPositionX: 4,
                   startingPositionY: "c",
@@ -68,6 +69,21 @@ export default {
                               allowPotion: false,
                               allowKey: false,
                         },
+                        armour: {
+                              head: null,
+                              arms: null,
+                              hands: null,
+                              torso: null,
+                              legs: null,
+                              boots: null,
+                        },
+                        weapons: {
+                              primary: null,
+                              secondary: null,
+                              concealed: null,
+                              shield: null,
+                        } as IWeapons,
+                        loot: [],
                   },
                   startingPositionX: 3,
                   startingPositionY: "e",

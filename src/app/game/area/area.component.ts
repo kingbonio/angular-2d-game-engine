@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { IInventoryItem, IMonster } from '../shared/interfaces';
 import { IAreaElement, IGridReferences, IPuzzle } from './interfaces';
-import { copyConfig } from '@angular/router/src/config';
 import { ILevelData } from './interfaces/ilevel-data';
 import { AreaType } from './enums/area-type';
 import { ActivatedRoute } from '@angular/router';
@@ -13,6 +12,9 @@ import { PlayerStateService } from '../shared/services/player-state.service';
 import { Enemy, NPC, Player } from '../character-classes/';
 import { Character } from '../character-classes/character';
 import { BattleCalculatorService } from '../shared/services/battle-calculator.service';
+import { MatDialogConfig, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Weapons } from '../../game-config/items';
+import { LootingModalComponent } from '../item/looting/looting-modal.component';
 
 @Component({
   selector: 'app-area',
@@ -30,14 +32,19 @@ export class AreaComponent implements OnInit {
   private isEnd: boolean;
   public character = CharacterType;
   public direction = Direction;
+  private modalRef: MatDialogRef<any>;
 
   constructor(
     public areaStateService: AreaStateService,
     private route: ActivatedRoute,
-    private areaConfigProvider: AreaConfigProviderService,
+    public areaConfigProviderService: AreaConfigProviderService,
     public playerStateService: PlayerStateService,
     public battleCalculatorService: BattleCalculatorService,
+    private dialog: MatDialog,
   ) {
+    this.playerStateService.openLootingModal.subscribe((target: Character) => {
+      this.openLootingModal(target);
+    });
   }
 
   ngOnInit() {
@@ -53,6 +60,32 @@ export class AreaComponent implements OnInit {
     // // Build the area
     // // Set Items first
     this.prepareArea();
+    // TODO Event listener with handler openLootingModal()
+  }
+
+  /**
+   * Opens the looting component modal allowing manipulation of target's inventory
+   * @param items The character we want to loot
+   */
+  private openLootingModal(target: Character) {
+    if (!this.modalRef) {
+      const modalConfig = new MatDialogConfig();
+
+      modalConfig.disableClose = false;
+      modalConfig.autoFocus = true; // Maybe not necessary
+      modalConfig.hasBackdrop = true;
+      modalConfig.width = '300px';
+      modalConfig.height = '200px';
+      modalConfig.data = target;
+      modalConfig.panelClass = "looting-modal";
+
+
+      this.modalRef = this.dialog.open(LootingModalComponent, modalConfig);
+
+      this.modalRef.afterClosed().subscribe(returnData => {
+        this.modalRef = null;
+      });
+    }
   }
 
   public getDirectionClass(gridCharacter: Character) {
@@ -76,7 +109,7 @@ export class AreaComponent implements OnInit {
 
   private prepareArea(): void {
     // get the config from the provider
-    this.areaConfig = this.areaConfigProvider.getConfig(this.areaStateService.currentLocation);
+    this.areaConfig = this.areaConfigProviderService.getConfig(this.areaStateService.currentLocation);
     // Set the player location
     // TODO This won't work, needs moving into the loop with a check on player
     this.playerStateService.locationY = this.areaConfig.default.areaElements[0].startingPositionY;
@@ -123,5 +156,26 @@ export class AreaComponent implements OnInit {
       type: AreaType.puzzle
     } as ILevelData;
   }
-
 }
+
+// @Component({
+//   selector: 'app-looting',
+//   templateUrl: './looting-modal.component.html',
+// })
+// export class LootingModalComponent implements OnInit {
+//   items: IInventoryItem[];
+
+//   constructor(
+//     private dialogRef: MatDialogRef<LootingModalComponent>,
+//     @Inject(MAT_DIALOG_DATA) data,
+//   ) {
+//     this.items = data.loot;
+//     // TODO Remove this
+//     this.items.push(Weapons.basicKnife);
+//   }
+
+//   ngOnInit() {
+//   }
+
+// }
+

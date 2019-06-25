@@ -1,7 +1,7 @@
 import { Character } from "./character";
 import { CharacterType, Direction } from "../shared/enums";
 import { UserInteractionTypes } from "../../shared/enums";
-import { IArmour } from "../shared/interfaces";
+import { IWeapons, IArmour, IInventoryItem } from "../item/interfaces";
 
 export class NPC extends Character {
       public type = CharacterType.npc;
@@ -15,6 +15,8 @@ export class NPC extends Character {
       public isAsleep: boolean;
       public direction: Direction;
       public armour: IArmour;
+      public weapons: IWeapons;
+      loot: IInventoryItem[];
 
       constructor(characterDetails: any) {
             // TODO: Resolve any
@@ -30,6 +32,17 @@ export class NPC extends Character {
             this.currentHp = this.maxHp;
             this.xp = 0;
             this.armour = characterDetails.equippedArmour;
+            this.loot = characterDetails.loot;
+            if (this.loot) {
+                  characterDetails.loot.forEach((item: IInventoryItem) => {
+                        for (const slot in this.inventoryLocations) {
+                              if (this.inventoryLocations.hasOwnProperty(slot) && !this.inventoryLocations[slot]) {
+                                    this.inventoryLocations[slot] = item;
+                                    return;
+                              }
+                        }
+                  });
+            }
       }
 
       public respond(interaction: UserInteractionTypes, directionToFace: Direction, damage: number) {

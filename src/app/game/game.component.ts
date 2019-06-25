@@ -6,13 +6,14 @@ import { UserInputService } from '../shared/services/user-input.service';
 import { Observable } from 'rxjs/Observable';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Subscription } from 'rxjs/Subscription';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 
 @Component({
   selector: 'app-game-root',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss']
 })
-export class GameComponent implements OnInit, OnDestroy{
+export class GameComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   title = 'game';
 
@@ -27,6 +28,7 @@ export class GameComponent implements OnInit, OnDestroy{
       this.userInputService.keyDownEventHandler($e);
     });
   }
+
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
