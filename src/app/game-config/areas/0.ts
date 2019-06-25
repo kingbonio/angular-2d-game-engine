@@ -20,7 +20,7 @@ export default {
                   elementClass: {
                         asleep: true,
                         level: 1,
-                        maxHp: 10,
+                        maxHp: 2,
                         name: "Gary The Dick",
                         class: MonsterClass.Human,
                         direction: Direction.N,
@@ -46,7 +46,9 @@ export default {
                               concealed: null,
                               shield: null,
                         } as IWeapons,
-                        items: [],
+                        loot: [
+                              Armour.leatherBoots,
+                        ],
                   },
                   startingPositionX: 4,
                   startingPositionY: "c",

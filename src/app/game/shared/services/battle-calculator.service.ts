@@ -38,7 +38,7 @@ export class BattleCalculatorService {
     const equippedWeaponDamage = equippedWeapon.properties.damage + levelMultiplyer;
 
     // Round up the damage to the nearest whole number
-    damageTaken = Math.ceil(equippedWeaponDamage / totalArmourValue);
+    damageTaken = Math.ceil(equippedWeaponDamage / (totalArmourValue + 1));
 
     return damageTaken;
   }

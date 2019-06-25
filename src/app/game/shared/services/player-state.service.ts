@@ -1,5 +1,5 @@
 import defaults from '../../../shared/defaults';
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Direction, InteractionTarget, ItemClass, CharacterType } from '../enums';
 import { IPlayerStateData, IInventoryItem } from '../interfaces';
 import { AreaStateService } from './area-state.service';
@@ -12,10 +12,11 @@ import { BattleCalculatorService } from './battle-calculator.service';
 import { IWeapons } from '../../item/interfaces';
 import { WeaponType } from '../../item/enums';
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
-import { ModalService } from '../../modal/services/modal.service';
 
 @Injectable()
 export class PlayerStateService {
+  @Output() openLootingModal: EventEmitter<any> = new EventEmitter();
+
   private _health: number;
   private _maxHealth: number;
   private _strength: number;
@@ -37,7 +38,6 @@ export class PlayerStateService {
     private movement: MovementComponent,
     private battleCalculatorService: BattleCalculatorService,
     private equipmentManagerService: EquipmentManagerService,
-    private modalService: ModalService,
   ) {
   }
 
@@ -233,11 +233,16 @@ export class PlayerStateService {
     const targetReference = this.movement.getNextLocation(this.locationY, this.locationX, this.direction);
     // TODO Types
     const target = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
-    if (target && (target.class === CharacterType.npc || target.class === CharacterType.enemy)) {
+    if (target && target.loot) {
       // Loot body if dead
       if (this.battleCalculatorService.isDead(target.currentHp)) {
         // Load a modal with the contents of the character's inventory
         // this.modalService.open("type");
+
+        // Emit event for looting modal
+        this.openLootingModal.emit(target);
+
+        // TODO
         // this.areaStateService
         return;
       }
