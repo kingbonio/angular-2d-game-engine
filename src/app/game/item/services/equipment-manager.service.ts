@@ -20,6 +20,7 @@ export class EquipmentManagerService {
     concealed: null,
     shield: null,
   };
+  public activeItem: IInventoryItem;
 
   constructor(
     private inventoryManagerService: InventoryManagerService
@@ -72,6 +73,10 @@ export class EquipmentManagerService {
 
   public removeWeapon(weaponSlot: WeaponType) {
     this.weapons[weaponSlot] = null;
+  }
+
+  public removeActiveItem() {
+    this.activeItem = null;
   }
 
   /**

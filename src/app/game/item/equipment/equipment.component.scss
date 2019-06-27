@@ -1,7 +1,7 @@
 .character-section {
       border: solid 1px black;
 
-      .armour, .weapons {
+      .armour, .weapons, .active-items {
             border: solid 1px black;
 
             .title {
@@ -12,8 +12,8 @@
             .slot {
                   display: inline-block;
                   border: solid 1px red;
-                  min-width: 20px;
-                  height: 20px;
+                  min-width: 30px;
+                  height: 30px;
                   cursor: pointer;
             }
       }

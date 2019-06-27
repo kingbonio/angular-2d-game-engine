@@ -47,7 +47,7 @@ export default {
                               shield: null,
                         } as IWeapons,
                         loot: [
-                              Armour.leatherBoots,
+                              Armour.ironHelmet,
                         ],
                   },
                   startingPositionX: 4,

@@ -26,14 +26,15 @@ export class AreaConfigProviderService implements OnInit {
   // TODO Probably move this to another class
   private assignEquipmentToPlayer() {
     // TODO This might be useful when properly setting equipment
-    // this.equipmentManagerService.setWeaponType(Weapons.cuthroatRazor);
+    // this.equipmentManagerService.setWeaponType(Weapons.cutthroatRazor);
   }
 
   private assignItemsToInventory() {
     // TODO This might be useful when properly setting equipment
-    this.inventoryManagerService.addItemToInventory(Weapons.cuthroatRazor);
-    this.inventoryManagerService.addItemToInventory(Armour.leatherHelmet);
-    this.inventoryManagerService.addItemToInventory(Armour.fedora);
+    this.inventoryManagerService.addItemToInventory(Weapons.sword);
+    this.inventoryManagerService.addItemToInventory(Weapons.axe);
+    this.inventoryManagerService.addItemToInventory(Armour.leatherChestPiece);
+    this.inventoryManagerService.addItemToInventory(Armour.ironHelmet);
   }
 
   /**

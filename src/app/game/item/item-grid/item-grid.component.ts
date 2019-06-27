@@ -22,4 +22,9 @@ export class ItemGridComponent implements OnInit {
     this.clickItem.emit(itemSlot);
   }
 
+  // TODO duplicate code
+  public getImageSource(item: IInventoryItem) {
+    return 'assets/images/' + item.class + "/" + item.imageFileName;
+  }
+
 }

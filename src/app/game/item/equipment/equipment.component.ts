@@ -32,4 +32,15 @@ export class EquipmentComponent implements OnInit {
     }
   }
 
+  public removeActiveItem(item: IInventoryItem) {
+    if (item) {
+      this.inventoryManagerService.addItemToInventory(item);
+      this.equipmentManagerService.removeActiveItem();
+    }
+  }
+
+  public getImageSource(item: IInventoryItem) {
+    return 'assets/images/' + item.class + "/" + item.imageFileName;
+  }
+
 }

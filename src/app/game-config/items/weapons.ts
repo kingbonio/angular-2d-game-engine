@@ -17,8 +17,8 @@ export const Weapons = {
                   damage: 10,
             },
       },
-      cuthroatRazor: {
-            name: "Cuthroat Razor",
+      cutthroatRazor: {
+            name: "Cutthroat Razor",
             class: ItemClass.weapon,
             armourSlot: null,
             weaponSlot: WeaponType.primary,
@@ -31,6 +31,38 @@ export const Weapons = {
             imageFileName: "",
             properties: {
                   damage: 12,
+            },
+      },
+      sword: {
+            name: "Sword",
+            class: ItemClass.weapon,
+            armourSlot: null,
+            weaponSlot: WeaponType.primary,
+            usable: false,
+            level: 3,
+            weight: 4,
+            inventoryHeight: 2,
+            inventoryWidth: 1,
+            value: 100,
+            imageFileName: "sword.png",
+            properties: {
+                  damage: 17,
+            },
+      },
+      axe: {
+            name: "Axe",
+            class: ItemClass.weapon,
+            armourSlot: null,
+            weaponSlot: WeaponType.primary,
+            usable: false,
+            level: 3,
+            weight: 4,
+            inventoryHeight: 2,
+            inventoryWidth: 1,
+            value: 100,
+            imageFileName: "axe.png",
+            properties: {
+                  damage: 17,
             },
       },
 };
