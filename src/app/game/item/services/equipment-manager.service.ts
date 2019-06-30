@@ -67,6 +67,12 @@ export class EquipmentManagerService {
     return returnItem;
   }
 
+  public switchActiveItem(item: IInventoryItem): IInventoryItem {
+    const returnItem = this.activeItem;
+    this.activeItem = item;
+    return returnItem;
+  }
+
   public removeArmour(armourSlot: ArmourType) {
     this.armour[armourSlot] = null;
   }

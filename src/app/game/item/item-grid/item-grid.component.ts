@@ -15,7 +15,7 @@ export class ItemGridComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.gridLocations);
+    // console.log(this.gridLocations);
   }
 
   public itemSlotClicked(itemSlot: string): void {

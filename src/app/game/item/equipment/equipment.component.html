@@ -5,6 +5,8 @@
     Active Item:
     <div class="active-item">
       <span class="slot" (click)="removeActiveItem(equipmentManagerService.activeItem)">
+        <img *ngIf="equipmentManagerService.activeItem && equipmentManagerService.activeItem.imageFileName"
+             [src]="getImageSource(equipmentManagerService.activeItem)" title="{{equipmentManagerService.activeItem.name}}" />
       </span>
     </div>
   </div>

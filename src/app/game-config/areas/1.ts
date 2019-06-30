@@ -1,10 +1,10 @@
-import { MonsterClass, Direction, CharacterType } from "../../game/shared/enums";
+import { MonsterClass, Direction, ElementClass } from "../../game/shared/enums";
 import { IAreaElement } from "../../game/area/interfaces";
 
 export default {
       areaElements: [
             {
-                  type: CharacterType.player,
+                  type: ElementClass.player,
                   elementProperties: {
                         asleep: true,
                         level: 1,

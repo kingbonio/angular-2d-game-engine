@@ -1,6 +1,6 @@
 import defaults from '../../../shared/defaults';
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { Direction } from '../enums';
+import { Direction, ElementClass } from '../enums';
 import { IPlayerStateData, IInventoryItem } from '../interfaces';
 import { AreaStateService } from './area-state.service';
 import { DialogueService } from './dialogue.service';
@@ -9,6 +9,8 @@ import { MovementComponent } from '../util/movement/movement.component';
 import { BattleCalculatorService } from './battle-calculator.service';
 import { WeaponType } from '../../item/enums';
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
+import { GridObject } from '../../area/grid-object-classes/grid-object';
+import { Character } from '../../character-classes/character';
 
 @Injectable()
 export class PlayerStateService {
@@ -229,19 +231,40 @@ export class PlayerStateService {
   public interact() {
     const targetReference = this.movement.getNextLocation(this.locationY, this.locationX, this.direction);
     // TODO Types
-    const target = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
-    if (target && target.loot) {
-      // Loot body if dead
-      if (this.battleCalculatorService.isDead(target.currentHp)) {
-        // Load a modal with the contents of the character's inventory
-        // this.modalService.open("type");
+    const target: any = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
+    if (target) {
+      if (target.type === ElementClass.object) {
+        const activeItem = this.equipmentManagerService.activeItem;
+        // TODO Maybe organise these ifs
+        if (activeItem && activeItem.itemReference) {
+          if (target.itemReferenceNeeded === activeItem.itemReference) {
+            this.openLootingModal.emit(target);
+          } else {
+            this.dialogueService.displayDialogueMessage({
+              text: defaults.dialogue.keyItemNotActive,
+              character: defaults.dialogue.computerCharacterType,
+              name: defaults.dialogue.computerName
+            });
+            return;
+          }
+        }
+      } else {
+        if (target.loot) {
+          // Loot body if dead
+          if (this.battleCalculatorService.isDead(target.currentHp)) {
+            // Load a modal with the contents of the character's inventory
+            // this.modalService.open("type");
 
-        // Emit event for looting modal
-        this.openLootingModal.emit(target);
+            // Emit event for looting modal
+            this.openLootingModal.emit(target);
 
-        // TODO
-        // this.areaStateService
-        return;
+            // TODO
+            // this.areaStateService
+            return;
+          }
+
+        }
+
       }
       // TODO else...
     }

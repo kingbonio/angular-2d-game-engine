@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AreaStateService } from '../shared/services/area-state.service';
 import { AreaConfigProviderService } from '../shared/services/area-config-provider.service';
 import { IAreaConfig } from '../../game-config/interfaces';
-import { CharacterType, Direction } from '../shared/enums';
+import { CharacterType, Direction, ElementClass } from '../shared/enums';
 import { PlayerStateService } from '../shared/services/player-state.service';
 import { Enemy, NPC, Player } from '../character-classes/';
 import { Character } from '../character-classes/character';
@@ -15,6 +15,7 @@ import { BattleCalculatorService } from '../shared/services/battle-calculator.se
 import { MatDialogConfig, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { weapons } from '../../game-config/items';
 import { LootingModalComponent } from '../item/looting/looting-modal.component';
+import { GridObject } from './grid-object-classes/grid-object';
 
 @Component({
   selector: 'app-area',
@@ -33,6 +34,7 @@ export class AreaComponent implements OnInit {
   public character = CharacterType;
   public direction = Direction;
   private modalRef: MatDialogRef<any>;
+  public ElementClass = ElementClass;
 
   constructor(
     public areaStateService: AreaStateService,
@@ -88,17 +90,21 @@ export class AreaComponent implements OnInit {
     }
   }
 
-  public getDirectionClass(gridCharacter: Character) {
+  public getGridElementImageSource(gridElement: Character | GridObject) {
+    return 'assets/images/elements/' + gridElement.imageFileName;
+  }
+
+  public getDirectionClass(gridElement: Character | GridObject) {
     // TODO this is proving strange, might want to come back to directions
-    const isPlayer = (gridCharacter && gridCharacter.type === CharacterType.player);
+    const isPlayer = (gridElement && gridElement.type === ElementClass.player);
     if (isPlayer) {
       return 'direction-' + this.playerStateService.direction;
     }
-    return gridCharacter ? 'direction-' + gridCharacter.direction : "";
+    return gridElement ? 'direction-' + gridElement.direction : "";
   }
 
   public getDeadClass(character: Character): string {
-    if (character.type !== CharacterType.player) {
+    if (character.type !== ElementClass.player) {
       return character.currentHp > 0 ? "" : "dead";
     }
   }
@@ -125,14 +131,17 @@ export class AreaComponent implements OnInit {
       if (!this.areaStateService.locations[gridReference]) {
         // We want to create instances of each character in the config
         switch (element.type) {
-          case CharacterType.enemy:
+          case ElementClass.enemy:
             this.areaStateService.locations[gridReference] = new Enemy(element.elementProperties);
             break;
-          case CharacterType.player:
+          case ElementClass.player:
             this.areaStateService.locations[gridReference] = new Player(element.elementProperties);
             break;
-          case CharacterType.npc:
+          case ElementClass.npc:
             this.areaStateService.locations[gridReference] = new NPC(element.elementProperties);
+            break;
+          case ElementClass.object:
+            this.areaStateService.locations[gridReference] = new GridObject(element.elementProperties);
             break;
           default:
             this.areaStateService.locations[gridReference] = element;
@@ -140,6 +149,7 @@ export class AreaComponent implements OnInit {
       } else {
         // TODO: Move them to another position, up to x amount (need to block overcrowding)
       }
+      console.log(this.areaStateService.locations);
     });
   }
 

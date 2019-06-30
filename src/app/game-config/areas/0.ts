@@ -1,12 +1,12 @@
 import { MonsterClass, Direction, CharacterType, ElementClass } from "../../game/shared/enums";
 import { IAreaElement } from "../../game/area/interfaces";
-import { armour, weapons } from "../items";
+import { armour, weapons, keyItems } from "../items";
 import { IWeapons } from "../../game/item/interfaces";
 
 export default {
       areaElements: [
             {
-                  type: CharacterType.player,
+                  type: ElementClass.player,
                   elementProperties: {
                         name: "Smelly Jeremy",
                         imageName: "player1.jpg",
@@ -16,7 +16,7 @@ export default {
                   direction: Direction.N,
             },
             {
-                  type: CharacterType.enemy,
+                  type: ElementClass.enemy,
                   elementProperties: {
                         asleep: true,
                         level: 1,
@@ -48,13 +48,16 @@ export default {
                         } as IWeapons,
                         loot: [
                               armour.ironHelmet,
+                              keyItems.rustyOldKey,
+                              keyItems.fancyKey,
                         ],
+                        imageFileName: "",
                   },
                   startingPositionX: 4,
                   startingPositionY: "c",
             },
             {
-                  type: CharacterType.npc,
+                  type: ElementClass.npc,
                   elementProperties: {
                         asleep: false,
                         level: 1,
@@ -84,6 +87,7 @@ export default {
                               shield: null,
                         } as IWeapons,
                         loot: [],
+                        imageFileName: "",
                   },
                   startingPositionX: 3,
                   startingPositionY: "e",
@@ -91,10 +95,18 @@ export default {
             {
                   type: ElementClass.object,
                   elementProperties: {
+                        name: "Old chest",
+                        direction: Direction.E,
                         canBeTraversed: false,
                         isInteractive: true,
                         itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbf693c76",
-                  }
+                        imageName: "old-chest.png",
+                        loot: [
+                              weapons.axe,
+                        ]
+                  },
+                  startingPositionX: 1,
+                  startingPositionY: "d",
             }
       ] as IAreaElement[],
       areaCompleteRequirements: {

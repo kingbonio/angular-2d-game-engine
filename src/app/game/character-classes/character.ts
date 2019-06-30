@@ -1,4 +1,4 @@
-import { CharacterType, Direction } from "../shared/enums";
+import { CharacterType, Direction, ElementClass } from "../shared/enums";
 import { IWeapons, IArmour, IInventoryItem } from "../item/interfaces";
 
 export class Character {
@@ -6,11 +6,12 @@ export class Character {
       maxHp: number;
       xp: number;
       asleep: boolean;
-      type: CharacterType;
+      type: ElementClass;
       direction: Direction;
       armour?: IArmour;
       weapons?: IWeapons;
       loot: IInventoryItem[];
+      imageFileName: string;
 
       inventoryLocations: any;
       locationKeys: any;

@@ -1,6 +1,6 @@
 export enum ElementClass {
-      player,
-      npc,
-      monster,
-      object
+      player = "player",
+      npc = "npc",
+      enemy = "enemy",
+      object = "object"
 }
