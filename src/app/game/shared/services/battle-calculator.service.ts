@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { PlayerStateService } from './player-state.service';
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
 import { Character } from '../../character-classes/character';
 import { WeaponType } from '../../item/enums';
-import defaults from '../../../shared/defaults';
 import { DialogueService } from './dialogue.service';
 
 @Injectable()

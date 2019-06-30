@@ -1,12 +1,9 @@
-import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
-import { Direction } from './shared/enums';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PlayerStateService } from './shared/services/player-state.service';
 import { DialogueService } from './shared/services/dialogue.service';
 import { UserInputService } from '../shared/services/user-input.service';
-import { Observable } from 'rxjs/Observable';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Subscription } from 'rxjs/Subscription';
-import { MatDialog, MatDialogConfig } from '@angular/material';
 
 @Component({
   selector: 'app-game-root',

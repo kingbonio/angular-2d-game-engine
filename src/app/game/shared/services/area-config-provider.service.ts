@@ -1,5 +1,4 @@
 import { Injectable, OnInit } from '@angular/core';
-import { IAreaConfig } from '../../../game-config/interfaces';
 import * as areaConfig from "../../../game-config/areas/0";
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
 import { weapons, armour } from '../../../game-config/items';

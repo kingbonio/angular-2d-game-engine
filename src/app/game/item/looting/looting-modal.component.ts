@@ -1,7 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
-import { IInventoryItem } from '../interfaces';
-import { weapons } from '../../../game-config/items';
+import { MAT_DIALOG_DATA } from "@angular/material";
 import { Character } from '../../character-classes/character';
 import { InventoryManagerService } from '../services/inventory-manager.service';
 

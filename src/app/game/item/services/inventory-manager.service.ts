@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { PlayerStateService } from '../../shared/services/player-state.service';
 import { IInventoryStateData, IInventoryItem } from '../../shared/interfaces';
 import defaults from '../../../shared/defaults';
-import { IGridReferences } from '../../area/interfaces';
 import { IInventoryReferences } from '../inventory/interfaces';
 import { DialogueService } from '../../shared/services/dialogue.service';
 

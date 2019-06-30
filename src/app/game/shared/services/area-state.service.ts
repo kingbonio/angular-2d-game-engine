@@ -1,8 +1,7 @@
 import { Injectable, ComponentFactoryResolver } from '@angular/core';
 import { IAreaStateData } from '../interfaces';
 import { IGridReferences } from '../../area/interfaces';
-import { CharacterType, Direction } from '../enums';
-import { EnemyComponent } from '../../character/enemy/enemy.component';
+import { Direction } from '../enums';
 
 @Injectable()
 export class AreaStateService {
