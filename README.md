@@ -40,3 +40,12 @@ Numerous default settings can be found in the src/app/shared/defaults/index.ts, 
 # Persistence
 
 The application uses local storage to persist game element states
+
+
+# Current presentation
+
+Please check out the following video for the most recent additions to functionality:
+
+https://www.youtube.com/watch?v=yiBFuRUe9sc
+
+Most recently added key items which can be used with interactive grid objects
