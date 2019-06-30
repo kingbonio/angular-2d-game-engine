@@ -1,6 +1,6 @@
 import { ItemClass, WeaponType } from "../../game/item/enums";
 
-export const Weapons = {
+export const weapons = {
       basicKnife: {
             name: "Basic Knife",
             class: ItemClass.weapon,

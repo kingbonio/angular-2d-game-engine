@@ -2,7 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { IAreaConfig } from '../../../game-config/interfaces';
 import * as areaConfig from "../../../game-config/areas/0";
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
-import { Weapons, Armour } from '../../../game-config/items';
+import { weapons, armour } from '../../../game-config/items';
 import { InventoryManagerService } from '../../item/services/inventory-manager.service';
 
 @Injectable()
@@ -31,10 +31,10 @@ export class AreaConfigProviderService implements OnInit {
 
   private assignItemsToInventory() {
     // TODO This might be useful when properly setting equipment
-    this.inventoryManagerService.addItemToInventory(Weapons.sword);
-    this.inventoryManagerService.addItemToInventory(Weapons.axe);
-    this.inventoryManagerService.addItemToInventory(Armour.leatherChestPiece);
-    this.inventoryManagerService.addItemToInventory(Armour.ironHelmet);
+    this.inventoryManagerService.addItemToInventory(weapons.sword);
+    this.inventoryManagerService.addItemToInventory(weapons.axe);
+    this.inventoryManagerService.addItemToInventory(armour.leatherChestPiece);
+    this.inventoryManagerService.addItemToInventory(armour.ironHelmet);
   }
 
   /**

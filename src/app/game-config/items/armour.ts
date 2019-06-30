@@ -1,6 +1,7 @@
 import { ItemClass, ArmourType } from "../../game/item/enums";
 
-export const Armour = {
+// TODO these should have interfaces
+export const armour = {
       leatherHelmet: {
             name: "Leather Helmet",
             class: ItemClass.armour,

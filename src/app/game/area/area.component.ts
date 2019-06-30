@@ -13,7 +13,7 @@ import { Enemy, NPC, Player } from '../character-classes/';
 import { Character } from '../character-classes/character';
 import { BattleCalculatorService } from '../shared/services/battle-calculator.service';
 import { MatDialogConfig, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Weapons } from '../../game-config/items';
+import { weapons } from '../../game-config/items';
 import { LootingModalComponent } from '../item/looting/looting-modal.component';
 
 @Component({
@@ -126,13 +126,13 @@ export class AreaComponent implements OnInit {
         // We want to create instances of each character in the config
         switch (element.type) {
           case CharacterType.enemy:
-            this.areaStateService.locations[gridReference] = new Enemy(element.elementClass);
+            this.areaStateService.locations[gridReference] = new Enemy(element.elementProperties);
             break;
           case CharacterType.player:
-            this.areaStateService.locations[gridReference] = new Player(element.elementClass);
+            this.areaStateService.locations[gridReference] = new Player(element.elementProperties);
             break;
           case CharacterType.npc:
-            this.areaStateService.locations[gridReference] = new NPC(element.elementClass);
+            this.areaStateService.locations[gridReference] = new NPC(element.elementProperties);
             break;
           default:
             this.areaStateService.locations[gridReference] = element;

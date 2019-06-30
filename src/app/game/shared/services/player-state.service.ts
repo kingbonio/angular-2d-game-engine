@@ -1,15 +1,12 @@
 import defaults from '../../../shared/defaults';
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { Direction, InteractionTarget, ItemClass, CharacterType } from '../enums';
+import { Direction } from '../enums';
 import { IPlayerStateData, IInventoryItem } from '../interfaces';
 import { AreaStateService } from './area-state.service';
-import { IGridReferences, IAreaElement } from '../../area/interfaces';
 import { DialogueService } from './dialogue.service';
-import { UserActionTypes, UserInteractionTypes } from '../../../shared/enums';
+import { UserInteractionTypes } from '../../../shared/enums';
 import { MovementComponent } from '../util/movement/movement.component';
-import { Character } from '../../character-classes/character';
 import { BattleCalculatorService } from './battle-calculator.service';
-import { IWeapons } from '../../item/interfaces';
 import { WeaponType } from '../../item/enums';
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
 

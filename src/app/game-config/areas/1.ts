@@ -5,7 +5,7 @@ export default {
       areaElements: [
             {
                   type: CharacterType.player,
-                  elementClass: {
+                  elementProperties: {
                         asleep: true,
                         level: 1,
                         name: "Darren",

@@ -9,6 +9,7 @@ export interface IInventoryItem {
       armourSlot: ArmourType | null;
       weaponSlot: WeaponType | null;
       usable: boolean;
+      itemReference?: string;
       level?: number;
       weight?: number;
       inventoryHeight?: number;

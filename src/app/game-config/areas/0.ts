@@ -1,13 +1,13 @@
-import { MonsterClass, Direction, CharacterType } from "../../game/shared/enums";
+import { MonsterClass, Direction, CharacterType, ElementClass } from "../../game/shared/enums";
 import { IAreaElement } from "../../game/area/interfaces";
-import { Armour, Weapons } from "../items";
+import { armour, weapons } from "../items";
 import { IWeapons } from "../../game/item/interfaces";
 
 export default {
       areaElements: [
             {
                   type: CharacterType.player,
-                  elementClass: {
+                  elementProperties: {
                         name: "Smelly Jeremy",
                         imageName: "player1.jpg",
                   },
@@ -17,7 +17,7 @@ export default {
             },
             {
                   type: CharacterType.enemy,
-                  elementClass: {
+                  elementProperties: {
                         asleep: true,
                         level: 1,
                         maxHp: 2,
@@ -33,21 +33,21 @@ export default {
                               allowKey: false,
                         },
                         armour: {
-                              head: Armour.leatherHelmet,
+                              head: armour.leatherHelmet,
                               arms: null,
                               hands: null,
                               torso: null,
                               legs: null,
-                              boots: Armour.leatherBoots,
+                              boots: armour.leatherBoots,
                         },
                         weapons: {
-                              primary: Weapons.basicKnife,
+                              primary: weapons.basicKnife,
                               secondary: null,
                               concealed: null,
                               shield: null,
                         } as IWeapons,
                         loot: [
-                              Armour.ironHelmet,
+                              armour.ironHelmet,
                         ],
                   },
                   startingPositionX: 4,
@@ -55,7 +55,7 @@ export default {
             },
             {
                   type: CharacterType.npc,
-                  elementClass: {
+                  elementProperties: {
                         asleep: false,
                         level: 1,
                         maxHp: 10,
@@ -88,6 +88,14 @@ export default {
                   startingPositionX: 3,
                   startingPositionY: "e",
             },
+            {
+                  type: ElementClass.object,
+                  elementProperties: {
+                        canBeTraversed: false,
+                        isInteractive: true,
+                        itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbf693c76",
+                  }
+            }
       ] as IAreaElement[],
       areaCompleteRequirements: {
             item: false,

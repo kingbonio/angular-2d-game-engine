@@ -1,4 +1,4 @@
-export enum InteractionTarget {
+export enum ElementClass {
       player,
       npc,
       monster,
