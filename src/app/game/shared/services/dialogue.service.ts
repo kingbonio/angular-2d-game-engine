@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { CharacterType } from '../enums';
 import defaults from '../../../shared/defaults';
 import { IDialogueStateData } from '../interfaces';
 import { ISpeech } from '../../dialogue/interfaces';

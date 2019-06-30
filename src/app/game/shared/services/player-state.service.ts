@@ -9,8 +9,6 @@ import { MovementComponent } from '../util/movement/movement.component';
 import { BattleCalculatorService } from './battle-calculator.service';
 import { WeaponType } from '../../item/enums';
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
-import { GridObject } from '../../area/grid-object-classes/grid-object';
-import { Character } from '../../character-classes/character';
 
 @Injectable()
 export class PlayerStateService {

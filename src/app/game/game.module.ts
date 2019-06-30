@@ -6,7 +6,6 @@ import { PlayerComponent } from './character/player/player.component';
 import { NpcComponent } from './character/npc/npc.component';
 import { EnemyComponent } from './character/enemy/enemy.component';
 import { AreaComponent } from './area/area.component';
-import { WeaponComponent } from './item/weapon/weapon.component';
 import { CharacterComponent } from './character/character.component';
 import { DialogueComponent } from './dialogue/dialogue.component';
 import { GameComponent } from './game.component';
@@ -19,11 +18,10 @@ import { EquipmentComponent } from './item/equipment/equipment.component';
 import { EquipmentManagerService } from './item/services/equipment-manager.service';
 import { InventoryManagerService } from './item/services/inventory-manager.service';
 import { InventoryComponent } from './item/inventory/inventory.component';
-import { LootComponent } from './item/loot/loot.component';
 import { ItemGridComponent } from './item/item-grid/item-grid.component';
 import { LootingModalComponent } from './item/looting/looting-modal.component';
 import { MatDialogModule } from '@angular/material';
-import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
@@ -40,13 +38,11 @@ import { BrowserModule } from '@angular/platform-browser';
     NpcComponent,
     EnemyComponent,
     AreaComponent,
-    WeaponComponent,
     CharacterComponent,
     DialogueComponent,
     MovementComponent,
     EquipmentComponent,
     InventoryComponent,
-    LootComponent,
     ItemGridComponent,
     LootingModalComponent,
   ],

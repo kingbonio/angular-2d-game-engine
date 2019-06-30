@@ -1,19 +1,17 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IInventoryItem, IMonster } from '../shared/interfaces';
-import { IAreaElement, IGridReferences, IPuzzle } from './interfaces';
+import { IAreaElement, IPuzzle } from './interfaces';
 import { ILevelData } from './interfaces/ilevel-data';
 import { AreaType } from './enums/area-type';
 import { ActivatedRoute } from '@angular/router';
 import { AreaStateService } from '../shared/services/area-state.service';
 import { AreaConfigProviderService } from '../shared/services/area-config-provider.service';
-import { IAreaConfig } from '../../game-config/interfaces';
 import { CharacterType, Direction, ElementClass } from '../shared/enums';
 import { PlayerStateService } from '../shared/services/player-state.service';
 import { Enemy, NPC, Player } from '../character-classes/';
 import { Character } from '../character-classes/character';
 import { BattleCalculatorService } from '../shared/services/battle-calculator.service';
-import { MatDialogConfig, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { weapons } from '../../game-config/items';
+import { MatDialogConfig, MatDialog, MatDialogRef } from '@angular/material';
 import { LootingModalComponent } from '../item/looting/looting-modal.component';
 import { GridObject } from './grid-object-classes/grid-object';
 

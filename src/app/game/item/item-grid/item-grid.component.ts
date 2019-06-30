@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IGridReferences } from '../../area/interfaces';
 import { IInventoryItem } from '../interfaces';
 
 @Component({
