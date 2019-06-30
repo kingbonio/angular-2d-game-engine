@@ -6,4 +6,5 @@ export interface IItemProperties {
       healing?: number;
       magicAbility?: MagicAbility;
       magicPotency?: number;
+      keyItem?: boolean;
 }

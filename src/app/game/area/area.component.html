@@ -4,8 +4,15 @@
             <div class="grid-item"
                  *ngIf="areaStateService.locations[key]"
                  [ngClass]="getDirectionClass(areaStateService.locations[key])">
+                 
+                 <div *ngIf="areaStateService.locations[key].type === ElementClass.object"
+                      class="object">
+                       <img [src]="getGridElementImageSource(areaStateService.locations[key])"
+                            title="{{areaStateService.locations[key].name}}" />
+                 </div>
 
-                  <div class="character-type"
+                  <div *ngIf="areaStateService.locations[key].type !== ElementClass.object"
+                       class="character-type"
                        [ngClass]="getCharacterType(areaStateService.locations[key])">
 
                        <div class="overlay"

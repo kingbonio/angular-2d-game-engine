@@ -1,11 +1,11 @@
 import { Character } from "./character";
-import { MonsterClass, CharacterType, Direction } from "../shared/enums";
+import { MonsterClass, CharacterType, Direction, ElementClass } from "../shared/enums";
 import { UserInteractionTypes } from "../../shared/enums";
 import { IArmour, IWeapons, IInventoryItem } from "../item/interfaces";
 
 export class Enemy extends Character {
       // private movement: Movement;
-      public type = CharacterType.enemy;
+      public type = ElementClass.enemy;
       public name: string;
       public class: MonsterClass;
       public maxHp: number;
@@ -14,6 +14,7 @@ export class Enemy extends Character {
       public speechResponse: string;
       public sleepResponse: string;
       public isAsleep: boolean;
+      public imageFileName: string;
       public direction: Direction;
       public armour: IArmour;
       public weapons: IWeapons;
@@ -37,6 +38,7 @@ export class Enemy extends Character {
             this.weapons = characterDetails.weapons;
             // TODO this could be more efficient
             this.loot = characterDetails.loot;
+            this.imageFileName = characterDetails.imageFileName;
             if (this.loot) {
                   characterDetails.loot.forEach((item: IInventoryItem) => {
                         for (const slot in this.inventoryLocations) {

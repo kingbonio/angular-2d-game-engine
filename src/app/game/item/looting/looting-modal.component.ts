@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { IInventoryItem } from '../interfaces';
-import { Weapons } from '../../../game-config/items';
+import { weapons } from '../../../game-config/items';
 import { Character } from '../../character-classes/character';
 import { InventoryManagerService } from '../services/inventory-manager.service';
 
@@ -18,14 +18,14 @@ export class LootingModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data
   ) {
     this.target = data;
-    console.log(data);
+    // console.log(data);
   }
 
   ngOnInit() {
   }
 
   public useItem(itemSlot: string) {
-    console.log(itemSlot);
+    // console.log(itemSlot);
     this.inventoryManagerService.addItemToInventory(this.target.inventoryLocations[itemSlot]);
     this.target.inventoryLocations[itemSlot] = null;
   }

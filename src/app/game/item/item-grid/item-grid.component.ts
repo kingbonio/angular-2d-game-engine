@@ -15,11 +15,16 @@ export class ItemGridComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.gridLocations);
+    // console.log(this.gridLocations);
   }
 
   public itemSlotClicked(itemSlot: string): void {
     this.clickItem.emit(itemSlot);
+  }
+
+  // TODO duplicate code
+  public getImageSource(item: IInventoryItem) {
+    return 'assets/images/' + item.class + "/" + item.imageFileName;
   }
 
 }

@@ -33,8 +33,9 @@ export class InventoryComponent implements OnInit {
         case (ItemClass.potion):
           // Drink potion and inbue effect
           break;
-        case (ItemClass.misc):
-          // Attempt to use item
+        case (ItemClass.keyItem):
+          // Assign the item to active slot
+          this.inventoryManagerService.locations[itemSlot] = this.equipmentManagerService.switchActiveItem(this.inventoryManagerService.locations[itemSlot]);
           break;
       }
     }

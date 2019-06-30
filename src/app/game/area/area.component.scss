@@ -31,6 +31,7 @@
                         transform: rotate(270deg);
                   }
 
+                  // TODO Move this into imageFileName property
                   .player {
                         background-image: url("../shared/resources/shadow-player.png");
                   }

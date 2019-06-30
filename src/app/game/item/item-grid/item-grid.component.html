@@ -4,7 +4,12 @@
     <!-- Click on item in inventory to place on character -->
     <div class="slot">
       <div class="item" *ngIf="gridLocations[itemSlot]" (click)="itemSlotClicked(itemSlot)">
-        {{ gridLocations[itemSlot].name }}
+        <img *ngIf="gridLocations[itemSlot] && gridLocations[itemSlot].imageFileName"
+          [src]="getImageSource(gridLocations[itemSlot])"
+          title="{{gridLocations[itemSlot].name}}" />
+        <span *ngIf="!gridLocations[itemSlot].imageFileName">
+          {{gridLocations[itemSlot].name}}
+        </span>
       </div>
     </div>
   </div>
