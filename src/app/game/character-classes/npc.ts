@@ -13,6 +13,7 @@ export class NPC extends Character {
       public speechResponse: string;
       public sleepResponse: string;
       public isAsleep: boolean;
+      public isAngry: boolean;
       public imageFileName: string;
       public direction: Direction;
       public armour: IArmour;
@@ -27,6 +28,7 @@ export class NPC extends Character {
             // TODO Need to figure out how to use this in the css
             this.imageName = characterDetails.imageName;
             this.isAsleep = characterDetails.asleep;
+            this.isAngry = characterDetails.angry;
             this.speechResponse = characterDetails.speechResponse;
             this.direction = characterDetails.direction;
             this.maxHp = characterDetails.maxHp;
@@ -62,6 +64,10 @@ export class NPC extends Character {
                         this.currentHp -= damage;
                         return this.currentHp;
             }
+      }
+
+      public isLowHealth() {
+            
       }
 
 }

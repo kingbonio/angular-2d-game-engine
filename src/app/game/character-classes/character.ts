@@ -5,7 +5,8 @@ export class Character {
       currentHp: number;
       maxHp: number;
       xp: number;
-      asleep: boolean;
+      isAsleep: boolean;
+      isAngry: boolean;
       type: ElementClass;
       direction: Direction;
       armour?: IArmour;
@@ -46,4 +47,5 @@ export class Character {
             };
             this.locationKeys = Object.keys;
       }
+
 }

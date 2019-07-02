@@ -18,7 +18,7 @@ export default {
             {
                   type: ElementClass.enemy,
                   elementProperties: {
-                        asleep: true,
+                        asleep: false,
                         level: 1,
                         maxHp: 2,
                         name: "Gary The Dick",

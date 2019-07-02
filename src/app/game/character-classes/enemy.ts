@@ -14,6 +14,7 @@ export class Enemy extends Character {
       public speechResponse: string;
       public sleepResponse: string;
       public isAsleep: boolean;
+      public isAngry: boolean;
       public imageFileName: string;
       public direction: Direction;
       public armour: IArmour;
@@ -29,6 +30,7 @@ export class Enemy extends Character {
             this.speechResponse = characterDetails.speechResponse;
             this.sleepResponse = characterDetails.sleepResponse;
             this.isAsleep = characterDetails.asleep;
+            this.isAngry = characterDetails.angry;
             this.direction = characterDetails.direction;
             // TODO: Set this manually
             this.maxHp = characterDetails.maxHp;
@@ -66,5 +68,9 @@ export class Enemy extends Character {
                         this.currentHp -= damage;
                         return this.currentHp;
             }
+      }
+
+      public isLowHealth() {
+
       }
 }
