@@ -182,7 +182,7 @@ export class PlayerStateService {
       const target = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
 
       if (target) {
-        if (this.battleCalculatorService.isDead(target.currentHp)) {
+        if (target.isDead()) {
           this.dialogueService.displayDialogueMessage({
             text: defaults.dialogue.nullElementResponse,
             character: defaults.dialogue.computerCharacterType,
@@ -194,8 +194,8 @@ export class PlayerStateService {
         const damage = this.battleCalculatorService.calculateDamageToEnemy(target, this.selectedWeaponSlot, this.levelMultiplyer);
 
         if (damage) {
-          // TODO this can possibly just be target.currentHp
-          const targetCurrentHp = target.respond(UserInteractionTypes.attack, this.movement.getDirectionToFace(this.direction), damage);
+          // No need to assign this
+          target.respond(UserInteractionTypes.attack, this.movement.getDirectionToFace(this.direction), damage);
 
           this.dialogueService.displayDialogueMessage({
             text: defaults.dialogue.attackSuccess + damage,
@@ -203,7 +203,7 @@ export class PlayerStateService {
             name: defaults.dialogue.computerName
           });
 
-          if (this.battleCalculatorService.isDead(targetCurrentHp)) {
+          if (target.isDead()) {
             this.dialogueService.displayDialogueMessage({
               text: defaults.dialogue.targetDead + target.name,
               character: defaults.dialogue.computerCharacterType,
@@ -249,7 +249,7 @@ export class PlayerStateService {
       } else {
         if (target.loot) {
           // Loot body if dead
-          if (this.battleCalculatorService.isDead(target.currentHp)) {
+          if (target.isDead()) {
             // Load a modal with the contents of the character's inventory
             // this.modalService.open("type");
 
@@ -284,7 +284,7 @@ export class PlayerStateService {
     if (nextGridLocation) {
       const target = this.areaStateService.locations[nextGridLocation.locationY + nextGridLocation.locationX];
 
-      if (this.battleCalculatorService.isDead(target.currentHp)) {
+      if (target.isDead()) {
         this.dialogueService.displayDialogueMessage({
           text: defaults.dialogue.nullElementResponse,
           character: defaults.dialogue.computerCharacterType,
