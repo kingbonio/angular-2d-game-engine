@@ -1,7 +1,8 @@
-import { Injectable, ComponentFactoryResolver } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { IAreaStateData } from '../interfaces';
-import { IGridReferences } from '../../area/interfaces';
-import { Direction } from '../enums';
+import { IGridReferences, IGridObject } from '../../area/interfaces';
+import { Direction, ElementClass } from '../enums';
+import { AiService } from './ai.service';
 
 @Injectable()
 export class AreaStateService {
@@ -11,7 +12,8 @@ export class AreaStateService {
   public locationKeys: any;
   public locations: IGridReferences;
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) {
+  constructor(
+    ) {
     // Set the state to be the first level before anything
     this._currentLocation = 0;
     this.locations = {
@@ -68,7 +70,6 @@ export class AreaStateService {
     this.locationKeys = Object.keys;
     // TODO: Maybe we should have a generic area which has properties of
     // puzzle, enemy, design, potential items etc.
-
   }
 
   get currentLocation() {
@@ -88,10 +89,33 @@ export class AreaStateService {
   }
 
   /**
+   * Push all charcters on grid into an array and return it
+   */
+  public getCharactersOnGrid(): {gridItem: IGridObject, gridLocation: string}[] {
+    const characterData = [];
+    for (const gridLocation in this.locations) {
+      if (this.locations.hasOwnProperty(gridLocation) &&
+        this.locations[gridLocation] &&
+        this.locations[gridLocation].type &&
+        (this.locations[gridLocation].type === ElementClass.enemy || this.locations[gridLocation].type === ElementClass.npc) &&
+        !this.locations[gridLocation].isDead()) {
+        const gridItem = this.locations[gridLocation];
+        if (gridItem.type && (gridItem.type === ElementClass.enemy || gridItem.type === ElementClass.npc)) {
+          characterData.push({
+            gridItem,
+            gridLocation
+          });
+        }
+      }
+    }
+    return characterData;
+  }
+
+  /**
    * Checks whether the location on the grid can be moved into
    * @param location the grid reference for the location
    */
-  isLocationFree(location: string): boolean {
+  public isLocationFree(location: string): boolean {
     return (!this.locations[location]);
   }
 

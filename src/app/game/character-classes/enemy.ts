@@ -15,6 +15,7 @@ export class Enemy extends Character {
       public sleepResponse: string;
       public isAsleep: boolean;
       public isAngry: boolean;
+      public isPaused: boolean;
       public imageFileName: string;
       public direction: Direction;
       public armour: IArmour;
@@ -34,8 +35,6 @@ export class Enemy extends Character {
             this.direction = characterDetails.direction;
             // TODO: Set this manually
             this.maxHp = characterDetails.maxHp;
-            this.currentHp = this.maxHp;
-            this.xp = 0;
             this.armour = characterDetails.armour;
             this.weapons = characterDetails.weapons;
             // TODO this could be more efficient
@@ -51,6 +50,9 @@ export class Enemy extends Character {
                         }
                   });
             }
+            this.currentHp = this.maxHp;
+            this.isPaused = false;
+            this.xp = 0;
       }
 
       public respond(interaction: UserInteractionTypes, directionToFace: Direction, damage: number) {

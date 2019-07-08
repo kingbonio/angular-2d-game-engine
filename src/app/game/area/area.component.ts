@@ -8,12 +8,13 @@ import { AreaStateService } from '../shared/services/area-state.service';
 import { AreaConfigProviderService } from '../shared/services/area-config-provider.service';
 import { CharacterType, Direction, ElementClass } from '../shared/enums';
 import { PlayerStateService } from '../shared/services/player-state.service';
-import { Enemy, NPC, Player } from '../character-classes';
+import { Enemy, NPC } from '../character-classes';
 import { Character } from '../character-classes/character';
 import { BattleCalculatorService } from '../shared/services/battle-calculator.service';
 import { MatDialogConfig, MatDialog, MatDialogRef } from '@angular/material';
 import { LootingModalComponent } from '../item/looting/looting-modal.component';
 import { GridObject } from './grid-object-classes/grid-object';
+import { Player } from '../character-classes/player';
 
 @Component({
   selector: 'app-area',

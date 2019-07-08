@@ -14,6 +14,7 @@ export class NPC extends Character {
       public sleepResponse: string;
       public isAsleep: boolean;
       public isAngry: boolean;
+      public isPaused: boolean;
       public imageFileName: string;
       public direction: Direction;
       public armour: IArmour;
@@ -32,8 +33,6 @@ export class NPC extends Character {
             this.speechResponse = characterDetails.speechResponse;
             this.direction = characterDetails.direction;
             this.maxHp = characterDetails.maxHp;
-            this.currentHp = this.maxHp;
-            this.xp = 0;
             this.armour = characterDetails.equippedArmour;
             this.loot = characterDetails.loot;
             this.imageFileName = characterDetails.imageFileName;
@@ -47,6 +46,9 @@ export class NPC extends Character {
                         }
                   });
             }
+            this.currentHp = this.maxHp;
+            this.isPaused = false;
+            this.xp = 0;
       }
 
       public respond(interaction: UserInteractionTypes, directionToFace: Direction, damage: number) {

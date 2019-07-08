@@ -1,6 +1,5 @@
 import { Character } from "./character";
-import { IAreaElement, IPlayer } from "../area/interfaces";
-import { PlayerClass, CharacterType, Direction, ElementClass } from "../shared/enums";
+import { PlayerClass, Direction, ElementClass } from "../shared/enums";
 
 export class Player extends Character {
       public type = ElementClass.player;

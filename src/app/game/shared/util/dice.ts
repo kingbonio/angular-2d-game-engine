@@ -16,6 +16,6 @@ export class Dice {
       }
 
       private static getRandomNumber(max: number): number {
-            return Math.floor(Math.random() * max);
+            return Math.floor(Math.random() * max) + 1;
       }
 }

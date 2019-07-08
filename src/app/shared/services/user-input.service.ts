@@ -1,4 +1,4 @@
-import { Injectable, ɵsetCurrentInjector } from '@angular/core';
+import { Injectable, ɵsetCurrentInjector, Output, EventEmitter, Inject } from '@angular/core';
 import defaults from '../defaults';
 import { IUserAction } from '../interfaces';
 import { UserActionTypes, UserInteractionTypes } from '../enums';
@@ -8,25 +8,39 @@ import { AreaStateService } from '../../game/shared/services/area-state.service'
 import { ElementClass } from '../../game/shared/enums';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AiService } from '../../game/shared/services/ai.service';
+import { Subject } from 'rxjs/internal/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subscription } from 'rxjs/Subscription';
+
 
 @Injectable()
 export class UserInputService {
-  public $playerMoved = new Observable(direction => {
-    // TODO tidy this up
-    for (const gridLocation in this.areaStateService.locations) {
-      if (this.areaStateService.locations.hasOwnProperty(gridLocation) && this.areaStateService.locations[gridLocation]) {
-        const gridItem = this.areaStateService.locations[gridLocation];
-        if (gridItem.type && (gridItem.type === ElementClass.enemy || gridItem.type === ElementClass.npc)) {
-          this.aiService.react(gridItem, gridLocation);
-        }
-      }
-    }
-  });
+
+  public playerMovedSubscription: Subscription;
+
+  // @Output() playerMoved = new EventEmitter<any>();
+  // public playerMoved = new Subject<void>().asObservable();
+  public playerMoved: BehaviorSubject<string>;
+
+  // private countdownEndSource = new Subject<void>();
+  // public countdownEnd$ = this.countdownEndSource.asObservable();
+
+  // public playerMoved = new Observable(observer => {
+  //   // TODO tidy this up
+  //   // this.aiService.actionTriggerHandler();
+  //   observer.next();
+  // });
 
   constructor(
-    private aiService: AiService,
     private playerStateService: PlayerStateService,
-    private areaStateService: AreaStateService) {
+    // private aiService: AiService,
+  ) {
+    console.log("User Input Service instantiated");
+    this.playerMoved = new BehaviorSubject("test");
+
+    this.playerMovedSubscription = this.playerMoved.subscribe(data => {
+      console.log(this.playerMoved.value);
+    });
 
   }
 
@@ -40,6 +54,9 @@ export class UserInputService {
           this.playerStateService.move(characterAction.direction);
           // TODO Hook up event listener to move enemies
           // this.$playerMoved.next(characterAction.direction);
+          // this.playerMoved.emit("hello");
+          this.playerMoved.next("test");
+
           break;
 
         case UserActionTypes.direction:
@@ -68,4 +85,5 @@ export class UserInputService {
       }
     }
   }
+
 }

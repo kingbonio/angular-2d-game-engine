@@ -111,14 +111,13 @@ export class MovementComponent {
     let direction: Direction = this.getDirectionFromNumber(directionDiceRoll);
 
     // TODO This seems unnecessary but will need to refactor the method and other dependencies
-    let currentLocationObject = this.splitLocationReference(currentLocation);
+    let currentLocationDetails = this.splitLocationReference(currentLocation);
 
-    let targetLocationObject = this.getNextLocation(currentLocationObject.locationY, currentLocationObject.locationX, direction);
+    let targetLocationDetails = this.getNextLocation(currentLocationDetails.locationY, currentLocationDetails.locationX, direction);
 
-    let targetLocation = targetLocationObject.locationY + targetLocationObject.locationX;
-
-    if (targetLocationObject.isLocationFree) {
-      this.areaStateService.moveCharacter(currentLocation, targetLocation);
+    if (targetLocationDetails && targetLocationDetails.isLocationFree) {
+      const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
+      this.areaStateService.moveCharacter(targetLocation, currentLocation);
     } else {
       // Select a direction to move
       for (let i = 1; i < 4; i++) {
@@ -129,14 +128,14 @@ export class MovementComponent {
 
         direction = this.getDirectionFromNumber(i);
 
-        currentLocationObject = this.splitLocationReference(currentLocation);
+        currentLocationDetails = this.splitLocationReference(currentLocation);
 
-        targetLocationObject = this.getNextLocation(currentLocationObject.locationY, currentLocationObject.locationX, direction);
+        targetLocationDetails = this.getNextLocation(currentLocationDetails.locationY, currentLocationDetails.locationX, direction);
 
-        targetLocation = targetLocationObject.locationY + targetLocationObject.locationX;
+        if (targetLocationDetails && targetLocationDetails.isLocationFree) {
+          const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
+          this.areaStateService.moveCharacter(targetLocation, currentLocation);
 
-        if (targetLocationObject.isLocationFree) {
-          this.areaStateService.moveCharacter(currentLocation, targetLocation);
           return;
         }
       }

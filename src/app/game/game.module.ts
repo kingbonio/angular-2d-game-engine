@@ -2,11 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { GameRoutingModule } from './game-routing.module';
-import { PlayerComponent } from './character/player/player.component';
-import { NpcComponent } from './character/npc/npc.component';
-import { EnemyComponent } from './character/enemy/enemy.component';
 import { AreaComponent } from './area/area.component';
-import { CharacterComponent } from './character/character.component';
 import { DialogueComponent } from './dialogue/dialogue.component';
 import { GameComponent } from './game.component';
 import { AreaConfigProviderService } from './shared/services/area-config-provider.service';
@@ -23,6 +19,8 @@ import { LootingModalComponent } from './item/looting/looting-modal.component';
 import { MatDialogModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { AiService } from './shared/services/ai.service';
+import { UserInputService } from '../shared/services/user-input.service';
 
 @NgModule({
   imports: [
@@ -34,11 +32,7 @@ import { BrowserModule } from '@angular/platform-browser';
   ],
   declarations: [
     GameComponent,
-    PlayerComponent,
-    NpcComponent,
-    EnemyComponent,
     AreaComponent,
-    CharacterComponent,
     DialogueComponent,
     MovementComponent,
     EquipmentComponent,
@@ -54,6 +48,8 @@ import { BrowserModule } from '@angular/platform-browser';
     MovementComponent,
     EquipmentManagerService,
     InventoryManagerService,
+    AiService,
+    UserInputService,
   ],
   entryComponents: [
     LootingModalComponent,
