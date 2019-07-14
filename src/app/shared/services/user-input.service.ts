@@ -39,7 +39,7 @@ export class UserInputService {
     this.playerMoved = new BehaviorSubject("test");
 
     this.playerMovedSubscription = this.playerMoved.subscribe(data => {
-      console.log(this.playerMoved.value);
+      // Do nothing
     });
 
   }

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { IAreaStateData } from '../interfaces';
-import { IGridReferences, IGridObject } from '../../area/interfaces';
+import { IGridReferences, IAreaElement } from '../../area/interfaces';
 import { Direction, ElementClass } from '../enums';
 import { AiService } from './ai.service';
+import { PlayerStateService } from './player-state.service';
 
 @Injectable()
 export class AreaStateService {
@@ -13,9 +14,10 @@ export class AreaStateService {
   public locations: IGridReferences;
 
   constructor(
-    ) {
+  ) {
     // Set the state to be the first level before anything
     this._currentLocation = 0;
+    // TODO Might be worth holding location x and y data on the object alongside the gridObject or null
     this.locations = {
       a1: null,
       a2: null,
@@ -72,6 +74,17 @@ export class AreaStateService {
     // puzzle, enemy, design, potential items etc.
   }
 
+  get playerLocation(): string {
+    for (const gridLocation in this.locations) {
+      if (this.locations.hasOwnProperty(gridLocation) &&
+        this.locations[gridLocation] &&
+        this.locations[gridLocation].type &&
+        (this.locations[gridLocation].type === ElementClass.player)) {
+          return gridLocation;
+      }
+    }
+  }
+
   get currentLocation() {
     return this._currentLocation;
   }
@@ -91,7 +104,8 @@ export class AreaStateService {
   /**
    * Push all charcters on grid into an array and return it
    */
-  public getCharactersOnGrid(): {gridItem: IGridObject, gridLocation: string}[] {
+  // TODO return type as interface
+  public getCharactersOnGrid(): { gridItem: IAreaElement, gridLocation: string }[] {
     const characterData = [];
     for (const gridLocation in this.locations) {
       if (this.locations.hasOwnProperty(gridLocation) &&

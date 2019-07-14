@@ -19,6 +19,7 @@ export default {
                   type: ElementClass.enemy,
                   elementProperties: {
                         asleep: false,
+                        angry: true,
                         level: 1,
                         maxHp: 2,
                         name: "Gary The Dick",
@@ -60,6 +61,7 @@ export default {
                   type: ElementClass.npc,
                   elementProperties: {
                         asleep: false,
+                        angry: false,
                         level: 1,
                         maxHp: 10,
                         name: "David",

@@ -78,14 +78,6 @@ export class MovementComponent {
     }
   }
 
-  private previousYReference(yReference: string | null): string {
-    // TODO: Should really just check if it exists in grid somehow
-    if (yReference === "a") {
-      return null;
-    }
-    return String.fromCharCode(yReference.charCodeAt(0) - 1);
-  }
-
   public getDirectionToFace(direction: Direction) {
     switch (direction) {
       case Direction.N:
@@ -117,6 +109,7 @@ export class MovementComponent {
 
     if (targetLocationDetails && targetLocationDetails.isLocationFree) {
       const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
+      this.areaStateService.locations[currentLocation].direction = direction;
       this.areaStateService.moveCharacter(targetLocation, currentLocation);
     } else {
       // Select a direction to move
@@ -134,6 +127,7 @@ export class MovementComponent {
 
         if (targetLocationDetails && targetLocationDetails.isLocationFree) {
           const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
+          this.areaStateService.locations[currentLocation].direction = direction;
           this.areaStateService.moveCharacter(targetLocation, currentLocation);
 
           return;
@@ -144,8 +138,39 @@ export class MovementComponent {
     return;
   }
 
-  public moveTowardsPlayer(character, gridLocation) {
+  public moveTowardsPlayer(character: any, characterLocation: string) {
+    const playerLocation = this.areaStateService.playerLocation;
+    const splitPlayerLocation = this.splitLocationReference(playerLocation);
+    const furthestDirectionToPlayer = this.getFurthestDirectionToPlayer(splitPlayerLocation, this.splitLocationReference(characterLocation));
+    this.areaStateService.locations[characterLocation].direction = furthestDirectionToPlayer;
+  }
 
+  public moveAwayFromPlayer() {
+
+  }
+
+  private getFurthestDirectionToPlayer(playerLocation: { locationY: string, locationX: number }, characterLocation: { locationY: string, locationX: number }): Direction {
+    const differenceBetweenY = playerLocation.locationY.charCodeAt(0) - characterLocation.locationY.charCodeAt(0);
+    const differenceBetweenX = playerLocation.locationX - characterLocation.locationX;
+    // const differenceBetweenY = Math.abs(playerLocation.locationY.charCodeAt(0) - characterLocation.locationY.charCodeAt(0));
+    // const differenceBetweenX = Math.abs(playerLocation.locationX - characterLocation.locationX);
+    // TODO tidy this up
+
+    if (Math.abs(differenceBetweenY) >= Math.abs(differenceBetweenX)) {
+      // Move vertically
+      if (differenceBetweenY >= 0) {
+        return Direction.S;
+      } else {
+        return Direction.N;
+      }
+    } else {
+      // Move horizontally
+      if (differenceBetweenX >= 0) {
+        return Direction.E;
+      } else {
+        return Direction.W;
+      }
+    }
   }
 
   private splitLocationReference(gridLocation: string): { locationY: string, locationX: number } {
@@ -168,6 +193,14 @@ export class MovementComponent {
       default:
         return null;
     }
+  }
+
+  private previousYReference(yReference: string | null): string {
+    // TODO: Should really just check if it exists in grid somehow
+    if (yReference === "a") {
+      return null;
+    }
+    return String.fromCharCode(yReference.charCodeAt(0) - 1);
   }
 
   private nextYReference(yReference: string): string {

@@ -113,41 +113,12 @@ export class PlayerStateService {
   }
 
   /**
-   * Return the player state for storage
-   * @returns the state data relevant to this service
-   */
-  public gatherState(): IPlayerStateData {
-    return {
-      health: this.health,
-      maxHealth: this.maxHealth,
-      strength: this.strength,
-      dexterity: this.dexterity,
-      magicka: this.magicka,
-      exp: this.exp,
-      locationX: this.locationX,
-      locationY: this.locationY,
-      direction: this.direction
-    };
-  }
-
-  /**
-   * Applies state data to this service
-   * @param newState settings from storage to push to this state service
-   */
-  public applyState(newState: IPlayerStateData): void {
-    for (const stateSetting in newState) {
-      if (this.hasOwnProperty(stateSetting)) {
-        this[stateSetting] = newState[stateSetting];
-      }
-    }
-  }
-
-  /**
    * Attempts to move the character in a direction
    * @param direction The direction to attempt to move
    */
   public move(direction: Direction) {
 
+    // TODO Might be worth getting location of player from area state service
     const newLocation = this.movement.getNextLocation(this.locationY, this.locationX, direction);
 
     // Update area state
@@ -309,6 +280,36 @@ export class PlayerStateService {
             name: target.name
           }
         );
+      }
+    }
+  }
+
+  /**
+   * Return the player state for storage
+   * @returns the state data relevant to this service
+   */
+  public gatherState(): IPlayerStateData {
+    return {
+      health: this.health,
+      maxHealth: this.maxHealth,
+      strength: this.strength,
+      dexterity: this.dexterity,
+      magicka: this.magicka,
+      exp: this.exp,
+      locationX: this.locationX,
+      locationY: this.locationY,
+      direction: this.direction
+    };
+  }
+
+  /**
+   * Applies state data to this service
+   * @param newState settings from storage to push to this state service
+   */
+  public applyState(newState: IPlayerStateData): void {
+    for (const stateSetting in newState) {
+      if (this.hasOwnProperty(stateSetting)) {
+        this[stateSetting] = newState[stateSetting];
       }
     }
   }
