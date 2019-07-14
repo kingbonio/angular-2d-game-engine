@@ -50,6 +50,7 @@ export class AiService {
           character.isPaused = true;
         } else {
           this.movement.moveTowardsPlayer(character, gridLocation);
+          character.isPaused = true;
 
           // } else {
           //   if (!character.isLowHealth()) {

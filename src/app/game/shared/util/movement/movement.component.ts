@@ -141,8 +141,15 @@ export class MovementComponent {
   public moveTowardsPlayer(character: any, characterLocation: string) {
     const playerLocation = this.areaStateService.playerLocation;
     const splitPlayerLocation = this.splitLocationReference(playerLocation);
-    const furthestDirectionToPlayer = this.getFurthestDirectionToPlayer(splitPlayerLocation, this.splitLocationReference(characterLocation));
+    const splitCharacterLocation = this.splitLocationReference(characterLocation);
+    const furthestDirectionToPlayer = this.getFurthestDirectionToPlayer(splitPlayerLocation, splitCharacterLocation);
     this.areaStateService.locations[characterLocation].direction = furthestDirectionToPlayer;
+    const targetLocationDetails = this.getNextLocation(splitCharacterLocation.locationY, splitCharacterLocation.locationX, furthestDirectionToPlayer);
+    const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
+
+    if (targetLocationDetails.isLocationFree) {
+      this.areaStateService.moveCharacter(targetLocation, characterLocation);
+    }
   }
 
   public moveAwayFromPlayer() {
@@ -152,10 +159,8 @@ export class MovementComponent {
   private getFurthestDirectionToPlayer(playerLocation: { locationY: string, locationX: number }, characterLocation: { locationY: string, locationX: number }): Direction {
     const differenceBetweenY = playerLocation.locationY.charCodeAt(0) - characterLocation.locationY.charCodeAt(0);
     const differenceBetweenX = playerLocation.locationX - characterLocation.locationX;
-    // const differenceBetweenY = Math.abs(playerLocation.locationY.charCodeAt(0) - characterLocation.locationY.charCodeAt(0));
-    // const differenceBetweenX = Math.abs(playerLocation.locationX - characterLocation.locationX);
-    // TODO tidy this up
 
+    // TODO tidy this up
     if (Math.abs(differenceBetweenY) >= Math.abs(differenceBetweenX)) {
       // Move vertically
       if (differenceBetweenY >= 0) {
