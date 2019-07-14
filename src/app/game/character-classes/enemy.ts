@@ -10,6 +10,7 @@ export class Enemy extends Character {
       public class: MonsterClass;
       public maxHp: number;
       public currentHp: number;
+      public lowHealthThreshold: number;
       public imageName: string;
       public speechResponse: string;
       public sleepResponse: string;
@@ -35,6 +36,7 @@ export class Enemy extends Character {
             this.direction = characterDetails.direction;
             // TODO: Set this manually
             this.maxHp = characterDetails.maxHp;
+            this.lowHealthThreshold = characterDetails.lowHealthThreshold;
             this.armour = characterDetails.armour;
             this.weapons = characterDetails.weapons;
             // TODO this could be more efficient
@@ -73,7 +75,7 @@ export class Enemy extends Character {
       }
 
       public isLowHealth() {
-
+            return this.currentHp < this.lowHealthThreshold;
       }
 
       public isDead(): boolean {

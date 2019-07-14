@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IAreaStateData } from '../interfaces';
+import { IAreaStateData, ILocation } from '../interfaces';
 import { IGridReferences, IAreaElement } from '../../area/interfaces';
 import { Direction, ElementClass } from '../enums';
 import { AiService } from './ai.service';
@@ -102,7 +102,7 @@ export class AreaStateService {
   }
 
   /**
-   * Push all charcters on grid into an array and return it
+   * Push all characters on grid into an array and return it
    */
   // TODO return type as interface
   public getCharactersOnGrid(): { gridItem: IAreaElement, gridLocation: string }[] {
@@ -125,6 +125,29 @@ export class AreaStateService {
     return characterData;
   }
 
+  public isCharacterNextToPlayer(gridLocation: string): boolean {
+    const playerCoordinates = this.splitLocationReference(this.playerLocation);
+    const characterCoordinates = this.splitLocationReference(gridLocation);
+    const distanceFromPlayerCoordinates = this.getDistanceBetweenLocations(playerCoordinates, characterCoordinates);
+    // Positive differences should be 0 and 1
+    if (Math.abs(distanceFromPlayerCoordinates.xDistance) + Math.abs(distanceFromPlayerCoordinates.yDistance) === 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Returns a positive or negative value for both x and y distances to target location
+   * @param currentLocation The location we want the distance to
+   * @param targetLocation The location we want the distance from
+   */
+  public getDistanceBetweenLocations(currentLocation: ILocation, targetLocation: ILocation): { yDistance: number, xDistance: number } {
+    const differenceBetweenY = currentLocation.locationY.charCodeAt(0) - targetLocation.locationY.charCodeAt(0);
+    const differenceBetweenX = currentLocation.locationX - targetLocation.locationX;
+    return { yDistance: differenceBetweenY, xDistance: differenceBetweenX };
+  }
+
   /**
    * Checks whether the location on the grid can be moved into
    * @param location the grid reference for the location
@@ -134,6 +157,8 @@ export class AreaStateService {
   }
 
   public moveCharacter(newLocation: string, currentLocation: string) {
+    console.log(`Attempting to move ${this.locations[currentLocation].type} from ${currentLocation} to ${newLocation}`);
+    console.log("While this grid location: ", this.locations);
     // TODO: We need to store a reference to the player object here
     this.locations[newLocation] = this.locations[currentLocation];
     this.locations[currentLocation] = null;
@@ -141,6 +166,13 @@ export class AreaStateService {
 
   public getNextGridLocation(direction: Direction) {
 
+  }
+
+  public splitLocationReference(gridLocation: string): ILocation {
+    return {
+      locationY: gridLocation[0],
+      locationX: Number(gridLocation[1]),
+    };
   }
 
   /**

@@ -21,7 +21,6 @@ export class AiService {
     private playerStateService: PlayerStateService,
   ) {
     this.userInputService.playerMoved.subscribe(data => {
-      console.log(this.areaStateService.locations);
       this.actionTriggerHandler();
     });
   }
@@ -49,20 +48,19 @@ export class AiService {
           this.movement.wander(character, gridLocation);
           character.isPaused = true;
         } else {
-          this.movement.moveTowardsPlayer(character, gridLocation);
+          if (!character.isLowHealth()) {
+            // Head towards player and attack if next to player, otherwise move towards the player
+            if (this.areaStateService.isCharacterNextToPlayer(gridLocation)) {
+              console.log("I caught you!");
+              //   this.character.attackPlayer();
+            } else {
+              this.movement.moveWithRespectToPlayer(character, gridLocation, true);
+            }
+          } else {
+            // Run away from player
+            this.movement.moveWithRespectToPlayer(character, gridLocation, false);
+          }
           character.isPaused = true;
-
-          // } else {
-          //   if (!character.isLowHealth()) {
-          //     this.movement.moveTowardsPlayer(character, gridLocation);
-
-          //     if (this.areaStateService.isNextToPlayer(gridLocation)) {
-          //       this.areaStateService
-          //       this.character.attackPlayer();
-          //     }
-          //   } else {
-          //     this.movement.runAway(character);
-          //   }
         }
       }
     }

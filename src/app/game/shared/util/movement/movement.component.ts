@@ -3,6 +3,7 @@ import { AreaStateService } from '../../services/area-state.service';
 import { Direction } from '../../enums';
 import { DiceService } from '../../services/dice.service';
 import { Dice } from '../dice';
+import { ILocation } from '../../interfaces';
 
 @Component({
   selector: 'app-movement',
@@ -103,7 +104,7 @@ export class MovementComponent {
     let direction: Direction = this.getDirectionFromNumber(directionDiceRoll);
 
     // TODO This seems unnecessary but will need to refactor the method and other dependencies
-    let currentLocationDetails = this.splitLocationReference(currentLocation);
+    let currentLocationDetails = this.areaStateService.splitLocationReference(currentLocation);
 
     let targetLocationDetails = this.getNextLocation(currentLocationDetails.locationY, currentLocationDetails.locationX, direction);
 
@@ -115,13 +116,13 @@ export class MovementComponent {
       // Select a direction to move
       for (let i = 1; i < 4; i++) {
 
-        if (i = directionDiceRoll) {
+        if (i === directionDiceRoll) {
           continue;
         }
 
         direction = this.getDirectionFromNumber(i);
 
-        currentLocationDetails = this.splitLocationReference(currentLocation);
+        currentLocationDetails = this.areaStateService.splitLocationReference(currentLocation);
 
         targetLocationDetails = this.getNextLocation(currentLocationDetails.locationY, currentLocationDetails.locationX, direction);
 
@@ -138,51 +139,50 @@ export class MovementComponent {
     return;
   }
 
-  public moveTowardsPlayer(character: any, characterLocation: string) {
+  /**
+   * If direction is available move the chracter towards the player's location
+   * @param character The character that will be moving
+   * @param characterLocation The location of the character in question
+   * @param moveTowardsPlayer Whether to more towards or away from player's location
+   */
+  public moveWithRespectToPlayer(character: any, characterLocation: string, moveTowardsPlayer: boolean) {
     const playerLocation = this.areaStateService.playerLocation;
-    const splitPlayerLocation = this.splitLocationReference(playerLocation);
-    const splitCharacterLocation = this.splitLocationReference(characterLocation);
-    const furthestDirectionToPlayer = this.getFurthestDirectionToPlayer(splitPlayerLocation, splitCharacterLocation);
+    const splitPlayerLocation = this.areaStateService.splitLocationReference(playerLocation);
+    const splitCharacterLocation = this.areaStateService.splitLocationReference(characterLocation);
+    const furthestDirectionToPlayer = this.getDirectionWithRespectToPlayer(splitPlayerLocation, splitCharacterLocation, moveTowardsPlayer);
     this.areaStateService.locations[characterLocation].direction = furthestDirectionToPlayer;
     const targetLocationDetails = this.getNextLocation(splitCharacterLocation.locationY, splitCharacterLocation.locationX, furthestDirectionToPlayer);
     const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
 
-    if (targetLocationDetails.isLocationFree) {
+    if (targetLocationDetails && targetLocationDetails.isLocationFree) {
       this.areaStateService.moveCharacter(targetLocation, characterLocation);
     }
   }
 
-  public moveAwayFromPlayer() {
+  /**
+   * Returns the best direction towards or away from the player's location
+   * @param playerLocation The current location of the player
+   * @param characterLocation The current location of the character to move
+   * @param moveTowardsPlayer Whether to more towards or away from player's location
+   */
+  private getDirectionWithRespectToPlayer(playerLocation: ILocation, characterLocation: ILocation, moveTowardsPlayer: boolean): Direction {
+    const distanceData = this.areaStateService.getDistanceBetweenLocations(playerLocation, characterLocation);
 
-  }
-
-  private getFurthestDirectionToPlayer(playerLocation: { locationY: string, locationX: number }, characterLocation: { locationY: string, locationX: number }): Direction {
-    const differenceBetweenY = playerLocation.locationY.charCodeAt(0) - characterLocation.locationY.charCodeAt(0);
-    const differenceBetweenX = playerLocation.locationX - characterLocation.locationX;
-
-    // TODO tidy this up
-    if (Math.abs(differenceBetweenY) >= Math.abs(differenceBetweenX)) {
-      // Move vertically
-      if (differenceBetweenY >= 0) {
-        return Direction.S;
+    // Move vertically
+    if (Math.abs(distanceData.yDistance) >= Math.abs(distanceData.xDistance)) {
+      if (distanceData.yDistance >= 0) {
+        return moveTowardsPlayer ? Direction.S : Direction.N;
       } else {
-        return Direction.N;
+        return moveTowardsPlayer ? Direction.N : Direction.S;
       }
     } else {
       // Move horizontally
-      if (differenceBetweenX >= 0) {
-        return Direction.E;
+      if (distanceData.xDistance >= 0) {
+        return moveTowardsPlayer ? Direction.E : Direction.W;
       } else {
-        return Direction.W;
+        return moveTowardsPlayer ? Direction.W : Direction.E;
       }
     }
-  }
-
-  private splitLocationReference(gridLocation: string): { locationY: string, locationX: number } {
-    return {
-      locationY: gridLocation[0],
-      locationX: Number(gridLocation[1]),
-    };
   }
 
   private getDirectionFromNumber(numberReference: number): Direction | null {
