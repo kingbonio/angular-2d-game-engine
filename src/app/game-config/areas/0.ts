@@ -55,7 +55,7 @@ export default {
                         ],
                         imageFileName: "",
                   },
-                  startingPositionX: 4,
+                  startingPositionX: 3,
                   startingPositionY: "c",
             },
             {
@@ -98,8 +98,92 @@ export default {
             {
                   type: ElementClass.object,
                   elementProperties: {
-                        name: "Old chest",
+                        name: "Straight Wall",
                         direction: Direction.E,
+                        canBeTraversed: false,
+                        isInteractive: false,
+                        imageName: "wall-straight.png",
+                  },
+                  startingPositionX: 1,
+                  startingPositionY: "d",
+            },
+            {
+                  type: ElementClass.object,
+                  elementProperties: {
+                        name: "Straight Wall",
+                        direction: Direction.E,
+                        canBeTraversed: false,
+                        isInteractive: false,
+                        imageName: "wall-straight.png",
+                  },
+                  startingPositionX: 2,
+                  startingPositionY: "d",
+            },
+            {
+                  type: ElementClass.object,
+                  elementProperties: {
+                        name: "Straight Wall",
+                        direction: Direction.E,
+                        canBeTraversed: false,
+                        isInteractive: false,
+                        imageName: "wall-straight.png",
+                  },
+                  startingPositionX: 3,
+                  startingPositionY: "d",
+            },
+            {
+                  type: ElementClass.object,
+                  elementProperties: {
+                        name: "Corner Wall",
+                        direction: Direction.S,
+                        canBeTraversed: false,
+                        isInteractive: false,
+                        imageName: "wall-corner.png",
+                  },
+                  startingPositionX: 4,
+                  startingPositionY: "d",
+            },
+            {
+                  type: ElementClass.object,
+                  elementProperties: {
+                        name: "Straight Wall",
+                        direction: Direction.S,
+                        canBeTraversed: false,
+                        isInteractive: false,
+                        imageName: "wall-straight.png",
+                  },
+                  startingPositionX: 4,
+                  startingPositionY: "c",
+            },
+            {
+                  type: ElementClass.object,
+                  elementProperties: {
+                        name: "Door",
+                        direction: Direction.N,
+                        canBeTraversed: false,
+                        isInteractive: true,
+                        imageName: "door.png",
+                  },
+                  startingPositionX: 4,
+                  startingPositionY: "b",
+            },
+            {
+                  type: ElementClass.object,
+                  elementProperties: {
+                        name: "Straight Wall",
+                        direction: Direction.S,
+                        canBeTraversed: false,
+                        isInteractive: false,
+                        imageName: "wall-straight.png",
+                  },
+                  startingPositionX: 4,
+                  startingPositionY: "a",
+            },
+            {
+                  type: ElementClass.object,
+                  elementProperties: {
+                        name: "Old chest",
+                        direction: Direction.N,
                         canBeTraversed: false,
                         isInteractive: true,
                         itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbf693c76",
@@ -109,8 +193,8 @@ export default {
                         ]
                   },
                   startingPositionX: 1,
-                  startingPositionY: "d",
-            }
+                  startingPositionY: "c",
+            },
       ] as IAreaElement[],
       areaCompleteRequirements: {
             item: false,

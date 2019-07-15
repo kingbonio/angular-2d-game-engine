@@ -9,6 +9,7 @@ import { MovementComponent } from '../util/movement/movement.component';
 import { BattleCalculatorService } from './battle-calculator.service';
 import { WeaponType } from '../../item/enums';
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
+import { IAreaElement } from '../../area/interfaces';
 
 @Injectable()
 export class PlayerStateService {
@@ -152,7 +153,7 @@ export class PlayerStateService {
       const targetReference = this.movement.getNextLocation(this.locationY, this.locationX, this.direction);
       const target = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
 
-      if (target) {
+      if (target && (target.type === ElementClass.enemy || target.type === ElementClass.npc)) {
         if (target.isDead()) {
           this.dialogueService.displayDialogueMessage({
             text: defaults.dialogue.nullElementResponse,
