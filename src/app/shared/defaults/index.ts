@@ -14,19 +14,20 @@ export default {
         locationY: 'B',
         direction: Direction.N
     },
-    playerMultiplyers: {
-        inventoryStorageMultiplyer: 30,
-        inventoryCapacityMultiplyer: 30,
+    playerMultipliers: {
+        inventoryStorageMultiplier: 30,
+        inventoryCapacityMultiplier: 30,
         levelCalculation: (exp) => {
             return exp / 3000;
         },
-        levelStatMultiplyer: 1.2
+        levelStatMultiplier: 1.2,
+        stealSuccessRequirement: 2,
     },
     initialAreaSettings: {
         type: 'start'
     },
     dialogue: {
-        textOnScreenTimeMultiplyer: 200,
+        textOnScreenTimeMultiplier: 200,
         minimumOnScreenTime: 4000,
         nullElementResponse: "There is no response",
         keyItemNotActive: "You have not got the correct active item",
@@ -37,7 +38,8 @@ export default {
         attackFailure: "Your attack fails",
         targetDead: "You have killed ",
         inventoryFull: "Your inventory is full",
-        noWeaponEquipped: "You have no weapon equipped to attack with"
+        noWeaponEquipped: "You have no weapon equipped to attack with",
+        stealAttemptFail: "You failed to steal from the target and you have angered them",
     },
     gameMenu: {
         menuOpenAtLoad: true,

@@ -21,6 +21,7 @@ export class NPC extends Character {
       public armour: IArmour;
       public weapons: IWeapons;
       public loot: IInventoryItem[];
+      public level: number;
 
       constructor(characterDetails: any) {
             // TODO: Resolve any
@@ -37,6 +38,7 @@ export class NPC extends Character {
             this.lowHealthThreshold = characterDetails.lowHealthThreshold;
             this.armour = characterDetails.equippedArmour;
             this.loot = characterDetails.loot;
+            this.level = characterDetails.level;
             this.imageFileName = characterDetails.imageFileName;
             if (this.loot) {
                   characterDetails.loot.forEach((item: IInventoryItem) => {

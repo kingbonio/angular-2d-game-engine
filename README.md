@@ -11,7 +11,7 @@ Run `npm install` in the repo folder and then `ng serve`, this will launch the e
 
 # Defaults
 
-Numerous default settings can be found in the src/app/shared/defaults/index.ts, setting starting parameters and multiplyers
+Numerous default settings can be found in the src/app/shared/defaults/index.ts, setting starting parameters and multipliers
 
 ## Default Controls
 

@@ -10,6 +10,8 @@ import { BattleCalculatorService } from './battle-calculator.service';
 import { WeaponType } from '../../item/enums';
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
 import { IAreaElement } from '../../area/interfaces';
+import { Character } from '../../character-classes/character';
+import { Dice } from '../util/dice';
 
 @Injectable()
 export class PlayerStateService {
@@ -36,6 +38,7 @@ export class PlayerStateService {
     private movement: MovementComponent,
     private battleCalculatorService: BattleCalculatorService,
     private equipmentManagerService: EquipmentManagerService,
+
   ) {
   }
 
@@ -98,15 +101,15 @@ export class PlayerStateService {
   }
 
   get inventoryCapacity() {
-    return this._strength * defaults.playerMultiplyers.inventoryStorageMultiplyer;
+    return this._strength * defaults.playerMultipliers.inventoryStorageMultiplier;
   }
 
   get level() {
-    return defaults.playerMultiplyers.levelCalculation(this.exp);
+    return Math.ceil(defaults.playerMultipliers.levelCalculation(this.exp));
   }
 
-  get levelMultiplyer(): number {
-    return this.level * defaults.playerMultiplyers.levelStatMultiplyer;
+  get levelMultiplier(): number {
+    return this.level * defaults.playerMultipliers.levelStatMultiplier;
   }
 
   public itemTooHighLevel(item: IInventoryItem): boolean {
@@ -163,7 +166,7 @@ export class PlayerStateService {
           return;
         }
 
-        const damage = this.battleCalculatorService.calculateDamageToEnemy(target, this.selectedWeaponSlot, this.levelMultiplyer);
+        const damage = this.battleCalculatorService.calculateDamageToEnemy(target, this.selectedWeaponSlot, this.levelMultiplier);
 
         if (damage) {
           // No need to assign this
@@ -222,15 +225,24 @@ export class PlayerStateService {
         if (target.loot) {
           // Loot body if dead
           if (target.isDead()) {
-            // Load a modal with the contents of the character's inventory
-            // this.modalService.open("type");
-
             // Emit event for looting modal
             this.openLootingModal.emit(target);
-
-            // TODO
-            // this.areaStateService
             return;
+          } else if (target.isAsleep) {
+            const stealSuccess = this.attemptSteal(target);
+            if (stealSuccess) {
+              this.openLootingModal.emit(target);
+            } else {
+              this.dialogueService.displayDialogueMessage(
+                {
+                  text: defaults.dialogue.stealAttemptFail,
+                  character: defaults.dialogue.computerCharacterType,
+                  name: defaults.dialogue.computerName
+                }
+              );
+              target.isAsleep = false;
+              target.isAngry = true;
+            }
           }
 
         }
@@ -283,6 +295,16 @@ export class PlayerStateService {
         );
       }
     }
+  }
+
+  private attemptSteal(target: Character): boolean {
+    // TODO Work this out properly
+    const diceRoll = Dice.roll1d20();
+    if (diceRoll > defaults.playerMultipliers.stealSuccessRequirement && this.level >= target.level) {
+      return true;
+    }
+    return false;
+    // const successChanceMultiplier = target.isAsleep ? defaults.playerMultipliers.
   }
 
   /**

@@ -12,6 +12,7 @@ export class Character {
       armour?: IArmour;
       weapons?: IWeapons;
       loot: IInventoryItem[];
+      level: number;
       imageFileName: string;
 
       inventoryLocations: any;

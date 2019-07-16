@@ -18,8 +18,8 @@ export default {
             {
                   type: ElementClass.enemy,
                   elementProperties: {
-                        asleep: false,
-                        angry: true,
+                        asleep: true,
+                        angry: false,
                         level: 1,
                         maxHp: 6,
                         lowHealthThreshold: 4,
@@ -155,18 +155,18 @@ export default {
                   startingPositionX: 4,
                   startingPositionY: "c",
             },
-            {
-                  type: ElementClass.object,
-                  elementProperties: {
-                        name: "Door",
-                        direction: Direction.N,
-                        canBeTraversed: false,
-                        isInteractive: true,
-                        imageName: "door.png",
-                  },
-                  startingPositionX: 4,
-                  startingPositionY: "b",
-            },
+            // {
+            //       type: ElementClass.object,
+            //       elementProperties: {
+            //             name: "Door",
+            //             direction: Direction.N,
+            //             canBeTraversed: false,
+            //             isInteractive: true,
+            //             imageName: "door.png",
+            //       },
+            //       startingPositionX: 4,
+            //       startingPositionY: "b",
+            // },
             {
                   type: ElementClass.object,
                   elementProperties: {

@@ -21,7 +21,7 @@ export class BattleCalculatorService {
    * @param target The character with equipped armour
    * @param weaponTypeUsed Reference for player weapon type
    */
-  public calculateDamageToEnemy(target: Character, weaponTypeUsed: WeaponType, levelMultiplyer: number): number | undefined {
+  public calculateDamageToEnemy(target: Character, weaponTypeUsed: WeaponType, levelMultiplier: number): number | undefined {
     let totalArmourValue = 0;
     let damageTaken = 0;
 
@@ -33,7 +33,7 @@ export class BattleCalculatorService {
 
     const equippedWeapon = this.equipmentManagerService.getWeaponType(weaponTypeUsed);
 
-    const equippedWeaponDamage = equippedWeapon.properties.damage + levelMultiplyer;
+    const equippedWeaponDamage = equippedWeapon.properties.damage + levelMultiplier;
 
     // Round up the damage to the nearest whole number
     damageTaken = Math.ceil(equippedWeaponDamage / (totalArmourValue + 1));

@@ -22,6 +22,7 @@ export class Enemy extends Character {
       public armour: IArmour;
       public weapons: IWeapons;
       public loot: IInventoryItem[];
+      public level: number;
 
       constructor(characterDetails: any) {
             // TODO: Resolve any
@@ -41,6 +42,7 @@ export class Enemy extends Character {
             this.weapons = characterDetails.weapons;
             // TODO this could be more efficient
             this.loot = characterDetails.loot;
+            this.level = characterDetails.level;
             this.imageFileName = characterDetails.imageFileName;
             if (this.loot) {
                   characterDetails.loot.forEach((item: IInventoryItem) => {

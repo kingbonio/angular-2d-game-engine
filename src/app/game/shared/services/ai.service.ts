@@ -18,7 +18,6 @@ export class AiService {
     private movement: MovementComponent,
     private areaStateService: AreaStateService,
     private userInputService: UserInputService,
-    private playerStateService: PlayerStateService,
   ) {
     this.userInputService.playerMoved.subscribe(data => {
       this.actionTriggerHandler();
