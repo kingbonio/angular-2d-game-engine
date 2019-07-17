@@ -2,6 +2,7 @@ import { MonsterClass, Direction, CharacterType, ElementClass } from "../../game
 import { IAreaElement } from "../../game/area/interfaces";
 import { armour, weapons, keyItems } from "../items";
 import { IWeapons } from "../../game/item/interfaces";
+import { ObjectType } from "../../game/shared/enums";
 
 export default {
       areaElements: [
@@ -51,7 +52,6 @@ export default {
                         loot: [
                               armour.ironHelmet,
                               keyItems.rustyOldKey,
-                              keyItems.fancyKey,
                         ],
                         imageFileName: "",
                   },
@@ -89,7 +89,9 @@ export default {
                               concealed: null,
                               shield: null,
                         } as IWeapons,
-                        loot: [],
+                        loot: [
+                              keyItems.fancyKey,
+                        ],
                         imageFileName: "",
                   },
                   startingPositionX: 3,
@@ -155,18 +157,20 @@ export default {
                   startingPositionX: 4,
                   startingPositionY: "c",
             },
-            // {
-            //       type: ElementClass.object,
-            //       elementProperties: {
-            //             name: "Door",
-            //             direction: Direction.N,
-            //             canBeTraversed: false,
-            //             isInteractive: true,
-            //             imageName: "door.png",
-            //       },
-            //       startingPositionX: 4,
-            //       startingPositionY: "b",
-            // },
+            {
+                  type: ElementClass.object,
+                  elementProperties: {
+                        name: "Door",
+                        objectType: ObjectType.door,
+                        direction: Direction.N,
+                        canBeTraversed: false,
+                        isInteractive: true,
+                        itemReferenceNeeded: "64c87a80-4f1a-4dc3-b2c8-c47a9c393f61",
+                        imageName: "door.png",
+                  },
+                  startingPositionX: 4,
+                  startingPositionY: "b",
+            },
             {
                   type: ElementClass.object,
                   elementProperties: {
@@ -183,6 +187,7 @@ export default {
                   type: ElementClass.object,
                   elementProperties: {
                         name: "Old chest",
+                        objectType: ObjectType.lootObject,
                         direction: Direction.N,
                         canBeTraversed: false,
                         isInteractive: true,

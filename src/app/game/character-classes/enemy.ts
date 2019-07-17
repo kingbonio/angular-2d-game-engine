@@ -59,7 +59,7 @@ export class Enemy extends Character {
             this.xp = 0;
       }
 
-      public respond(interaction: UserInteractionTypes, directionToFace: Direction, damage: number) {
+      public respond(interaction: UserInteractionTypes, directionToFace: Direction, damage?: number) {
             switch (interaction) {
                   case UserInteractionTypes.speak:
                         if (!this.isAsleep) {

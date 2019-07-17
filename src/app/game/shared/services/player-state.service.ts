@@ -1,6 +1,6 @@
 import defaults from '../../../shared/defaults';
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { Direction, ElementClass } from '../enums';
+import { Direction, ElementClass, ObjectType } from '../enums';
 import { IPlayerStateData, IInventoryItem } from '../interfaces';
 import { AreaStateService } from './area-state.service';
 import { DialogueService } from './dialogue.service';
@@ -17,12 +17,12 @@ import { Dice } from '../util/dice';
 export class PlayerStateService {
   @Output() openLootingModal: EventEmitter<any> = new EventEmitter();
 
-  private _health: number;
-  private _maxHealth: number;
-  private _strength: number;
-  private _dexterity: number;
-  private _magicka: number;
-  private _exp: number = defaults.initialPlayerStats.exp;
+  private health: number;
+  private maxHealth: number;
+  private strength: number;
+  private dexterity: number;
+  private magicka: number;
+  private exp: number = defaults.initialPlayerStats.exp;
   public locationX: number;
   public locationY: string;
   public direction: Direction = Direction.N;
@@ -44,64 +44,16 @@ export class PlayerStateService {
 
   onInit() {
     // Pull defaults from defaults file and assign initial values
-    this._health = defaults.initialPlayerStats.health;
-    this._maxHealth = defaults.initialPlayerStats.maxHealth;
-    this._strength = defaults.initialPlayerStats.strength;
-    this._dexterity = defaults.initialPlayerStats.dexterity;
-    this._magicka = defaults.initialPlayerStats.magicka;
+    this.health = defaults.initialPlayerStats.health;
+    this.maxHealth = defaults.initialPlayerStats.maxHealth;
+    this.strength = defaults.initialPlayerStats.strength;
+    this.dexterity = defaults.initialPlayerStats.dexterity;
+    this.magicka = defaults.initialPlayerStats.magicka;
     this.direction = defaults.initialPlayerStats.direction;
   }
 
-  get health() {
-    return this._health;
-  }
-
-  set health(newHealth) {
-    this._health = newHealth;
-  }
-
-  get maxHealth() {
-    return this._maxHealth;
-  }
-
-  set maxHealth(newMaxHealth) {
-    this._maxHealth = newMaxHealth;
-  }
-
-  get strength() {
-    return this._strength;
-  }
-
-  set strength(newStrength) {
-    this._strength = newStrength;
-  }
-
-  get dexterity() {
-    return this._dexterity;
-  }
-
-  set dexterity(newDexterity) {
-    this._dexterity = newDexterity;
-  }
-
-  get magicka() {
-    return this._magicka;
-  }
-
-  set magicka(newMagicka) {
-    this._magicka = newMagicka;
-  }
-
-  get exp() {
-    return this._exp;
-  }
-
-  set exp(newExp) {
-    this._exp = newExp;
-  }
-
   get inventoryCapacity() {
-    return this._strength * defaults.playerMultipliers.inventoryStorageMultiplier;
+    return this.strength * defaults.playerMultipliers.inventoryStorageMultiplier;
   }
 
   get level() {
@@ -209,17 +161,25 @@ export class PlayerStateService {
       if (target.type === ElementClass.object) {
         const activeItem = this.equipmentManagerService.activeItem;
         // TODO Maybe organise these ifs
-        if (activeItem && activeItem.itemReference) {
-          if (target.itemReferenceNeeded === activeItem.itemReference) {
-            this.openLootingModal.emit(target);
-          } else {
-            this.dialogueService.displayDialogueMessage({
-              text: defaults.dialogue.keyItemNotActive,
-              character: defaults.dialogue.computerCharacterType,
-              name: defaults.dialogue.computerName
-            });
-            return;
+        if (activeItem && activeItem.itemReference && target.itemReferenceNeeded === activeItem.itemReference) {
+          switch (target.objectType) {
+            case ObjectType.lootObject:
+              this.openLootingModal.emit(target);
+              break;
+            case ObjectType.door:
+              this.areaStateService.removeElementFromArea(target, targetReference.locationY + targetReference.locationX);
+              break;
+            default:
+              // Do nothing...
+              break;
           }
+        } else {
+          this.dialogueService.displayDialogueMessage({
+            text: defaults.dialogue.keyItemNotActive,
+            character: defaults.dialogue.computerCharacterType,
+            name: defaults.dialogue.computerName
+          });
+          return;
         }
       } else {
         if (target.loot) {
@@ -243,10 +203,16 @@ export class PlayerStateService {
               target.isAsleep = false;
               target.isAngry = true;
             }
+          } else {
+            this.dialogueService.displayDialogueMessage(
+              {
+                text: target.respond(UserInteractionTypes.speak, this.movement.getDirectionToFace(this.direction)),
+                character: target.type,
+                name: target.name
+              }
+            );
           }
-
         }
-
       }
       // TODO else...
     }

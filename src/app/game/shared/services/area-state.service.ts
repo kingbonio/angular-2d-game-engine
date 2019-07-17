@@ -80,7 +80,7 @@ export class AreaStateService {
         this.locations[gridLocation] &&
         this.locations[gridLocation].type &&
         (this.locations[gridLocation].type === ElementClass.player)) {
-          return gridLocation;
+        return gridLocation;
       }
     }
   }
@@ -164,8 +164,8 @@ export class AreaStateService {
     this.locations[currentLocation] = null;
   }
 
-  public getNextGridLocation(direction: Direction) {
-
+  public removeElementFromArea(target: IAreaElement, location: string) {
+    this.locations[location] = null;
   }
 
   public splitLocationReference(gridLocation: string): ILocation {
