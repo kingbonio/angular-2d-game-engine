@@ -5,12 +5,14 @@ export class Character {
       currentHp: number;
       maxHp: number;
       xp: number;
-      asleep: boolean;
+      isAsleep: boolean;
+      isAngry: boolean;
       type: ElementClass;
       direction: Direction;
       armour?: IArmour;
       weapons?: IWeapons;
       loot: IInventoryItem[];
+      level: number;
       imageFileName: string;
 
       inventoryLocations: any;
@@ -46,4 +48,5 @@ export class Character {
             };
             this.locationKeys = Object.keys;
       }
+
 }

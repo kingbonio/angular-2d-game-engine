@@ -1,7 +1,9 @@
-import { Injectable, ComponentFactoryResolver } from '@angular/core';
-import { IAreaStateData } from '../interfaces';
-import { IGridReferences } from '../../area/interfaces';
-import { Direction } from '../enums';
+import { Injectable } from '@angular/core';
+import { IAreaStateData, ILocation } from '../interfaces';
+import { IGridReferences, IAreaElement } from '../../area/interfaces';
+import { Direction, ElementClass } from '../enums';
+import { AiService } from './ai.service';
+import { PlayerStateService } from './player-state.service';
 
 @Injectable()
 export class AreaStateService {
@@ -11,9 +13,11 @@ export class AreaStateService {
   public locationKeys: any;
   public locations: IGridReferences;
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) {
+  constructor(
+  ) {
     // Set the state to be the first level before anything
     this._currentLocation = 0;
+    // TODO Might be worth holding location x and y data on the object alongside the gridObject or null
     this.locations = {
       a1: null,
       a2: null,
@@ -68,7 +72,17 @@ export class AreaStateService {
     this.locationKeys = Object.keys;
     // TODO: Maybe we should have a generic area which has properties of
     // puzzle, enemy, design, potential items etc.
+  }
 
+  get playerLocation(): string {
+    for (const gridLocation in this.locations) {
+      if (this.locations.hasOwnProperty(gridLocation) &&
+        this.locations[gridLocation] &&
+        this.locations[gridLocation].type &&
+        (this.locations[gridLocation].type === ElementClass.player)) {
+        return gridLocation;
+      }
+    }
   }
 
   get currentLocation() {
@@ -88,21 +102,77 @@ export class AreaStateService {
   }
 
   /**
+   * Push all characters on grid into an array and return it
+   */
+  // TODO return type as interface
+  public getCharactersOnGrid(): { gridItem: IAreaElement, gridLocation: string }[] {
+    const characterData = [];
+    for (const gridLocation in this.locations) {
+      if (this.locations.hasOwnProperty(gridLocation) &&
+        this.locations[gridLocation] &&
+        this.locations[gridLocation].type &&
+        (this.locations[gridLocation].type === ElementClass.enemy || this.locations[gridLocation].type === ElementClass.npc) &&
+        !this.locations[gridLocation].isDead()) {
+        const gridItem = this.locations[gridLocation];
+        if (gridItem.type && (gridItem.type === ElementClass.enemy || gridItem.type === ElementClass.npc)) {
+          characterData.push({
+            gridItem,
+            gridLocation
+          });
+        }
+      }
+    }
+    return characterData;
+  }
+
+  public isCharacterNextToPlayer(gridLocation: string): boolean {
+    const playerCoordinates = this.splitLocationReference(this.playerLocation);
+    const characterCoordinates = this.splitLocationReference(gridLocation);
+    const distanceFromPlayerCoordinates = this.getDistanceBetweenLocations(playerCoordinates, characterCoordinates);
+    // Positive differences should be 0 and 1
+    if (Math.abs(distanceFromPlayerCoordinates.xDistance) + Math.abs(distanceFromPlayerCoordinates.yDistance) === 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Returns a positive or negative value for both x and y distances to target location
+   * @param currentLocation The location we want the distance to
+   * @param targetLocation The location we want the distance from
+   */
+  public getDistanceBetweenLocations(currentLocation: ILocation, targetLocation: ILocation): { yDistance: number, xDistance: number } {
+    const differenceBetweenY = currentLocation.locationY.charCodeAt(0) - targetLocation.locationY.charCodeAt(0);
+    const differenceBetweenX = currentLocation.locationX - targetLocation.locationX;
+    return { yDistance: differenceBetweenY, xDistance: differenceBetweenX };
+  }
+
+  /**
    * Checks whether the location on the grid can be moved into
    * @param location the grid reference for the location
    */
-  isLocationFree(location: string): boolean {
+  public isLocationFree(location: string): boolean {
     return (!this.locations[location]);
   }
 
   public moveCharacter(newLocation: string, currentLocation: string) {
+    console.log(`Attempting to move ${this.locations[currentLocation].type} from ${currentLocation} to ${newLocation}`);
+    console.log("While this grid location: ", this.locations);
     // TODO: We need to store a reference to the player object here
     this.locations[newLocation] = this.locations[currentLocation];
     this.locations[currentLocation] = null;
   }
 
-  public getNextGridLocation(direction: Direction) {
+  public removeElementFromArea(target: IAreaElement, location: string) {
+    this.locations[location] = null;
+  }
 
+  public splitLocationReference(gridLocation: string): ILocation {
+    return {
+      locationY: gridLocation[0],
+      locationX: Number(gridLocation[1]),
+    };
   }
 
   /**

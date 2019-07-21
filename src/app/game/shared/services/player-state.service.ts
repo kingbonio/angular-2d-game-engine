@@ -1,6 +1,6 @@
 import defaults from '../../../shared/defaults';
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { Direction, ElementClass } from '../enums';
+import { Direction, ElementClass, ObjectType } from '../enums';
 import { IPlayerStateData, IInventoryItem } from '../interfaces';
 import { AreaStateService } from './area-state.service';
 import { DialogueService } from './dialogue.service';
@@ -9,17 +9,20 @@ import { MovementComponent } from '../util/movement/movement.component';
 import { BattleCalculatorService } from './battle-calculator.service';
 import { WeaponType } from '../../item/enums';
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
+import { IAreaElement } from '../../area/interfaces';
+import { Character } from '../../character-classes/character';
+import { Dice } from '../util/dice';
 
 @Injectable()
 export class PlayerStateService {
   @Output() openLootingModal: EventEmitter<any> = new EventEmitter();
 
-  private _health: number;
-  private _maxHealth: number;
-  private _strength: number;
-  private _dexterity: number;
-  private _magicka: number;
-  private _exp: number = defaults.initialPlayerStats.exp;
+  private health: number;
+  private maxHealth: number;
+  private strength: number;
+  private dexterity: number;
+  private magicka: number;
+  private exp: number = defaults.initialPlayerStats.exp;
   public locationX: number;
   public locationY: string;
   public direction: Direction = Direction.N;
@@ -35,111 +38,34 @@ export class PlayerStateService {
     private movement: MovementComponent,
     private battleCalculatorService: BattleCalculatorService,
     private equipmentManagerService: EquipmentManagerService,
+
   ) {
   }
 
   onInit() {
     // Pull defaults from defaults file and assign initial values
-    this._health = defaults.initialPlayerStats.health;
-    this._maxHealth = defaults.initialPlayerStats.maxHealth;
-    this._strength = defaults.initialPlayerStats.strength;
-    this._dexterity = defaults.initialPlayerStats.dexterity;
-    this._magicka = defaults.initialPlayerStats.magicka;
+    this.health = defaults.initialPlayerStats.health;
+    this.maxHealth = defaults.initialPlayerStats.maxHealth;
+    this.strength = defaults.initialPlayerStats.strength;
+    this.dexterity = defaults.initialPlayerStats.dexterity;
+    this.magicka = defaults.initialPlayerStats.magicka;
     this.direction = defaults.initialPlayerStats.direction;
   }
 
-  get health() {
-    return this._health;
-  }
-
-  set health(newHealth) {
-    this._health = newHealth;
-  }
-
-  get maxHealth() {
-    return this._maxHealth;
-  }
-
-  set maxHealth(newMaxHealth) {
-    this._maxHealth = newMaxHealth;
-  }
-
-  get strength() {
-    return this._strength;
-  }
-
-  set strength(newStrength) {
-    this._strength = newStrength;
-  }
-
-  get dexterity() {
-    return this._dexterity;
-  }
-
-  set dexterity(newDexterity) {
-    this._dexterity = newDexterity;
-  }
-
-  get magicka() {
-    return this._magicka;
-  }
-
-  set magicka(newMagicka) {
-    this._magicka = newMagicka;
-  }
-
-  get exp() {
-    return this._exp;
-  }
-
-  set exp(newExp) {
-    this._exp = newExp;
-  }
-
   get inventoryCapacity() {
-    return this._strength * defaults.playerMultiplyers.inventoryStorageMultiplyer;
+    return this.strength * defaults.playerMultipliers.inventoryStorageMultiplier;
   }
 
   get level() {
-    return defaults.playerMultiplyers.levelCalculation(this.exp);
+    return Math.ceil(defaults.playerMultipliers.levelCalculation(this.exp));
   }
 
-  get levelMultiplyer(): number {
-    return this.level * defaults.playerMultiplyers.levelStatMultiplyer;
+  get levelMultiplier(): number {
+    return this.level * defaults.playerMultipliers.levelStatMultiplier;
   }
 
   public itemTooHighLevel(item: IInventoryItem): boolean {
     return item.level > this.level;
-  }
-
-  /**
-   * Return the player state for storage
-   * @returns the state data relevant to this service
-   */
-  public gatherState(): IPlayerStateData {
-    return {
-      health: this.health,
-      maxHealth: this.maxHealth,
-      strength: this.strength,
-      dexterity: this.dexterity,
-      magicka: this.magicka,
-      exp: this.exp,
-      locationX: this.locationX,
-      locationY: this.locationY,
-      direction: this.direction
-    };
-  }
-
-  /**
-   * Applies state data to this service
-   * @param newState settings from storage to push to this state service
-   */
-  public applyState(newState: IPlayerStateData): void {
-    for (const stateSetting in newState) {
-      if (this.hasOwnProperty(stateSetting)) {
-        this[stateSetting] = newState[stateSetting];
-      }
-    }
   }
 
   /**
@@ -148,6 +74,7 @@ export class PlayerStateService {
    */
   public move(direction: Direction) {
 
+    // TODO Might be worth getting location of player from area state service
     const newLocation = this.movement.getNextLocation(this.locationY, this.locationX, direction);
 
     // Update area state
@@ -181,8 +108,8 @@ export class PlayerStateService {
       const targetReference = this.movement.getNextLocation(this.locationY, this.locationX, this.direction);
       const target = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
 
-      if (target) {
-        if (this.battleCalculatorService.isDead(target.currentHp)) {
+      if (target && (target.type === ElementClass.enemy || target.type === ElementClass.npc)) {
+        if (target.isDead()) {
           this.dialogueService.displayDialogueMessage({
             text: defaults.dialogue.nullElementResponse,
             character: defaults.dialogue.computerCharacterType,
@@ -191,11 +118,11 @@ export class PlayerStateService {
           return;
         }
 
-        const damage = this.battleCalculatorService.calculateDamageToEnemy(target, this.selectedWeaponSlot, this.levelMultiplyer);
+        const damage = this.battleCalculatorService.calculateDamageToEnemy(target, this.selectedWeaponSlot, this.levelMultiplier);
 
         if (damage) {
-          // TODO this can possibly just be target.currentHp
-          const targetCurrentHp = target.respond(UserInteractionTypes.attack, this.movement.getDirectionToFace(this.direction), damage);
+          // No need to assign this
+          target.respond(UserInteractionTypes.attack, this.movement.getDirectionToFace(this.direction), damage);
 
           this.dialogueService.displayDialogueMessage({
             text: defaults.dialogue.attackSuccess + damage,
@@ -203,7 +130,7 @@ export class PlayerStateService {
             name: defaults.dialogue.computerName
           });
 
-          if (this.battleCalculatorService.isDead(targetCurrentHp)) {
+          if (target.isDead()) {
             this.dialogueService.displayDialogueMessage({
               text: defaults.dialogue.targetDead + target.name,
               character: defaults.dialogue.computerCharacterType,
@@ -234,35 +161,58 @@ export class PlayerStateService {
       if (target.type === ElementClass.object) {
         const activeItem = this.equipmentManagerService.activeItem;
         // TODO Maybe organise these ifs
-        if (activeItem && activeItem.itemReference) {
-          if (target.itemReferenceNeeded === activeItem.itemReference) {
-            this.openLootingModal.emit(target);
-          } else {
-            this.dialogueService.displayDialogueMessage({
-              text: defaults.dialogue.keyItemNotActive,
-              character: defaults.dialogue.computerCharacterType,
-              name: defaults.dialogue.computerName
-            });
-            return;
+        if (activeItem && activeItem.itemReference && target.itemReferenceNeeded === activeItem.itemReference) {
+          switch (target.objectType) {
+            case ObjectType.lootObject:
+              this.openLootingModal.emit(target);
+              break;
+            case ObjectType.door:
+              this.areaStateService.removeElementFromArea(target, targetReference.locationY + targetReference.locationX);
+              break;
+            default:
+              // Do nothing...
+              break;
           }
+        } else {
+          this.dialogueService.displayDialogueMessage({
+            text: defaults.dialogue.keyItemNotActive,
+            character: defaults.dialogue.computerCharacterType,
+            name: defaults.dialogue.computerName
+          });
+          return;
         }
       } else {
         if (target.loot) {
           // Loot body if dead
-          if (this.battleCalculatorService.isDead(target.currentHp)) {
-            // Load a modal with the contents of the character's inventory
-            // this.modalService.open("type");
-
+          if (target.isDead()) {
             // Emit event for looting modal
             this.openLootingModal.emit(target);
-
-            // TODO
-            // this.areaStateService
             return;
+          } else if (target.isAsleep) {
+            const stealSuccess = this.attemptSteal(target);
+            if (stealSuccess) {
+              this.openLootingModal.emit(target);
+            } else {
+              this.dialogueService.displayDialogueMessage(
+                {
+                  text: defaults.dialogue.stealAttemptFail,
+                  character: defaults.dialogue.computerCharacterType,
+                  name: defaults.dialogue.computerName
+                }
+              );
+              target.isAsleep = false;
+              target.isAngry = true;
+            }
+          } else {
+            this.dialogueService.displayDialogueMessage(
+              {
+                text: target.respond(UserInteractionTypes.speak, this.movement.getDirectionToFace(this.direction)),
+                character: target.type,
+                name: target.name
+              }
+            );
           }
-
         }
-
       }
       // TODO else...
     }
@@ -284,7 +234,7 @@ export class PlayerStateService {
     if (nextGridLocation) {
       const target = this.areaStateService.locations[nextGridLocation.locationY + nextGridLocation.locationX];
 
-      if (this.battleCalculatorService.isDead(target.currentHp)) {
+      if (target.isDead()) {
         this.dialogueService.displayDialogueMessage({
           text: defaults.dialogue.nullElementResponse,
           character: defaults.dialogue.computerCharacterType,
@@ -309,6 +259,46 @@ export class PlayerStateService {
             name: target.name
           }
         );
+      }
+    }
+  }
+
+  private attemptSteal(target: Character): boolean {
+    // TODO Work this out properly
+    const diceRoll = Dice.roll1d20();
+    if (diceRoll > defaults.playerMultipliers.stealSuccessRequirement && this.level >= target.level) {
+      return true;
+    }
+    return false;
+    // const successChanceMultiplier = target.isAsleep ? defaults.playerMultipliers.
+  }
+
+  /**
+   * Return the player state for storage
+   * @returns the state data relevant to this service
+   */
+  public gatherState(): IPlayerStateData {
+    return {
+      health: this.health,
+      maxHealth: this.maxHealth,
+      strength: this.strength,
+      dexterity: this.dexterity,
+      magicka: this.magicka,
+      exp: this.exp,
+      locationX: this.locationX,
+      locationY: this.locationY,
+      direction: this.direction
+    };
+  }
+
+  /**
+   * Applies state data to this service
+   * @param newState settings from storage to push to this state service
+   */
+  public applyState(newState: IPlayerStateData): void {
+    for (const stateSetting in newState) {
+      if (this.hasOwnProperty(stateSetting)) {
+        this[stateSetting] = newState[stateSetting];
       }
     }
   }

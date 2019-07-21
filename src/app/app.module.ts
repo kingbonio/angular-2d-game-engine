@@ -12,7 +12,6 @@ import { GameModule } from './game/game.module';
 import { MenuStateService } from './shared/services/menu-state.service';
 import { UserInputService } from './shared/services/user-input.service';
 import { AreaStateService } from './game/shared/services/area-state.service';
-import { MovementComponent } from './util/movement/movement.component';
 
 
 @NgModule({
@@ -27,12 +26,11 @@ import { MovementComponent } from './util/movement/movement.component';
     AppComponent,
     MainMenuComponent,
     InGameMenuComponent,
-    MovementComponent,
   ],
   providers: [
     AreaStateService,
     MenuStateService,
-    UserInputService
+    UserInputService,
   ],
   bootstrap: [AppComponent],
 })

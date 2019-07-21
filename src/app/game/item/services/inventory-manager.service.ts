@@ -60,7 +60,7 @@ export class InventoryManagerService {
   }
 
   // get capacity(): number {
-  //   return this.playerStateService.strength * defaults.playerMultiplyers.inventoryCapacityMultiplyer;
+  //   return this.playerStateService.strength * defaults.playerMultipliers.inventoryCapacityMultiplier;
   // }
 
   /**

@@ -1,5 +1,6 @@
 import { IInventoryItem } from "../../item/interfaces";
 import { ElementClass, Direction } from "../../shared/enums";
+import { ObjectType } from "../../shared/enums";
 
 export class GridObject {
       public type = ElementClass.object;
@@ -10,6 +11,7 @@ export class GridObject {
       public itemReferenceNeeded: string;
       public direction: Direction;
       public loot: IInventoryItem[];
+      public objectType: ObjectType;
 
       public inventoryLocations: any;
       public locationKeys: any;
@@ -51,6 +53,7 @@ export class GridObject {
             this.direction = elementProperties.direction;
             this.itemReferenceNeeded = elementProperties.itemReferenceNeeded;
             this.loot = elementProperties.loot;
+            this.objectType = elementProperties.objectType;
             if (this.loot) {
                   elementProperties.loot.forEach((item: IInventoryItem) => {
                         for (const slot in this.inventoryLocations) {

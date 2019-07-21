@@ -9,15 +9,19 @@ export class NPC extends Character {
       public class: NPC;
       public maxHp: number;
       public currentHp: number;
+      public lowHealthThreshold: number;
       public imageName: string;
       public speechResponse: string;
       public sleepResponse: string;
       public isAsleep: boolean;
+      public isAngry: boolean;
+      public isPaused: boolean;
       public imageFileName: string;
       public direction: Direction;
       public armour: IArmour;
       public weapons: IWeapons;
       public loot: IInventoryItem[];
+      public level: number;
 
       constructor(characterDetails: any) {
             // TODO: Resolve any
@@ -27,13 +31,14 @@ export class NPC extends Character {
             // TODO Need to figure out how to use this in the css
             this.imageName = characterDetails.imageName;
             this.isAsleep = characterDetails.asleep;
+            this.isAngry = characterDetails.angry;
             this.speechResponse = characterDetails.speechResponse;
             this.direction = characterDetails.direction;
             this.maxHp = characterDetails.maxHp;
-            this.currentHp = this.maxHp;
-            this.xp = 0;
+            this.lowHealthThreshold = characterDetails.lowHealthThreshold;
             this.armour = characterDetails.equippedArmour;
             this.loot = characterDetails.loot;
+            this.level = characterDetails.level;
             this.imageFileName = characterDetails.imageFileName;
             if (this.loot) {
                   characterDetails.loot.forEach((item: IInventoryItem) => {
@@ -45,6 +50,9 @@ export class NPC extends Character {
                         }
                   });
             }
+            this.currentHp = this.maxHp;
+            this.isPaused = false;
+            this.xp = 0;
       }
 
       public respond(interaction: UserInteractionTypes, directionToFace: Direction, damage: number) {
@@ -60,8 +68,16 @@ export class NPC extends Character {
                         this.isAsleep = false;
                         this.direction = directionToFace;
                         this.currentHp -= damage;
-                        return this.currentHp;
+                        return;
             }
+      }
+
+      public isLowHealth() {
+            return this.currentHp < this.lowHealthThreshold;
+      }
+
+      public isDead(): boolean {
+            return (this.currentHp <= 0);
       }
 
 }

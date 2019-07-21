@@ -4,6 +4,7 @@ import { DialogueService } from './shared/services/dialogue.service';
 import { UserInputService } from '../shared/services/user-input.service';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Subscription } from 'rxjs/Subscription';
+import { AiService } from './shared/services/ai.service';
 
 @Component({
   selector: 'app-game-root',
@@ -18,6 +19,7 @@ export class GameComponent implements OnInit, OnDestroy {
     public playerStateService: PlayerStateService,
     public dialogueService: DialogueService,
     public userInputService: UserInputService,
+    public aiService: AiService,
   ) { }
 
   ngOnInit(): void {

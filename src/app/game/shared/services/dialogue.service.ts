@@ -32,7 +32,7 @@ export class DialogueService {
   // TODO: This will need tidying up as it counts from the point of getting the message, not the time it's loaded
   private setTimer(message: ISpeech) {
     const timerDuration: number = message.text.length < defaults.dialogue.minimumOnScreenTime ?
-      message.text.length * defaults.dialogue.textOnScreenTimeMultiplyer :
+      message.text.length * defaults.dialogue.textOnScreenTimeMultiplier :
       defaults.dialogue.minimumOnScreenTime;
     setTimeout(() => {
       // Remove the oldest message on screen and pull in any pending messages
