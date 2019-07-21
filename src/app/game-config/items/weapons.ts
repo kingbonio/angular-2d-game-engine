@@ -14,7 +14,7 @@ export const weapons = {
             value: 100,
             imageFileName: "",
             properties: {
-                  damage: 10,
+                  damage: 4,
             },
       },
       cutthroatRazor: {
@@ -30,7 +30,7 @@ export const weapons = {
             value: 100,
             imageFileName: "",
             properties: {
-                  damage: 12,
+                  damage: 3,
             },
       },
       sword: {
@@ -46,7 +46,7 @@ export const weapons = {
             value: 100,
             imageFileName: "sword.png",
             properties: {
-                  damage: 17,
+                  damage: 10,
             },
       },
       axe: {
@@ -62,7 +62,7 @@ export const weapons = {
             value: 100,
             imageFileName: "axe.png",
             properties: {
-                  damage: 17,
+                  damage: 9,
             },
       },
 };

@@ -5,6 +5,7 @@ import { AreaStateService } from './area-state.service';
 import { UserInputService } from '../../../shared/services/user-input.service';
 import { Subscription } from 'rxjs/Subscription';
 import { PlayerStateService } from './player-state.service';
+import { BattleCalculatorService } from './battle-calculator.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,12 +19,12 @@ export class AiService {
     private movement: MovementComponent,
     private areaStateService: AreaStateService,
     private userInputService: UserInputService,
+    private playerStateService: PlayerStateService,
   ) {
     this.userInputService.playerMoved.subscribe(data => {
       this.actionTriggerHandler();
     });
   }
-
 
   public actionTriggerHandler() {
     const characters: { gridItem: any, gridLocation: string }[] = this.areaStateService.getCharactersOnGrid();
@@ -38,29 +39,49 @@ export class AiService {
   public action(character: any, gridLocation: string) {
     if (character) {
       if (character.isAsleep || character.isDead() || character.isPaused) {
+
+        // Not expected to move
         if (character.isPaused) {
           character.isPaused = false;
         }
-        // Do nothing, maybe say Zzzzzzzz (asleep speech command)
       } else {
-        if (!character.isAngry) {
+
+        // Expected to perform an action
+        if (!character.isAngry && !character.isLowHealth()) {
+
+          // Untroubled character, do some wandering
           this.movement.wander(character, gridLocation);
+
           character.isPaused = true;
-        } else {
-          if (!character.isLowHealth()) {
-            // Head towards player and attack if next to player, otherwise move towards the player
-            if (this.areaStateService.isCharacterNextToPlayer(gridLocation)) {
-              console.log("I caught you!");
-              //   this.character.attackPlayer();
-            } else {
-              this.movement.moveWithRespectToPlayer(character, gridLocation, true);
-            }
+        } else if (character.isAngry && !character.isLowHealth()) {
+
+          // Head towards player and attack if next to player, otherwise move towards the player
+          if (this.areaStateService.isCharacterNextToPlayer(gridLocation)) {
+
+            const playerLocation = this.areaStateService.splitLocationReference(this.areaStateService.playerLocation);
+
+            const characterLocation = this.areaStateService.splitLocationReference(gridLocation);
+
+            const directionToPlayer = this.movement.getDirectionWithRespectToPlayer(playerLocation, characterLocation, true);
+
+            character.direction = directionToPlayer;
+
+            this.playerStateService.receiveAttack(character);
           } else {
-            // Run away from player
-            this.movement.moveWithRespectToPlayer(character, gridLocation, false);
+
+            // Character needs to get closer to attack
+            this.movement.moveWithRespectToPlayer(character, gridLocation, true);
           }
-          character.isPaused = true;
+        } else {
+
+          // Character is low health and needs to escape
+          this.movement.moveWithRespectToPlayer(character, gridLocation, false);
+
+          // Maybe move these to a response method on character
+          character.angry = false;
         }
+
+        character.isPaused = true;
       }
     }
   }

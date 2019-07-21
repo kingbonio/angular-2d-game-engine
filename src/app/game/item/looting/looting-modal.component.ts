@@ -16,14 +16,12 @@ export class LootingModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data
   ) {
     this.target = data;
-    // console.log(data);
   }
 
   ngOnInit() {
   }
 
   public useItem(itemSlot: string) {
-    // console.log(itemSlot);
     this.inventoryManagerService.addItemToInventory(this.target.inventoryLocations[itemSlot]);
     this.target.inventoryLocations[itemSlot] = null;
   }

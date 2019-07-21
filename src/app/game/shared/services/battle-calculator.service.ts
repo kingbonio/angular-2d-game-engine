@@ -1,15 +1,17 @@
+import defaults from '../../../shared/defaults';
 import { Injectable } from '@angular/core';
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
 import { Character } from '../../character-classes/character';
 import { WeaponType } from '../../item/enums';
 import { DialogueService } from './dialogue.service';
+import { IArmour, IWeapons, IInventoryItem } from '../../item/interfaces';
+import { Dice } from '../util/dice';
 
 @Injectable()
 export class BattleCalculatorService {
 
   constructor(
     private equipmentManagerService: EquipmentManagerService,
-    private dialogueService: DialogueService,
   ) { }
 
   public isDead(hp: number): boolean {
@@ -21,22 +23,41 @@ export class BattleCalculatorService {
    * @param target The character with equipped armour
    * @param weaponTypeUsed Reference for player weapon type
    */
-  public calculateDamageToEnemy(target: Character, weaponTypeUsed: WeaponType, levelMultiplier: number): number | undefined {
-    let totalArmourValue = 0;
-    let damageTaken = 0;
-
-    for (const item in target.armour) {
-      if (target.armour.hasOwnProperty(item) && target.armour[item]) {
-        totalArmourValue += target.armour[item].properties.defense;
-      }
-    }
+  public getDamageToEnemy(target: Character, weaponTypeUsed: WeaponType): number | undefined {
 
     const equippedWeapon = this.equipmentManagerService.getWeaponType(weaponTypeUsed);
 
-    const equippedWeaponDamage = equippedWeapon.properties.damage + levelMultiplier;
+    return this.calculateDamage(target.armour, equippedWeapon);
+  }
 
-    // Round up the damage to the nearest whole number
-    damageTaken = Math.ceil(equippedWeaponDamage / (totalArmourValue + 1));
+  public getDamageToPlayer(character: Character, armour: IArmour): number {
+
+    // TODO assumed always using primary
+    return this.calculateDamage(armour, character.weapons.primary);
+  }
+
+  private calculateDamage(targetArmour: IArmour, weapon: IInventoryItem) {
+    let totalArmourValue = defaults.enemyProperties.baseArmour;
+
+    if (targetArmour) {
+      for (const item in targetArmour) {
+        if (targetArmour.hasOwnProperty(item) && targetArmour[item]) {
+          totalArmourValue += targetArmour[item].properties.defense;
+        }
+      }
+    }
+
+    const diceRoll = Dice.roll1d20();
+
+    if (diceRoll <= defaults.enemyProperties.minimumAttackRoll) {
+      return 0;
+    }
+
+    const damageTotal = Math.ceil(weapon.properties.damage * (diceRoll / 20));
+
+    const defenseTotal = Math.ceil(weapon.properties.damage / totalArmourValue);
+
+    const damageTaken = damageTotal * defenseTotal;
 
     return damageTaken;
   }
