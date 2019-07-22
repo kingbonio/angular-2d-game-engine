@@ -1,13 +1,13 @@
 import defaults from '../../../shared/defaults';
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { Direction, ElementClass, ObjectType } from '../enums';
+import { Direction, ElementClass, ObjectType, ItemClass } from '../enums';
 import { IPlayerStateData, IInventoryItem } from '../interfaces';
 import { AreaStateService } from './area-state.service';
 import { DialogueService } from './dialogue.service';
 import { UserInteractionTypes } from '../../../shared/enums';
 import { MovementComponent } from '../util/movement/movement.component';
 import { BattleCalculatorService } from './battle-calculator.service';
-import { WeaponType } from '../../item/enums';
+import { WeaponType, PotionType } from '../../item/enums';
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
 import { IAreaElement } from '../../area/interfaces';
 import { Character } from '../../character-classes/character';
@@ -299,6 +299,20 @@ export class PlayerStateService {
     }
     if (this.health <= 0) {
       // YOU ARE DEAD!
+    }
+  }
+
+  public useConsumable(item: IInventoryItem) {
+    if (item.class === ItemClass.potion) {
+      switch (item.type) {
+        case PotionType.healing:
+          this.health += item.properties.healing;
+      }
+      this.dialogueService.displayDialogueMessage({
+        text: defaults.dialogue.consumedHealthPotion(item.name, item.properties.healing),
+        character: defaults.dialogue.computerCharacterType,
+        name: defaults.dialogue.computerName
+      });
     }
   }
 

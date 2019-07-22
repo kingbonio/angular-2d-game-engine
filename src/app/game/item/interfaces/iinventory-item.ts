@@ -6,6 +6,7 @@ import { WeaponType } from "../enums/weapon-type";
 export interface IInventoryItem {
       name: string;
       class: ItemClass;
+      type?: any;
       armourSlot: ArmourType | null;
       weaponSlot: WeaponType | null;
       usable: boolean;

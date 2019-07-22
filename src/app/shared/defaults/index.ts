@@ -50,6 +50,9 @@ export default {
         enemyFailsAttack: (name) => {
             return `${name} failed to attack you`;
         },
+        consumedHealthPotion: (name, healing) => {
+            return `You have consumed a ${name}, you have been healed by ${healing} points`;
+        },
         inventoryFull: "Your inventory is full",
         noWeaponEquipped: "You have no weapon equipped to attack with",
         stealAttemptFail: "You failed to steal from the target and you have angered them",

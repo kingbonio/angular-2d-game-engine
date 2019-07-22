@@ -1,6 +1,6 @@
 import { MonsterClass, Direction, CharacterType, ElementClass } from "../../game/shared/enums";
 import { IAreaElement } from "../../game/area/interfaces";
-import { armour, weapons, keyItems } from "../items";
+import { armour, weapons, keyItems, potions } from "../items";
 import { IWeapons } from "../../game/item/interfaces";
 import { ObjectType } from "../../game/shared/enums";
 
@@ -92,6 +92,7 @@ export default {
                         } as IWeapons,
                         loot: [
                               keyItems.fancyKey,
+                              potions.smallHealthPotion,
                         ],
                         imageFileName: "",
                   },
@@ -196,6 +197,7 @@ export default {
                         imageName: "old-chest.png",
                         loot: [
                               weapons.axe,
+                              potions.smallHealthPotion,
                         ]
                   },
                   startingPositionX: 1,

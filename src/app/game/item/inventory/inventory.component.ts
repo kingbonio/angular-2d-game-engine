@@ -3,6 +3,7 @@ import { InventoryManagerService } from '../services/inventory-manager.service';
 import { IInventoryItem } from '../interfaces';
 import { ItemClass } from '../enums';
 import { EquipmentManagerService } from '../services/equipment-manager.service';
+import { PlayerStateService } from '../../shared/services/player-state.service';
 
 @Component({
   selector: 'app-inventory',
@@ -14,6 +15,7 @@ export class InventoryComponent implements OnInit {
   constructor(
     public inventoryManagerService: InventoryManagerService,
     public equipmentManagerService: EquipmentManagerService,
+    public playerStateService: PlayerStateService,
   ) { }
 
   ngOnInit() {
@@ -32,6 +34,8 @@ export class InventoryComponent implements OnInit {
           break;
         case (ItemClass.potion):
           // Drink potion and inbue effect
+          this.playerStateService.useConsumable(this.inventoryManagerService.locations[itemSlot]);
+          this.inventoryManagerService.locations[itemSlot] = null;
           break;
         case (ItemClass.keyItem):
           // Assign the item to active slot
@@ -40,5 +44,8 @@ export class InventoryComponent implements OnInit {
       }
     }
   }
+
+
+
 
 }
