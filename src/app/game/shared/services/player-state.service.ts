@@ -1,13 +1,13 @@
 import defaults from '../../../shared/defaults';
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { Direction, ElementClass, ObjectType } from '../enums';
+import { Direction, ElementClass, ObjectType, ItemClass } from '../enums';
 import { IPlayerStateData, IInventoryItem } from '../interfaces';
 import { AreaStateService } from './area-state.service';
 import { DialogueService } from './dialogue.service';
 import { UserInteractionTypes } from '../../../shared/enums';
 import { MovementComponent } from '../util/movement/movement.component';
 import { BattleCalculatorService } from './battle-calculator.service';
-import { WeaponType } from '../../item/enums';
+import { WeaponType, PotionType } from '../../item/enums';
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
 import { IAreaElement } from '../../area/interfaces';
 import { Character } from '../../character-classes/character';
@@ -17,8 +17,8 @@ import { Dice } from '../util/dice';
 export class PlayerStateService {
   @Output() openLootingModal: EventEmitter<any> = new EventEmitter();
 
-  private health: number;
-  private maxHealth: number;
+  public health: number;
+  public maxHealth: number;
   private strength: number;
   private dexterity: number;
   private magicka: number;
@@ -40,9 +40,6 @@ export class PlayerStateService {
     private equipmentManagerService: EquipmentManagerService,
 
   ) {
-  }
-
-  onInit() {
     // Pull defaults from defaults file and assign initial values
     this.health = defaults.initialPlayerStats.health;
     this.maxHealth = defaults.initialPlayerStats.maxHealth;
@@ -50,6 +47,9 @@ export class PlayerStateService {
     this.dexterity = defaults.initialPlayerStats.dexterity;
     this.magicka = defaults.initialPlayerStats.magicka;
     this.direction = defaults.initialPlayerStats.direction;
+  }
+
+  onInit() {
   }
 
   get inventoryCapacity() {
@@ -118,14 +118,14 @@ export class PlayerStateService {
           return;
         }
 
-        const damage = this.battleCalculatorService.calculateDamageToEnemy(target, this.selectedWeaponSlot, this.levelMultiplier);
+        const damage = this.battleCalculatorService.getDamageToEnemy(target, this.selectedWeaponSlot);
 
         if (damage) {
           // No need to assign this
           target.respond(UserInteractionTypes.attack, this.movement.getDirectionToFace(this.direction), damage);
 
           this.dialogueService.displayDialogueMessage({
-            text: defaults.dialogue.attackSuccess + damage,
+            text: defaults.dialogue.attackSuccess(damage),
             character: defaults.dialogue.computerCharacterType,
             name: defaults.dialogue.computerName
           });
@@ -137,6 +137,12 @@ export class PlayerStateService {
               name: defaults.dialogue.computerName
             });
           }
+        } else {
+          this.dialogueService.displayDialogueMessage({
+            text: defaults.dialogue.attackFailure,
+            character: defaults.dialogue.computerCharacterType,
+            name: defaults.dialogue.computerName
+          });
         }
       }
     } else {
@@ -271,6 +277,43 @@ export class PlayerStateService {
     }
     return false;
     // const successChanceMultiplier = target.isAsleep ? defaults.playerMultipliers.
+  }
+
+  public receiveAttack(character: Character) {
+    const damage = this.battleCalculatorService.getDamageToPlayer(character, this.equipmentManagerService.armour);
+    if (damage) {
+
+      this.health -= damage;
+
+      this.dialogueService.displayDialogueMessage({
+        text: defaults.dialogue.enemyAttacks(damage, character.name),
+        character: defaults.dialogue.computerCharacterType,
+        name: defaults.dialogue.computerName
+      });
+    } else {
+      this.dialogueService.displayDialogueMessage({
+        text: defaults.dialogue.enemyFailsAttack(character.name),
+        character: defaults.dialogue.computerCharacterType,
+        name: defaults.dialogue.computerName
+      });
+    }
+    if (this.health <= 0) {
+      // YOU ARE DEAD!
+    }
+  }
+
+  public useConsumable(item: IInventoryItem) {
+    if (item.class === ItemClass.potion) {
+      switch (item.type) {
+        case PotionType.healing:
+          this.health += item.properties.healing;
+      }
+      this.dialogueService.displayDialogueMessage({
+        text: defaults.dialogue.consumedHealthPotion(item.name, item.properties.healing),
+        character: defaults.dialogue.computerCharacterType,
+        name: defaults.dialogue.computerName
+      });
+    }
   }
 
   /**

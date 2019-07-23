@@ -1,6 +1,6 @@
 import { MonsterClass, Direction, CharacterType, ElementClass } from "../../game/shared/enums";
 import { IAreaElement } from "../../game/area/interfaces";
-import { armour, weapons, keyItems } from "../items";
+import { armour, weapons, keyItems, potions } from "../items";
 import { IWeapons } from "../../game/item/interfaces";
 import { ObjectType } from "../../game/shared/enums";
 
@@ -22,8 +22,8 @@ export default {
                         asleep: true,
                         angry: false,
                         level: 1,
-                        maxHp: 6,
-                        lowHealthThreshold: 4,
+                        maxHp: 30,
+                        lowHealthThreshold: 6,
                         name: "Gary The Dick",
                         class: MonsterClass.Human,
                         direction: Direction.N,
@@ -64,7 +64,8 @@ export default {
                         asleep: false,
                         angry: false,
                         level: 1,
-                        maxHp: 10,
+                        maxHp: 20,
+                        lowHealthThreshold: 15,
                         name: "David",
                         direction: Direction.E,
                         speechResponse: "Stop bothering me, you fool!",
@@ -91,6 +92,7 @@ export default {
                         } as IWeapons,
                         loot: [
                               keyItems.fancyKey,
+                              potions.smallHealthPotion,
                         ],
                         imageFileName: "",
                   },
@@ -195,6 +197,7 @@ export default {
                         imageName: "old-chest.png",
                         loot: [
                               weapons.axe,
+                              potions.smallHealthPotion,
                         ]
                   },
                   startingPositionX: 1,

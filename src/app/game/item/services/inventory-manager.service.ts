@@ -3,6 +3,9 @@ import { IInventoryStateData, IInventoryItem } from '../../shared/interfaces';
 import defaults from '../../../shared/defaults';
 import { IInventoryReferences } from '../inventory/interfaces';
 import { DialogueService } from '../../shared/services/dialogue.service';
+import { ItemClass, PotionType } from '../enums';
+import { PortalInjector } from '@angular/cdk/portal';
+import { PlayerStateService } from '../../shared/services/player-state.service';
 
 @Injectable()
 export class InventoryManagerService {
@@ -11,7 +14,7 @@ export class InventoryManagerService {
   public locations: IInventoryReferences;
 
   constructor(
-    private dialogueService: DialogueService
+    private dialogueService: DialogueService,
   ) {
     this.locations = {
       a1: null,

@@ -148,7 +148,6 @@ export class AreaComponent implements OnInit {
       } else {
         // TODO: Move them to another position, up to x amount (need to block overcrowding)
       }
-      console.log(this.areaStateService.locations);
     });
   }
 

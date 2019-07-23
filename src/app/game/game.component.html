@@ -51,5 +51,20 @@
             <div class="inventory-section">
                   <app-inventory></app-inventory>
             </div>
+            <div class="status">
+                  <div class="health">
+                        HP: {{ playerStateService.health }}/{{ playerStateService.maxHealth }}
+                  </div>
+                  <div class="armour">
+                        Total Armour: {{ equipmentManagerService.armourTotal }}
+                  </div>
+                  <div class="weapon">
+                        Weapon Damage: {{ getWeaponDamage() }}
+                  </div>
+
+                  <div class="status-effects">
+
+                  </div>
+            </div>
       </div>
 </div>

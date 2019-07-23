@@ -1,6 +1,6 @@
 <div class="dialogue-text">
   <div *ngFor="let message of dialogueService.messagesOnScreen" class="text-block">
-    <span class="character-name" [ngClass]="message.character">{{ message.name }}: </span>
+    <span class="character-name" [ngClass]="message.character">{{ message.name }} ({{ message.time }}): </span>
     <span class="dialogue">{{ message.text }}</span>
   </div>
 </div>

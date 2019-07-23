@@ -2,6 +2,7 @@ import { CharacterType, Direction, ElementClass } from "../shared/enums";
 import { IWeapons, IArmour, IInventoryItem } from "../item/interfaces";
 
 export class Character {
+      name: string;
       currentHp: number;
       maxHp: number;
       xp: number;

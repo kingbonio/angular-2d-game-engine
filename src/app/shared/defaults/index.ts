@@ -23,6 +23,11 @@ export default {
         levelStatMultiplier: 1.2,
         stealSuccessRequirement: 2,
     },
+    enemyProperties: {
+        // Must be 1 or over
+        baseArmour: 5,
+        minimumAttackRoll: 3,
+    },
     initialAreaSettings: {
         type: 'start'
     },
@@ -34,9 +39,20 @@ export default {
         computerName: "Computer",
         computerCharacterType: "computer",
         maximumMessagesOnScreen: 2,
-        attackSuccess: "Your attack hits with damage: ",
+        attackSuccess: (damage) => {
+            return `Your attack hits with damage: ${damage}`;
+        },
         attackFailure: "Your attack fails",
         targetDead: "You have killed ",
+        enemyAttacks: (damage, name) => {
+            return `Your were attacked by ${name}, you take ${damage} damage`;
+        },
+        enemyFailsAttack: (name) => {
+            return `${name} failed to attack you`;
+        },
+        consumedHealthPotion: (name, healing) => {
+            return `You have consumed a ${name}, you have been healed by ${healing} points`;
+        },
         inventoryFull: "Your inventory is full",
         noWeaponEquipped: "You have no weapon equipped to attack with",
         stealAttemptFail: "You failed to steal from the target and you have angered them",

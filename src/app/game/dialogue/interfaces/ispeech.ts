@@ -4,4 +4,5 @@ export interface ISpeech {
       text: string;
       character: CharacterType | string;
       name: string;
+      time?: string;
 }

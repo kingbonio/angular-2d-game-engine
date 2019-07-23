@@ -5,6 +5,7 @@ import { UserInputService } from '../shared/services/user-input.service';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Subscription } from 'rxjs/Subscription';
 import { AiService } from './shared/services/ai.service';
+import { EquipmentManagerService } from './item/services/equipment-manager.service';
 
 @Component({
   selector: 'app-game-root',
@@ -17,6 +18,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   constructor(
     public playerStateService: PlayerStateService,
+    public equipmentManagerService: EquipmentManagerService,
     public dialogueService: DialogueService,
     public userInputService: UserInputService,
     public aiService: AiService,
@@ -26,8 +28,12 @@ export class GameComponent implements OnInit, OnDestroy {
     this.subscription = fromEvent(document, 'keydown').subscribe(($e: KeyboardEvent) => {
       this.userInputService.keyDownEventHandler($e);
     });
+    const tempHealth = this.playerStateService.health;
   }
 
+  getWeaponDamage() {
+    return this.equipmentManagerService.weapons.primary ? this.equipmentManagerService.weapons.primary.properties.damage : 0;
+  }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();

@@ -26,6 +26,17 @@ export class EquipmentManagerService {
     private inventoryManagerService: InventoryManagerService
     ) { }
 
+  // TODO This is inefficient
+  get armourTotal() {
+    let armourTotal = 0;
+    for (const armourSlot in this.armour) {
+      if (this.armour.hasOwnProperty(armourSlot) && this.armour[armourSlot]) {
+        armourTotal += this.armour[armourSlot].properties.defense;
+      }
+    }
+    return armourTotal;
+  }
+
   /**
    * Adds an item to its relevant armour slot
    * @param newArmour armour item being added

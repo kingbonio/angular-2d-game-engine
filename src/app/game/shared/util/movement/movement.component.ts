@@ -152,9 +152,9 @@ export class MovementComponent {
     const furthestDirectionToPlayer = this.getDirectionWithRespectToPlayer(splitPlayerLocation, splitCharacterLocation, moveTowardsPlayer);
     this.areaStateService.locations[characterLocation].direction = furthestDirectionToPlayer;
     const targetLocationDetails = this.getNextLocation(splitCharacterLocation.locationY, splitCharacterLocation.locationX, furthestDirectionToPlayer);
-    const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
 
     if (targetLocationDetails && targetLocationDetails.isLocationFree) {
+      const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
       this.areaStateService.moveCharacter(targetLocation, characterLocation);
     }
   }
@@ -163,24 +163,24 @@ export class MovementComponent {
    * Returns the best direction towards or away from the player's location
    * @param playerLocation The current location of the player
    * @param characterLocation The current location of the character to move
-   * @param moveTowardsPlayer Whether to more towards or away from player's location
+   * @param towardsPlayer Whether to more towards or away from player's location
    */
-  private getDirectionWithRespectToPlayer(playerLocation: ILocation, characterLocation: ILocation, moveTowardsPlayer: boolean): Direction {
+  public getDirectionWithRespectToPlayer(playerLocation: ILocation, characterLocation: ILocation, towardsPlayer: boolean): Direction {
     const distanceData = this.areaStateService.getDistanceBetweenLocations(playerLocation, characterLocation);
 
     // Move vertically
     if (Math.abs(distanceData.yDistance) >= Math.abs(distanceData.xDistance)) {
       if (distanceData.yDistance >= 0) {
-        return moveTowardsPlayer ? Direction.S : Direction.N;
+        return towardsPlayer ? Direction.S : Direction.N;
       } else {
-        return moveTowardsPlayer ? Direction.N : Direction.S;
+        return towardsPlayer ? Direction.N : Direction.S;
       }
     } else {
       // Move horizontally
       if (distanceData.xDistance >= 0) {
-        return moveTowardsPlayer ? Direction.E : Direction.W;
+        return towardsPlayer ? Direction.E : Direction.W;
       } else {
-        return moveTowardsPlayer ? Direction.W : Direction.E;
+        return towardsPlayer ? Direction.W : Direction.E;
       }
     }
   }

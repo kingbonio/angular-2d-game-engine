@@ -16,12 +16,18 @@ export class DialogueService {
    */
   public displayDialogueMessage(message: ISpeech) {
     if (message) {
-      if (this.messagesOnScreen.length >= defaults.dialogue.maximumMessagesOnScreen) {
-        this.pendingMessages.push(message);
-      } else {
-        this.messagesOnScreen.push(message);
+      // if (this.messagesOnScreen.length >= defaults.dialogue.maximumMessagesOnScreen) {
+      // this.pendingMessages.push(message);
+      // } else {
+      const date = new Date();
+      message.time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+
+      if (this.messagesOnScreen.length >= 5) {
+        this.messagesOnScreen.pop();
       }
-      this.setTimer(message);
+      this.messagesOnScreen.unshift(message);
+      // }
+      // this.setTimer(message);
     }
   }
 

@@ -35,8 +35,7 @@ export class UserInputService {
     private playerStateService: PlayerStateService,
     // private aiService: AiService,
   ) {
-    console.log("User Input Service instantiated");
-    this.playerMoved = new BehaviorSubject("test");
+    this.playerMoved = new BehaviorSubject("forceCharacterMove");
 
     this.playerMovedSubscription = this.playerMoved.subscribe(data => {
       // Do nothing
@@ -55,7 +54,7 @@ export class UserInputService {
           // TODO Hook up event listener to move enemies
           // this.$playerMoved.next(characterAction.direction);
           // this.playerMoved.emit("hello");
-          this.playerMoved.next("test");
+          this.playerMoved.next("forceCharacterMove");
 
           break;
 
@@ -68,6 +67,7 @@ export class UserInputService {
 
             case UserInteractionTypes.attack:
               this.playerStateService.attack();
+              this.playerMoved.next("test");
               break;
 
             case UserInteractionTypes.guard:
