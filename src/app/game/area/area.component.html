@@ -2,33 +2,33 @@
       <div *ngFor="let key of areaStateService.locationKeys(areaStateService.locations)" class="grid-box">
             <!-- <div *ngIf="element">Has element</div> -->
             <div class="grid-item"
-                 *ngIf="areaStateService.locations[key]"
-                 [ngClass]="getDirectionClass(areaStateService.locations[key])">
+                 *ngIf="areaStateService.locations[key].element"
+                 [ngClass]="getDirectionClass(areaStateService.locations[key].element)">
                  
-                 <div *ngIf="areaStateService.locations[key].type === ElementClass.object"
+                 <div *ngIf="areaStateService.locations[key].element.type === ElementClass.object"
                       class="object">
-                       <img [src]="getGridElementImageSource(areaStateService.locations[key])"
-                            title="{{areaStateService.locations[key].name}}" />
+                       <img [src]="getGridElementImageSource(areaStateService.locations[key].element)"
+                            title="{{areaStateService.locations[key].element.name}}" />
                  </div>
 
-                  <div *ngIf="areaStateService.locations[key].type !== ElementClass.object"
+                  <div *ngIf="areaStateService.locations[key].element.type !== ElementClass.object"
                        class="character-type"
-                       [ngClass]="getCharacterType(areaStateService.locations[key])">
+                       [ngClass]="getCharacterType(areaStateService.locations[key].element)">
 
                        <div class="overlay"
-                            [ngClass]="getDeadClass(areaStateService.locations[key])">
+                            [ngClass]="getDeadClass(areaStateService.locations[key].element)">
 
                        </div>
                   <!-- <div style="color: red" > -->
                         <!-- <div class="character" >
 
                         </div> -->
-                        <!-- {{ areaStateService.locations[key].name }} -->
+                        <!-- {{ areaStateService.locations[key].element.name }} -->
                         
-                        <!-- <div *ngIf="!areaStateService.locations[key]">{{ key + ' : ' }} Empty</div> -->
-                        <!-- <div *ngIf="areaStateService.locations[key]">
-                              {{ areaStateService.locations[key].hp }}HP
-                              {{ areaStateService.locations[key].xp }}XP
+                        <!-- <div *ngIf="!areaStateService.locations[key].element">{{ key + ' : ' }} Empty</div> -->
+                        <!-- <div *ngIf="areaStateService.locations[key].element">
+                              {{ areaStateService.locations[key].element.hp }}HP
+                              {{ areaStateService.locations[key].element.xp }}XP
                         </div> -->
                   </div>
             </div>

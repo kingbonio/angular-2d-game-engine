@@ -5,6 +5,7 @@ import { IWeapons } from "../../game/item/interfaces";
 import { ObjectType } from "../../game/shared/enums";
 
 export default {
+      room: 1,
       areaElements: [
             {
                   type: ElementClass.player,

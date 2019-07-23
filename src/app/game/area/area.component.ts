@@ -119,6 +119,7 @@ export class AreaComponent implements OnInit {
     // TODO This won't work, needs moving into the loop with a check on player
     this.playerStateService.locationY = this.areaConfig.default.areaElements[0].startingPositionY;
     this.playerStateService.locationX = this.areaConfig.default.areaElements[0].startingPositionX;
+    this.areaStateService.room = this.areaConfig.default.room;
     // Set the monsters
     this.addElementsToGrid(this.areaConfig.default.areaElements);
   }
@@ -127,23 +128,23 @@ export class AreaComponent implements OnInit {
     elements.forEach(element => {
       // Check element's preferred grid reference and attempt to add it there
       const gridReference = element.startingPositionY + element.startingPositionX;
-      if (!this.areaStateService.locations[gridReference]) {
+      if (!this.areaStateService.locations[gridReference].element) {
         // We want to create instances of each character in the config
         switch (element.type) {
           case ElementClass.enemy:
-            this.areaStateService.locations[gridReference] = new Enemy(element.elementProperties);
+            this.areaStateService.locations[gridReference].element = new Enemy(element.elementProperties);
             break;
           case ElementClass.player:
-            this.areaStateService.locations[gridReference] = new Player(element.elementProperties);
+            this.areaStateService.locations[gridReference].element = new Player(element.elementProperties);
             break;
           case ElementClass.npc:
-            this.areaStateService.locations[gridReference] = new NPC(element.elementProperties);
+            this.areaStateService.locations[gridReference].element = new NPC(element.elementProperties);
             break;
           case ElementClass.object:
-            this.areaStateService.locations[gridReference] = new GridObject(element.elementProperties);
+            this.areaStateService.locations[gridReference].element = new GridObject(element.elementProperties);
             break;
           default:
-            this.areaStateService.locations[gridReference] = element;
+            this.areaStateService.locations[gridReference].element = element;
         }
       } else {
         // TODO: Move them to another position, up to x amount (need to block overcrowding)

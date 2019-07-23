@@ -10,6 +10,7 @@ export class AreaStateService {
   // Stores the location ID
   private _currentLocation: number;
   private _areaCompleted = false;
+  public room: number;
   public locationKeys: any;
   public locations: IGridReferences;
 
@@ -19,55 +20,304 @@ export class AreaStateService {
     this._currentLocation = 0;
     // TODO Might be worth holding location x and y data on the object alongside the gridObject or null
     this.locations = {
-      a1: null,
-      a2: null,
-      a3: null,
-      a4: null,
-      a5: null,
-      a6: null,
-      a7: null,
-      b1: null,
-      b2: null,
-      b3: null,
-      b4: null,
-      b5: null,
-      b6: null,
-      b7: null,
-      c1: null,
-      c2: null,
-      c3: null,
-      c4: null,
-      c5: null,
-      c6: null,
-      c7: null,
-      d1: null,
-      d2: null,
-      d3: null,
-      d4: null,
-      d5: null,
-      d6: null,
-      d7: null,
-      e1: null,
-      e2: null,
-      e3: null,
-      e4: null,
-      e5: null,
-      e6: null,
-      e7: null,
-      f1: null,
-      f2: null,
-      f3: null,
-      f4: null,
-      f5: null,
-      f6: null,
-      f7: null,
-      g1: null,
-      g2: null,
-      g3: null,
-      g4: null,
-      g5: null,
-      g6: null,
-      g7: null,
+      a1: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      a2: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      a3: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      // north door
+      a4: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      a5: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      a6: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      a7: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      b1: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      b2: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      b3: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      b4: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      b5: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      b6: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      b7: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      c1: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      c2: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      c3: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      c4: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      c5: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      c6: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      c7: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      // west door
+      d1: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      d2: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      d3: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      d4: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      d5: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      d6: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      // east door
+      d7: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      e1: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      e2: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      e3: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      e4: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      e5: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      e6: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      e7: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      f1: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      f2: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      f3: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      f4: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      f5: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      f6: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      f7: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      g1: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      g2: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      g3: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      // south door
+      g4: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      g5: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      g6: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
+      g7: {
+        doorDestination: null,
+        areaEffect: null,
+        element: null,
+        floorStyle: null,
+      },
     };
     this.locationKeys = Object.keys;
     // TODO: Maybe we should have a generic area which has properties of
@@ -181,8 +431,7 @@ export class AreaStateService {
    */
   public gatherState(): IAreaStateData {
     return {
-      currentLocation: this.currentLocation,
-      areaCompleted: this.areaCompleted,
+      locations: this.locations,
     };
   }
 

@@ -106,7 +106,7 @@ export class PlayerStateService {
   public attack() {
     if (this.equipmentManagerService.getWeaponType(this.selectedWeaponSlot)) {
       const targetReference = this.movement.getNextLocation(this.locationY, this.locationX, this.direction);
-      const target = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
+      const target = this.areaStateService.locations[targetReference.locationY + targetReference.locationX].element;
 
       if (target && (target.type === ElementClass.enemy || target.type === ElementClass.npc)) {
         if (target.isDead()) {
@@ -162,7 +162,7 @@ export class PlayerStateService {
   public interact() {
     const targetReference = this.movement.getNextLocation(this.locationY, this.locationX, this.direction);
     // TODO Types
-    const target: any = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
+    const target: any = this.areaStateService.locations[targetReference.locationY + targetReference.locationX].element;
     if (target) {
       if (target.type === ElementClass.object) {
         const activeItem = this.equipmentManagerService.activeItem;
@@ -238,7 +238,7 @@ export class PlayerStateService {
     const nextGridLocation = this.movement.getNextLocation(this.locationY, this.locationX, this.direction);
     // TODO rename this
     if (nextGridLocation) {
-      const target = this.areaStateService.locations[nextGridLocation.locationY + nextGridLocation.locationX];
+      const target = this.areaStateService.locations[nextGridLocation.locationY + nextGridLocation.locationX].element;
 
       if (target.isDead()) {
         this.dialogueService.displayDialogueMessage({

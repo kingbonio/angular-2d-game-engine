@@ -110,7 +110,7 @@ export class MovementComponent {
 
     if (targetLocationDetails && targetLocationDetails.isLocationFree) {
       const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
-      this.areaStateService.locations[currentLocation].direction = direction;
+      this.areaStateService.locations[currentLocation].element.direction = direction;
       this.areaStateService.moveCharacter(targetLocation, currentLocation);
     } else {
       // Select a direction to move
@@ -128,7 +128,7 @@ export class MovementComponent {
 
         if (targetLocationDetails && targetLocationDetails.isLocationFree) {
           const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
-          this.areaStateService.locations[currentLocation].direction = direction;
+          this.areaStateService.locations[currentLocation].element.direction = direction;
           this.areaStateService.moveCharacter(targetLocation, currentLocation);
 
           return;
@@ -150,7 +150,7 @@ export class MovementComponent {
     const splitPlayerLocation = this.areaStateService.splitLocationReference(playerLocation);
     const splitCharacterLocation = this.areaStateService.splitLocationReference(characterLocation);
     const furthestDirectionToPlayer = this.getDirectionWithRespectToPlayer(splitPlayerLocation, splitCharacterLocation, moveTowardsPlayer);
-    this.areaStateService.locations[characterLocation].direction = furthestDirectionToPlayer;
+    this.areaStateService.locations[characterLocation].element.direction = furthestDirectionToPlayer;
     const targetLocationDetails = this.getNextLocation(splitCharacterLocation.locationY, splitCharacterLocation.locationX, furthestDirectionToPlayer);
 
     if (targetLocationDetails && targetLocationDetails.isLocationFree) {
