@@ -20,7 +20,7 @@ export class MovementComponent {
   // TODO Look into direction being used from the service
   // TODO Could refactor this switch statement
   // tslint:disable-next-line:max-line-length
-  public getNextLocation(locationY: string, locationX: number, direction: Direction): { locationY: string, locationX: number, isLocationFree: boolean } | null {
+  public getNextLocation(locationY: string, locationX: number, direction: Direction): { locationY: string, locationX: number, isLocationFree: boolean, isTargetAreaExit: boolean } | null {
 
     // Attempt movement
     let newLocationY;
@@ -34,45 +34,40 @@ export class MovementComponent {
           return {
             locationY: newLocationY,
             locationX: newLocationX,
-            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX)
+            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX),
+            isTargetAreaExit: this.isTargetLocationAreaExit(locationY, locationX, direction),
           };
         }
         return null;
       case Direction.E:
         newLocationX = this.nextXReference(locationX);
         newLocationY = locationY;
-        // Make sure the location isn't off the edge of the grid and get new reference
-        if (newLocationY && newLocationX) {
           return {
             locationY: newLocationY,
             locationX: newLocationX,
-            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX)
+            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX),
+            isTargetAreaExit: this.isTargetLocationAreaExit(locationY, locationX, direction),
           };
-        }
         return null;
       case Direction.S:
         newLocationY = this.nextYReference(locationY);
         newLocationX = locationX;
-        // Make sure the location isn't off the edge of the grid and get new reference
-        if (newLocationY && newLocationX) {
           return {
             locationY: newLocationY,
             locationX: newLocationX,
-            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX)
+            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX),
+            isTargetAreaExit: this.isTargetLocationAreaExit(locationY, locationX, direction),
           };
-        }
         return null;
       case Direction.W:
         newLocationX = this.previousXReference(locationX);
         newLocationY = locationY;
-        // Make sure the location isn't off the edge of the grid and get new reference
-        if (newLocationY && newLocationX) {
           return {
             locationY: newLocationY,
             locationX: newLocationX,
-            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX)
+            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX),
+            isTargetAreaExit: this.isTargetLocationAreaExit(locationY, locationX, direction),
           };
-        }
         return null;
       default:
         return null;
@@ -227,5 +222,20 @@ export class MovementComponent {
       return null;
     }
     return xReference + 1;
+  }
+
+  private isTargetLocationAreaExit(locationY: string, locationX: number, direction: string): boolean {
+    if (locationY === "a" && locationX === 4 && direction === Direction.N) {
+      return this.areaStateService.locations[locationY + locationX].doorDestination;
+    }
+    if (locationY === "d" && locationX === 7 && direction === Direction.E) {
+      return this.areaStateService.locations[locationY + locationX].doorDestination;
+    }
+    if (locationY === "g" && locationX === 4 && direction === Direction.S) {
+      return this.areaStateService.locations[locationY + locationX].doorDestination;
+    }
+    if (locationY === "d" && locationX === 1 && direction === Direction.W) {
+      return this.areaStateService.locations[locationY + locationX].doorDestination;
+    }
   }
 }

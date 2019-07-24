@@ -77,6 +77,14 @@ export class PlayerStateService {
     // TODO Might be worth getting location of player from area state service
     const newLocation = this.movement.getNextLocation(this.locationY, this.locationX, direction);
 
+    // TODO Might be worth moving this somewhere more apprpriate, maybe listener in movement component
+    if (newLocation.isTargetAreaExit) {
+      // DO the event for new load thing
+      console.log("You are trying to exit the area ",
+        this.areaStateService.locations[this.locationY + this.locationX].doorDestination);
+      return;
+    }
+
     // Update area state
     if (newLocation && newLocation.locationX && newLocation.locationY && newLocation.isLocationFree) {
       this.areaStateService.moveCharacter(newLocation.locationY + newLocation.locationX, this.locationY + this.locationX);

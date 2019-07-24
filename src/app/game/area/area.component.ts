@@ -15,6 +15,7 @@ import { MatDialogConfig, MatDialog, MatDialogRef } from '@angular/material';
 import { LootingModalComponent } from '../item/looting/looting-modal.component';
 import { GridObject } from './grid-object-classes/grid-object';
 import { Player } from '../character-classes/player';
+import { IAreaExits } from '../../game-config/interfaces';
 
 @Component({
   selector: 'app-area',
@@ -24,6 +25,7 @@ import { Player } from '../character-classes/player';
 export class AreaComponent implements OnInit {
 
   private areaConfig: any;
+  private areaExits: any;
   private levelId: number;
   private items: IInventoryItem[];
   private monsters: IMonster[];
@@ -115,6 +117,7 @@ export class AreaComponent implements OnInit {
   private prepareArea(): void {
     // get the config from the provider
     this.areaConfig = this.areaConfigProviderService.getConfig(this.areaStateService.currentLocation);
+    this.areaExits = this.areaConfigProviderService.getAreaExits(this.areaStateService.currentLocation);
     // Set the player location
     // TODO This won't work, needs moving into the loop with a check on player
     this.playerStateService.locationY = this.areaConfig.default.areaElements[0].startingPositionY;
@@ -122,6 +125,7 @@ export class AreaComponent implements OnInit {
     this.areaStateService.room = this.areaConfig.default.room;
     // Set the monsters
     this.addElementsToGrid(this.areaConfig.default.areaElements);
+    this.addExitsToGrid(this.areaExits);
   }
 
   private addElementsToGrid(elements: IAreaElement[]): void {
@@ -150,6 +154,22 @@ export class AreaComponent implements OnInit {
         // TODO: Move them to another position, up to x amount (need to block overcrowding)
       }
     });
+  }
+
+  private addExitsToGrid(areaExits: IAreaExits) {
+    if (areaExits.north) {
+      this.areaStateService.locations["a4"].doorDestination = areaExits.north;
+    }
+    if (areaExits.east) {
+      this.areaStateService.locations["d7"].doorDestination = areaExits.east;
+    }
+    if (areaExits.south) {
+      this.areaStateService.locations["g4"].doorDestination = areaExits.south;
+    }
+    if (areaExits.west) {
+      this.areaStateService.locations["d1"].doorDestination = areaExits.west;
+    }
+    console.log(this.areaStateService.locations);
   }
 
   /**

@@ -1,26 +1,28 @@
+import { IAreaExits } from "../interfaces";
+
 export default {
       1: {
             north: 2,
             east: 1,
-            south: false,
-            west: false,
-      },
+            south: null,
+            west: null,
+      } as IAreaExits,
       2: {
             north: 3,
-            east: false,
-            south: false,
+            east: null,
+            south: null,
             west: 0,
-      },
+      } as IAreaExits,
       3: {
-            north: false,
+            north: null,
             east: 3,
             south: 0,
-            west: false,
-      },
+            west: null,
+      } as IAreaExits,
       4: {
-            north: false,
-            east: false,
+            north: null,
+            east: null,
             south: 1,
             west: 2,
-      },
+      } as IAreaExits,
 };

@@ -6,6 +6,7 @@ import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Subscription } from 'rxjs/Subscription';
 import { AiService } from './shared/services/ai.service';
 import { EquipmentManagerService } from './item/services/equipment-manager.service';
+import { AreaStateService } from './shared/services/area-state.service';
 
 @Component({
   selector: 'app-game-root',
@@ -22,6 +23,7 @@ export class GameComponent implements OnInit, OnDestroy {
     public dialogueService: DialogueService,
     public userInputService: UserInputService,
     public aiService: AiService,
+    public areaStateService: AreaStateService,
   ) { }
 
   ngOnInit(): void {
@@ -31,13 +33,10 @@ export class GameComponent implements OnInit, OnDestroy {
     const tempHealth = this.playerStateService.health;
   }
 
-  getWeaponDamage() {
-    return this.equipmentManagerService.weapons.primary ? this.equipmentManagerService.weapons.primary.properties.damage : 0;
-  }
-
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
 
   // public onKeyDown($e) {
   //   this.userInputService.keyDownEventHandler($e);

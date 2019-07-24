@@ -1,5 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import * as areaConfig from "../../../game-config/areas/0";
+import * as map from "../../../game-config/areas/map";
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
 import { weapons, armour } from '../../../game-config/items';
 import { InventoryManagerService } from '../../item/services/inventory-manager.service';
@@ -8,6 +9,7 @@ import { InventoryManagerService } from '../../item/services/inventory-manager.s
 export class AreaConfigProviderService implements OnInit {
 
   private areaConfig: any;
+  private map: any;
 
   constructor(
     private equipmentManagerService: EquipmentManagerService,
@@ -15,6 +17,7 @@ export class AreaConfigProviderService implements OnInit {
     ) {
       // TODO: This needs fixing
       this.areaConfig = areaConfig;
+      this.map = map;
       this.assignEquipmentToPlayer();
       this.assignItemsToInventory();
   }
@@ -44,6 +47,11 @@ export class AreaConfigProviderService implements OnInit {
   public getConfig(id?: number): any {
     // TODO: Should be returning IAreaConfig
     return this.areaConfig;
+  }
+
+  public getAreaExits(id?: number): any {
+    // TODO Should get from id
+    return this.map;
   }
 
 }
