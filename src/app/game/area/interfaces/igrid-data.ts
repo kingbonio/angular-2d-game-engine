@@ -1,7 +1,8 @@
 import { IAreaElement } from ".";
+import { Direction } from "../../shared/enums";
 
 export interface IGridData {
-      doorDestination: number | null;
+      exitDestination: number | null;
       areaEffect: string | null;
       element: IAreaElement | null;
       floorStyle: string | null;

@@ -4,6 +4,7 @@ import { Direction } from '../../enums';
 import { DiceService } from '../../services/dice.service';
 import { Dice } from '../dice';
 import { ILocation } from '../../interfaces';
+import defaults from '../../../../shared/defaults';
 
 @Component({
   selector: 'app-movement',
@@ -25,50 +26,55 @@ export class MovementComponent {
     // Attempt movement
     let newLocationY;
     let newLocationX;
+    let isTargetLocationAreaExit;
+    let isLocationFree;
     switch (direction) {
       case Direction.N:
         newLocationY = this.previousYReference(locationY);
         newLocationX = locationX;
         // Make sure the location isn't off the edge of the grid and get new reference
-        if (newLocationY && newLocationX) {
-          return {
-            locationY: newLocationY,
-            locationX: newLocationX,
-            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX),
-            isTargetAreaExit: this.isTargetLocationAreaExit(locationY, locationX, direction),
-          };
-        }
+        isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
+        isLocationFree = !isTargetLocationAreaExit ? this.areaStateService.isLocationFree(newLocationY + newLocationX) : false;
+        return {
+          locationY: newLocationY,
+          locationX: newLocationX,
+          isTargetAreaExit: isTargetLocationAreaExit,
+          isLocationFree: isLocationFree,
+        };
         return null;
       case Direction.E:
         newLocationX = this.nextXReference(locationX);
         newLocationY = locationY;
-          return {
-            locationY: newLocationY,
-            locationX: newLocationX,
-            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX),
-            isTargetAreaExit: this.isTargetLocationAreaExit(locationY, locationX, direction),
-          };
-        return null;
+        isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
+        isLocationFree = !isTargetLocationAreaExit ? this.areaStateService.isLocationFree(newLocationY + newLocationX) : false;
+        return {
+          locationY: newLocationY,
+          locationX: newLocationX,
+          isTargetAreaExit: isTargetLocationAreaExit,
+          isLocationFree: isLocationFree,
+        };
       case Direction.S:
         newLocationY = this.nextYReference(locationY);
         newLocationX = locationX;
-          return {
-            locationY: newLocationY,
-            locationX: newLocationX,
-            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX),
-            isTargetAreaExit: this.isTargetLocationAreaExit(locationY, locationX, direction),
-          };
-        return null;
+        isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
+        isLocationFree = !isTargetLocationAreaExit ? this.areaStateService.isLocationFree(newLocationY + newLocationX) : false;
+        return {
+          locationY: newLocationY,
+          locationX: newLocationX,
+          isTargetAreaExit: isTargetLocationAreaExit,
+          isLocationFree: isLocationFree,
+        };
       case Direction.W:
         newLocationX = this.previousXReference(locationX);
         newLocationY = locationY;
-          return {
-            locationY: newLocationY,
-            locationX: newLocationX,
-            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX),
-            isTargetAreaExit: this.isTargetLocationAreaExit(locationY, locationX, direction),
-          };
-        return null;
+        isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
+        isLocationFree = !isTargetLocationAreaExit ? this.areaStateService.isLocationFree(newLocationY + newLocationX) : false;
+        return {
+          locationY: newLocationY,
+          locationX: newLocationX,
+          isTargetAreaExit: isTargetLocationAreaExit,
+          isLocationFree: isLocationFree,
+        };
       default:
         return null;
     }
@@ -196,46 +202,34 @@ export class MovementComponent {
   }
 
   private previousYReference(yReference: string | null): string {
-    // TODO: Should really just check if it exists in grid somehow
-    if (yReference === "a") {
-      return null;
-    }
     return String.fromCharCode(yReference.charCodeAt(0) - 1);
   }
 
   private nextYReference(yReference: string): string {
-    if (yReference === "g") {
-      return null;
-    }
     return String.fromCharCode(yReference.charCodeAt(0) + 1);
   }
 
   private previousXReference(xReference: number): number {
-    if (xReference === 1) {
-      return null;
-    }
     return xReference - 1;
   }
 
   private nextXReference(xReference: number): number {
-    if (xReference === 7) {
-      return null;
-    }
     return xReference + 1;
   }
 
-  private isTargetLocationAreaExit(locationY: string, locationX: number, direction: string): boolean {
-    if (locationY === "a" && locationX === 4 && direction === Direction.N) {
-      return this.areaStateService.locations[locationY + locationX].doorDestination;
+  private isTargetLocationAreaExit(currentLocation: string, targetLocation: string): boolean {
+    if (targetLocation === defaults.mapDetails.northExit) {
+      return !!this.areaStateService.locations[currentLocation].exitDestination;
     }
-    if (locationY === "d" && locationX === 7 && direction === Direction.E) {
-      return this.areaStateService.locations[locationY + locationX].doorDestination;
+    if (targetLocation === defaults.mapDetails.eastExit) {
+      return !!this.areaStateService.locations[currentLocation].exitDestination;
     }
-    if (locationY === "g" && locationX === 4 && direction === Direction.S) {
-      return this.areaStateService.locations[locationY + locationX].doorDestination;
+    if (targetLocation === defaults.mapDetails.southExit) {
+      return !!this.areaStateService.locations[currentLocation].exitDestination;
     }
-    if (locationY === "d" && locationX === 1 && direction === Direction.W) {
-      return this.areaStateService.locations[locationY + locationX].doorDestination;
+    if (targetLocation === defaults.mapDetails.westExit) {
+      return !!this.areaStateService.locations[currentLocation].exitDestination;
     }
+    return false;
   }
 }

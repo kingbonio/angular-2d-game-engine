@@ -21,299 +21,299 @@ export class AreaStateService {
     // TODO Might be worth holding location x and y data on the object alongside the gridObject or null
     this.locations = {
       a1: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       a2: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       a3: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       // north door
       a4: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       a5: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       a6: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       a7: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       b1: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       b2: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       b3: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       b4: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       b5: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       b6: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       b7: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       c1: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       c2: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       c3: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       c4: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       c5: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       c6: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       c7: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       // west door
       d1: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       d2: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       d3: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       d4: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       d5: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       d6: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       // east door
       d7: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       e1: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       e2: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       e3: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       e4: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       e5: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       e6: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       e7: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       f1: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       f2: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       f3: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       f4: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       f5: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       f6: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       f7: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       g1: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       g2: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       g3: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       // south door
       g4: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       g5: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       g6: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
       },
       g7: {
-        doorDestination: null,
+        exitDestination: null,
         areaEffect: null,
         element: null,
         floorStyle: null,
@@ -327,9 +327,9 @@ export class AreaStateService {
   get playerLocation(): string {
     for (const gridLocation in this.locations) {
       if (this.locations.hasOwnProperty(gridLocation) &&
-        this.locations[gridLocation] &&
-        this.locations[gridLocation].type &&
-        (this.locations[gridLocation].type === ElementClass.player)) {
+        this.locations[gridLocation].element &&
+        this.locations[gridLocation].element.type &&
+        (this.locations[gridLocation].element.type === ElementClass.player)) {
         return gridLocation;
       }
     }
@@ -355,18 +355,18 @@ export class AreaStateService {
    * Push all characters on grid into an array and return it
    */
   // TODO return type as interface
-  public getCharactersOnGrid(): { gridItem: IAreaElement, gridLocation: string }[] {
+  public getCharactersOnGrid(): { gridElement: IAreaElement, gridLocation: string }[] {
     const characterData = [];
     for (const gridLocation in this.locations) {
       if (this.locations.hasOwnProperty(gridLocation) &&
-        this.locations[gridLocation] &&
-        this.locations[gridLocation].type &&
-        (this.locations[gridLocation].type === ElementClass.enemy || this.locations[gridLocation].type === ElementClass.npc) &&
-        !this.locations[gridLocation].isDead()) {
-        const gridItem = this.locations[gridLocation];
-        if (gridItem.type && (gridItem.type === ElementClass.enemy || gridItem.type === ElementClass.npc)) {
+        this.locations[gridLocation].element &&
+        this.locations[gridLocation].element.type &&
+        (this.locations[gridLocation].element.type === ElementClass.enemy || this.locations[gridLocation].element.type === ElementClass.npc) &&
+        !this.locations[gridLocation].element.isDead()) {
+        const gridElement = this.locations[gridLocation].element;
+        if (gridElement.type && (gridElement.type === ElementClass.enemy || gridElement.type === ElementClass.npc)) {
           characterData.push({
-            gridItem,
+            gridElement: gridElement,
             gridLocation
           });
         }
@@ -403,19 +403,19 @@ export class AreaStateService {
    * @param location the grid reference for the location
    */
   public isLocationFree(location: string): boolean {
-    return (!this.locations[location]);
+    return (!this.locations[location].element);
   }
 
   public moveCharacter(newLocation: string, currentLocation: string) {
     console.log(`Attempting to move ${this.locations[currentLocation].type} from ${currentLocation} to ${newLocation}`);
     console.log("While this grid location: ", this.locations);
     // TODO: We need to store a reference to the player object here
-    this.locations[newLocation] = this.locations[currentLocation];
-    this.locations[currentLocation] = null;
+    this.locations[newLocation].element = this.locations[currentLocation].element;
+    this.locations[currentLocation].element = null;
   }
 
   public removeElementFromArea(target: IAreaElement, location: string) {
-    this.locations[location] = null;
+    this.locations[location].element = null;
   }
 
   public splitLocationReference(gridLocation: string): ILocation {
@@ -427,6 +427,7 @@ export class AreaStateService {
 
   /**
    * Return the area state for storage
+   * @returns the state data relevant to this service
    * @returns the state data relevant to this service
    */
   public gatherState(): IAreaStateData {

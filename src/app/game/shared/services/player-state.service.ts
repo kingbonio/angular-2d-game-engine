@@ -81,7 +81,8 @@ export class PlayerStateService {
     if (newLocation.isTargetAreaExit) {
       // DO the event for new load thing
       console.log("You are trying to exit the area ",
-        this.areaStateService.locations[this.locationY + this.locationX].doorDestination);
+        this.areaStateService.locations[this.locationY + this.locationX].exitDestination);
+        // Emit event that new location access attempted, pass exitDestination
       return;
     }
 

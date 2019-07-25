@@ -37,6 +37,10 @@ export class EquipmentManagerService {
     return armourTotal;
   }
 
+  get getWeaponDamage() {
+    return this.weapons.primary ? this.weapons.primary.properties.damage : 0;
+  }
+
   /**
    * Adds an item to its relevant armour slot
    * @param newArmour armour item being added

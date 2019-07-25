@@ -72,6 +72,13 @@ export default {
             }
         ]
     },
+    mapDetails: {
+        // TODO This is not ideal
+        northExit: "`4",
+        eastExit: "d8",
+        southExit: "h4",
+        westExit: "d0",
+    },
     keyMap: {
         // https://keycode.info
         87: { type: "move", direction: "n" },

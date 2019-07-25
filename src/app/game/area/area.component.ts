@@ -120,11 +120,11 @@ export class AreaComponent implements OnInit {
     this.areaExits = this.areaConfigProviderService.getAreaExits(this.areaStateService.currentLocation);
     // Set the player location
     // TODO This won't work, needs moving into the loop with a check on player
-    this.playerStateService.locationY = this.areaConfig.default.areaElements[0].startingPositionY;
-    this.playerStateService.locationX = this.areaConfig.default.areaElements[0].startingPositionX;
-    this.areaStateService.room = this.areaConfig.default.room;
+    this.playerStateService.locationY = this.areaConfig.areaElements[0].startingPositionY;
+    this.playerStateService.locationX = this.areaConfig.areaElements[0].startingPositionX;
+    this.areaStateService.room = this.areaConfig.room;
     // Set the monsters
-    this.addElementsToGrid(this.areaConfig.default.areaElements);
+    this.addElementsToGrid(this.areaConfig.areaElements);
     this.addExitsToGrid(this.areaExits);
   }
 
@@ -158,17 +158,18 @@ export class AreaComponent implements OnInit {
 
   private addExitsToGrid(areaExits: IAreaExits) {
     if (areaExits.north) {
-      this.areaStateService.locations["a4"].doorDestination = areaExits.north;
+      this.areaStateService.locations["a4"].exitDestination = areaExits.north;
     }
     if (areaExits.east) {
-      this.areaStateService.locations["d7"].doorDestination = areaExits.east;
+      this.areaStateService.locations["d7"].exitDestination = areaExits.east;
     }
     if (areaExits.south) {
-      this.areaStateService.locations["g4"].doorDestination = areaExits.south;
+      this.areaStateService.locations["g4"].exitDestination = areaExits.south;
     }
     if (areaExits.west) {
-      this.areaStateService.locations["d1"].doorDestination = areaExits.west;
+      this.areaStateService.locations["d1"].exitDestination = areaExits.west;
     }
+    console.log("YOU'RE LOADING THE MAP EXITS");
     console.log(this.areaStateService.locations);
   }
 

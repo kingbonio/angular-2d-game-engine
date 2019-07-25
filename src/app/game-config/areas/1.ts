@@ -1,28 +1,21 @@
-import { MonsterClass, Direction, ElementClass } from "../../game/shared/enums";
+import { MonsterClass, Direction, CharacterType, ElementClass } from "../../game/shared/enums";
 import { IAreaElement } from "../../game/area/interfaces";
-import { armour, weapons, keyItems } from "../items";
+import { armour, weapons, keyItems, potions } from "../items";
 import { IWeapons } from "../../game/item/interfaces";
+import { ObjectType } from "../../game/shared/enums";
 
 export default {
-      room: 2,
+      room: 1,
       areaElements: [
             {
                   type: ElementClass.player,
                   elementProperties: {
-                        asleep: true,
-                        level: 1,
-                        name: "Darren",
-                        class: MonsterClass.Rat,
-                        lootParameters: {
-                              level: 6,
-                              allowWeapon: true,
-                              allowPotion: false,
-                              allowKey: false
-                        },
+                        name: "Smelly Jeremy",
+                        imageName: "player1.jpg",
                   },
-                  startingPositionY: "c",
-                  startingPositionX: 3,
-                  direction: Direction.N
+                  startingPositionX: 4,
+                  startingPositionY: "g",
+                  direction: Direction.N,
             },
             {
                   type: ElementClass.enemy,
@@ -63,7 +56,140 @@ export default {
                         ],
                         imageFileName: "",
                   },
+                  startingPositionX: 2,
+                  startingPositionY: "b",
+            },
+            {
+                  type: ElementClass.npc,
+                  elementProperties: {
+                        asleep: true,
+                        angry: false,
+                        level: 1,
+                        maxHp: 20,
+                        lowHealthThreshold: 15,
+                        name: "David",
+                        direction: Direction.E,
+                        speechResponse: "Stop bothering me, you fool!",
+                        sleepResponse: "Zzzzzzzzzzzzzzzz",
+                        lootParameters: {
+                              level: 6,
+                              allowWeapon: true,
+                              allowPotion: false,
+                              allowKey: false,
+                        },
+                        armour: {
+                              head: null,
+                              arms: null,
+                              hands: null,
+                              torso: null,
+                              legs: null,
+                              boots: null,
+                        },
+                        weapons: {
+                              primary: null,
+                              secondary: null,
+                              concealed: null,
+                              shield: null,
+                        } as IWeapons,
+                        loot: [
+                              keyItems.fancyKey,
+                              potions.smallHealthPotion,
+                        ],
+                        imageFileName: "",
+                  },
                   startingPositionX: 3,
+                  startingPositionY: "e",
+            },
+            {
+                  type: ElementClass.object,
+                  elementProperties: {
+                        name: "Straight Wall",
+                        direction: Direction.E,
+                        canBeTraversed: false,
+                        isInteractive: false,
+                        imageName: "wall-straight.png",
+                  },
+                  startingPositionX: 1,
+                  startingPositionY: "d",
+            },
+            {
+                  type: ElementClass.object,
+                  elementProperties: {
+                        name: "Straight Wall",
+                        direction: Direction.E,
+                        canBeTraversed: false,
+                        isInteractive: false,
+                        imageName: "wall-straight.png",
+                  },
+                  startingPositionX: 2,
+                  startingPositionY: "d",
+            },
+            {
+                  type: ElementClass.object,
+                  elementProperties: {
+                        name: "Corner Wall",
+                        direction: Direction.S,
+                        canBeTraversed: false,
+                        isInteractive: false,
+                        imageName: "wall-corner.png",
+                  },
+                  startingPositionX: 3,
+                  startingPositionY: "d",
+            },
+            {
+                  type: ElementClass.object,
+                  elementProperties: {
+                        name: "Straight Wall",
+                        direction: Direction.S,
+                        canBeTraversed: false,
+                        isInteractive: false,
+                        imageName: "wall-straight.png",
+                  },
+                  startingPositionX: 3,
+                  startingPositionY: "c",
+            },
+            {
+                  type: ElementClass.object,
+                  elementProperties: {
+                        name: "Door",
+                        objectType: ObjectType.door,
+                        direction: Direction.N,
+                        canBeTraversed: false,
+                        isInteractive: true,
+                        itemReferenceNeeded: "64c87a80-4f1a-4dc3-b2c8-c47a9c393f61",
+                        imageName: "door.png",
+                  },
+                  startingPositionX: 3,
+                  startingPositionY: "b",
+            },
+            {
+                  type: ElementClass.object,
+                  elementProperties: {
+                        name: "Straight Wall",
+                        direction: Direction.S,
+                        canBeTraversed: false,
+                        isInteractive: false,
+                        imageName: "wall-straight.png",
+                  },
+                  startingPositionX: 3,
+                  startingPositionY: "a",
+            },
+            {
+                  type: ElementClass.object,
+                  elementProperties: {
+                        name: "Old chest",
+                        objectType: ObjectType.lootObject,
+                        direction: Direction.N,
+                        canBeTraversed: false,
+                        isInteractive: true,
+                        itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbf693c76",
+                        imageName: "old-chest.png",
+                        loot: [
+                              weapons.axe,
+                              potions.smallHealthPotion,
+                        ]
+                  },
+                  startingPositionX: 1,
                   startingPositionY: "c",
             },
       ] as IAreaElement[],
