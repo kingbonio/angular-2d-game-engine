@@ -34,7 +34,7 @@ export class GameComponent implements OnInit, OnDestroy {
       this.userInputService.keyDownEventHandler($e);
     });
 
-    this.playerStateService.openLootingModal.subscribe((area: number) => {
+    this.areaStateService.areaChange.subscribe(() => {
       this.rebootAreaComponent();
     });
   }

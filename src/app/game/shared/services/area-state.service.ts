@@ -2,7 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { IAreaStateData, ILocation } from '../interfaces';
 import { IGridReferences, IAreaElement } from '../../area/interfaces';
 import { ElementClass } from '../enums';
-import locations from '../models/locations';
+import locationDefaults from '../models/locations';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
@@ -21,14 +21,14 @@ export class AreaStateService implements OnInit {
     // Set the state to be the first level before anything
     this.currentLocation = 1;
     // TODO Might be worth holding location x and y data on the object alongside the gridObject or null
-    this.locations = locations;
+    this.locations = locationDefaults;
     this.locationKeys = Object.keys;
     // TODO: Maybe we should have a generic area which has properties of
     // puzzle, enemy, design, potential items etc.
+    this.areaChange = new BehaviorSubject("changedArea");
   }
 
   ngOnInit() {
-    this.areaChange = new BehaviorSubject("changedArea");
 
     // this.playerStateService.playerMoved.subscribe(data => {
     //   this.actionTriggerHandler();
@@ -138,10 +138,10 @@ export class AreaStateService implements OnInit {
     // Back up current state
     this.saveState(this.currentLocation);
     // Reset the locations to blank
-    this.locations = locations;
+    this.locations = locationDefaults;
+    this.currentLocation = newAreaReference;
     // Emit event to reset area component with new area reference
     this.areaChange.next("changedArea");
-    this.currentLocation = newAreaReference;
   }
 
   /**

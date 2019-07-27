@@ -1,4 +1,4 @@
-const locations = {
+const locationDefaults = {
       a1: {
             exitDestination: null,
             areaEffect: null,
@@ -299,4 +299,4 @@ const locations = {
       },
 };
 
-export default locations;
+export default locationDefaults;
