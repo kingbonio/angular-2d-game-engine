@@ -171,8 +171,6 @@ export class AreaComponent implements OnInit {
     if (areaExits.west) {
       this.areaStateService.locations["d1"].exitDestination = areaExits.west;
     }
-    console.log("YOU'RE LOADING THE MAP EXITS");
-    console.log(this.areaStateService.locations);
   }
 
   /**

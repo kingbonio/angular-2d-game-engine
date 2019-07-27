@@ -12,6 +12,7 @@ import { EquipmentManagerService } from '../../item/services/equipment-manager.s
 import { IAreaElement } from '../../area/interfaces';
 import { Character } from '../../character-classes/character';
 import { Dice } from '../util/dice';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class PlayerStateService {
@@ -30,7 +31,6 @@ export class PlayerStateService {
   // TODO maybe move this to equipment manager
   public selectedWeaponSlot: WeaponType = WeaponType.primary;
   // public location: string;
-
 
   constructor(
     private areaStateService: AreaStateService,
@@ -83,6 +83,7 @@ export class PlayerStateService {
       console.log("You are trying to exit the area ",
         this.areaStateService.locations[this.locationY + this.locationX].exitDestination);
         // Emit event that new location access attempted, pass exitDestination
+      this.areaStateService.loadNewArea(this.areaStateService.locations[this.locationY + this.locationX].exitDestination);
       return;
     }
 

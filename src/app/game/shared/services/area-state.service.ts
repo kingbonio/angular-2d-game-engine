@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { IAreaStateData, ILocation } from '../interfaces';
 import { IGridReferences, IAreaElement } from '../../area/interfaces';
-import { Direction, ElementClass } from '../enums';
-import { AiService } from './ai.service';
-import { PlayerStateService } from './player-state.service';
+import { ElementClass } from '../enums';
+import locations from '../models/locations';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
-export class AreaStateService {
+export class AreaStateService implements OnInit {
   // Stores the location ID
   private _currentLocation: number;
   private _areaCompleted = false;
@@ -14,314 +14,25 @@ export class AreaStateService {
   public locationKeys: any;
   public locations: IGridReferences;
 
+  public areaChange: BehaviorSubject<string>;
+
   constructor(
   ) {
     // Set the state to be the first level before anything
-    this._currentLocation = 0;
+    this.currentLocation = 1;
     // TODO Might be worth holding location x and y data on the object alongside the gridObject or null
-    this.locations = {
-      a1: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      a2: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      a3: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      // north door
-      a4: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      a5: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      a6: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      a7: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      b1: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      b2: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      b3: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      b4: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      b5: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      b6: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      b7: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      c1: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      c2: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      c3: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      c4: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      c5: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      c6: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      c7: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      // west door
-      d1: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      d2: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      d3: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      d4: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      d5: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      d6: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      // east door
-      d7: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      e1: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      e2: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      e3: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      e4: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      e5: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      e6: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      e7: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      f1: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      f2: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      f3: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      f4: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      f5: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      f6: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      f7: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      g1: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      g2: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      g3: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      // south door
-      g4: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      g5: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      g6: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-      g7: {
-        exitDestination: null,
-        areaEffect: null,
-        element: null,
-        floorStyle: null,
-      },
-    };
+    this.locations = locations;
     this.locationKeys = Object.keys;
     // TODO: Maybe we should have a generic area which has properties of
     // puzzle, enemy, design, potential items etc.
+  }
+
+  ngOnInit() {
+    this.areaChange = new BehaviorSubject("changedArea");
+
+    // this.playerStateService.playerMoved.subscribe(data => {
+    //   this.actionTriggerHandler();
+    // });
   }
 
   get playerLocation(): string {
@@ -407,8 +118,6 @@ export class AreaStateService {
   }
 
   public moveCharacter(newLocation: string, currentLocation: string) {
-    console.log(`Attempting to move ${this.locations[currentLocation].type} from ${currentLocation} to ${newLocation}`);
-    console.log("While this grid location: ", this.locations);
     // TODO: We need to store a reference to the player object here
     this.locations[newLocation].element = this.locations[currentLocation].element;
     this.locations[currentLocation].element = null;
@@ -423,6 +132,24 @@ export class AreaStateService {
       locationY: gridLocation[0],
       locationX: Number(gridLocation[1]),
     };
+  }
+
+  public loadNewArea(newAreaReference: number) {
+    // Back up current state
+    this.saveState(this.currentLocation);
+    // Reset the locations to blank
+    this.locations = locations;
+    // Emit event to reset area component with new area reference
+    this.areaChange.next("changedArea");
+    this.currentLocation = newAreaReference;
+  }
+
+  /**
+   * Save the area state to storage
+   * @param newAreaReference the area number
+   */
+  public saveState(newAreaReference: number) {
+    localStorage.setItem(newAreaReference.toString(), JSON.stringify(this.locations));
   }
 
   /**

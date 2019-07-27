@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { AiService } from './shared/services/ai.service';
 import { EquipmentManagerService } from './item/services/equipment-manager.service';
 import { AreaStateService } from './shared/services/area-state.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-game-root',
@@ -14,8 +15,10 @@ import { AreaStateService } from './shared/services/area-state.service';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit, OnDestroy {
-  subscription: Subscription;
+  private userInputSubscription: Subscription;
+  private areaChangeSubscription: Subscription;
   title = 'game';
+  private areaComponentAlive = true;
 
   constructor(
     public playerStateService: PlayerStateService,
@@ -27,14 +30,22 @@ export class GameComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.subscription = fromEvent(document, 'keydown').subscribe(($e: KeyboardEvent) => {
+    this.userInputSubscription = fromEvent(document, 'keydown').subscribe(($e: KeyboardEvent) => {
       this.userInputService.keyDownEventHandler($e);
     });
-    const tempHealth = this.playerStateService.health;
+
+    this.playerStateService.openLootingModal.subscribe((area: number) => {
+      this.rebootAreaComponent();
+    });
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.userInputSubscription.unsubscribe();
+  }
+
+  private rebootAreaComponent() {
+    this.areaComponentAlive = false;
+    this.areaComponentAlive = true;
   }
 
 

@@ -62,7 +62,7 @@ export default {
             {
                   type: ElementClass.npc,
                   elementProperties: {
-                        asleep: true,
+                        asleep: false,
                         angry: false,
                         level: 1,
                         maxHp: 20,
@@ -167,7 +167,7 @@ export default {
                   elementProperties: {
                         name: "Old chest",
                         objectType: ObjectType.lootObject,
-                        direction: Direction.E,
+                        direction: Direction.S,
                         canBeTraversed: false,
                         isInteractive: true,
                         itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbf693c76",
