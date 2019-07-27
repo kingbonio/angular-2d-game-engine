@@ -27,7 +27,7 @@ export default {
                         lowHealthThreshold: 6,
                         name: "Gary The Dick",
                         class: MonsterClass.Human,
-                        direction: Direction.N,
+                        direction: Direction.W,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
                         lootParameters: {
@@ -57,7 +57,7 @@ export default {
                         imageFileName: "",
                   },
                   startingPositionX: 2,
-                  startingPositionY: "b",
+                  startingPositionY: "a",
             },
             {
                   type: ElementClass.npc,
@@ -110,7 +110,7 @@ export default {
                         imageName: "wall-straight.png",
                   },
                   startingPositionX: 1,
-                  startingPositionY: "d",
+                  startingPositionY: "c",
             },
             {
                   type: ElementClass.object,
@@ -122,7 +122,7 @@ export default {
                         imageName: "wall-straight.png",
                   },
                   startingPositionX: 2,
-                  startingPositionY: "d",
+                  startingPositionY: "c",
             },
             {
                   type: ElementClass.object,
@@ -132,18 +132,6 @@ export default {
                         canBeTraversed: false,
                         isInteractive: false,
                         imageName: "wall-corner.png",
-                  },
-                  startingPositionX: 3,
-                  startingPositionY: "d",
-            },
-            {
-                  type: ElementClass.object,
-                  elementProperties: {
-                        name: "Straight Wall",
-                        direction: Direction.S,
-                        canBeTraversed: false,
-                        isInteractive: false,
-                        imageName: "wall-straight.png",
                   },
                   startingPositionX: 3,
                   startingPositionY: "c",
@@ -179,7 +167,7 @@ export default {
                   elementProperties: {
                         name: "Old chest",
                         objectType: ObjectType.lootObject,
-                        direction: Direction.N,
+                        direction: Direction.E,
                         canBeTraversed: false,
                         isInteractive: true,
                         itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbf693c76",
@@ -190,7 +178,7 @@ export default {
                         ]
                   },
                   startingPositionX: 1,
-                  startingPositionY: "c",
+                  startingPositionY: "a",
             },
       ] as IAreaElement[],
       areaCompleteRequirements: {

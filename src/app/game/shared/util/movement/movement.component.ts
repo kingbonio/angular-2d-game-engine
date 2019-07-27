@@ -33,8 +33,11 @@ export class MovementComponent {
         newLocationY = this.previousYReference(locationY);
         newLocationX = locationX;
         // Make sure the location isn't off the edge of the grid and get new reference
+        // TODO This may need tidying up
         isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
-        isLocationFree = !isTargetLocationAreaExit ? this.areaStateService.isLocationFree(newLocationY + newLocationX) : false;
+        isLocationFree = (!isTargetLocationAreaExit && !this.isTargetLocationOutOfBounds(newLocationY + newLocationX)) ?
+                          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
+                          false;
         return {
           locationY: newLocationY,
           locationX: newLocationX,
@@ -46,7 +49,9 @@ export class MovementComponent {
         newLocationX = this.nextXReference(locationX);
         newLocationY = locationY;
         isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
-        isLocationFree = !isTargetLocationAreaExit ? this.areaStateService.isLocationFree(newLocationY + newLocationX) : false;
+        isLocationFree = (!isTargetLocationAreaExit && !this.isTargetLocationOutOfBounds(newLocationY + newLocationX)) ?
+                          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
+                          false;
         return {
           locationY: newLocationY,
           locationX: newLocationX,
@@ -57,7 +62,9 @@ export class MovementComponent {
         newLocationY = this.nextYReference(locationY);
         newLocationX = locationX;
         isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
-        isLocationFree = !isTargetLocationAreaExit ? this.areaStateService.isLocationFree(newLocationY + newLocationX) : false;
+        isLocationFree = (!isTargetLocationAreaExit && !this.isTargetLocationOutOfBounds(newLocationY + newLocationX)) ?
+                          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
+                          false;
         return {
           locationY: newLocationY,
           locationX: newLocationX,
@@ -68,7 +75,9 @@ export class MovementComponent {
         newLocationX = this.previousXReference(locationX);
         newLocationY = locationY;
         isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
-        isLocationFree = !isTargetLocationAreaExit ? this.areaStateService.isLocationFree(newLocationY + newLocationX) : false;
+        isLocationFree = (!isTargetLocationAreaExit && !this.isTargetLocationOutOfBounds(newLocationY + newLocationX)) ?
+                          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
+                          false;
         return {
           locationY: newLocationY,
           locationX: newLocationX,
@@ -218,18 +227,37 @@ export class MovementComponent {
   }
 
   private isTargetLocationAreaExit(currentLocation: string, targetLocation: string): boolean {
-    if (targetLocation === defaults.mapDetails.northExit) {
-      return !!this.areaStateService.locations[currentLocation].exitDestination;
+    // if (targetLocation === defaults.mapDetails.northExit) {
+    //   return !!this.areaStateService.locations[currentLocation].exitDestination;
+    // }
+    // if (targetLocation === defaults.mapDetails.eastExit) {
+    //   return !!this.areaStateService.locations[currentLocation].exitDestination;
+    // }
+    // if (targetLocation === defaults.mapDetails.southExit) {
+    //   return !!this.areaStateService.locations[currentLocation].exitDestination;
+    // }
+    // if (targetLocation === defaults.mapDetails.westExit) {
+    //   return !!this.areaStateService.locations[currentLocation].exitDestination;
+    // }
+
+    for (const exit in defaults.areaExitDestinations) {
+      if (defaults.areaExitDestinations.hasOwnProperty(exit) && targetLocation === defaults.areaExitDestinations[exit]) {
+        return !!this.areaStateService.locations[currentLocation].exitDestination;
+      }
     }
-    if (targetLocation === defaults.mapDetails.eastExit) {
-      return !!this.areaStateService.locations[currentLocation].exitDestination;
-    }
-    if (targetLocation === defaults.mapDetails.southExit) {
-      return !!this.areaStateService.locations[currentLocation].exitDestination;
-    }
-    if (targetLocation === defaults.mapDetails.westExit) {
-      return !!this.areaStateService.locations[currentLocation].exitDestination;
-    }
+
     return false;
+  }
+
+  private isTargetLocationOutOfBounds(targetLocation: string) {
+    if (targetLocation.indexOf(defaults.areaOuterBoundaries.lowerYBoundary) === -1 &&
+        targetLocation.indexOf(defaults.areaOuterBoundaries.upperYBoundary) === -1 &&
+        targetLocation.indexOf(defaults.areaOuterBoundaries.lowerXBoundary) === -1 &&
+        targetLocation.indexOf(defaults.areaOuterBoundaries.upperXBoundary) === -1
+    ) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

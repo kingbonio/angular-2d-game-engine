@@ -16,6 +16,8 @@ import { LootingModalComponent } from '../item/looting/looting-modal.component';
 import { GridObject } from './grid-object-classes/grid-object';
 import { Player } from '../character-classes/player';
 import { IAreaExits } from '../../game-config/interfaces';
+import defaults from '../../shared/defaults';
+import { IGridData } from './interfaces/igrid-data';
 
 @Component({
   selector: 'app-area',
@@ -110,7 +112,7 @@ export class AreaComponent implements OnInit {
     }
   }
 
-  public getCharacterType(gridCharacter: Character) {
+  public getCharacterType(gridCharacter: Character): ElementClass {
     return gridCharacter.type;
   }
 
@@ -185,6 +187,18 @@ export class AreaComponent implements OnInit {
       height: 6,
       type: AreaType.puzzle
     } as ILevelData;
+  }
+
+  public locationExit(location: string, gridObject: IGridData): string {
+    for (const locationReference in defaults.areaExitLocations) {
+      if (defaults.areaExitLocations.hasOwnProperty(locationReference) &&
+      defaults.areaExitLocations[locationReference] === location &&
+      gridObject.exitDestination
+      ) {
+        return locationReference;
+      }
+    }
+    return "";
   }
 }
 

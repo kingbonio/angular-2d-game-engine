@@ -72,12 +72,25 @@ export default {
             }
         ]
     },
-    mapDetails: {
+    areaExitDestinations: {
         // TODO This is not ideal
         northExit: "`4",
         eastExit: "d8",
         southExit: "h4",
         westExit: "d0",
+    },
+    areaExitLocations: {
+        // TODO This is not ideal
+        northExit: "a4",
+        eastExit: "d7",
+        southExit: "g4",
+        westExit: "d1",
+    },
+    areaOuterBoundaries: {
+        lowerYBoundary: "`",
+        upperYBoundary: "h",
+        lowerXBoundary: "0",
+        upperXBoundary: "8",
     },
     keyMap: {
         // https://keycode.info
