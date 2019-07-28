@@ -10,13 +10,12 @@ export class NPC extends Character {
       public maxHp: number;
       public currentHp: number;
       public lowHealthThreshold: number;
-      public imageName: string;
+      public imageFileName: string;
       public speechResponse: string;
       public sleepResponse: string;
       public isAsleep: boolean;
       public isAngry: boolean;
       public isPaused: boolean;
-      public imageFileName: string;
       public direction: Direction;
       public armour: IArmour;
       public weapons: IWeapons;
@@ -29,7 +28,7 @@ export class NPC extends Character {
             this.name = characterDetails.name;
             this.class = characterDetails.class;
             // TODO Need to figure out how to use this in the css
-            this.imageName = characterDetails.imageName;
+            this.imageFileName = characterDetails.imageFileName;
             this.isAsleep = characterDetails.asleep;
             this.isAngry = characterDetails.angry;
             this.speechResponse = characterDetails.speechResponse;

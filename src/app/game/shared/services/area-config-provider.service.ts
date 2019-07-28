@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
-import * as areaConfig from "../../../game-config/areas/1";
-import * as map from "../../../game-config/areas/map";
+import * as areaConfigs from "../../../game-config/areas";
+import * as maps from "../../../game-config/areas/map";
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
 import { weapons, armour } from '../../../game-config/items';
 import { InventoryManagerService } from '../../item/services/inventory-manager.service';
@@ -8,7 +8,7 @@ import { InventoryManagerService } from '../../item/services/inventory-manager.s
 @Injectable()
 export class AreaConfigProviderService implements OnInit {
 
-  private areaConfig: any;
+  private areas: any;
   private map: any;
 
   constructor(
@@ -16,8 +16,8 @@ export class AreaConfigProviderService implements OnInit {
     public inventoryManagerService: InventoryManagerService,
     ) {
       // TODO: This needs fixing
-      this.areaConfig = areaConfig.default;
-      this.map = map.default;
+      this.areas = areaConfigs;
+      this.map = maps.default;
       this.assignEquipmentToPlayer();
       this.assignItemsToInventory();
   }
@@ -44,14 +44,14 @@ export class AreaConfigProviderService implements OnInit {
    * @param id reference for the area
    * @returns the area config object
    */
-  public getConfig(id?: number): any {
+  public getAreaConfig(id?: number): any {
     // TODO: Should be returning IAreaConfig
-    return this.areaConfig;
+    return this.areas["area" + id].default;
   }
 
   public getAreaExits(id?: number): any {
     // TODO Should get from id
-    return this.map[1];
+    return this.map[id];
   }
 
 }

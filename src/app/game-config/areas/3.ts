@@ -55,7 +55,7 @@ export default {
                         ],
                         imageFileName: "",
                   },
-                  startingPositionX: 2,
+                  startingPositionX: 3,
                   startingPositionY: "a",
             },
       ] as IAreaElement[],

@@ -8,24 +8,30 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 @Injectable()
 export class AreaStateService implements OnInit {
   // Stores the location ID
-  private _currentLocation: number;
   private _areaCompleted = false;
-  public room: number;
+  public currentLocation: number;
+  public newLocation: number;
+  public loadingArea = false;
+  public loadingExistingArea = false;
   public locationKeys: any;
   public locations: IGridReferences;
+  public previousPlayerLocation: string;
 
-  public areaChange: BehaviorSubject<string>;
+  public areaChange: BehaviorSubject<number>;
+  public areaReady: BehaviorSubject<number>;
 
   constructor(
   ) {
     // Set the state to be the first level before anything
     this.currentLocation = 1;
+    this.newLocation = null;
     // TODO Might be worth holding location x and y data on the object alongside the gridObject or null
-    this.locations = locationDefaults;
+    this.locations = this.cloneLocations(locationDefaults);
     this.locationKeys = Object.keys;
     // TODO: Maybe we should have a generic area which has properties of
     // puzzle, enemy, design, potential items etc.
-    this.areaChange = new BehaviorSubject("changedArea");
+    this.areaChange = new BehaviorSubject(1);
+    this.areaReady = new BehaviorSubject(1);
   }
 
   ngOnInit() {
@@ -44,14 +50,6 @@ export class AreaStateService implements OnInit {
         return gridLocation;
       }
     }
-  }
-
-  get currentLocation() {
-    return this._currentLocation;
-  }
-
-  set currentLocation(newLocation) {
-    this._currentLocation = newLocation;
   }
 
   get areaCompleted() {
@@ -123,6 +121,12 @@ export class AreaStateService implements OnInit {
     this.locations[currentLocation].element = null;
   }
 
+  public movePlayer(newLocation: string) {
+    if (newLocation !== this.playerLocation) {
+      this.moveCharacter(newLocation, this.playerLocation);
+    }
+  }
+
   public removeElementFromArea(target: IAreaElement, location: string) {
     this.locations[location].element = null;
   }
@@ -134,22 +138,66 @@ export class AreaStateService implements OnInit {
     };
   }
 
+  public notifyAreaChange() {
+    // Let the area state service handle the death of the component
+    this.areaReady.next(this.newLocation);
+  }
+
+  public updateLocation() {
+    this.currentLocation = this.newLocation;
+    this.newLocation = null;
+  }
+
+  /**
+   * Backs up current location state, loads the new one and emits event to notify listeners
+   * @param newAreaReference The target are to pull data for
+   */
   public loadNewArea(newAreaReference: number) {
+    this.loadingArea = true;
     // Back up current state
-    this.saveState(this.currentLocation);
-    // Reset the locations to blank
-    this.locations = locationDefaults;
-    this.currentLocation = newAreaReference;
-    // Emit event to reset area component with new area reference
-    this.areaChange.next("changedArea");
+    this.saveAreaState(this.currentLocation);
+    // Save the new area reference
+    this.newLocation = newAreaReference;
+
+    this.previousPlayerLocation = this.playerLocation;
+
+    const targetAreaData = this.getAreaState(newAreaReference);
+    if (targetAreaData) {
+      this.loadingExistingArea = true;
+      // Reset the locations to be the stored data
+      this.locations = JSON.parse(targetAreaData);
+    } else {
+      // Reset the locations to blank
+      this.locations = this.cloneLocations(locationDefaults);
+    }
+
+    // TODO this isn't ideal really, look for the other subject type
+    this.areaChange.next(newAreaReference ? newAreaReference : this.currentLocation);
+
+    // Update the location
+    this.currentLocation = this.newLocation;
+    this.newLocation = null;
+
   }
 
   /**
    * Save the area state to storage
    * @param newAreaReference the area number
    */
-  public saveState(newAreaReference: number) {
+  public saveAreaState(newAreaReference: number) {
     localStorage.setItem(newAreaReference.toString(), JSON.stringify(this.locations));
+  }
+
+  /**
+   * Get the area from storage
+   * @param newAreaReference the area number
+   */
+  public getAreaState(newAreaReference: number): any | null {
+    return localStorage.getItem(newAreaReference.toString());
+  }
+
+  private cloneLocations(sourceLocations) {
+    return JSON.parse(JSON.stringify(sourceLocations));
   }
 
   /**

@@ -4,20 +4,18 @@ import { UserInteractionTypes } from "../../shared/enums";
 import { IArmour, IWeapons, IInventoryItem } from "../item/interfaces";
 
 export class Enemy extends Character {
-      // private movement: Movement;
       public type = ElementClass.enemy;
       public name: string;
       public class: MonsterClass;
       public maxHp: number;
       public currentHp: number;
       public lowHealthThreshold: number;
-      public imageName: string;
+      public imageFileName: string;
       public speechResponse: string;
       public sleepResponse: string;
       public isAsleep: boolean;
       public isAngry: boolean;
       public isPaused: boolean;
-      public imageFileName: string;
       public direction: Direction;
       public armour: IArmour;
       public weapons: IWeapons;
@@ -29,7 +27,7 @@ export class Enemy extends Character {
             super();
             this.name = characterDetails.name;
             this.class = characterDetails.class;
-            this.imageName = characterDetails.imageName;
+            this.imageFileName = characterDetails.imageFileName;
             this.speechResponse = characterDetails.speechResponse;
             this.sleepResponse = characterDetails.sleepResponse;
             this.isAsleep = characterDetails.asleep;

@@ -47,7 +47,7 @@ export class GridObject {
             this.locationKeys = Object.keys;
 
             this.name = elementProperties.name;
-            this.imageFileName = elementProperties.imageName;
+            this.imageFileName = elementProperties.imageFileName;
             this.canBeTraversed = elementProperties.canBeTraversed;
             this.isInteractive = elementProperties.isInteractive;
             this.direction = elementProperties.direction;

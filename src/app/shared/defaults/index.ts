@@ -58,6 +58,7 @@ export default {
         stealAttemptFail: "You failed to steal from the target and you have angered them",
     },
     gameMenu: {
+        loadingText: "Loading Area...",
         menuOpenAtLoad: true,
         pages: [
             {

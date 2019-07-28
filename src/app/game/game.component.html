@@ -2,7 +2,14 @@
       <div class="top-menu">
 
       </div>
-      <app-area *ngIf="areaComponentAlive"></app-area>
+      <div class="area-container">
+            <div *ngIf="isLoadingArea()" class="loading-overlay">
+                  <div class="loading-text">
+                        {{ loadingText }}
+                  </div>
+            </div>
+            <app-area *ngIf="isAreaComponentAlive()"></app-area>
+      </div>
       <div class="dialogue-area">
             <app-dialogue class="dialogue-box"></app-dialogue>
       </div>

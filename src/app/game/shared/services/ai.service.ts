@@ -23,7 +23,10 @@ export class AiService {
     private playerStateService: PlayerStateService,
   ) {
     this.userInputService.playerMoved.subscribe(data => {
-      this.actionTriggerHandler();
+      // TODO This may need a more specific flag
+      if (!this.areaStateService.loadingArea) {
+        this.actionTriggerHandler();
+      }
     });
   }
 

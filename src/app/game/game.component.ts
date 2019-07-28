@@ -7,7 +7,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { AiService } from './shared/services/ai.service';
 import { EquipmentManagerService } from './item/services/equipment-manager.service';
 import { AreaStateService } from './shared/services/area-state.service';
-import { BehaviorSubject } from 'rxjs';
+import defaults from '../shared/defaults';
+import * as areaConfigs from "../game-config/areas";
 
 @Component({
   selector: 'app-game-root',
@@ -17,8 +18,11 @@ import { BehaviorSubject } from 'rxjs';
 export class GameComponent implements OnInit, OnDestroy {
   private userInputSubscription: Subscription;
   private areaChangeSubscription: Subscription;
+  private areaReadySubscription: Subscription;
+  private areaConfigs = areaConfigs;
   title = 'game';
-  private areaComponentAlive = true;
+  public loadingText = defaults.gameMenu.loadingText;
+  public areaComponentAlive = true;
 
   constructor(
     public playerStateService: PlayerStateService,
@@ -34,20 +38,57 @@ export class GameComponent implements OnInit, OnDestroy {
       this.userInputService.keyDownEventHandler($e);
     });
 
-    this.areaStateService.areaChange.subscribe(() => {
-      this.rebootAreaComponent();
+    // Destroy the area component
+    this.areaChangeSubscription = this.areaStateService.areaChange.subscribe((newAreaReference) => {
+      if (this.areaStateService.currentLocation !== newAreaReference) {
+        this.killAreaComponent();
+      }
     });
+
+    // Reinstate area component when ready
+    this.areaReadySubscription = this.areaStateService.areaReady.subscribe((newAreaReference) => {
+      if (this.areaStateService.currentLocation !== newAreaReference) {
+        this.createAreaComponent();
+      }
+    });
+
+    // Clear the game history
+    for (const areaReference in this.areaConfigs) {
+      if (this.areaConfigs.hasOwnProperty(areaReference)) {
+        const storageReference = areaReference.substring(4);
+        localStorage.setItem(storageReference, "");
+      }
+    }
+  }
+
+  public isAreaComponentAlive() {
+    return this.areaComponentAlive;
+  }
+
+  public isLoadingArea() {
+    return this.areaStateService.loadingArea;
+  }
+
+  public isLoadingScreen() {
+    return this.areaStateService.loadingArea ? "show" : "hide";
+  }
+
+  private killAreaComponent() {
+    this.areaComponentAlive = false;
+  }
+
+  private createAreaComponent() {
+    // Update the area state service with the new location before reload
+    setTimeout(() => {
+      this.areaComponentAlive = true;
+    }, 0);
   }
 
   ngOnDestroy() {
     this.userInputSubscription.unsubscribe();
+    this.areaChangeSubscription.unsubscribe();
+    this.areaReadySubscription.unsubscribe();
   }
-
-  private rebootAreaComponent() {
-    this.areaComponentAlive = false;
-    this.areaComponentAlive = true;
-  }
-
 
   // public onKeyDown($e) {
   //   this.userInputService.keyDownEventHandler($e);

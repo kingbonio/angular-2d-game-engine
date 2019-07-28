@@ -227,19 +227,6 @@ export class MovementComponent {
   }
 
   private isTargetLocationAreaExit(currentLocation: string, targetLocation: string): boolean {
-    // if (targetLocation === defaults.mapDetails.northExit) {
-    //   return !!this.areaStateService.locations[currentLocation].exitDestination;
-    // }
-    // if (targetLocation === defaults.mapDetails.eastExit) {
-    //   return !!this.areaStateService.locations[currentLocation].exitDestination;
-    // }
-    // if (targetLocation === defaults.mapDetails.southExit) {
-    //   return !!this.areaStateService.locations[currentLocation].exitDestination;
-    // }
-    // if (targetLocation === defaults.mapDetails.westExit) {
-    //   return !!this.areaStateService.locations[currentLocation].exitDestination;
-    // }
-
     for (const exit in defaults.areaExitDestinations) {
       if (defaults.areaExitDestinations.hasOwnProperty(exit) && targetLocation === defaults.areaExitDestinations[exit]) {
         return !!this.areaStateService.locations[currentLocation].exitDestination;
