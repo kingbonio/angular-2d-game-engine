@@ -19,7 +19,7 @@ export default {
             {
                   type: ElementClass.enemy,
                   elementProperties: {
-                        asleep: true,
+                        asleep: false,
                         angry: false,
                         level: 1,
                         maxHp: 30,
@@ -55,8 +55,8 @@ export default {
                         ],
                         imageFileName: "",
                   },
-                  startingPositionX: 4,
-                  startingPositionY: "a",
+                  startingPositionX: 7,
+                  startingPositionY: "b",
             },
       ] as IAreaElement[],
       areaCompleteRequirements: {

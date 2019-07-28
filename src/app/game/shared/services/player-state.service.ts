@@ -79,10 +79,7 @@ export class PlayerStateService {
 
     // TODO Might be worth moving this somewhere more apprpriate, maybe listener in movement component
     if (newLocation.isTargetAreaExit) {
-      // DO the event for new load thing
-      console.log("You are trying to exit the area ",
-        this.areaStateService.locations[this.locationY + this.locationX].exitDestination);
-        // Emit event that new location access attempted, pass exitDestination
+      // Emit event that new location access attempted, pass exitDestination
       this.areaStateService.loadNewArea(this.areaStateService.locations[this.locationY + this.locationX].exitDestination);
       return;
     }

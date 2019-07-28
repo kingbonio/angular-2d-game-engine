@@ -19,7 +19,7 @@ export default {
             {
                   type: ElementClass.enemy,
                   elementProperties: {
-                        asleep: true,
+                        asleep: false,
                         angry: false,
                         level: 1,
                         maxHp: 30,

@@ -129,8 +129,6 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
       this.updatePlayerLocation();
     }
     this.areaStateService.loadingExistingArea = false;
-
-    console.log(this.areaStateService.locations);
   }
 
   private addElementsToGrid(elements: IAreaElement[]): void {
@@ -184,7 +182,6 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     }
-    console.log(this.areaStateService.locations);
   }
 
 
@@ -197,19 +194,19 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
     // TODO Currently we're overwriting anything that's in the entrance location
     switch (previousLocation) {
       case defaults.areaExitLocations.northExit:
-        newLocation = "g4";
+        newLocation = defaults.areaExitLocations.southExit;
         this.areaStateService.movePlayer(newLocation);
         break;
       case defaults.areaExitLocations.eastExit:
-        newLocation = "d1";
+        newLocation = defaults.areaExitLocations.westExit;
         this.areaStateService.movePlayer(newLocation);
         break;
       case defaults.areaExitLocations.southExit:
-        newLocation = "a4";
+        newLocation = defaults.areaExitLocations.northExit;
         this.areaStateService.movePlayer(newLocation);
         break;
       case defaults.areaExitLocations.westExit:
-        newLocation = "d7";
+        newLocation = defaults.areaExitLocations.eastExit;
         this.areaStateService.movePlayer(newLocation);
         break;
     }
@@ -220,16 +217,16 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private addExitsToGrid(areaExits: IAreaExits) {
     if (areaExits.north) {
-      this.areaStateService.locations["a4"].exitDestination = areaExits.north;
+      this.areaStateService.locations[defaults.areaExitLocations.northExit].exitDestination = areaExits.north;
     }
     if (areaExits.east) {
-      this.areaStateService.locations["d7"].exitDestination = areaExits.east;
+      this.areaStateService.locations[defaults.areaExitLocations.eastExit].exitDestination = areaExits.east;
     }
     if (areaExits.south) {
-      this.areaStateService.locations["g4"].exitDestination = areaExits.south;
+      this.areaStateService.locations[defaults.areaExitLocations.southExit].exitDestination = areaExits.south;
     }
     if (areaExits.west) {
-      this.areaStateService.locations["d1"].exitDestination = areaExits.west;
+      this.areaStateService.locations[defaults.areaExitLocations.westExit].exitDestination = areaExits.west;
     }
   }
 
