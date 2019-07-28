@@ -1,11 +1,35 @@
 .game-container {
     width: 568px;
 
-    app-area {
-        display: inline-block;
-        float: left;
-        height: 560px;
-        border: solid #000 4px;
+    .area-container {
+        .loading-overlay {
+            position: fixed;
+            z-index: 11;
+            // TODO Fix this
+            width: 569px;
+            height: 569px;
+            background-color: black;
+
+            .loading-text {
+                position: absolute;
+                width: 200px;
+                height: 30px;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                color: white;
+                font-size: 30px;
+                text-align: centre;
+            }
+        }
+
+        app-area {
+            position: relative;
+            display: inline-block;
+            float: left;
+            height: 560px;
+            border: solid #000 4px;
+        }
     }
     
     .dialogue-area {

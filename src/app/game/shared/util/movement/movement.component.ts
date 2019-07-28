@@ -4,6 +4,7 @@ import { Direction } from '../../enums';
 import { DiceService } from '../../services/dice.service';
 import { Dice } from '../dice';
 import { ILocation } from '../../interfaces';
+import defaults from '../../../../shared/defaults';
 
 @Component({
   selector: 'app-movement',
@@ -20,60 +21,69 @@ export class MovementComponent {
   // TODO Look into direction being used from the service
   // TODO Could refactor this switch statement
   // tslint:disable-next-line:max-line-length
-  public getNextLocation(locationY: string, locationX: number, direction: Direction): { locationY: string, locationX: number, isLocationFree: boolean } | null {
+  public getNextLocation(locationY: string, locationX: number, direction: Direction): { locationY: string, locationX: number, isLocationFree: boolean, isTargetAreaExit: boolean } | null {
 
     // Attempt movement
     let newLocationY;
     let newLocationX;
+    let isTargetLocationAreaExit;
+    let isLocationFree;
     switch (direction) {
       case Direction.N:
         newLocationY = this.previousYReference(locationY);
         newLocationX = locationX;
         // Make sure the location isn't off the edge of the grid and get new reference
-        if (newLocationY && newLocationX) {
-          return {
-            locationY: newLocationY,
-            locationX: newLocationX,
-            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX)
-          };
-        }
+        // TODO This may need tidying up
+        isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
+        isLocationFree = (!isTargetLocationAreaExit && !this.isTargetLocationOutOfBounds(newLocationY + newLocationX)) ?
+                          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
+                          false;
+        return {
+          locationY: newLocationY,
+          locationX: newLocationX,
+          isTargetAreaExit: isTargetLocationAreaExit,
+          isLocationFree: isLocationFree,
+        };
         return null;
       case Direction.E:
         newLocationX = this.nextXReference(locationX);
         newLocationY = locationY;
-        // Make sure the location isn't off the edge of the grid and get new reference
-        if (newLocationY && newLocationX) {
-          return {
-            locationY: newLocationY,
-            locationX: newLocationX,
-            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX)
-          };
-        }
-        return null;
+        isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
+        isLocationFree = (!isTargetLocationAreaExit && !this.isTargetLocationOutOfBounds(newLocationY + newLocationX)) ?
+                          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
+                          false;
+        return {
+          locationY: newLocationY,
+          locationX: newLocationX,
+          isTargetAreaExit: isTargetLocationAreaExit,
+          isLocationFree: isLocationFree,
+        };
       case Direction.S:
         newLocationY = this.nextYReference(locationY);
         newLocationX = locationX;
-        // Make sure the location isn't off the edge of the grid and get new reference
-        if (newLocationY && newLocationX) {
-          return {
-            locationY: newLocationY,
-            locationX: newLocationX,
-            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX)
-          };
-        }
-        return null;
+        isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
+        isLocationFree = (!isTargetLocationAreaExit && !this.isTargetLocationOutOfBounds(newLocationY + newLocationX)) ?
+                          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
+                          false;
+        return {
+          locationY: newLocationY,
+          locationX: newLocationX,
+          isTargetAreaExit: isTargetLocationAreaExit,
+          isLocationFree: isLocationFree,
+        };
       case Direction.W:
         newLocationX = this.previousXReference(locationX);
         newLocationY = locationY;
-        // Make sure the location isn't off the edge of the grid and get new reference
-        if (newLocationY && newLocationX) {
-          return {
-            locationY: newLocationY,
-            locationX: newLocationX,
-            isLocationFree: this.areaStateService.isLocationFree(newLocationY + newLocationX)
-          };
-        }
-        return null;
+        isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
+        isLocationFree = (!isTargetLocationAreaExit && !this.isTargetLocationOutOfBounds(newLocationY + newLocationX)) ?
+                          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
+                          false;
+        return {
+          locationY: newLocationY,
+          locationX: newLocationX,
+          isTargetAreaExit: isTargetLocationAreaExit,
+          isLocationFree: isLocationFree,
+        };
       default:
         return null;
     }
@@ -110,7 +120,7 @@ export class MovementComponent {
 
     if (targetLocationDetails && targetLocationDetails.isLocationFree) {
       const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
-      this.areaStateService.locations[currentLocation].direction = direction;
+      this.areaStateService.locations[currentLocation].element.direction = direction;
       this.areaStateService.moveCharacter(targetLocation, currentLocation);
     } else {
       // Select a direction to move
@@ -128,7 +138,7 @@ export class MovementComponent {
 
         if (targetLocationDetails && targetLocationDetails.isLocationFree) {
           const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
-          this.areaStateService.locations[currentLocation].direction = direction;
+          this.areaStateService.locations[currentLocation].element.direction = direction;
           this.areaStateService.moveCharacter(targetLocation, currentLocation);
 
           return;
@@ -150,7 +160,7 @@ export class MovementComponent {
     const splitPlayerLocation = this.areaStateService.splitLocationReference(playerLocation);
     const splitCharacterLocation = this.areaStateService.splitLocationReference(characterLocation);
     const furthestDirectionToPlayer = this.getDirectionWithRespectToPlayer(splitPlayerLocation, splitCharacterLocation, moveTowardsPlayer);
-    this.areaStateService.locations[characterLocation].direction = furthestDirectionToPlayer;
+    this.areaStateService.locations[characterLocation].element.direction = furthestDirectionToPlayer;
     const targetLocationDetails = this.getNextLocation(splitCharacterLocation.locationY, splitCharacterLocation.locationX, furthestDirectionToPlayer);
 
     if (targetLocationDetails && targetLocationDetails.isLocationFree) {
@@ -201,31 +211,40 @@ export class MovementComponent {
   }
 
   private previousYReference(yReference: string | null): string {
-    // TODO: Should really just check if it exists in grid somehow
-    if (yReference === "a") {
-      return null;
-    }
     return String.fromCharCode(yReference.charCodeAt(0) - 1);
   }
 
   private nextYReference(yReference: string): string {
-    if (yReference === "g") {
-      return null;
-    }
     return String.fromCharCode(yReference.charCodeAt(0) + 1);
   }
 
   private previousXReference(xReference: number): number {
-    if (xReference === 1) {
-      return null;
-    }
     return xReference - 1;
   }
 
   private nextXReference(xReference: number): number {
-    if (xReference === 7) {
-      return null;
-    }
     return xReference + 1;
+  }
+
+  private isTargetLocationAreaExit(currentLocation: string, targetLocation: string): boolean {
+    for (const exit in defaults.areaExitDestinations) {
+      if (defaults.areaExitDestinations.hasOwnProperty(exit) && targetLocation === defaults.areaExitDestinations[exit]) {
+        return !!this.areaStateService.locations[currentLocation].exitDestination;
+      }
+    }
+
+    return false;
+  }
+
+  private isTargetLocationOutOfBounds(targetLocation: string) {
+    if (targetLocation.indexOf(defaults.areaOuterBoundaries.lowerYBoundary) === -1 &&
+        targetLocation.indexOf(defaults.areaOuterBoundaries.upperYBoundary) === -1 &&
+        targetLocation.indexOf(defaults.areaOuterBoundaries.lowerXBoundary) === -1 &&
+        targetLocation.indexOf(defaults.areaOuterBoundaries.upperXBoundary) === -1
+    ) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

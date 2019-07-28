@@ -6,6 +6,7 @@ import { UserInputService } from '../../../shared/services/user-input.service';
 import { Subscription } from 'rxjs/Subscription';
 import { PlayerStateService } from './player-state.service';
 import { BattleCalculatorService } from './battle-calculator.service';
+import { IAreaElement } from '../../area/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -22,14 +23,17 @@ export class AiService {
     private playerStateService: PlayerStateService,
   ) {
     this.userInputService.playerMoved.subscribe(data => {
-      this.actionTriggerHandler();
+      // TODO This may need a more specific flag
+      if (!this.areaStateService.loadingArea) {
+        this.actionTriggerHandler();
+      }
     });
   }
 
   public actionTriggerHandler() {
-    const characters: { gridItem: any, gridLocation: string }[] = this.areaStateService.getCharactersOnGrid();
-    characters.forEach(({ gridItem, gridLocation }) => {
-      this.action(gridItem, gridLocation);
+    const characters: { gridElement: IAreaElement, gridLocation: string }[] = this.areaStateService.getCharactersOnGrid();
+    characters.forEach(({ gridElement, gridLocation }) => {
+      this.action(gridElement, gridLocation);
     });
   }
 

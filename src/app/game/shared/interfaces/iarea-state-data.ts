@@ -1,4 +1,5 @@
+import { ILocation } from "./iLocation";
+
 export interface IAreaStateData {
-      currentLocation: number;
-      areaCompleted: boolean;
+      locations: any;
 }

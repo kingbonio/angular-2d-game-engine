@@ -1,96 +1,55 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { IAreaStateData, ILocation } from '../interfaces';
 import { IGridReferences, IAreaElement } from '../../area/interfaces';
-import { Direction, ElementClass } from '../enums';
-import { AiService } from './ai.service';
-import { PlayerStateService } from './player-state.service';
+import { ElementClass } from '../enums';
+import locationDefaults from '../models/locations';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
-export class AreaStateService {
+export class AreaStateService implements OnInit {
   // Stores the location ID
-  private _currentLocation: number;
   private _areaCompleted = false;
+  public currentLocation: number;
+  public newLocation: number;
+  public loadingArea = false;
+  public loadingExistingArea = false;
   public locationKeys: any;
   public locations: IGridReferences;
+  public previousPlayerLocation: string;
+
+  public areaChange: BehaviorSubject<number>;
+  public areaReady: BehaviorSubject<number>;
 
   constructor(
   ) {
     // Set the state to be the first level before anything
-    this._currentLocation = 0;
+    this.currentLocation = 1;
+    this.newLocation = null;
     // TODO Might be worth holding location x and y data on the object alongside the gridObject or null
-    this.locations = {
-      a1: null,
-      a2: null,
-      a3: null,
-      a4: null,
-      a5: null,
-      a6: null,
-      a7: null,
-      b1: null,
-      b2: null,
-      b3: null,
-      b4: null,
-      b5: null,
-      b6: null,
-      b7: null,
-      c1: null,
-      c2: null,
-      c3: null,
-      c4: null,
-      c5: null,
-      c6: null,
-      c7: null,
-      d1: null,
-      d2: null,
-      d3: null,
-      d4: null,
-      d5: null,
-      d6: null,
-      d7: null,
-      e1: null,
-      e2: null,
-      e3: null,
-      e4: null,
-      e5: null,
-      e6: null,
-      e7: null,
-      f1: null,
-      f2: null,
-      f3: null,
-      f4: null,
-      f5: null,
-      f6: null,
-      f7: null,
-      g1: null,
-      g2: null,
-      g3: null,
-      g4: null,
-      g5: null,
-      g6: null,
-      g7: null,
-    };
+    this.locations = this.cloneLocations(locationDefaults);
     this.locationKeys = Object.keys;
     // TODO: Maybe we should have a generic area which has properties of
     // puzzle, enemy, design, potential items etc.
+    this.areaChange = new BehaviorSubject(1);
+    this.areaReady = new BehaviorSubject(1);
+  }
+
+  ngOnInit() {
+
+    // this.playerStateService.playerMoved.subscribe(data => {
+    //   this.actionTriggerHandler();
+    // });
   }
 
   get playerLocation(): string {
     for (const gridLocation in this.locations) {
       if (this.locations.hasOwnProperty(gridLocation) &&
-        this.locations[gridLocation] &&
-        this.locations[gridLocation].type &&
-        (this.locations[gridLocation].type === ElementClass.player)) {
+        this.locations[gridLocation].element &&
+        this.locations[gridLocation].element.type &&
+        (this.locations[gridLocation].element.type === ElementClass.player)) {
         return gridLocation;
       }
     }
-  }
-
-  get currentLocation() {
-    return this._currentLocation;
-  }
-
-  set currentLocation(newLocation) {
-    this._currentLocation = newLocation;
   }
 
   get areaCompleted() {
@@ -105,18 +64,18 @@ export class AreaStateService {
    * Push all characters on grid into an array and return it
    */
   // TODO return type as interface
-  public getCharactersOnGrid(): { gridItem: IAreaElement, gridLocation: string }[] {
+  public getCharactersOnGrid(): { gridElement: IAreaElement, gridLocation: string }[] {
     const characterData = [];
     for (const gridLocation in this.locations) {
       if (this.locations.hasOwnProperty(gridLocation) &&
-        this.locations[gridLocation] &&
-        this.locations[gridLocation].type &&
-        (this.locations[gridLocation].type === ElementClass.enemy || this.locations[gridLocation].type === ElementClass.npc) &&
-        !this.locations[gridLocation].isDead()) {
-        const gridItem = this.locations[gridLocation];
-        if (gridItem.type && (gridItem.type === ElementClass.enemy || gridItem.type === ElementClass.npc)) {
+        this.locations[gridLocation].element &&
+        this.locations[gridLocation].element.type &&
+        (this.locations[gridLocation].element.type === ElementClass.enemy || this.locations[gridLocation].element.type === ElementClass.npc) &&
+        !this.locations[gridLocation].element.isDead()) {
+        const gridElement = this.locations[gridLocation].element;
+        if (gridElement.type && (gridElement.type === ElementClass.enemy || gridElement.type === ElementClass.npc)) {
           characterData.push({
-            gridItem,
+            gridElement: gridElement,
             gridLocation
           });
         }
@@ -153,19 +112,23 @@ export class AreaStateService {
    * @param location the grid reference for the location
    */
   public isLocationFree(location: string): boolean {
-    return (!this.locations[location]);
+    return (!this.locations[location].element);
   }
 
   public moveCharacter(newLocation: string, currentLocation: string) {
-    console.log(`Attempting to move ${this.locations[currentLocation].type} from ${currentLocation} to ${newLocation}`);
-    console.log("While this grid location: ", this.locations);
     // TODO: We need to store a reference to the player object here
-    this.locations[newLocation] = this.locations[currentLocation];
-    this.locations[currentLocation] = null;
+    this.locations[newLocation].element = this.locations[currentLocation].element;
+    this.locations[currentLocation].element = null;
+  }
+
+  public movePlayer(newLocation: string) {
+    if (newLocation !== this.playerLocation) {
+      this.moveCharacter(newLocation, this.playerLocation);
+    }
   }
 
   public removeElementFromArea(target: IAreaElement, location: string) {
-    this.locations[location] = null;
+    this.locations[location].element = null;
   }
 
   public splitLocationReference(gridLocation: string): ILocation {
@@ -175,14 +138,76 @@ export class AreaStateService {
     };
   }
 
+  public notifyAreaChange() {
+    // Let the area state service handle the death of the component
+    this.areaReady.next(this.newLocation);
+  }
+
+  public updateLocation() {
+    this.currentLocation = this.newLocation;
+    this.newLocation = null;
+  }
+
+  /**
+   * Backs up current location state, loads the new one and emits event to notify listeners
+   * @param newAreaReference The target are to pull data for
+   */
+  public loadNewArea(newAreaReference: number) {
+    this.loadingArea = true;
+    // Back up current state
+    this.saveAreaState(this.currentLocation);
+    // Save the new area reference
+    this.newLocation = newAreaReference;
+
+    this.previousPlayerLocation = this.playerLocation;
+
+    const targetAreaData = this.getAreaState(newAreaReference);
+    if (targetAreaData) {
+      this.loadingExistingArea = true;
+      // Reset the locations to be the stored data
+      this.locations = JSON.parse(targetAreaData);
+    } else {
+      // Reset the locations to blank
+      this.locations = this.cloneLocations(locationDefaults);
+    }
+
+    // TODO this isn't ideal really, look for the other subject type
+    this.areaChange.next(newAreaReference ? newAreaReference : this.currentLocation);
+
+    // Update the location
+    this.currentLocation = this.newLocation;
+    this.newLocation = null;
+
+  }
+
+  /**
+   * Save the area state to storage
+   * @param newAreaReference the area number
+   */
+  public saveAreaState(newAreaReference: number) {
+    localStorage.setItem(newAreaReference.toString(), JSON.stringify(this.locations));
+  }
+
+  /**
+   * Get the area from storage
+   * @param newAreaReference the area number
+   */
+  public getAreaState(newAreaReference: number): any | null {
+    return localStorage.getItem(newAreaReference.toString());
+  }
+
+  private cloneLocations(sourceLocations) {
+    return JSON.parse(JSON.stringify(sourceLocations));
+  }
+
   /**
    * Return the area state for storage
+   * @returns the state data relevant to this service
    * @returns the state data relevant to this service
    */
   public gatherState(): IAreaStateData {
     return {
-      currentLocation: this.currentLocation,
-      areaCompleted: this.areaCompleted,
+      locations: this.locations,
     };
   }
 

@@ -10,8 +10,40 @@
             z-index: -1;
             width: 80px;
             height: 80px;
-            background-image: url("../shared/resources/pavement.png");
+            background-image: url("../../../assets/images/floor-style/wooden-floor-small.png");
+            position: relative;
+            
+            .area-exit {
+                  z-index: 1;
+                  position: absolute;
+                  
+                  &.northExit, &.eastExit, &.southExit, &.westExit {
+                        width: 100%;
+                        height: 100%;
+                        border-color: red;
+                        background-image: url("../../../assets/images/grid-decoration/area-exit.png");
+                  }
+
+                  &.northExit {
+                        transform: rotate(0deg);
+                  }
+                  
+                  &.eastExit {
+                        transform: rotate(90deg);
+                  }
+                  
+                  &.southExit {
+                        transform: rotate(180deg);
+                  }
+                  
+                  &.westExit {
+                        transform: rotate(270deg);
+                  }
+
+            }
+
             .grid-item {
+                  z-index: 11;
                   width: 100%;
                   height: 100%;
 
@@ -33,13 +65,13 @@
 
                   // TODO Move this into imageFileName property
                   .player {
-                        background-image: url("../shared/resources/shadow-player.png");
+                        background-image: url("../../../assets/images/elements/shadow-player.png");
                   }
                   .enemy {
-                        background-image: url("../shared/resources/shadow-enemy.png");
+                        background-image: url("../../../assets/images/elements/shadow-enemy.png");
                   }
                   .npc {
-                        background-image: url("../shared/resources/shadow-npc.png");
+                        background-image: url("../../../assets/images/elements/shadow-npc.png");
                   }
                   .dead {
                         height: 80px;

@@ -12,6 +12,7 @@ import { EquipmentManagerService } from '../../item/services/equipment-manager.s
 import { IAreaElement } from '../../area/interfaces';
 import { Character } from '../../character-classes/character';
 import { Dice } from '../util/dice';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class PlayerStateService {
@@ -30,7 +31,6 @@ export class PlayerStateService {
   // TODO maybe move this to equipment manager
   public selectedWeaponSlot: WeaponType = WeaponType.primary;
   // public location: string;
-
 
   constructor(
     private areaStateService: AreaStateService,
@@ -77,6 +77,13 @@ export class PlayerStateService {
     // TODO Might be worth getting location of player from area state service
     const newLocation = this.movement.getNextLocation(this.locationY, this.locationX, direction);
 
+    // TODO Might be worth moving this somewhere more apprpriate, maybe listener in movement component
+    if (newLocation.isTargetAreaExit) {
+      // Emit event that new location access attempted, pass exitDestination
+      this.areaStateService.loadNewArea(this.areaStateService.locations[this.locationY + this.locationX].exitDestination);
+      return;
+    }
+
     // Update area state
     if (newLocation && newLocation.locationX && newLocation.locationY && newLocation.isLocationFree) {
       this.areaStateService.moveCharacter(newLocation.locationY + newLocation.locationX, this.locationY + this.locationX);
@@ -106,7 +113,7 @@ export class PlayerStateService {
   public attack() {
     if (this.equipmentManagerService.getWeaponType(this.selectedWeaponSlot)) {
       const targetReference = this.movement.getNextLocation(this.locationY, this.locationX, this.direction);
-      const target = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
+      const target = this.areaStateService.locations[targetReference.locationY + targetReference.locationX].element;
 
       if (target && (target.type === ElementClass.enemy || target.type === ElementClass.npc)) {
         if (target.isDead()) {
@@ -162,7 +169,7 @@ export class PlayerStateService {
   public interact() {
     const targetReference = this.movement.getNextLocation(this.locationY, this.locationX, this.direction);
     // TODO Types
-    const target: any = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
+    const target: any = this.areaStateService.locations[targetReference.locationY + targetReference.locationX].element;
     if (target) {
       if (target.type === ElementClass.object) {
         const activeItem = this.equipmentManagerService.activeItem;
@@ -238,7 +245,7 @@ export class PlayerStateService {
     const nextGridLocation = this.movement.getNextLocation(this.locationY, this.locationX, this.direction);
     // TODO rename this
     if (nextGridLocation) {
-      const target = this.areaStateService.locations[nextGridLocation.locationY + nextGridLocation.locationX];
+      const target = this.areaStateService.locations[nextGridLocation.locationY + nextGridLocation.locationX].element;
 
       if (target.isDead()) {
         this.dialogueService.displayDialogueMessage({
