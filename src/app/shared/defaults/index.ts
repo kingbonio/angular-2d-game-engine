@@ -71,7 +71,12 @@ export default {
                     }
                 ]
             }
-        ]
+        ],
+        saveSlots: {
+            1: null,
+            2: null,
+            3: null,
+        }
     },
     areaExitDestinations: {
         // TODO This is not ideal

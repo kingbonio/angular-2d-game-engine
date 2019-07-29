@@ -47,15 +47,17 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     // // Build the area
     this.prepareArea();
-    setTimeout(() => {
-      this.areaStateService.loadingArea = false;
-    }, 0);
+
   }
 
   ngOnInit() {
   }
 
   ngAfterViewInit() {
+    // Declare component loading complete
+    setTimeout(() => {
+      this.areaStateService.loadingArea = false;
+    }, 0);
   }
 
   /**

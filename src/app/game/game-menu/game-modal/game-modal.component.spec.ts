@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InGameMenuComponent } from './in-game-menu.component';
+import { GameModalComponent } from './game-modal.component';
 
-describe('InGameMenuComponent', () => {
-  let component: InGameMenuComponent;
-  let fixture: ComponentFixture<InGameMenuComponent>;
+describe('GameModalComponent', () => {
+  let component: GameModalComponent;
+  let fixture: ComponentFixture<GameModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InGameMenuComponent ]
+      declarations: [ GameModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InGameMenuComponent);
+    fixture = TestBed.createComponent(GameModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,0 +1,19 @@
+.game-menu-container {
+      
+      .save-control {
+
+            .image-container {
+                  width: 60px;
+                  height: 60px;
+                  border: solid red 2px;
+            }
+
+            .save-game {
+                  color: red;
+            }
+
+            .load-game {
+                  color: green;
+            }
+      }
+}

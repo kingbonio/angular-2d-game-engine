@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { PlayerStateService } from './shared/services/player-state.service';
 import { DialogueService } from './shared/services/dialogue.service';
 import { UserInputService } from '../shared/services/user-input.service';
@@ -9,6 +9,9 @@ import { EquipmentManagerService } from './item/services/equipment-manager.servi
 import { AreaStateService } from './shared/services/area-state.service';
 import defaults from '../shared/defaults';
 import * as areaConfigs from "../game-config/areas";
+import { GameStateService } from './shared/services/game-state.service';
+import { MatDialogConfig, MatDialog, MatDialogRef } from '@angular/material';
+import { GameModalComponent } from './game-menu/game-modal/game-modal.component';
 
 @Component({
   selector: 'app-game-root',
@@ -16,10 +19,12 @@ import * as areaConfigs from "../game-config/areas";
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit, OnDestroy {
+
   private userInputSubscription: Subscription;
   private areaChangeSubscription: Subscription;
   private areaReadySubscription: Subscription;
   private areaConfigs = areaConfigs;
+  private gameModalRef: MatDialogRef<any>;
   title = 'game';
   public loadingText = defaults.gameMenu.loadingText;
   public areaComponentAlive = true;
@@ -31,6 +36,8 @@ export class GameComponent implements OnInit, OnDestroy {
     public userInputService: UserInputService,
     public aiService: AiService,
     public areaStateService: AreaStateService,
+    public gameStateService: GameStateService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -61,6 +68,28 @@ export class GameComponent implements OnInit, OnDestroy {
     }
   }
 
+
+  private openGameModal() {
+    if (!this.gameModalRef) {
+      const modalConfig = new MatDialogConfig();
+
+      modalConfig.disableClose = false;
+      modalConfig.autoFocus = true; // Maybe not necessary
+      modalConfig.hasBackdrop = true;
+      modalConfig.width = '600px';
+      modalConfig.height = '400px';
+      modalConfig.data = "hello";
+      modalConfig.panelClass = "game-modal";
+
+
+      this.gameModalRef = this.dialog.open(GameModalComponent, modalConfig);
+
+      this.gameModalRef.afterClosed().subscribe(returnData => {
+        this.gameModalRef = null;
+      });
+    }
+  }
+
   public isAreaComponentAlive() {
     return this.areaComponentAlive;
   }
@@ -71,6 +100,11 @@ export class GameComponent implements OnInit, OnDestroy {
 
   public isLoadingScreen() {
     return this.areaStateService.loadingArea ? "show" : "hide";
+  }
+
+  public openGameMenu() {
+    this.gameStateService.gameMenuOpen = true;
+    this.openGameModal();
   }
 
   private killAreaComponent() {

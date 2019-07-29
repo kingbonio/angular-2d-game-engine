@@ -2,7 +2,6 @@ import { Routes, RouterModule } from "@angular/router";
 import { MainMenuComponent } from "./main-menu/main-menu.component";
 import { NgModule } from "@angular/core";
 import { GameComponent } from "./game/game.component";
-import { SettingsComponent } from "./main-menu/settings/settings.component";
 
 const appRoutes = [
       {

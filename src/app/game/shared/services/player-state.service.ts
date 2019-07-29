@@ -9,10 +9,8 @@ import { MovementComponent } from '../util/movement/movement.component';
 import { BattleCalculatorService } from './battle-calculator.service';
 import { WeaponType, PotionType } from '../../item/enums';
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
-import { IAreaElement } from '../../area/interfaces';
 import { Character } from '../../character-classes/character';
 import { Dice } from '../util/dice';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class PlayerStateService {

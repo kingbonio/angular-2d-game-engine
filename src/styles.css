@@ -8,13 +8,15 @@ app-area {
 }
 
 .cdk-overlay-container {
-      left: 144px;
-      top: 200px;
+      z-index: 99999;
       position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
       padding-top: 0px;
 }
 
-.looting-modal .mat-dialog-container {
+.looting-modal .mat-dialog-container, .game-modal .mat-dialog-container {
       display: block;
       padding: 15px;
       border-radius: 3px;
@@ -28,5 +30,9 @@ app-area {
 }
 
 .looting-modal {
+      background-color: #ec8013;
+}
+
+.game-modal {
       background-color: #ec8013;
 }

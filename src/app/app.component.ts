@@ -12,6 +12,4 @@ export class AppComponent {
   constructor(
     private menuStateService: MenuStateService) {
   }
-
-
 }
