@@ -8,7 +8,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 @Injectable()
 export class AreaStateService implements OnInit {
   // Stores the location ID
-  private _areaCompleted = false;
   public currentLocation: number;
   public newLocation: number;
   public loadingArea = false;
@@ -50,14 +49,6 @@ export class AreaStateService implements OnInit {
         return gridLocation;
       }
     }
-  }
-
-  get areaCompleted() {
-    return this._areaCompleted;
-  }
-
-  set areaCompleted(areaCompleted) {
-    this._areaCompleted = areaCompleted;
   }
 
   /**
@@ -207,7 +198,13 @@ export class AreaStateService implements OnInit {
    */
   public gatherState(): IAreaStateData {
     return {
+      currentLocation: this.currentLocation,
+      newLocation: this.newLocation,
+      loadingArea: this.loadingArea,
+      loadingExistingArea: this.loadingExistingArea,
+      locationKeys: this.locationKeys,
       locations: this.locations,
+      previousPlayerLocation: this.previousPlayerLocation,
     };
   }
 
@@ -216,10 +213,11 @@ export class AreaStateService implements OnInit {
    * @param newState settings from storage to push to this state service
    */
   public applyState(newState: IAreaStateData): void {
-    for (const stateSetting in newState) {
-      if (this.hasOwnProperty(stateSetting)) {
-        this[stateSetting] = newState[stateSetting];
-      }
-    }
+    console.log(newState);
+    // for (const stateSetting in newState) {
+    //   if (this.hasOwnProperty(stateSetting)) {
+    //     this[stateSetting] = newState[stateSetting];
+    //   }
+    // }
   }
 }

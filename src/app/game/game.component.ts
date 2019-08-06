@@ -78,6 +78,7 @@ export class GameComponent implements OnInit, OnDestroy {
       modalConfig.hasBackdrop = true;
       modalConfig.width = '600px';
       modalConfig.height = '400px';
+      // TODO here
       modalConfig.data = "hello";
       modalConfig.panelClass = "game-modal";
 

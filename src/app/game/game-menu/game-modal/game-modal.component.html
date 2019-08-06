@@ -1,8 +1,13 @@
 <div class="game-menu-container">
-  <div class="save-control" *ngFor="let saveSlot of objectKeys(saveSlots)">
-    <div class="image-container"></div>
-    <button class="save-game" (click)="saveGame(saveSlot)">Save Game</button>
-    <button class="load-game" (click)="loadGame(saveSlot)">Load Game</button>
+  <div class="save-container">
+    <div class="save-control" *ngFor="let saveSlot of objectKeys(saveSlots)">
+      <div class="save-title">Save Slot {{ saveSlot }}</div>
+      <div class="image-container"></div>
+      <div class="button-container">
+        <button class="save-game" (click)="saveGame(saveSlot)">Save</button>
+        <button class="load-game" (click)="loadGame(saveSlot)">Load</button>
+      </div>
+    </div>
   </div>
   <div class="cancel">
     <button class="close" mat-dialog-close>Close</button>

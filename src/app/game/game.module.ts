@@ -24,6 +24,7 @@ import { UserInputService } from '../shared/services/user-input.service';
 import { GameMenuComponent } from './game-menu/game-menu/game-menu.component';
 import { GameStateService } from './shared/services/game-state.service';
 import { GameModalComponent } from './game-menu/game-modal/game-modal.component';
+import { PersistentStateService } from './shared/services/persistent-state.service';
 
 @NgModule({
   imports: [
@@ -56,6 +57,7 @@ import { GameModalComponent } from './game-menu/game-modal/game-modal.component'
     AiService,
     UserInputService,
     GameStateService,
+    PersistentStateService,
   ],
   entryComponents: [
     LootingModalComponent,

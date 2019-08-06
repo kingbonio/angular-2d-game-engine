@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import defaults from '../../../shared/defaults';
+import { PersistentStateService } from '../../shared/services/persistent-state.service';
 
 @Component({
   selector: 'app-game-modal',
@@ -13,6 +14,7 @@ export class GameModalComponent implements OnInit {
   public objectKeys;
 
   constructor(
+    private persistentStateService: PersistentStateService,
     @Inject(MAT_DIALOG_DATA) data
   ) {
     this.data = data;
@@ -20,12 +22,12 @@ export class GameModalComponent implements OnInit {
     this.saveSlots = defaults.gameMenu.saveSlots;
   }
 
-  public saveGame() {
-
+  public saveGame(saveSlot) {
+    this.persistentStateService.save(saveSlot);
   }
 
-  public loadGame() {
-
+  public loadGame(saveSlot) {
+    this.persistentStateService.load(saveSlot);
   }
 
   ngOnInit() {

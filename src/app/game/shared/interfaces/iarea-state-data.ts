@@ -1,5 +1,12 @@
 import { ILocation } from "./iLocation";
+import { IGridReferences } from "../../area/interfaces";
 
 export interface IAreaStateData {
-      locations: any;
+      currentLocation: number;
+      newLocation: number;
+      loadingArea: boolean;
+      loadingExistingArea: boolean;
+      locationKeys: any;
+      locations: IGridReferences;
+      previousPlayerLocation: string;
 }
