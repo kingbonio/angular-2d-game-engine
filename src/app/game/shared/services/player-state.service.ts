@@ -18,9 +18,6 @@ export class PlayerStateService {
 
   public health: number;
   public maxHealth: number;
-  private strength: number;
-  private dexterity: number;
-  private magicka: number;
   private exp: number = defaults.initialPlayerStats.exp;
   public locationX: number;
   public locationY: string;
@@ -41,17 +38,10 @@ export class PlayerStateService {
     // Pull defaults from defaults file and assign initial values
     this.health = defaults.initialPlayerStats.health;
     this.maxHealth = defaults.initialPlayerStats.maxHealth;
-    this.strength = defaults.initialPlayerStats.strength;
-    this.dexterity = defaults.initialPlayerStats.dexterity;
-    this.magicka = defaults.initialPlayerStats.magicka;
     this.direction = defaults.initialPlayerStats.direction;
   }
 
   onInit() {
-  }
-
-  get inventoryCapacity() {
-    return this.strength * defaults.playerMultipliers.inventoryStorageMultiplier;
   }
 
   get level() {
@@ -329,13 +319,11 @@ export class PlayerStateService {
     return {
       health: this.health,
       maxHealth: this.maxHealth,
-      strength: this.strength,
-      dexterity: this.dexterity,
-      magicka: this.magicka,
       exp: this.exp,
       locationX: this.locationX,
       locationY: this.locationY,
-      direction: this.direction
+      direction: this.direction,
+      selectedWeaponSlot: this.selectedWeaponSlot,
     };
   }
 

@@ -3,6 +3,7 @@ import { IArmour, IInventoryItem, IWeapons } from '../interfaces';
 import { ItemClass, ArmourType } from '../enums';
 import { WeaponType } from '../enums/weapon-type';
 import { InventoryManagerService } from './inventory-manager.service';
+import { IEquipmentStateData } from '../../shared/interfaces/iequipment-state-data';
 
 @Injectable()
 export class EquipmentManagerService {
@@ -114,5 +115,31 @@ export class EquipmentManagerService {
    */
   public getWeaponType(type: WeaponType): IInventoryItem {
     return this.weapons[type];
+  }
+
+  /**
+ * Return the area state for storage
+ * @returns the state data relevant to this service
+ * @returns the state data relevant to this service
+ */
+  public gatherState(): IEquipmentStateData {
+    return {
+      armour: this.armour,
+      weapons: this.weapons,
+      activeItem: this.activeItem,
+    };
+  }
+
+  /**
+   * Applies state data to this service
+   * @param newState settings from storage to push to this state service
+   */
+  public applyState(newState: IEquipmentStateData): void {
+    // console.log(newState);
+    for (const stateSetting in newState) {
+      if (this.hasOwnProperty(stateSetting)) {
+        this[stateSetting] = newState[stateSetting];
+      }
+    }
   }
 }

@@ -168,7 +168,12 @@ export class AreaStateService implements OnInit {
     // Update the location
     this.currentLocation = this.newLocation;
     this.newLocation = null;
+  }
 
+  public loadFromSaveGame(savedState: IAreaStateData) {
+    this.loadingArea = true;
+
+    this.areaChange.next(savedState.currentLocation);
   }
 
   /**
@@ -213,11 +218,12 @@ export class AreaStateService implements OnInit {
    * @param newState settings from storage to push to this state service
    */
   public applyState(newState: IAreaStateData): void {
-    console.log(newState);
-    // for (const stateSetting in newState) {
-    //   if (this.hasOwnProperty(stateSetting)) {
-    //     this[stateSetting] = newState[stateSetting];
-    //   }
-    // }
+    // console.log(newState);
+    for (const stateSetting in newState) {
+      if (this.hasOwnProperty(stateSetting)) {
+        this[stateSetting] = newState[stateSetting];
+      }
+    }
+    this.loadFromSaveGame(newState);
   }
 }

@@ -3,13 +3,9 @@ import { IInventoryStateData, IInventoryItem } from '../../shared/interfaces';
 import defaults from '../../../shared/defaults';
 import { IInventoryReferences } from '../inventory/interfaces';
 import { DialogueService } from '../../shared/services/dialogue.service';
-import { ItemClass, PotionType } from '../enums';
-import { PortalInjector } from '@angular/cdk/portal';
-import { PlayerStateService } from '../../shared/services/player-state.service';
 
 @Injectable()
 export class InventoryManagerService {
-  // public contents: IInventoryItem[];
   public locationKeys: any;
   public locations: IInventoryReferences;
 
@@ -130,8 +126,8 @@ export class InventoryManagerService {
    */
   public gatherState(): IInventoryStateData {
     return {
-      // revert to this.capacity
-      capacity: 11
+      locationKeys: this.locationKeys,
+      locations: this.locations,
     };
   }
 

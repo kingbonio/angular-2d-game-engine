@@ -1,3 +1,6 @@
+import { IInventoryReferences } from "../../item/inventory/interfaces";
+
 export interface IInventoryStateData {
-      capacity: number;
+      locations: IInventoryReferences;
+      locationKeys: any;
 }

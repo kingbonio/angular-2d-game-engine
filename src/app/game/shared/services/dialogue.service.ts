@@ -31,27 +31,27 @@ export class DialogueService {
     }
   }
 
-  /**
-   * Set the wait until the oldest message should be removed from the dialogue screen
-   * @param message data about the message
-   */
-  // TODO: This will need tidying up as it counts from the point of getting the message, not the time it's loaded
-  private setTimer(message: ISpeech) {
-    const timerDuration: number = message.text.length < defaults.dialogue.minimumOnScreenTime ?
-      message.text.length * defaults.dialogue.textOnScreenTimeMultiplier :
-      defaults.dialogue.minimumOnScreenTime;
-    setTimeout(() => {
-      // Remove the oldest message on screen and pull in any pending messages
-      if (this.messagesOnScreen.length > 0) {
-        this.messagesOnScreen.splice(0, 1);
-        if (this.pendingMessages.length) {
-          const nextMessage: ISpeech = this.pendingMessages[0];
-          this.pendingMessages.splice(0, 1);
-          this.displayDialogueMessage(nextMessage);
-        }
-      }
-    }, timerDuration);
-  }
+  // /**
+  //  * Set the wait until the oldest message should be removed from the dialogue screen
+  //  * @param message data about the message
+  //  */
+  // // TODO: This will need tidying up as it counts from the point of getting the message, not the time it's loaded
+  // private setTimer(message: ISpeech) {
+  //   const timerDuration: number = message.text.length < defaults.dialogue.minimumOnScreenTime ?
+  //     message.text.length * defaults.dialogue.textOnScreenTimeMultiplier :
+  //     defaults.dialogue.minimumOnScreenTime;
+  //   setTimeout(() => {
+  //     // Remove the oldest message on screen and pull in any pending messages
+  //     if (this.messagesOnScreen.length > 0) {
+  //       this.messagesOnScreen.splice(0, 1);
+  //       if (this.pendingMessages.length) {
+  //         const nextMessage: ISpeech = this.pendingMessages[0];
+  //         this.pendingMessages.splice(0, 1);
+  //         this.displayDialogueMessage(nextMessage);
+  //       }
+  //     }
+  //   }, timerDuration);
+  // }
 
   /**
    * Return the dialogue state for storage
@@ -59,8 +59,8 @@ export class DialogueService {
    */
   public gatherState(): IDialogueStateData {
     return {
-      pendingMessages: this.pendingMessages,
       messagesOnScreen: this.messagesOnScreen,
+      // pendingMessages: this.pendingMessages,
     };
   }
 

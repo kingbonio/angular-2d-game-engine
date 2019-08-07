@@ -6,6 +6,8 @@ import { InventoryManagerService } from '../../item/services/inventory-manager.s
 import { GameStateService } from './game-state.service';
 import { IStateData, IAreaStateData, IPlayerStateData, IDialogueStateData, IInventoryStateData, IGameStateData } from '../interfaces';
 import * as maps from "../../../game-config/areas/map";
+import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
+import { IEquipmentStateData } from '../interfaces/iequipment-state-data';
 
 @Injectable()
 export class PersistentStateService {
@@ -16,7 +18,8 @@ export class PersistentStateService {
     private areaStateService: AreaStateService,
     private playerStateService: PlayerStateService,
     private dialogueStateService: DialogueService,
-    private inventoryManagerService: InventoryManagerService
+    private inventoryManagerService: InventoryManagerService,
+    private equipmentManagerService: EquipmentManagerService,
   ) {
     this.areaIds = Object.keys(maps.default);
   }
@@ -46,9 +49,10 @@ export class PersistentStateService {
     this.state = {
       area: this.areaStateService.gatherState(),
       otherAreas: this.gatherAreasFromStorage(),
-      // player: this.playerStateService.gatherState(),
-      // dialogue: this.dialogueStateService.gatherState(),
-      // inventory: this.inventoryManagerService.gatherState(),
+      player: this.playerStateService.gatherState(),
+      dialogue: this.dialogueStateService.gatherState(),
+      inventory: this.inventoryManagerService.gatherState(),
+      equipment: this.equipmentManagerService.gatherState(),
     };
     console.log(this.state);
   }
@@ -71,12 +75,12 @@ export class PersistentStateService {
    * Gathers the states of the areas from local storage
    */
   private gatherAreasFromStorage() {
-    const areaStates = [];
+    const areaStates = {};
     for (const areaId in this.areaIds) {
       if (this.areaIds.hasOwnProperty(areaId) && Number(this.areaIds[areaId]) !== this.areaStateService.currentLocation) {
         const areaFromStorage = localStorage.getItem(this.areaIds[areaId]) || "{}";
         console.log(areaFromStorage);
-        areaStates[areaId] = JSON.parse(areaFromStorage);
+        areaStates[this.areaIds[areaId]] = JSON.parse(areaFromStorage);
       }
     }
     console.log(areaStates);
@@ -100,9 +104,10 @@ export class PersistentStateService {
   private applyToStates(): void {
     this.areaStateService.applyState(this.state.area as IAreaStateData);
     this.applyAreasToStorage();
-    // this.playerStateService.applyState(this.state.player as IPlayerStateData);
-    // this.dialogueStateService.applyState(this.state.dialogue as IDialogueStateData);
-    // this.inventoryManagerService.applyState(this.state.inventory as IInventoryStateData);
+    this.playerStateService.applyState(this.state.player as IPlayerStateData);
+    this.dialogueStateService.applyState(this.state.dialogue as IDialogueStateData);
+    this.inventoryManagerService.applyState(this.state.inventory as IInventoryStateData);
+    this.equipmentManagerService.applyState(this.state.equipment as IEquipmentStateData);
     console.log(this.state);
   }
 
