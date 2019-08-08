@@ -24,7 +24,7 @@ export class AiService {
   ) {
     this.userInputService.playerMoved.subscribe(data => {
       // TODO This may need a more specific flag
-      if (!this.areaStateService.loadingArea) {
+      if (!this.areaStateService.loadingPreviousArea) {
         this.actionTriggerHandler();
       }
     });

@@ -10,8 +10,9 @@ export class AreaStateService implements OnInit {
   // Stores the location ID
   public currentLocation: number;
   public newLocation: number;
-  public loadingArea = false;
+  public loadingPreviousArea = false;
   public loadingExistingArea = false;
+  public loadingSavedGame = false;
   public locationKeys: any;
   public locations: IGridReferences;
   public previousPlayerLocation: string;
@@ -139,12 +140,13 @@ export class AreaStateService implements OnInit {
     this.newLocation = null;
   }
 
+  // TODO This isn't great, redo this
   /**
    * Backs up current location state, loads the new one and emits event to notify listeners
    * @param newAreaReference The target are to pull data for
    */
   public loadNewArea(newAreaReference: number) {
-    this.loadingArea = true;
+    this.loadingPreviousArea = true;
     // Back up current state
     this.saveAreaState(this.currentLocation);
     // Save the new area reference
@@ -171,9 +173,10 @@ export class AreaStateService implements OnInit {
   }
 
   public loadFromSaveGame(savedState: IAreaStateData) {
-    this.loadingArea = true;
+    this.loadingExistingArea = true;
 
     this.areaChange.next(savedState.currentLocation);
+    this.areaReady.next(savedState.currentLocation);
   }
 
   /**
@@ -205,7 +208,7 @@ export class AreaStateService implements OnInit {
     return {
       currentLocation: this.currentLocation,
       newLocation: this.newLocation,
-      loadingArea: this.loadingArea,
+      loadingArea: this.loadingPreviousArea,
       loadingExistingArea: this.loadingExistingArea,
       locationKeys: this.locationKeys,
       locations: this.locations,
@@ -224,6 +227,7 @@ export class AreaStateService implements OnInit {
         this[stateSetting] = newState[stateSetting];
       }
     }
+    this.loadingSavedGame = true;
     this.loadFromSaveGame(newState);
   }
 }

@@ -47,16 +47,16 @@ export class GameComponent implements OnInit, OnDestroy {
 
     // Destroy the area component
     this.areaChangeSubscription = this.areaStateService.areaChange.subscribe((newAreaReference) => {
-      if (this.areaStateService.currentLocation !== newAreaReference) {
+      // if (this.areaStateService.currentLocation !== newAreaReference) {
         this.killAreaComponent();
-      }
+      // }
     });
 
     // Reinstate area component when ready
     this.areaReadySubscription = this.areaStateService.areaReady.subscribe((newAreaReference) => {
-      if (this.areaStateService.currentLocation !== newAreaReference) {
+      // if (this.areaStateService.currentLocation !== newAreaReference) {
         this.createAreaComponent();
-      }
+      // }
     });
 
     // Clear the game history
@@ -96,11 +96,11 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   public isLoadingArea() {
-    return this.areaStateService.loadingArea;
+    return this.areaStateService.loadingPreviousArea;
   }
 
   public isLoadingScreen() {
-    return this.areaStateService.loadingArea ? "show" : "hide";
+    return this.areaStateService.loadingPreviousArea ? "show" : "hide";
   }
 
   public openGameMenu() {

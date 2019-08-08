@@ -56,7 +56,7 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit() {
     // Declare component loading complete
     setTimeout(() => {
-      this.areaStateService.loadingArea = false;
+      this.areaStateService.loadingPreviousArea = false;
     }, 0);
   }
 
@@ -127,7 +127,7 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     // If player is entering a new area we want to update the location to be opposite the way they came in
-    if (this.areaStateService.loadingArea) {
+    if (this.areaStateService.loadingPreviousArea) {
       this.updatePlayerLocation();
     }
     this.areaStateService.loadingExistingArea = false;

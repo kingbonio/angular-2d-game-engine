@@ -93,7 +93,7 @@ export class PersistentStateService {
   private applyAreasToStorage() {
     for (const areaId in this.state.otherAreas) {
       if (this.areaIds.hasOwnProperty(areaId) && Number(areaId) !== this.state.area.currentLocation) {
-        localStorage.setItem(areaId, this.state.otherAreas[areaId]);
+        localStorage.setItem(areaId, JSON.stringify(this.state.otherAreas[areaId]));
       }
     }
   }
