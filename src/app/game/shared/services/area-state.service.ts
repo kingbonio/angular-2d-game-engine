@@ -221,7 +221,6 @@ export class AreaStateService implements OnInit {
    * @param newState settings from storage to push to this state service
    */
   public applyState(newState: IAreaStateData): void {
-    // console.log(newState);
     for (const stateSetting in newState) {
       if (this.hasOwnProperty(stateSetting)) {
         this[stateSetting] = newState[stateSetting];

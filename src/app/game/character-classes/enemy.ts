@@ -42,7 +42,7 @@ export class Enemy extends Character {
             this.loot = characterDetails.loot;
             this.level = characterDetails.level;
             this.imageFileName = characterDetails.imageFileName;
-            if (this.loot) {
+            if (!characterDetails.inventoryLocations && this.loot) {
                   characterDetails.loot.forEach((item: IInventoryItem) => {
                         for (const slot in this.inventoryLocations) {
                               if (this.inventoryLocations.hasOwnProperty(slot) && !this.inventoryLocations[slot]) {

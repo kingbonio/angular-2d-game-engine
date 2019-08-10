@@ -135,7 +135,6 @@ export class EquipmentManagerService {
    * @param newState settings from storage to push to this state service
    */
   public applyState(newState: IEquipmentStateData): void {
-    // console.log(newState);
     for (const stateSetting in newState) {
       if (this.hasOwnProperty(stateSetting)) {
         this[stateSetting] = newState[stateSetting];

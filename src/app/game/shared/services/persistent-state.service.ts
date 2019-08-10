@@ -54,7 +54,6 @@ export class PersistentStateService {
       inventory: this.inventoryManagerService.gatherState(),
       equipment: this.equipmentManagerService.gatherState(),
     };
-    console.log(this.state);
   }
 
   /**
@@ -79,11 +78,9 @@ export class PersistentStateService {
     for (const areaId in this.areaIds) {
       if (this.areaIds.hasOwnProperty(areaId) && Number(this.areaIds[areaId]) !== this.areaStateService.currentLocation) {
         const areaFromStorage = localStorage.getItem(this.areaIds[areaId]) || "{}";
-        console.log(areaFromStorage);
         areaStates[this.areaIds[areaId]] = JSON.parse(areaFromStorage);
       }
     }
-    console.log(areaStates);
     return areaStates;
   }
 
@@ -108,7 +105,6 @@ export class PersistentStateService {
     this.dialogueStateService.applyState(this.state.dialogue as IDialogueStateData);
     this.inventoryManagerService.applyState(this.state.inventory as IInventoryStateData);
     this.equipmentManagerService.applyState(this.state.equipment as IEquipmentStateData);
-    console.log(this.state);
   }
 
 }
