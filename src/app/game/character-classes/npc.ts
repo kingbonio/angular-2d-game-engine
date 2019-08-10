@@ -49,7 +49,7 @@ export class NPC extends Character {
                         }
                   });
             }
-            this.currentHp = this.maxHp;
+            this.currentHp = (characterDetails.currentHp !== undefined) ? characterDetails.currentHp : this.maxHp;
             this.isPaused = false;
             this.xp = 0;
       }
