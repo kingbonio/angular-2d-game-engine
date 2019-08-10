@@ -5,7 +5,8 @@
       <div class="image-container"></div>
       <div class="button-container">
         <button class="save-game" (click)="saveGame(saveSlot)">Save</button>
-        <button class="load-game" (click)="loadGame(saveSlot)">Load</button>
+        <button *ngIf="saveSlotDoesntExist(saveSlot)" class="load-game" (click)="loadGame(saveSlot)">Load</button>
+        <button *ngIf="saveSlotDoesntExist(saveSlot)" class="delete-game" (click)="deleteGame(saveSlot)">Delete</button>
       </div>
     </div>
   </div>

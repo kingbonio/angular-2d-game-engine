@@ -43,6 +43,13 @@ export class PersistentStateService {
   }
 
   /**
+   * Remove the game from memory
+   */
+  public delete(saveSlot: number): void {
+    localStorage.removeItem("save-slot-" + saveSlot);
+  }
+
+  /**
    * Gather states from all relevant services
    */
   private collectStates(): void {
@@ -89,7 +96,7 @@ export class PersistentStateService {
    */
   private applyAreasToStorage() {
     for (const areaId in this.state.otherAreas) {
-      if (this.areaIds.hasOwnProperty(this.state.otherAreas[areaId]) && Number(areaId) !== this.state.area.currentLocation) {
+      if (this.areaIds.includes(areaId) && Number(areaId) !== this.state.area.currentLocation) {
         localStorage.setItem(areaId, JSON.stringify(this.state.otherAreas[areaId]));
       }
     }

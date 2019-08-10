@@ -30,6 +30,15 @@ export class GameModalComponent implements OnInit {
     this.persistentStateService.load(saveSlot);
   }
 
+  public deleteGame(saveSlot) {
+    this.persistentStateService.delete(saveSlot);
+  }
+
+  public saveSlotDoesntExist(saveSlot: number): boolean {
+    // TODO Intensely inefficient
+    return !!(localStorage.getItem("save-slot-" + saveSlot));
+  }
+
   ngOnInit() {
   }
 

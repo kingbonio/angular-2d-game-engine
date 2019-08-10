@@ -7,11 +7,16 @@ import { MenuStateService } from '../shared/services/menu-state.service';
   styleUrls: ['./main-menu.component.scss']
 })
 export class MainMenuComponent implements OnInit {
+  public showSaveGames = false;
 
   constructor(public menuStateService: MenuStateService) {
   }
 
   ngOnInit() {
+  }
+
+  public toggleSaveGameSection() {
+    this.showSaveGames = !this.showSaveGames;
   }
 
 }
