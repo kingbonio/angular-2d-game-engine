@@ -68,18 +68,28 @@ export class InventoryManagerService {
    * @param newItem item added to the inventory from the game
    */
   public addItemToInventory(newItem: IInventoryItem): void {
+    const targetLocation = this.getNextFreeSlot();
+    if (!targetLocation) {
+      throw new Error("Inventory full");
+    } else {
+      this.locations[targetLocation] = newItem;
+    }
+  }
+
+  public getNextFreeSlot(): string | null {
     for (const itemSlot in this.locations) {
       if (this.locations.hasOwnProperty(itemSlot) && !this.locations[itemSlot]) {
-        this.locations[itemSlot] = newItem;
-        return;
+        return itemSlot;
       }
     }
-    this.dialogueService.displayDialogueMessage({
-      text: defaults.dialogue.inventoryFull,
-      character: defaults.dialogue.computerCharacterType,
-      name: defaults.dialogue.computerName
-    });
+    return null;
   }
+
+  // Get next available inventory slot
+
+  // Return reference or null
+
+  // If not null allow adding
 
   /**
    * Searches for items in the inventory matching a given name

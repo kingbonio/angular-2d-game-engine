@@ -52,6 +52,7 @@ export class EquipmentManagerService {
       // this.notificationsService("Item is not armour");
     } else {
       if (this.armour[newArmour.armourSlot]) {
+        // TODO This actually isn't being used yet but if it is it needs safeguardng for inventory full error
         this.inventoryManagerService.addItemToInventory(this.armour[newArmour.armourSlot]);
       }
       this.armour[newArmour.armourSlot] = newArmour;

@@ -33,6 +33,7 @@ export class AreaConfigProviderService implements OnInit {
 
   private assignItemsToInventory() {
     // TODO This might be useful when properly setting equipment
+    // TODO This is not safeguarded against the inventory being full, when sorting this sort that
     this.inventoryManagerService.addItemToInventory(weapons.sword);
     this.inventoryManagerService.addItemToInventory(weapons.axe);
     this.inventoryManagerService.addItemToInventory(armour.leatherChestPiece);
