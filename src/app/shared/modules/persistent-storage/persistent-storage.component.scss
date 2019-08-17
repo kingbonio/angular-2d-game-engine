@@ -1,30 +1,49 @@
-.save-control {
-
-      width: 120px;
-      margin: 15px;
+.save-container {
+      width: 400px;
+      display: flex;
+      justify-content: center;
       background-color: grey;
+      color: white;
+      font-family: arial;
+      font-weight: 700;
 
-      .save-title {
-            text-align: center;
-            margin: auto;
-      }
+      .save-control {
 
-      .image-container {
-            width: 60px;
-            height: 60px;
-            margin: auto;
-            border: solid red 2px;
-      }
+            width: 100px;
+            margin: 15px;
 
-      .button-container {
-
-            margin: 5px;
-            text-align: center;
-
-            .save-game {
+            .save-title {
+                  text-align: center;
+                  margin: auto;
             }
 
-            .load-game {
+            .image-container {
+                  width: 80px;
+                  height: 80px;
+                  margin: auto;
+                  border: solid red 2px;
+
+                  .save-icon {
+                        width: 100%;
+                        height: 100%;
+
+                        // This is not ideal. WET
+                        &.player {
+                              background-image: url("../../../../assets/images/save-icon/player.png");
+                        }
+                  }
+            }
+
+            .button-container {
+
+                  margin: 5px;
+                  text-align: center;
+
+                  .save-game {
+                  }
+
+                  .load-game {
+                  }
             }
       }
 }

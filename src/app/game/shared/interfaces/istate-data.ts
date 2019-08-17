@@ -8,4 +8,5 @@ export interface IStateData {
       dialogue: IDialogueStateData;
       inventory: IInventoryStateData;
       equipment: IEquipmentStateData;
+      saveIconSrc: string;
 }

@@ -12,6 +12,7 @@ import * as areaConfigs from "../game-config/areas";
 import { GameStateService } from './shared/services/game-state.service';
 import { MatDialogConfig, MatDialog, MatDialogRef } from '@angular/material';
 import { GameModalComponent } from './game-menu/game-modal/game-modal.component';
+import { ApplicationStateService } from '../shared/services/application-state.service';
 
 @Component({
   selector: 'app-game-root',
@@ -37,8 +38,11 @@ export class GameComponent implements OnInit, OnDestroy {
     public aiService: AiService,
     public areaStateService: AreaStateService,
     public gameStateService: GameStateService,
+    private applicationStateService: ApplicationStateService,
     private dialog: MatDialog,
-  ) { }
+  ) {
+    this.applicationStateService.gameOpen = true;
+  }
 
   ngOnInit(): void {
     this.userInputSubscription = fromEvent(document, 'keydown').subscribe(($e: KeyboardEvent) => {

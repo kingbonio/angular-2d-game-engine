@@ -37,7 +37,7 @@ export class PersistentStateService {
    * Gather state from storage and apply to all state-based services
    */
   public load(saveSlot: number): void {
-    this.gatherFromStorage(saveSlot);
+    this.state = this.gatherFromStorage(saveSlot);
     this.applyToStates();
     this.state = null;
   }
@@ -60,7 +60,22 @@ export class PersistentStateService {
       dialogue: this.dialogueStateService.gatherState(),
       inventory: this.inventoryManagerService.gatherState(),
       equipment: this.equipmentManagerService.gatherState(),
+      saveIconSrc: this.getSaveIconSrcFromGame(),
     };
+  }
+
+  /**
+   * Return the source of the image used for the save icon
+   */
+  private getSaveIconSrcFromGame() {
+    const playerLocation = this.areaStateService.playerLocation;
+    const playerGridElement = this.areaStateService.locations[playerLocation];
+    return playerGridElement.element.imageFileName;
+  }
+
+  public getsaveIconSrcFromStorage(saveSlot): string {
+    const state = this.gatherFromStorage(saveSlot);
+    return state.saveIconSrc;
   }
 
   /**
@@ -73,8 +88,8 @@ export class PersistentStateService {
   /**
    * Get state data from storage medium
    */
-  private gatherFromStorage(saveSlot): void {
-    this.state = JSON.parse(localStorage.getItem("save-slot-" + saveSlot));
+  private gatherFromStorage(saveSlot): IStateData {
+    return JSON.parse(localStorage.getItem("save-slot-" + saveSlot));
   }
 
   /**

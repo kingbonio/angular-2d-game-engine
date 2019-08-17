@@ -158,7 +158,7 @@ export class AreaStateService implements OnInit {
     if (targetAreaData) {
       this.loadingExistingArea = true;
       // Reset the locations to be the stored data
-      this.locations = JSON.parse(targetAreaData);
+      this.locations = targetAreaData;
     } else {
       // Reset the locations to blank
       this.locations = this.cloneLocations(locationDefaults);
@@ -192,7 +192,12 @@ export class AreaStateService implements OnInit {
    * @param newAreaReference the area number
    */
   public getAreaState(newAreaReference: number): any | null {
-    return localStorage.getItem(newAreaReference.toString());
+    const stateJson = localStorage.getItem(newAreaReference.toString());
+    if (stateJson !== "{}") {
+      return JSON.parse(stateJson);
+    } else {
+      return null;
+    }
   }
 
   private cloneLocations(sourceLocations) {

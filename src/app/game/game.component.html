@@ -8,7 +8,7 @@
                         {{ loadingText }}
                   </div>
             </div>
-            <app-area *ngIf="isAreaComponentAlive()"></app-area>
+            <app-area *ngIf="isAreaComponentAlive() && applicationStateService.gameOpen"></app-area>
       </div>
       <div class="dialogue-area">
             <app-dialogue class="dialogue-box"></app-dialogue>
