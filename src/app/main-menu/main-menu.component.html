@@ -1,22 +1,3 @@
-<!-- <div class="menu">
-  <div class="menu-title">
-    <div *ngFor="let menuPages of gameMenu.pages" *ngIf="menuPage === menuStateService.currentPage">
-      <div class="menu-page-title">{{ menuPage.title }}</div>
-      <div *ngFor="let setting of menuPage.settings">
-        <h1>{{ settings.title }}</h1>
-        <h3>{{ settings.description }}</h3> -->
-        <!-- TODO Fit in the settings here -->
-        <!-- <div *ngIf="option.type === checkbox">
-        </div>
-        <div *ngIf="option.type === dropdown">
-        </div>
-        <div *ngIf="option.type === textfield">
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
 <div class="main-menu">
   <div class="options-container">
     <div class="game-options">
@@ -25,7 +6,9 @@
       </div>
       <div class="load-game">
         <span class="link"(click)="toggleSaveGameSection()">Load saved game</span>
-        <div *ngIf="showSaveGames" class="save-games">Showing save games</div>
+        <div *ngIf="showSaveGames" class="save-games">
+          <app-persistent-storage></app-persistent-storage>
+        </div>
       </div>
     </div>
     <div class="game-settings">

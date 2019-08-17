@@ -21,15 +21,16 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { AiService } from './shared/services/ai.service';
 import { UserInputService } from '../shared/services/user-input.service';
-import { GameMenuComponent } from './game-menu/game-menu/game-menu.component';
 import { GameStateService } from './shared/services/game-state.service';
 import { GameModalComponent } from './game-menu/game-modal/game-modal.component';
 import { PersistentStateService } from './shared/services/persistent-state.service';
+import { PersistentStorageModule } from '../shared/modules/persistent-storage/persistent-storage.module';
 
 @NgModule({
   imports: [
     BrowserModule,
     CommonModule,
+    PersistentStorageModule,
     NoopAnimationsModule,
     MatDialogModule,
     GameRoutingModule,
@@ -43,7 +44,6 @@ import { PersistentStateService } from './shared/services/persistent-state.servi
     InventoryComponent,
     ItemGridComponent,
     LootingModalComponent,
-    GameMenuComponent,
     GameModalComponent,
   ],
   providers: [

@@ -1,14 +1,11 @@
 <div class="game-menu-container">
   <div class="save-container">
-    <div class="save-control" *ngFor="let saveSlot of objectKeys(saveSlots)">
-      <div class="save-title">Save Slot {{ saveSlot }}</div>
-      <div class="image-container"></div>
-      <div class="button-container">
-        <button class="save-game" (click)="saveGame(saveSlot)">Save</button>
-        <button *ngIf="saveSlotDoesntExist(saveSlot)" class="load-game" (click)="loadGame(saveSlot)">Load</button>
-        <button *ngIf="saveSlotDoesntExist(saveSlot)" class="delete-game" (click)="deleteGame(saveSlot)">Delete</button>
-      </div>
-    </div>
+    <!-- <app-game-saves
+      (saveGame)="saveGame(saveSlot)"
+      (loadGame)="loadGame(saveSlot)"
+      (deleteGame)="deleteGame(saveSlot)">
+    </app-game-saves> -->
+    <app-persistent-storage></app-persistent-storage>
   </div>
   <div class="cancel">
     <button class="close" mat-dialog-close>Close</button>

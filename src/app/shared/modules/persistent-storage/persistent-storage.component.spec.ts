@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GameMenuComponent } from './game-menu.component';
+import { PersistentStorageComponent } from './persistent-storage.component';
 
-describe('GameMenuComponent', () => {
-  let component: GameMenuComponent;
-  let fixture: ComponentFixture<GameMenuComponent>;
+describe('PersistentStorageComponent', () => {
+  let component: PersistentStorageComponent;
+  let fixture: ComponentFixture<PersistentStorageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GameMenuComponent ]
+      declarations: [ PersistentStorageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GameMenuComponent);
+    fixture = TestBed.createComponent(PersistentStorageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

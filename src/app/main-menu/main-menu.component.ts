@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuStateService } from '../shared/services/menu-state.service';
+import { PersistentStateService } from '../game/shared/services/persistent-state.service';
 
 @Component({
   selector: 'app-main-menu',
@@ -9,7 +10,10 @@ import { MenuStateService } from '../shared/services/menu-state.service';
 export class MainMenuComponent implements OnInit {
   public showSaveGames = false;
 
-  constructor(public menuStateService: MenuStateService) {
+  constructor(
+    public menuStateService: MenuStateService,
+    private persistentStateService: PersistentStateService
+    ) {
   }
 
   ngOnInit() {

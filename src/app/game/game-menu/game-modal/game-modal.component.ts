@@ -10,34 +10,13 @@ import { PersistentStateService } from '../../shared/services/persistent-state.s
 })
 export class GameModalComponent implements OnInit {
   public data;
-  public saveSlots;
-  public objectKeys;
 
   constructor(
-    private persistentStateService: PersistentStateService,
     @Inject(MAT_DIALOG_DATA) data
   ) {
     this.data = data;
-    this.objectKeys = Object.keys;
-    this.saveSlots = defaults.gameMenu.saveSlots;
   }
 
-  public saveGame(saveSlot) {
-    this.persistentStateService.save(saveSlot);
-  }
-
-  public loadGame(saveSlot) {
-    this.persistentStateService.load(saveSlot);
-  }
-
-  public deleteGame(saveSlot) {
-    this.persistentStateService.delete(saveSlot);
-  }
-
-  public saveSlotDoesntExist(saveSlot: number): boolean {
-    // TODO Intensely inefficient
-    return !!(localStorage.getItem("save-slot-" + saveSlot));
-  }
 
   ngOnInit() {
   }

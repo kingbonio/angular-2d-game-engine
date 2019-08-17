@@ -5,35 +5,5 @@
             display: flex;
             justify-content: center;
 
-            .save-control {
-
-                  width: 120px;
-                  margin: 15px;
-                  background-color: grey;
-
-                  .save-title {
-                        text-align: center;
-                        margin: auto;
-                  }
-
-                  .image-container {
-                        width: 60px;
-                        height: 60px;
-                        margin: auto;
-                        border: solid red 2px;
-                  }
-      
-                  .button-container {
-
-                        margin: 5px;
-                        text-align: center;
-
-                        .save-game {
-                        }
-            
-                        .load-game {
-                        }
-                  }
-            }
       }
 }

@@ -11,6 +11,7 @@ import { GameModule } from './game/game.module';
 import { MenuStateService } from './shared/services/menu-state.service';
 import { UserInputService } from './shared/services/user-input.service';
 import { AreaStateService } from './game/shared/services/area-state.service';
+import { PersistentStorageModule } from './shared/modules/persistent-storage/persistent-storage.module';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { AreaStateService } from './game/shared/services/area-state.service';
     BrowserModule,
     NoopAnimationsModule,
     MatDialogModule,
+    PersistentStorageModule,
     GameModule,
     AppRoutingModule,
   ],
