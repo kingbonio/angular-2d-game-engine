@@ -193,7 +193,7 @@ export class AreaStateService implements OnInit {
    */
   public getAreaState(newAreaReference: number): any | null {
     const stateJson = localStorage.getItem(newAreaReference.toString());
-    if (stateJson !== "{}") {
+    if (stateJson.length && stateJson !== "{}") {
       return JSON.parse(stateJson);
     } else {
       return null;
