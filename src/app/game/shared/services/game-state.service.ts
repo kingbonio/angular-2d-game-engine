@@ -34,7 +34,7 @@ export class GameStateService {
    */
   public applyState(newState: IGameStateData): void {
     for (const stateSetting in newState) {
-      if (this.hasOwnProperty(stateSetting)) {
+      if (newState.hasOwnProperty(stateSetting)) {
         this[stateSetting] = newState[stateSetting];
       }
     }

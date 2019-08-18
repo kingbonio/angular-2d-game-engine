@@ -147,7 +147,7 @@ export class InventoryManagerService {
    */
   public applyState(newState: IInventoryStateData): void {
     for (const stateSetting in newState) {
-      if (this.hasOwnProperty(stateSetting)) {
+      if (newState.hasOwnProperty(stateSetting)) {
         this[stateSetting] = newState[stateSetting];
       }
     }

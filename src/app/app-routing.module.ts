@@ -6,13 +6,9 @@ import { GameComponent } from "./game/game.component";
 const appRoutes = [
       {
             path: 'game',
-            component: GameComponent
-      },
-      {
-            path: 'settings',
-            component: MainMenuComponent,
+            component: GameComponent,
             data: {
-                  page: 'settings'
+                  saveSlot: "1"
             }
       },
       {

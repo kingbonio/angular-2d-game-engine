@@ -137,7 +137,7 @@ export class EquipmentManagerService {
    */
   public applyState(newState: IEquipmentStateData): void {
     for (const stateSetting in newState) {
-      if (this.hasOwnProperty(stateSetting)) {
+      if (newState.hasOwnProperty(stateSetting)) {
         this[stateSetting] = newState[stateSetting];
       }
     }

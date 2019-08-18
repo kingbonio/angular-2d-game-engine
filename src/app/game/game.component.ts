@@ -52,14 +52,14 @@ export class GameComponent implements OnInit, OnDestroy {
     // Destroy the area component
     this.areaChangeSubscription = this.areaStateService.areaChange.subscribe((newAreaReference) => {
       // if (this.areaStateService.currentLocation !== newAreaReference) {
-        this.killAreaComponent();
+      this.killAreaComponent();
       // }
     });
 
     // Reinstate area component when ready
     this.areaReadySubscription = this.areaStateService.areaReady.subscribe((newAreaReference) => {
       // if (this.areaStateService.currentLocation !== newAreaReference) {
-        this.createAreaComponent();
+      this.createAreaComponent();
       // }
     });
 
@@ -119,7 +119,12 @@ export class GameComponent implements OnInit, OnDestroy {
   private createAreaComponent() {
     // Update the area state service with the new location before reload
     setTimeout(() => {
+
+      // Reset the area loading flag
+      this.areaStateService.loadingSavedGame = false;
+
       this.areaComponentAlive = true;
+
     }, 0);
   }
 

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { PersistentStateService } from '../../../game/shared/services/persistent-state.service';
 import defaults from '../../defaults';
 import { ApplicationStateService } from '../../services/application-state.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-persistent-storage',
@@ -16,6 +17,7 @@ export class PersistentStorageComponent implements OnInit {
   constructor(
     private persistentStateService: PersistentStateService,
     public applicationStateService: ApplicationStateService,
+    private router: Router,
   ) {
     this.objectKeys = Object.keys;
     this.saveSlots = defaults.gameMenu.saveSlots;
@@ -41,6 +43,10 @@ export class PersistentStorageComponent implements OnInit {
   }
 
   public loadGame(saveSlot) {
+    if (this.router.url !== "/game") {
+      this.applicationStateService.loadingFromOutsideGame = true;
+      this.router.navigateByUrl("/game");
+    }
     this.persistentStateService.load(saveSlot);
   }
 

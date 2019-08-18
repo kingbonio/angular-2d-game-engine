@@ -5,7 +5,7 @@
         <a routerLink="/game" class="link">Start new game</a>
       </div>
       <div class="load-game">
-        <span class="link"(click)="toggleSaveGameSection()">Load saved game</span>
+        <span class="link" (click)="toggleSaveGameSection()">Load saved game</span>
         <div *ngIf="showSaveGames" class="save-games">
           <app-persistent-storage></app-persistent-storage>
         </div>

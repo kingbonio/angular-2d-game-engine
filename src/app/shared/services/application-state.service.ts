@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class ApplicationStateService {
 
   public gameOpen = false;
+  public loadingFromOutsideGame = false;
 
   constructor() { }
 }

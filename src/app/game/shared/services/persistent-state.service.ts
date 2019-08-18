@@ -39,6 +39,11 @@ export class PersistentStateService {
   public load(saveSlot: number): void {
     this.state = this.gatherFromStorage(saveSlot);
     this.applyToStates();
+
+    // Ensure the areaStateService performs the necessary actions
+    this.areaStateService.loadingSavedGame = true;
+    this.areaStateService.loadFromSaveGame(this.state.area);
+
     this.state = null;
   }
 

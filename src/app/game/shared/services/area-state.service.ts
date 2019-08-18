@@ -227,11 +227,9 @@ export class AreaStateService implements OnInit {
    */
   public applyState(newState: IAreaStateData): void {
     for (const stateSetting in newState) {
-      if (this.hasOwnProperty(stateSetting)) {
+      if (newState.hasOwnProperty(stateSetting)) {
         this[stateSetting] = newState[stateSetting];
       }
     }
-    this.loadingSavedGame = true;
-    this.loadFromSaveGame(newState);
   }
 }
