@@ -24,11 +24,12 @@ export class MainMenuComponent implements OnInit {
   }
 
   public toggleSaveGameSection() {
+    this.showGameSettings = false;
     this.showSaveGames = !this.showSaveGames;
   }
 
   public toggleGameSettingsSection() {
+    this.showSaveGames = false;
     this.showGameSettings = !this.showGameSettings;
   }
-
 }
