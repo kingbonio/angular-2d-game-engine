@@ -13,6 +13,7 @@ import { GameStateService } from './shared/services/game-state.service';
 import { MatDialogConfig, MatDialog, MatDialogRef } from '@angular/material';
 import { GameModalComponent } from './game-menu/game-modal/game-modal.component';
 import { ApplicationStateService } from '../shared/services/application-state.service';
+import { GameSettingsService } from '../shared/services/game-settings.service';
 
 @Component({
   selector: 'app-game-root',
@@ -38,6 +39,7 @@ export class GameComponent implements OnInit, OnDestroy {
     public aiService: AiService,
     public areaStateService: AreaStateService,
     public gameStateService: GameStateService,
+    public gameSettingsService: GameSettingsService,
     private applicationStateService: ApplicationStateService,
     private dialog: MatDialog,
   ) {

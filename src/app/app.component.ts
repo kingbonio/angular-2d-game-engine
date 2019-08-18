@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MenuStateService } from './shared/services/menu-state.service';
+import { GameSettingsService } from './shared/services/game-settings.service';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,8 @@ export class AppComponent {
   title = 'app';
 
   constructor(
-    private menuStateService: MenuStateService) {
+    private menuStateService: MenuStateService,
+    private gameSettingsService: GameSettingsService,
+    ) {
   }
 }

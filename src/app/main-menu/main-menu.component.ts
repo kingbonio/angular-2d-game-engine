@@ -10,6 +10,7 @@ import { ApplicationStateService } from '../shared/services/application-state.se
 })
 export class MainMenuComponent implements OnInit {
   public showSaveGames = false;
+  public showGameSettings = false;
 
   constructor(
     public menuStateService: MenuStateService,
@@ -24,6 +25,10 @@ export class MainMenuComponent implements OnInit {
 
   public toggleSaveGameSection() {
     this.showSaveGames = !this.showSaveGames;
+  }
+
+  public toggleGameSettingsSection() {
+    this.showGameSettings = !this.showGameSettings;
   }
 
 }

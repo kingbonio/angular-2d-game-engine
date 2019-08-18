@@ -4,7 +4,7 @@ import { PlayerStateService } from './player-state.service';
 import { DialogueService } from './dialogue.service';
 import { InventoryManagerService } from '../../item/services/inventory-manager.service';
 import { GameStateService } from './game-state.service';
-import { IStateData, IAreaStateData, IPlayerStateData, IDialogueStateData, IInventoryStateData, IGameStateData } from '../interfaces';
+import { IStateData, IAreaStateData, IPlayerStateData, IDialogueStateData, IInventoryStateData, IGameStateData, IGameSettings } from '../interfaces';
 import * as maps from "../../../game-config/areas/map";
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
 import { IEquipmentStateData } from '../interfaces/iequipment-state-data';
@@ -52,6 +52,19 @@ export class PersistentStateService {
    */
   public delete(saveSlot: number): void {
     localStorage.removeItem("save-slot-" + saveSlot);
+  }
+
+  public getGameSettings(): IGameSettings | null {
+    const gameSettings = localStorage.getItem("game-settings");
+    if (gameSettings && gameSettings.length) {
+      return JSON.parse(gameSettings);
+    } else {
+      return null;
+    }
+  }
+
+  public saveGameSettings(settings: IGameSettings): void {
+    localStorage.setItem("game-settings", JSON.stringify(settings));
   }
 
   /**

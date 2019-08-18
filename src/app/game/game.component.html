@@ -74,7 +74,7 @@
                   </div>
             </div>
             <div class="menu-button">
-                  <button (click)="openGameMenu()">Menu</button>
+                  <button *ngIf="gameSettingsService.allowInGameMenu" (click)="openGameMenu()">Menu</button>
             </div>
       </div>
 </div>

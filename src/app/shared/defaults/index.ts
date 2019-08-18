@@ -78,6 +78,9 @@ export default {
             3: null,
         }
     },
+    gameSettings: {
+        allowInGameMenu: true,
+    },
     areaExitDestinations: {
         // TODO This is not ideal
         northExit: "`4",

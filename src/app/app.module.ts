@@ -12,6 +12,7 @@ import { MenuStateService } from './shared/services/menu-state.service';
 import { UserInputService } from './shared/services/user-input.service';
 import { AreaStateService } from './game/shared/services/area-state.service';
 import { PersistentStorageModule } from './shared/modules/persistent-storage/persistent-storage.module';
+import { GameSettingsComponent } from './game-settings/game-settings.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { PersistentStorageModule } from './shared/modules/persistent-storage/per
   declarations: [
     AppComponent,
     MainMenuComponent,
+    GameSettingsComponent,
   ],
   providers: [
     AreaStateService,

@@ -9,3 +9,4 @@ export * from "./iitem-properties";
 export * from "../../area/interfaces/ienemy";
 export * from "./ilootParameters";
 export * from "./iLocation";
+export * from "./igame-settings";
