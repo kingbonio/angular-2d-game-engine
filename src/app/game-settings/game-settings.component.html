@@ -1,9 +1,32 @@
 <div class="game-settings">
       <input type="checkbox" [checked]="allowMenuInGame" (change)="allowMenuInGame = !allowMenuInGame" />
       <!-- This will be much easier once matforms is used -->
-      <span class="move-north">Move North: </span><button class="key-input-button" (click)="setAwaitingKey('moveNorth')">Click to select key</button>
-      <span *ngIf="gameStateService.awaitingKeyboardSetting" class="press-key-text">
+      <div class="movement-section">
+            <!-- TODO ngFor in here -->
+            <div class="action-selection">
+                  <span class="move-north">Move North: </span>
+                  <button class="key-input-button" (click)="setAwaitingKey('moveNorth')">Select key</button>
+                  <span class="selected-key">{{ gameSettingsService.getSelectedKeyName('moveNorth') }}</span>
+            </div>
+            <div class="action-selection">
+                  <span class="move-east">Move East: </span>
+                  <button class="key-input-button" (click)="setAwaitingKey('moveEast')">Select key</button>
+                  <span class="selected-key">{{ gameSettingsService.getSelectedKeyName('moveEast') }}</span>
+            </div>
+            <div class="action-selection">
+                  <span class="move-south">Move South: </span>
+                  <button class="key-input-button" (click)="setAwaitingKey('moveSouth')">Select key</button>
+                  <span class="selected-key">{{ gameSettingsService.getSelectedKeyName('moveSouth') }}</span>
+            </div>
+            <div class="action-selection">
+                  <span class="move-west">Move West: </span>
+                  <button class="key-input-button" (click)="setAwaitingKey('moveWest')">Select key</button>
+                  <span class="selected-key">{{ gameSettingsService.getSelectedKeyName('moveWest') }}</span>
+            </div>
+      </div>
+      <div *ngIf="gameStateService.awaitingKeyboardSetting" class="press-key-text">
             Please enter a key to set it to the action
-      </span>
+            Press Escape to cancel
+      </div>
       <button (click)="saveSettings()">Save settings</button>
 </div>

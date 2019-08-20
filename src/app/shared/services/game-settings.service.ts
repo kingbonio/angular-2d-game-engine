@@ -3,6 +3,7 @@ import { IGameSettings } from '../../game/shared/interfaces';
 import { PersistentStateService } from '../../game/shared/services/persistent-state.service';
 
 import defaults from '../../shared/defaults';
+import keyReferences from '../../shared/util/key-references';
 import { IUserAction } from '../interfaces';
 import { KeyInputType } from '../enums';
 
@@ -36,6 +37,19 @@ export class GameSettingsService {
     this.keysMapped[key] = action;
   }
 
+  public getKeyName(key) {
+    return keyReferences[key];
+  }
+
+  /**
+   * Returns the name of the key for each action
+   * @param keyInputType the action we want to get the key name for
+   * @returns The name of the key
+   */
+  public getSelectedKeyName(keyInputType: KeyInputType): string {
+    return this.getKeyName(this.keyMap[keyInputType]);
+  }
+
   public getCharacterActionType(inputKey: number): IUserAction {
     return this.keyMap[inputKey];
   }
@@ -54,6 +68,8 @@ export class GameSettingsService {
   public gatherAllSettings(): IGameSettings {
     return {
       allowInGameMenu: this.allowInGameMenu,
+      keyMap: this.keyMap,
+      keysMapped: this.keysMapped,
     };
   }
 
