@@ -3,6 +3,8 @@ import { IGameSettings } from '../../game/shared/interfaces';
 import { PersistentStateService } from '../../game/shared/services/persistent-state.service';
 
 import defaults from '../../shared/defaults';
+import { IUserAction } from '../interfaces';
+import { KeyInputType } from '../enums';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,8 @@ import defaults from '../../shared/defaults';
 export class GameSettingsService {
 
   public allowInGameMenu = defaults.gameSettings.allowInGameMenu;
+  public keyMap = defaults.defaultKeyMap;
+  public keysMapped = {};
 
   constructor(
     public persistentStateService: PersistentStateService,
@@ -17,13 +21,30 @@ export class GameSettingsService {
     const persistentGameSettings: IGameSettings = this.persistentStateService.getGameSettings();
     if (persistentGameSettings) {
       this.applyAllSettings(persistentGameSettings);
+    } else {
+      // Set up the quick-access key references
+      for (const inputReference in this.keyMap) {
+        if (this.keyMap.hasOwnProperty(inputReference)) {
+          this.keysMapped[this.keyMap[inputReference]] = inputReference;
+        }
+      }
     }
+  }
+
+  public updateKeyReference(key: number, action: KeyInputType) {
+    this.keyMap[action] = key;
+    this.keysMapped[key] = action;
+  }
+
+  public getCharacterActionType(inputKey: number): IUserAction {
+    return this.keyMap[inputKey];
   }
 
   public saveGameSettings() {
     const allSettings = this.gatherAllSettings();
     this.persistentStateService.saveGameSettings(allSettings);
   }
+
 
   /**
  * Return the area state for storage

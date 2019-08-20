@@ -22,7 +22,6 @@ import { GameSettingsService } from '../shared/services/game-settings.service';
 })
 export class GameComponent implements OnInit, OnDestroy {
 
-  private userInputSubscription: Subscription;
   private areaChangeSubscription: Subscription;
   private areaReadySubscription: Subscription;
   private areaConfigs = areaConfigs;
@@ -47,10 +46,6 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.userInputSubscription = fromEvent(document, 'keydown').subscribe(($e: KeyboardEvent) => {
-      this.userInputService.keyDownEventHandler($e);
-    });
-
     // Destroy the area component
     this.areaChangeSubscription = this.areaStateService.areaChange.subscribe((newAreaReference) => {
       // if (this.areaStateService.currentLocation !== newAreaReference) {
@@ -131,7 +126,6 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.userInputSubscription.unsubscribe();
     this.areaChangeSubscription.unsubscribe();
     this.areaReadySubscription.unsubscribe();
   }

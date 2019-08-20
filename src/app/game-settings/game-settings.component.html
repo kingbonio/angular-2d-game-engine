@@ -1,4 +1,9 @@
-<input type="checkbox" [checked]="allowMenuInGame" (change)="allowMenuInGame = !allowMenuInGame" />
-
-<button (click)="saveSettings()">Save settings</button>
-
+<div class="game-settings">
+      <input type="checkbox" [checked]="allowMenuInGame" (change)="allowMenuInGame = !allowMenuInGame" />
+      <!-- This will be much easier once matforms is used -->
+      <span class="move-north">Move North: </span><button class="key-input-button" (click)="setAwaitingKey('moveNorth')">Click to select key</button>
+      <span *ngIf="gameStateService.awaitingKeyboardSetting" class="press-key-text">
+            Please enter a key to set it to the action
+      </span>
+      <button (click)="saveSettings()">Save settings</button>
+</div>

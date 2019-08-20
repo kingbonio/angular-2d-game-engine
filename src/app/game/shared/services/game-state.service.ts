@@ -4,6 +4,7 @@ import { IGameStateData } from '../interfaces';
 @Injectable()
 export class GameStateService {
   public gamePaused = false;
+  public awaitingKeyboardSetting = false;
   private _gameMenuOpen;
 
   constructor() {
