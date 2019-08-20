@@ -63,4 +63,8 @@ export class GameSettingsComponent implements OnInit {
     this.gameSettingsService.saveGameSettings();
   }
 
+  public resetToDefaults() {
+    this.gameSettingsService.setToDefaults();
+  }
+
 }

@@ -23,12 +23,7 @@ export class GameSettingsService {
     if (persistentGameSettings) {
       this.applyAllSettings(persistentGameSettings);
     } else {
-      // Set up the quick-access key references
-      for (const inputReference in this.keyMap) {
-        if (this.keyMap.hasOwnProperty(inputReference)) {
-          this.keysMapped[this.keyMap[inputReference]] = inputReference;
-        }
-      }
+      this.setToDefaults();
     }
   }
 
@@ -59,6 +54,15 @@ export class GameSettingsService {
     this.persistentStateService.saveGameSettings(allSettings);
   }
 
+  public setToDefaults() {
+    this.keyMap = defaults.defaultKeyMap;
+    // Set up the quick-access key references
+    for (const inputReference in this.keyMap) {
+      if (this.keyMap.hasOwnProperty(inputReference)) {
+        this.keysMapped[this.keyMap[inputReference]] = inputReference;
+      }
+    }
+  }
 
   /**
  * Return the area state for storage
