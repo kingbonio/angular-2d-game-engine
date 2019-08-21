@@ -1,33 +1,37 @@
 <div class="game-settings">
-      <input type="checkbox" [checked]="allowMenuInGame" (change)="allowMenuInGame = !allowMenuInGame" />
-      <!-- This will be much easier once matforms is used -->
-      <div class="movement-section">
-            <!-- TODO ngFor in here -->
-            <div class="action-selection">
-                  <span class="move-north">Move North: </span>
-                  <button class="key-input-button" (click)="setAwaitingKey('moveNorth')">Select key</button>
-                  <span class="selected-key">{{ gameSettingsService.getSelectedKeyName('moveNorth') }}</span>
-            </div>
-            <div class="action-selection">
-                  <span class="move-east">Move East: </span>
-                  <button class="key-input-button" (click)="setAwaitingKey('moveEast')">Select key</button>
-                  <span class="selected-key">{{ gameSettingsService.getSelectedKeyName('moveEast') }}</span>
-            </div>
-            <div class="action-selection">
-                  <span class="move-south">Move South: </span>
-                  <button class="key-input-button" (click)="setAwaitingKey('moveSouth')">Select key</button>
-                  <span class="selected-key">{{ gameSettingsService.getSelectedKeyName('moveSouth') }}</span>
-            </div>
-            <div class="action-selection">
-                  <span class="move-west">Move West: </span>
-                  <button class="key-input-button" (click)="setAwaitingKey('moveWest')">Select key</button>
-                  <span class="selected-key">{{ gameSettingsService.getSelectedKeyName('moveWest') }}</span>
-            </div>
+      <div class="input-section">
+            <div class="key-bindings">Key Bindings</div>
+            <table class="key-bindings-table">
+                  <th>
+                        Action
+                  </th>
+                  <th>
+                        Bound key
+                  </th>
+                  <th>
+                        
+                  </th>
+                  <tr *ngFor="let keyName of keyNames" class="action-selection">
+                        <td>
+                              <span class="key-name" [textContent]="keyFullNames[keyName] + ': '"></span>
+                        </td>
+                        <td>
+                              <span class="selected-key">{{ gameSettingsService.getSelectedKeyName(keyName) }}</span>
+                        </td>
+                        <td>
+                              <button class="key-input-button" (click)="setAwaitingKey(keyName)">Select key</button>
+                        </td>
+                  </tr>
+            </table>
       </div>
-      <div *ngIf="gameStateService.awaitingKeyboardSetting" class="press-key-text">
-            Please enter a key to set it to the action
-            Press Escape to cancel
+      <div *ngIf="gameStateService.awaitingKeyboardSetting" class="key-selection-text">
+            <div class="enter-key-note">Please enter a key to set it to the action</div>
+            <div class="cancel-note">Press Escape to cancel</div>
       </div>
-      <button (click)="saveSettings()">Save settings</button>
-      <button (click)="resetToDefaults()">Reset to defaults</button>
+      <div class="save-settings">
+            <button (click)="saveSettings()">Save settings</button>
+      </div>
+      <div class="reset-defaults">
+            <button (click)="resetToDefaults()">Reset to defaults</button>
+      </div>
 </div>

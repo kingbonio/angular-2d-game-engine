@@ -25,7 +25,6 @@ export class UserInputService {
 
   public keyDownEventHandler($e: KeyboardEvent) {
     if (this.gameStateService.awaitingKeyboardSetting) {
-      console.log("entered key: ", $e.keyCode);
       this.userSetKey.next($e.keyCode);
     } else {
       // TODO This will need updating from user config

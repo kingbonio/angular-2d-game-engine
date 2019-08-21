@@ -27,9 +27,16 @@ export class GameSettingsService {
     }
   }
 
-  public updateKeyReference(key: number, action: KeyInputType) {
+  /**
+   * Sets the new key and clears the previous action the key was set to
+   * @param key key entered for new binding
+   * @param action Reference for the action
+   */
+  public updateKeyBinding(key: number, action: KeyInputType) {
+    const previousKey = this.keyMap[action];
     this.keyMap[action] = key;
     this.keysMapped[key] = action;
+    this.keysMapped[previousKey] = null;
   }
 
   public getKeyName(key) {

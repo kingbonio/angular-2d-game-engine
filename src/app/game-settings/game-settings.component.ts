@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { UserInputService } from '../shared/services/user-input.service';
 import { GameStateService } from '../game/shared/services/game-state.service';
 import { KeyInputType } from '../shared/enums';
+import keyFullNames from '../shared/util/key-full-names';
+import defaults from '../shared/defaults';
 
 @Component({
   selector: 'app-game-settings',
@@ -17,6 +19,8 @@ export class GameSettingsComponent implements OnInit {
   public allowMenuInGame: boolean;
   public keyActionSelected: KeyInputType;
   public userSetKeySubscription: Subscription;
+  public keyNames: string[];
+  public keyFullNames: any;
 
 
   constructor(
@@ -25,10 +29,17 @@ export class GameSettingsComponent implements OnInit {
     public gameStateService: GameStateService,
   ) {
     this.allowMenuInGame = this.gameSettingsService.allowInGameMenu;
+    this.keyNames = Object.keys(defaults.defaultKeyMap);
+    this.keyFullNames = keyFullNames;
 
     this.userInputService.userSetKey.subscribe((key: number) => {
-      console.log("key: ", key);
-      if (this.gameStateService.awaitingKeyboardSetting && key !== 0 && key !== 27) {
+      if (
+        this.gameStateService.awaitingKeyboardSetting &&
+        key !== 0 &&
+        key !== 27 &&
+        !this.gameSettingsService.keysMapped[key]
+        ) {
+        // TODO Need to block any that are already selected
         this.userSetKeyHandler(key);
       } else if (this.gameStateService.awaitingKeyboardSetting && key === 27) {
         this.unsetAwaitingKey();
@@ -43,8 +54,9 @@ export class GameSettingsComponent implements OnInit {
   private userSetKeyHandler(key: number) {
     console.log("key entered: ", key);
     console.log("key action selected: ", this.keyActionSelected);
-    this.gameSettingsService.updateKeyReference(key, this.keyActionSelected);
+    this.gameSettingsService.updateKeyBinding(key, this.keyActionSelected);
     this.gameStateService.awaitingKeyboardSetting = false;
+    this.keyActionSelected = null;
   }
 
   public setAwaitingKey(keyAction: KeyInputType) {
@@ -66,5 +78,4 @@ export class GameSettingsComponent implements OnInit {
   public resetToDefaults() {
     this.gameSettingsService.setToDefaults();
   }
-
 }
