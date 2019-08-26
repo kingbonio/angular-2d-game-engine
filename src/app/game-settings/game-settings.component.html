@@ -1,37 +1,7 @@
-<div class="game-settings">
-      <div class="input-section">
-            <div class="key-bindings">Key Bindings</div>
-            <table class="key-bindings-table">
-                  <th>
-                        Action
-                  </th>
-                  <th>
-                        Bound key
-                  </th>
-                  <th>
-                        
-                  </th>
-                  <tr *ngFor="let keyName of keyNames" class="action-selection">
-                        <td>
-                              <span class="key-name" [textContent]="keyFullNames[keyName] + ': '"></span>
-                        </td>
-                        <td>
-                              <span class="selected-key">{{ gameSettingsService.getSelectedKeyName(keyName) }}</span>
-                        </td>
-                        <td>
-                              <button class="key-input-button" (click)="setAwaitingKey(keyName)">Select key</button>
-                        </td>
-                  </tr>
-            </table>
-      </div>
-      <div *ngIf="gameStateService.awaitingKeyboardSetting" class="key-selection-text">
-            <div class="enter-key-note">Please enter a key to set it to the action</div>
-            <div class="cancel-note">Press Escape to cancel</div>
-      </div>
-      <div class="save-settings">
-            <button (click)="saveSettings()">Save settings</button>
-      </div>
-      <div class="reset-defaults">
-            <button (click)="resetToDefaults()">Reset to defaults</button>
-      </div>
+<div class="header-links">
+      <a routerLink="/" class="link">Back to Main Menu</a>
+      <a routerLink="/settings/gameplay"  class="link">Gameplay</a>
+      <a routerLink="/settings/controls"  class="link">Controls</a>
 </div>
+
+<router-outlet></router-outlet>

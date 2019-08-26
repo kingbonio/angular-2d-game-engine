@@ -1,53 +1,16 @@
-.game-settings {
+.header-links {
 
-      padding: 20px;
+      height: 50px;
+      width: 750px;
       background-color: grey;
-      color: white;
-      font-family: arial;
-      text-align: left;
 
-      .input-section {
-
-            .key-bindings {
-                  margin: 10px 0px;
-                  padding: 5px;
-                  font-weight: 500;
-            }
-
-            .key-bindings-table {
-                  width: 300px;
-
-                  th {
-                  }
-
-                  td {
-
-                        .key-name {
-
-                        }
-
-                        .selected-key {
-
-                        }
-
-                        .key-input-button {
-
-                        }
-                  }
-            }
-      }
-
-      .key-selection-text {
-            padding: 5px;
-            background-color: white;
-            color: grey;
-      }
-
-      .save-settings {
-            padding: 5px 0px;
-      }
-      
-      .restore-defaults {
-            padding: 5px 0px;
+      .link {
+            display: inline-block;
+            margin: 10px;
+            font-family: arial;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+            cursor: pointer;
       }
 }

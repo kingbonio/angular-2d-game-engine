@@ -16,66 +16,15 @@ import defaults from '../shared/defaults';
 })
 export class GameSettingsComponent implements OnInit {
 
-  public allowMenuInGame: boolean;
-  public keyActionSelected: KeyInputType;
-  public userSetKeySubscription: Subscription;
-  public keyNames: string[];
-  public keyFullNames: any;
-
-
   constructor(
     public gameSettingsService: GameSettingsService,
     public userInputService: UserInputService,
     public gameStateService: GameStateService,
   ) {
-    this.allowMenuInGame = this.gameSettingsService.allowInGameMenu;
-    this.keyNames = Object.keys(defaults.defaultKeyMap);
-    this.keyFullNames = keyFullNames;
 
-    this.userInputService.userSetKey.subscribe((key: number) => {
-      if (
-        this.gameStateService.awaitingKeyboardSetting &&
-        key !== 0 &&
-        key !== 27 &&
-        !this.gameSettingsService.keysMapped[key]
-        ) {
-        // TODO Need to block any that are already selected
-        this.userSetKeyHandler(key);
-      } else if (this.gameStateService.awaitingKeyboardSetting && key === 27) {
-        this.unsetAwaitingKey();
-      }
-    });
   }
 
   ngOnInit() {
 
-  }
-
-  private userSetKeyHandler(key: number) {
-    console.log("key entered: ", key);
-    console.log("key action selected: ", this.keyActionSelected);
-    this.gameSettingsService.updateKeyBinding(key, this.keyActionSelected);
-    this.gameStateService.awaitingKeyboardSetting = false;
-    this.keyActionSelected = null;
-  }
-
-  public setAwaitingKey(keyAction: KeyInputType) {
-    this.keyActionSelected = keyAction;
-    this.gameStateService.awaitingKeyboardSetting = true;
-    console.log("Selecting key");
-  }
-
-  public unsetAwaitingKey() {
-    this.gameStateService.awaitingKeyboardSetting = false;
-    console.log("Not selecting key");
-  }
-
-  public saveSettings() {
-    this.gameSettingsService.allowInGameMenu = this.allowMenuInGame;
-    this.gameSettingsService.saveGameSettings();
-  }
-
-  public resetToDefaults() {
-    this.gameSettingsService.setToDefaults();
   }
 }

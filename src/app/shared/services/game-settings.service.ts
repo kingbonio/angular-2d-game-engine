@@ -4,6 +4,7 @@ import { PersistentStateService } from '../../game/shared/services/persistent-st
 
 import defaults from '../../shared/defaults';
 import keyReferences from '../../shared/util/key-references';
+import keyActions from '../../shared/util/key-actions';
 import { IUserAction } from '../interfaces';
 import { KeyInputType } from '../enums';
 
@@ -13,6 +14,7 @@ import { KeyInputType } from '../enums';
 export class GameSettingsService {
 
   public allowInGameMenu = defaults.gameSettings.allowInGameMenu;
+  public showRoomShadow = defaults.gameSettings.showRoomShadow;
   public keyMap = defaults.defaultKeyMap;
   public keysMapped = {};
 
@@ -52,8 +54,13 @@ export class GameSettingsService {
     return this.getKeyName(this.keyMap[keyInputType]);
   }
 
+  /**
+   * Returns the action object which can be used to determine outcome for key entry
+   * @param inputKey The key reference to get the action for
+   */
   public getCharacterActionType(inputKey: number): IUserAction {
-    return this.keyMap[inputKey];
+    const characterAction = this.keysMapped[inputKey];
+    return keyActions[characterAction];
   }
 
   public saveGameSettings() {
@@ -64,6 +71,7 @@ export class GameSettingsService {
   public setToDefaults() {
     this.keyMap = defaults.defaultKeyMap;
     // Set up the quick-access key references
+    this.keysMapped = {};
     for (const inputReference in this.keyMap) {
       if (this.keyMap.hasOwnProperty(inputReference)) {
         this.keysMapped[this.keyMap[inputReference]] = inputReference;
@@ -78,6 +86,7 @@ export class GameSettingsService {
  */
   public gatherAllSettings(): IGameSettings {
     return {
+      showRoomShadow: this.showRoomShadow,
       allowInGameMenu: this.allowInGameMenu,
       keyMap: this.keyMap,
       keysMapped: this.keysMapped,

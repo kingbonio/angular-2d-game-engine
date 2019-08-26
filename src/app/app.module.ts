@@ -13,6 +13,7 @@ import { UserInputService } from './shared/services/user-input.service';
 import { AreaStateService } from './game/shared/services/area-state.service';
 import { PersistentStorageModule } from './shared/modules/persistent-storage/persistent-storage.module';
 import { GameSettingsComponent } from './game-settings/game-settings.component';
+import { GameSettingsModule } from './game-settings/game-settings.module';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { GameSettingsComponent } from './game-settings/game-settings.component';
     MatDialogModule,
     PersistentStorageModule,
     GameModule,
+    GameSettingsModule,
     AppRoutingModule,
   ],
   declarations: [
@@ -34,6 +36,8 @@ import { GameSettingsComponent } from './game-settings/game-settings.component';
     MenuStateService,
     UserInputService,
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [
+    AppComponent
+  ],
 })
 export class AppModule { }

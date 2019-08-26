@@ -1,4 +1,4 @@
-<div class="grid-container">
+<div class="grid-container" [ngClass]="{ 'show-room-shadow': gameSettingsService.showRoomShadow }">
       <div *ngFor="let key of areaStateService.locationKeys(areaStateService.locations)" class="grid-box">
             <!-- <div *ngIf="element">Has element</div> -->
             <div class="area-exit" *ngIf="areaStateService.locations[key].exitDestination" [ngClass]="locationExit(key, areaStateService.locations[key])">

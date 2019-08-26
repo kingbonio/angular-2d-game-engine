@@ -80,6 +80,7 @@ export default {
     },
     gameSettings: {
         allowInGameMenu: true,
+        showRoomShadow: true,
     },
     areaExitDestinations: {
         // TODO This is not ideal
