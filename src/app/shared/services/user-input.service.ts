@@ -27,17 +27,12 @@ export class UserInputService {
     if (this.gameStateService.awaitingKeyboardSetting) {
       this.userSetKey.next($e.keyCode);
     } else {
-      // TODO This will need updating from user config
-      // const characterAction: IUserAction = defaults.defaultKeyMap[$e.keyCode];
       const characterAction: IUserAction = this.gameSettingsService.getCharacterActionType($e.keyCode);
       if (characterAction) {
         switch (characterAction.type) {
 
           case UserActionTypes.move:
             this.playerStateService.move(characterAction.direction);
-            // TODO Hook up event listener to move enemies
-            // this.$playerMoved.next(characterAction.direction);
-            // this.playerMoved.emit("hello");
             this.playerMoved.next("forceCharacterMove");
 
             break;

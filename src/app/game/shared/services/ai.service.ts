@@ -7,6 +7,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { PlayerStateService } from './player-state.service';
 import { BattleCalculatorService } from './battle-calculator.service';
 import { IAreaElement } from '../../area/interfaces';
+import { TimerService } from './timer.service';
+import { GameStateService } from './game-state.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +23,26 @@ export class AiService {
     private areaStateService: AreaStateService,
     private userInputService: UserInputService,
     private playerStateService: PlayerStateService,
+    private timerService: TimerService,
+    private gameStateService: GameStateService,
   ) {
     this.userInputService.playerMoved.subscribe(data => {
       // TODO This may need a more specific flag
       // We don't want to perform AI actions if loading game
-      if (!this.areaStateService.loadingPreviousArea && !this.areaStateService.loadingSavedGame) {
+      if (this.gameStateService.battleMode &&
+          !this.gameStateService.gamePaused &&
+          !this.areaStateService.loadingPreviousArea &&
+          !this.areaStateService.loadingSavedGame) {
+        this.actionTriggerHandler();
+      }
+    });
+    this.timerService.counter.subscribe(value => {
+      // TODO This may need a more specific flag
+      // We don't want to perform AI actions if loading game
+      if (!this.gameStateService.battleMode &&
+          !this.gameStateService.gamePaused &&
+          !this.areaStateService.loadingPreviousArea &&
+          !this.areaStateService.loadingSavedGame) {
         this.actionTriggerHandler();
       }
     });

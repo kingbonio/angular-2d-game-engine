@@ -14,6 +14,7 @@ import { MatDialogConfig, MatDialog, MatDialogRef } from '@angular/material';
 import { GameModalComponent } from './game-menu/game-modal/game-modal.component';
 import { ApplicationStateService } from '../shared/services/application-state.service';
 import { GameSettingsService } from '../shared/services/game-settings.service';
+import { TimerService } from './shared/services/timer.service';
 
 @Component({
   selector: 'app-game-root',
@@ -40,6 +41,7 @@ export class GameComponent implements OnInit, OnDestroy {
     public gameStateService: GameStateService,
     public gameSettingsService: GameSettingsService,
     private applicationStateService: ApplicationStateService,
+    private timerService: TimerService,
     private dialog: MatDialog,
   ) {
     this.applicationStateService.gameOpen = true;

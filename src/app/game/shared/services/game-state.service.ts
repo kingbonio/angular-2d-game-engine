@@ -5,6 +5,7 @@ import { IGameStateData } from '../interfaces';
 export class GameStateService {
   public gamePaused = false;
   public awaitingKeyboardSetting = false;
+  public battleMode: boolean;
   private _gameMenuOpen;
 
   constructor() {
@@ -26,6 +27,7 @@ export class GameStateService {
   gatherState(): IGameStateData {
     return {
       gamePaused: this.gamePaused,
+      battleMode: this.battleMode,
     };
   }
 
