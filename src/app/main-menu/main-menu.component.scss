@@ -1,0 +1,29 @@
+.main-menu {
+      width: 750px;
+      height: 747px;
+      background-color: black;
+      position: relative;
+
+      .options-container {
+            width: 410px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 40px;
+            background-color: white;
+            text-align: center;
+            
+            .new-game, .load-game, .game-settings {
+                  padding: 5px;
+
+                  .link-button, .settings-button {
+                        font-family: arial;
+                        font-weight: 700;
+                        text-decoration: none;
+                        color: gray;
+                        cursor: pointer;
+                  }
+            }
+      }
+}

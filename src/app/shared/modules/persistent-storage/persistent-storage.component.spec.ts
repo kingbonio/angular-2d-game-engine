@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SettingsComponent } from './settings.component';
+import { PersistentStorageComponent } from './persistent-storage.component';
 
-describe('SettingsComponent', () => {
-  let component: SettingsComponent;
-  let fixture: ComponentFixture<SettingsComponent>;
+describe('PersistentStorageComponent', () => {
+  let component: PersistentStorageComponent;
+  let fixture: ComponentFixture<PersistentStorageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SettingsComponent ]
+      declarations: [ PersistentStorageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SettingsComponent);
+    fixture = TestBed.createComponent(PersistentStorageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -8,11 +8,11 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 @Injectable()
 export class AreaStateService implements OnInit {
   // Stores the location ID
-  private _areaCompleted = false;
   public currentLocation: number;
   public newLocation: number;
-  public loadingArea = false;
+  public loadingPreviousArea = false;
   public loadingExistingArea = false;
+  public loadingSavedGame = false;
   public locationKeys: any;
   public locations: IGridReferences;
   public previousPlayerLocation: string;
@@ -50,14 +50,6 @@ export class AreaStateService implements OnInit {
         return gridLocation;
       }
     }
-  }
-
-  get areaCompleted() {
-    return this._areaCompleted;
-  }
-
-  set areaCompleted(areaCompleted) {
-    this._areaCompleted = areaCompleted;
   }
 
   /**
@@ -148,12 +140,13 @@ export class AreaStateService implements OnInit {
     this.newLocation = null;
   }
 
+  // TODO This isn't great, redo this
   /**
    * Backs up current location state, loads the new one and emits event to notify listeners
    * @param newAreaReference The target are to pull data for
    */
   public loadNewArea(newAreaReference: number) {
-    this.loadingArea = true;
+    this.loadingPreviousArea = true;
     // Back up current state
     this.saveAreaState(this.currentLocation);
     // Save the new area reference
@@ -165,7 +158,7 @@ export class AreaStateService implements OnInit {
     if (targetAreaData) {
       this.loadingExistingArea = true;
       // Reset the locations to be the stored data
-      this.locations = JSON.parse(targetAreaData);
+      this.locations = targetAreaData;
     } else {
       // Reset the locations to blank
       this.locations = this.cloneLocations(locationDefaults);
@@ -177,7 +170,13 @@ export class AreaStateService implements OnInit {
     // Update the location
     this.currentLocation = this.newLocation;
     this.newLocation = null;
+  }
 
+  public loadFromSaveGame(savedState: IAreaStateData) {
+    this.loadingExistingArea = true;
+
+    this.areaChange.next(savedState.currentLocation);
+    this.areaReady.next(savedState.currentLocation);
   }
 
   /**
@@ -193,7 +192,12 @@ export class AreaStateService implements OnInit {
    * @param newAreaReference the area number
    */
   public getAreaState(newAreaReference: number): any | null {
-    return localStorage.getItem(newAreaReference.toString());
+    const stateJson = localStorage.getItem(newAreaReference.toString());
+    if (stateJson.length && stateJson !== "{}") {
+      return JSON.parse(stateJson);
+    } else {
+      return null;
+    }
   }
 
   private cloneLocations(sourceLocations) {
@@ -207,7 +211,13 @@ export class AreaStateService implements OnInit {
    */
   public gatherState(): IAreaStateData {
     return {
+      currentLocation: this.currentLocation,
+      newLocation: this.newLocation,
+      loadingArea: this.loadingPreviousArea,
+      loadingExistingArea: this.loadingExistingArea,
+      locationKeys: this.locationKeys,
       locations: this.locations,
+      previousPlayerLocation: this.previousPlayerLocation,
     };
   }
 
@@ -217,7 +227,7 @@ export class AreaStateService implements OnInit {
    */
   public applyState(newState: IAreaStateData): void {
     for (const stateSetting in newState) {
-      if (this.hasOwnProperty(stateSetting)) {
+      if (newState.hasOwnProperty(stateSetting)) {
         this[stateSetting] = newState[stateSetting];
       }
     }

@@ -17,7 +17,7 @@ export class GridObject {
       public locationKeys: any;
 
       constructor(elementProperties: any) {
-            this.inventoryLocations = {
+            this.inventoryLocations = elementProperties.inventoryLocations || {
                   a1: null,
                   a2: null,
                   a3: null,
@@ -54,7 +54,7 @@ export class GridObject {
             this.itemReferenceNeeded = elementProperties.itemReferenceNeeded;
             this.loot = elementProperties.loot;
             this.objectType = elementProperties.objectType;
-            if (this.loot) {
+            if (!elementProperties.inventoryLocations && this.loot) {
                   elementProperties.loot.forEach((item: IInventoryItem) => {
                         for (const slot in this.inventoryLocations) {
                               if (this.inventoryLocations.hasOwnProperty(slot) && !this.inventoryLocations[slot]) {

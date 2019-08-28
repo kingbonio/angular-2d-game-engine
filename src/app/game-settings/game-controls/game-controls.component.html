@@ -1,0 +1,40 @@
+<div class="game-controls">
+      <div class="input-section">
+            <div class="controls-title">Key Bindings</div>
+            <table class="key-bindings-table">
+                  <th>
+                        Action
+                  </th>
+                  <th>
+                        Bound key
+                  </th>
+                  <th>
+                        
+                  </th>
+                  <tr *ngFor="let keyName of keyNames" class="action-selection">
+                        <td>
+                              <span class="key-name" [textContent]="keyFullNames[keyName] + ': '"></span>
+                        </td>
+                        <td>
+                              <span class="selected-key">{{ gameSettingsService.getSelectedKeyName(keyName) }}</span>
+                        </td>
+                        <td>
+                              <button class="key-input-button" (click)="setAwaitingKey(keyName)">Select key</button>
+                        </td>
+                  </tr>
+            </table>
+            <div *ngIf="gameStateService.awaitingKeyboardSetting" class="key-selection-text">
+                  <div class="enter-key-note">Please enter a key to set it to the action</div>
+                  <div class="cancel-note">Press Escape to cancel</div>
+            </div>
+      </div>
+      
+      <div class="footer-section">
+            <div class="save-settings">
+                  <button (click)="saveSettings()">Save settings</button>
+            </div>
+            <div class="restore-defaults">
+                  <button (click)="resetToDefaults()">Restore defaults</button>
+            </div>
+      </div>
+</div>

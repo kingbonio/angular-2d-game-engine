@@ -1,0 +1,64 @@
+.game-controls {
+
+      position: relative;
+      width: 710px;
+      height: 657px;
+      padding: 20px;
+      background-color: grey;
+      color: white;
+      font-family: arial;
+      text-align: left;
+
+      .input-section {
+
+            .controls-title {
+                  margin: 10px 0px;
+                  padding: 5px;
+                  font-weight: 500;
+            }
+
+            .key-bindings-table {
+                  width: 300px;
+
+                  th {
+                  }
+
+                  td {
+
+                        .key-name {
+
+                        }
+
+                        .selected-key {
+
+                        }
+
+                        .key-input-button {
+
+                        }
+                  }
+            }
+            
+            .key-selection-text {
+                  padding: 5px;
+                  background-color: white;
+                  color: grey;
+            }
+      }
+
+      .footer-section {
+
+            position: absolute;
+            bottom: 20px;
+
+      
+            .save-settings {
+                  display: inline-block;
+                  padding: 0px 15px 0px 0px;
+            }
+            
+            .restore-defaults {
+                  display: inline-block;
+            }
+      }
+}

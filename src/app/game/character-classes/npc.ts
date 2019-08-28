@@ -39,7 +39,7 @@ export class NPC extends Character {
             this.loot = characterDetails.loot;
             this.level = characterDetails.level;
             this.imageFileName = characterDetails.imageFileName;
-            if (this.loot) {
+            if (!characterDetails.inventoryLocations && this.loot) {
                   characterDetails.loot.forEach((item: IInventoryItem) => {
                         for (const slot in this.inventoryLocations) {
                               if (this.inventoryLocations.hasOwnProperty(slot) && !this.inventoryLocations[slot]) {
@@ -49,7 +49,7 @@ export class NPC extends Character {
                         }
                   });
             }
-            this.currentHp = this.maxHp;
+            this.currentHp = (characterDetails.currentHp !== undefined) ? characterDetails.currentHp : this.maxHp;
             this.isPaused = false;
             this.xp = 0;
       }

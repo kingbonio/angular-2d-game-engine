@@ -1,4 +1,4 @@
-<div class="game-container" (keydown)="onKeyDown($event)">
+<div class="game-container">
       <div class="top-menu">
 
       </div>
@@ -8,7 +8,7 @@
                         {{ loadingText }}
                   </div>
             </div>
-            <app-area *ngIf="isAreaComponentAlive()"></app-area>
+            <app-area *ngIf="isAreaComponentAlive() && applicationStateService.gameOpen"></app-area>
       </div>
       <div class="dialogue-area">
             <app-dialogue class="dialogue-box"></app-dialogue>
@@ -72,6 +72,9 @@
                   <div class="status-effects">
 
                   </div>
+            </div>
+            <div class="menu-button">
+                  <button *ngIf="gameSettingsService.allowInGameMenu" (click)="openGameMenu()">Menu</button>
             </div>
       </div>
 </div>

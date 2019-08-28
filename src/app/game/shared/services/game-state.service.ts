@@ -3,33 +3,20 @@ import { IGameStateData } from '../interfaces';
 
 @Injectable()
 export class GameStateService {
-  _isGameFinishedBooting: boolean;
-  _gamePaused: boolean;
-  @Output() performComputerMove: EventEmitter<any> = new EventEmitter();
+  public gamePaused = false;
+  public awaitingKeyboardSetting = false;
+  private _gameMenuOpen;
 
   constructor() {
-    this.isGameFinishedBooting = true;
   }
 
-  get isGameFinishedBooting() {
-    return this._isGameFinishedBooting;
+  get gameMenuOpen() {
+    return this._gameMenuOpen;
   }
 
-  set isGameFinishedBooting(isGameFinishedBooting) {
-    this._isGameFinishedBooting = isGameFinishedBooting;
-  }
-
-  get gamePaused() {
-    return this._gamePaused;
-  }
-
-  set gamePaused(newPauseState) {
-    this._gamePaused = newPauseState;
-  }
-
-  public takeComputerTurn() {
-    // TODO: Build this event emitter to update any subscribers to perform a "computer move"
-    this.performComputerMove.emit();
+  set gameMenuOpen(newState: boolean) {
+    this._gameMenuOpen = newState;
+    this.gamePaused = newState;
   }
 
   /**
@@ -48,7 +35,7 @@ export class GameStateService {
    */
   public applyState(newState: IGameStateData): void {
     for (const stateSetting in newState) {
-      if (this.hasOwnProperty(stateSetting)) {
+      if (newState.hasOwnProperty(stateSetting)) {
         this[stateSetting] = newState[stateSetting];
       }
     }

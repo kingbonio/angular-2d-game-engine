@@ -1,0 +1,16 @@
+.header-links {
+
+      height: 50px;
+      width: 750px;
+      background-color: grey;
+
+      .link {
+            display: inline-block;
+            margin: 10px;
+            font-family: arial;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+            cursor: pointer;
+      }
+}

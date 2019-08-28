@@ -18,6 +18,7 @@ import { IAreaExits } from '../../game-config/interfaces';
 import defaults from '../../shared/defaults';
 import { IGridData } from './interfaces/igrid-data';
 import { Subscription } from 'rxjs/Subscription';
+import { GameSettingsService } from '../../shared/services/game-settings.service';
 
 @Component({
   selector: 'app-area',
@@ -35,11 +36,12 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
   public openLootinModalSubscription: Subscription;
 
   constructor(
-    public areaStateService: AreaStateService,
     private route: ActivatedRoute,
+    public areaStateService: AreaStateService,
     public areaConfigProviderService: AreaConfigProviderService,
     public playerStateService: PlayerStateService,
     public battleCalculatorService: BattleCalculatorService,
+    public gameSettingsService: GameSettingsService,
     private dialog: MatDialog,
   ) {
     this.openLootinModalSubscription = this.playerStateService.openLootingModal.subscribe((target: Character) => {
@@ -47,15 +49,17 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     // // Build the area
     this.prepareArea();
-    setTimeout(() => {
-      this.areaStateService.loadingArea = false;
-    }, 0);
+
   }
 
   ngOnInit() {
   }
 
   ngAfterViewInit() {
+    // Declare component loading complete
+    setTimeout(() => {
+      this.areaStateService.loadingPreviousArea = false;
+    }, 0);
   }
 
   /**
@@ -125,7 +129,7 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     // If player is entering a new area we want to update the location to be opposite the way they came in
-    if (this.areaStateService.loadingArea) {
+    if (this.areaStateService.loadingPreviousArea) {
       this.updatePlayerLocation();
     }
     this.areaStateService.loadingExistingArea = false;

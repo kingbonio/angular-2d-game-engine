@@ -2,19 +2,18 @@ import { Routes, RouterModule } from "@angular/router";
 import { MainMenuComponent } from "./main-menu/main-menu.component";
 import { NgModule } from "@angular/core";
 import { GameComponent } from "./game/game.component";
-import { SettingsComponent } from "./main-menu/settings/settings.component";
+import { GameSettingsComponent } from "./game-settings/game-settings.component";
 
 const appRoutes = [
       {
             path: 'game',
-            component: GameComponent
+            pathMatch: "full",
+            component: GameComponent,
       },
       {
             path: 'settings',
-            component: MainMenuComponent,
-            data: {
-                  page: 'settings'
-            }
+            pathMatch: "full",
+            component: GameSettingsComponent
       },
       {
             path: '',

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AreaStateService } from '../../services/area-state.service';
 import { Direction } from '../../enums';
-import { DiceService } from '../../services/dice.service';
 import { Dice } from '../dice';
 import { ILocation } from '../../interfaces';
 import defaults from '../../../../shared/defaults';
