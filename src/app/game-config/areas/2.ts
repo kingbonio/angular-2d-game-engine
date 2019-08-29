@@ -1,4 +1,4 @@
-import { MonsterClass, Direction, ElementClass } from "../../game/shared/enums";
+import { MonsterClass, Direction, ElementClass, CharacterState } from "../../game/shared/enums";
 import { IAreaElement } from "../../game/area/interfaces";
 import { armour, weapons, keyItems } from "../items";
 import { IWeapons } from "../../game/item/interfaces";
@@ -27,6 +27,10 @@ export default {
                         name: "Gary The Dick",
                         class: MonsterClass.Human,
                         direction: Direction.W,
+                        patrolArea: true,
+                        directionsForPatrol: [
+                        ],
+                        startingState: CharacterState.wandering,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
                         lootParameters: {

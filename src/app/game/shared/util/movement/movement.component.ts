@@ -4,6 +4,7 @@ import { Direction } from '../../enums';
 import { Dice } from '../dice';
 import { ILocation } from '../../interfaces';
 import defaults from '../../../../shared/defaults';
+import { Character } from '../../../character-classes/character';
 
 @Component({
   selector: 'app-movement',
@@ -35,8 +36,8 @@ export class MovementComponent {
         // TODO This may need tidying up
         isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
         isLocationFree = (!isTargetLocationAreaExit && !this.isTargetLocationOutOfBounds(newLocationY + newLocationX)) ?
-                          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
-                          false;
+          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
+          false;
         return {
           locationY: newLocationY,
           locationX: newLocationX,
@@ -49,8 +50,8 @@ export class MovementComponent {
         newLocationY = locationY;
         isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
         isLocationFree = (!isTargetLocationAreaExit && !this.isTargetLocationOutOfBounds(newLocationY + newLocationX)) ?
-                          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
-                          false;
+          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
+          false;
         return {
           locationY: newLocationY,
           locationX: newLocationX,
@@ -62,8 +63,8 @@ export class MovementComponent {
         newLocationX = locationX;
         isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
         isLocationFree = (!isTargetLocationAreaExit && !this.isTargetLocationOutOfBounds(newLocationY + newLocationX)) ?
-                          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
-                          false;
+          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
+          false;
         return {
           locationY: newLocationY,
           locationX: newLocationX,
@@ -75,8 +76,8 @@ export class MovementComponent {
         newLocationY = locationY;
         isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
         isLocationFree = (!isTargetLocationAreaExit && !this.isTargetLocationOutOfBounds(newLocationY + newLocationX)) ?
-                          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
-                          false;
+          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
+          false;
         return {
           locationY: newLocationY,
           locationX: newLocationX,
@@ -146,6 +147,39 @@ export class MovementComponent {
     }
     // Do nothing
     return;
+  }
+
+  /**
+   * Cycle through the direction of patrol for character
+   * Only move if the next location is free 
+   */
+  public walkRoute(character: Character, gridLocation: string) {
+    const routeIndex = character.currentPositionInRoute;
+    const splitLocation = this.areaStateService.splitLocationReference(gridLocation);
+    const direction = character.directionsForPatrol[character.currentPositionInRoute];
+    const newLocation = this.getNextLocation(splitLocation.locationY, splitLocation.locationX, direction);
+    if (newLocation && newLocation.isLocationFree) {
+      this.areaStateService.moveCharacter(newLocation.locationY + newLocation.locationX, gridLocation);
+
+      if (routeIndex >= (character.directionsForPatrol.length - 1)) {
+        character.currentPositionInRoute = 0;
+      } else {
+        character.currentPositionInRoute++;
+      }
+
+      const previousDirection = character.currentPositionInRoute === 0 ?
+        character.directionsForPatrol[character.directionsForPatrol.length - 1] :
+        character.directionsForPatrol[character.currentPositionInRoute - 1];
+
+      character.direction = previousDirection;
+    }
+  }
+
+  /**
+   * Moves the character towards the starting position of their patrol route
+   */
+  public returnToRouteStart(character: Character, gridLocation: string) {
+
   }
 
   /**
@@ -237,9 +271,9 @@ export class MovementComponent {
 
   private isTargetLocationOutOfBounds(targetLocation: string) {
     if (targetLocation.indexOf(defaults.areaOuterBoundaries.lowerYBoundary) === -1 &&
-        targetLocation.indexOf(defaults.areaOuterBoundaries.upperYBoundary) === -1 &&
-        targetLocation.indexOf(defaults.areaOuterBoundaries.lowerXBoundary) === -1 &&
-        targetLocation.indexOf(defaults.areaOuterBoundaries.upperXBoundary) === -1
+      targetLocation.indexOf(defaults.areaOuterBoundaries.upperYBoundary) === -1 &&
+      targetLocation.indexOf(defaults.areaOuterBoundaries.lowerXBoundary) === -1 &&
+      targetLocation.indexOf(defaults.areaOuterBoundaries.upperXBoundary) === -1
     ) {
       return false;
     } else {

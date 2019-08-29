@@ -1,4 +1,4 @@
-import { MonsterClass, Direction, CharacterType, ElementClass } from "../../game/shared/enums";
+import { MonsterClass, Direction, CharacterType, ElementClass, CharacterState } from "../../game/shared/enums";
 import { IAreaElement } from "../../game/area/interfaces";
 import { armour, weapons, keyItems, potions } from "../items";
 import { IWeapons } from "../../game/item/interfaces";
@@ -27,7 +27,17 @@ export default {
                         lowHealthThreshold: 6,
                         name: "Gary The Dick",
                         class: MonsterClass.Human,
-                        direction: Direction.W,
+                        direction: Direction.S,
+                        patrolArea: true,
+                        directionsForPatrol: [
+                              Direction.S,
+                              Direction.S,
+                              Direction.W,
+                              Direction.N,
+                              Direction.N,
+                              Direction.E,
+                        ],
+                        startingState: CharacterState.patrolling,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
                         lootParameters: {
@@ -84,8 +94,8 @@ export default {
                         ],
                         imageFileName: "",
                   },
-                  startingPositionX: 2,
-                  startingPositionY: "a",
+                  startingPositionY: "c",
+                  startingPositionX: 5,
             },
             {
                   type: ElementClass.npc,
@@ -97,6 +107,10 @@ export default {
                         lowHealthThreshold: 15,
                         name: "David",
                         direction: Direction.E,
+                        patrolArea: false,
+                        directionsForPatrol: [
+                        ],
+                        startingState: CharacterState.wandering,
                         speechResponse: "Stop bothering me, you fool!",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
                         lootParameters: {

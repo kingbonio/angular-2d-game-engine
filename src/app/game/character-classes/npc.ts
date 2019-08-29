@@ -1,5 +1,5 @@
 import { Character } from "./character";
-import { CharacterType, Direction, ElementClass } from "../shared/enums";
+import { CharacterType, Direction, ElementClass, CharacterState } from "../shared/enums";
 import { UserInteractionTypes } from "../../shared/enums";
 import { IWeapons, IArmour, IInventoryItem } from "../item/interfaces";
 
@@ -17,6 +17,10 @@ export class NPC extends Character {
       public isAngry: boolean;
       public isPaused: boolean;
       public direction: Direction;
+      public patrolArea: boolean;
+      public directionsForPatrol: Direction[];
+      public currentPositionInRoute: number;
+      public currentState: CharacterState;
       public armour: IArmour;
       public weapons: IWeapons;
       public loot: IInventoryItem[];
@@ -33,6 +37,10 @@ export class NPC extends Character {
             this.isAngry = characterDetails.angry;
             this.speechResponse = characterDetails.speechResponse;
             this.direction = characterDetails.direction;
+            this.patrolArea = characterDetails.patrolArea;
+            this.directionsForPatrol = characterDetails.directionsForPatrol;
+            this.currentPositionInRoute = 0,
+            this.currentState = characterDetails.startingState;
             this.maxHp = characterDetails.maxHp;
             this.lowHealthThreshold = characterDetails.lowHealthThreshold;
             this.armour = characterDetails.equippedArmour;

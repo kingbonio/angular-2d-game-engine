@@ -1,4 +1,4 @@
-import { CharacterType, Direction, ElementClass } from "../shared/enums";
+import { CharacterType, Direction, ElementClass, CharacterState } from "../shared/enums";
 import { IWeapons, IArmour, IInventoryItem } from "../item/interfaces";
 
 export class Character {
@@ -10,6 +10,10 @@ export class Character {
       isAngry: boolean;
       type: ElementClass;
       direction: Direction;
+      patrolArea: boolean;
+      directionsForPatrol: Direction[];
+      currentPositionInRoute: number;
+      currentState: CharacterState;
       armour?: IArmour;
       weapons?: IWeapons;
       loot: IInventoryItem[];
