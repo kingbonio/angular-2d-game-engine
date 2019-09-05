@@ -30,6 +30,32 @@ export class MovementComponent {
     let isLocationFree;
     switch (direction) {
       case Direction.N:
+        newLocationY = this.nextYReference(locationY);
+        newLocationX = locationX;
+        isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
+        isLocationFree = (!isTargetLocationAreaExit && !this.isTargetLocationOutOfBounds(newLocationY + newLocationX)) ?
+          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
+          false;
+        return {
+          locationY: newLocationY,
+          locationX: newLocationX,
+          isTargetAreaExit: isTargetLocationAreaExit,
+          isLocationFree: isLocationFree,
+        };
+      case Direction.E:
+        newLocationX = this.nextXReference(locationX);
+        newLocationY = locationY;
+        isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
+        isLocationFree = (!isTargetLocationAreaExit && !this.isTargetLocationOutOfBounds(newLocationY + newLocationX)) ?
+          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
+          false;
+        return {
+          locationY: newLocationY,
+          locationX: newLocationX,
+          isTargetAreaExit: isTargetLocationAreaExit,
+          isLocationFree: isLocationFree,
+        };
+      case Direction.S:
         newLocationY = this.previousYReference(locationY);
         newLocationX = locationX;
         // Make sure the location isn't off the edge of the grid and get new reference
@@ -45,32 +71,6 @@ export class MovementComponent {
           isLocationFree: isLocationFree,
         };
         return null;
-      case Direction.E:
-        newLocationX = this.nextXReference(locationX);
-        newLocationY = locationY;
-        isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
-        isLocationFree = (!isTargetLocationAreaExit && !this.isTargetLocationOutOfBounds(newLocationY + newLocationX)) ?
-          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
-          false;
-        return {
-          locationY: newLocationY,
-          locationX: newLocationX,
-          isTargetAreaExit: isTargetLocationAreaExit,
-          isLocationFree: isLocationFree,
-        };
-      case Direction.S:
-        newLocationY = this.nextYReference(locationY);
-        newLocationX = locationX;
-        isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
-        isLocationFree = (!isTargetLocationAreaExit && !this.isTargetLocationOutOfBounds(newLocationY + newLocationX)) ?
-          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
-          false;
-        return {
-          locationY: newLocationY,
-          locationX: newLocationX,
-          isTargetAreaExit: isTargetLocationAreaExit,
-          isLocationFree: isLocationFree,
-        };
       case Direction.W:
         newLocationX = this.previousXReference(locationX);
         newLocationY = locationY;
@@ -87,6 +87,69 @@ export class MovementComponent {
       default:
         return null;
     }
+  }
+
+  public getViewAreaLocations(viewDistance: number, direction: Direction, gridLocation: string): string[] {
+    const gridReferences = [];
+    const splitLocation = this.areaStateService.splitLocationReference(gridLocation);
+
+    // TODO Only catering for 1 view distance at the moment
+    let location: string;
+    switch (direction) {
+
+      case Direction.N:
+        // Get first location
+        location = this.nextYReference(splitLocation.locationY) + this.previousXReference(splitLocation.locationX);
+        gridReferences.push(location);
+        // Get second location
+        location = this.nextYReference(splitLocation.locationY) + splitLocation.locationX;
+        gridReferences.push(location);
+        // Get third location
+        location = this.nextYReference(splitLocation.locationY) + this.nextXReference(splitLocation.locationX);
+        gridReferences.push(location);
+        break;
+
+      case Direction.E:
+        // Get first location
+        location = this.nextYReference(splitLocation.locationY) + this.nextXReference(splitLocation.locationX);
+        gridReferences.push(location);
+        // Get second location
+        location = splitLocation.locationY + this.nextXReference(splitLocation.locationX);
+        gridReferences.push(location);
+        // Get third location
+        location = this.previousYReference(splitLocation.locationY) + this.nextXReference(splitLocation.locationX);
+        gridReferences.push(location);
+        break;
+
+      case Direction.S:
+        // Get first location
+        location = this.previousYReference(splitLocation.locationY) + this.nextXReference(splitLocation.locationX);
+        gridReferences.push(location);
+        // Get second location
+        location = this.previousYReference(splitLocation.locationY) + splitLocation.locationX;
+        gridReferences.push(location);
+        // Get third location
+        location = this.previousYReference(splitLocation.locationY) + this.previousXReference(splitLocation.locationX);
+        gridReferences.push(location);
+        break;
+
+      case Direction.W:
+        // Get first location
+        location = this.previousYReference(splitLocation.locationY) + this.previousXReference(splitLocation.locationX);
+        gridReferences.push(location);
+        // Get second location
+        location = splitLocation.locationY + this.previousXReference(splitLocation.locationX);
+        gridReferences.push(location);
+        // Get third location
+        location = this.nextYReference(splitLocation.locationY) + this.previousXReference(splitLocation.locationX);
+        gridReferences.push(location);
+        break;
+
+      default:
+        // Do nothing
+    }
+
+    return gridReferences;
   }
 
   public getDirectionToFace(direction: Direction) {
@@ -243,6 +306,21 @@ export class MovementComponent {
     }
   }
 
+  private getNumberFromDirection(direction: Direction): number | null {
+    switch (direction) {
+      case Direction.N:
+        return 1;
+      case Direction.E:
+        return 2;
+      case Direction.S:
+        return 3;
+      case Direction.W:
+        return 4;
+      default:
+        return null;
+    }
+  }
+
   private previousYReference(yReference: string | null): string {
     return String.fromCharCode(yReference.charCodeAt(0) - 1);
   }
@@ -269,7 +347,7 @@ export class MovementComponent {
     return false;
   }
 
-  private isTargetLocationOutOfBounds(targetLocation: string) {
+  public isTargetLocationOutOfBounds(targetLocation: string): boolean {
     if (targetLocation.indexOf(defaults.areaOuterBoundaries.lowerYBoundary) === -1 &&
       targetLocation.indexOf(defaults.areaOuterBoundaries.upperYBoundary) === -1 &&
       targetLocation.indexOf(defaults.areaOuterBoundaries.lowerXBoundary) === -1 &&

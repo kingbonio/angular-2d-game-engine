@@ -14,7 +14,7 @@ export default {
                         imageFileName: "player1.jpg",
                   },
                   startingPositionX: 4,
-                  startingPositionY: "g",
+                  startingPositionY: "a",
                   direction: Direction.N,
             },
             {
@@ -94,7 +94,7 @@ export default {
                         ],
                         imageFileName: "",
                   },
-                  startingPositionY: "c",
+                  startingPositionY: "f",
                   startingPositionX: 5,
             },
             {
@@ -170,7 +170,7 @@ export default {
                   type: ElementClass.object,
                   elementProperties: {
                         name: "Corner Wall",
-                        direction: Direction.S,
+                        direction: Direction.E,
                         canBeTraversed: false,
                         isInteractive: false,
                         imageFileName: "wall-corner.png",
@@ -209,7 +209,7 @@ export default {
                   elementProperties: {
                         name: "Old chest",
                         objectType: ObjectType.lootObject,
-                        direction: Direction.S,
+                        direction: Direction.N,
                         canBeTraversed: false,
                         isInteractive: true,
                         itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbf693c76",

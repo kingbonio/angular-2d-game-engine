@@ -57,6 +57,9 @@ export default {
         noWeaponEquipped: "You have no weapon equipped to attack with",
         stealAttemptFail: "You failed to steal from the target and you have angered them",
     },
+    enemyConfig: {
+        viewDistance: 1,
+    },
     gameMenu: {
         loadingText: "Loading Area...",
         menuOpenAtLoad: true,
@@ -84,21 +87,21 @@ export default {
     },
     areaExitDestinations: {
         // TODO This is not ideal
-        northExit: "`4",
+        northExit: "h4",
         eastExit: "d8",
-        southExit: "h4",
+        southExit: "`4",
         westExit: "d0",
     },
     areaExitLocations: {
         // TODO This is not ideal
-        northExit: "a4",
+        northExit: "g4",
         eastExit: "d7",
-        southExit: "g4",
+        southExit: "a4",
         westExit: "d1",
     },
     areaOuterBoundaries: {
-        lowerYBoundary: "`",
-        upperYBoundary: "h",
+        lowerYBoundary: "h",
+        upperYBoundary: "`",
         lowerXBoundary: "0",
         upperXBoundary: "8",
     },

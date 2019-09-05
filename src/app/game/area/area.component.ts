@@ -5,7 +5,7 @@ import { AreaType } from './enums/area-type';
 import { ActivatedRoute } from '@angular/router';
 import { AreaStateService } from '../shared/services/area-state.service';
 import { AreaConfigProviderService } from '../shared/services/area-config-provider.service';
-import { CharacterType, Direction, ElementClass } from '../shared/enums';
+import { CharacterType, Direction, ElementClass, CharacterState } from '../shared/enums';
 import { PlayerStateService } from '../shared/services/player-state.service';
 import { Enemy, NPC } from '../character-classes';
 import { Character } from '../character-classes/character';
@@ -33,6 +33,7 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
   public direction = Direction;
   private modalRef: MatDialogRef<any>;
   public ElementClass = ElementClass;
+  public CharacterState = CharacterState;
   public openLootinModalSubscription: Subscription;
 
   constructor(
@@ -116,8 +117,8 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
       this.rebuildArea();
     } else {
       // get the config from the provider
-      this.areaConfig = this.areaConfigProviderService.getAreaConfig(this.areaStateService.currentLocation);
-      this.areaExits = this.areaConfigProviderService.getAreaExits(this.areaStateService.currentLocation);
+      this.areaConfig = this.areaConfigProviderService.getAreaConfig(this.areaStateService.currentArea);
+      this.areaExits = this.areaConfigProviderService.getAreaExits(this.areaStateService.currentArea);
 
       // Set the player location
       // TODO This won't work, needs moving into the loop with a check on player

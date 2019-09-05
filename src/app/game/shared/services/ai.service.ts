@@ -9,7 +9,8 @@ import { BattleCalculatorService } from './battle-calculator.service';
 import { IAreaElement } from '../../area/interfaces';
 import { TimerService } from './timer.service';
 import { GameStateService } from './game-state.service';
-import { CharacterState } from '../enums';
+import { CharacterState, ElementClass } from '../enums';
+import defaults from '../../../shared/defaults';
 
 @Injectable({
   providedIn: 'root'
@@ -30,11 +31,11 @@ export class AiService {
     this.userInputService.playerMoved.subscribe(data => {
       // TODO This may need a more specific flag
       // We don't want to perform AI actions if loading game
-      if (this.gameStateService.battleMode &&
+      if (!this.gameStateService.battleMode &&
           !this.gameStateService.gamePaused &&
           !this.areaStateService.loadingPreviousArea &&
           !this.areaStateService.loadingSavedGame) {
-        this.actionTriggerHandler();
+        this.actionTriggerHandler(true);
       }
     });
     this.timerService.counter.subscribe(value => {
@@ -44,15 +45,20 @@ export class AiService {
           !this.gameStateService.gamePaused &&
           !this.areaStateService.loadingPreviousArea &&
           !this.areaStateService.loadingSavedGame) {
-        this.actionTriggerHandler();
+        this.actionTriggerHandler(false);
       }
     });
   }
 
-  public actionTriggerHandler() {
-    const characters: { gridElement: IAreaElement, gridLocation: string }[] = this.areaStateService.getCharactersOnGrid();
-    characters.forEach(({ gridElement, gridLocation }) => {
-      this.action(gridElement, gridLocation);
+  // TODO Change this parameter
+  public actionTriggerHandler(playerInput: boolean) {
+    const characters: { character: Character, gridLocation: string }[] = this.areaStateService.getCharactersOnGrid();
+    characters.forEach(({ character, gridLocation }) => {
+      if (!playerInput) {
+        this.action(character, gridLocation);
+      }
+
+      this.isPlayerInSight(character, gridLocation);
     });
   }
 
@@ -107,6 +113,26 @@ export class AiService {
           // Do nothing
           break;
       }
+
+      this.isPlayerInSight(character, gridLocation);
+    }
+  }
+
+  private isPlayerInSight(character: Character, gridLocation: string) {
+    const viewAreaLocations = this.movement.getViewAreaLocations(defaults.enemyConfig.viewDistance, character.direction, gridLocation);
+    viewAreaLocations.forEach(location => {
+      if (!this.movement.isTargetLocationOutOfBounds(location) &&
+          this.areaStateService.locations[location].element &&
+          this.areaStateService.locations[location].element.type === ElementClass.player) {
+        console.log("!");
+        console.log(location);
+        return;
+      }
+    });
+  }
+
+
+
     //   if (character.isAsleep || character.isDead() || character.isPaused) {
 
     //     // Not expected to move
@@ -157,6 +183,5 @@ export class AiService {
 
     //     character.isPaused = true;
     //   }
-    }
-  }
+
 }

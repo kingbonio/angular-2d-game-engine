@@ -1,126 +1,126 @@
 const locationDefaults = {
-      a1: {
+      g1: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      a2: {
+      g2: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      a3: {
+      g3: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
       // north door
-      a4: {
+      g4: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      a5: {
+      g5: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      a6: {
+      g6: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      a7: {
+      g7: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      b1: {
+      f1: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      b2: {
+      f2: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      b3: {
+      f3: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      b4: {
+      f4: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      b5: {
+      f5: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      b6: {
+      f6: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      b7: {
+      f7: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      c1: {
+      e1: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      c2: {
+      e2: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      c3: {
+      e3: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      c4: {
+      e4: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      c5: {
+      e5: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      c6: {
+      e6: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      c7: {
+      e7: {
             exitDestination: null,
             areaEffect: null,
             element: null,
@@ -170,128 +170,128 @@ const locationDefaults = {
             element: null,
             floorStyle: null,
       },
-      e1: {
+      c1: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      e2: {
+      c2: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      e3: {
+      c3: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      e4: {
+      c4: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      e5: {
+      c5: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      e6: {
+      c6: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      e7: {
+      c7: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      f1: {
+      b1: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      f2: {
+      b2: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      f3: {
+      b3: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      f4: {
+      b4: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      f5: {
+      b5: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      f6: {
+      b6: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      f7: {
+      b7: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      g1: {
+      a1: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      g2: {
+      a2: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      g3: {
+      a3: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
       // south door
-      g4: {
+      a4: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      g5: {
+      a5: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      g6: {
+      a6: {
             exitDestination: null,
             areaEffect: null,
             element: null,
             floorStyle: null,
       },
-      g7: {
+      a7: {
             exitDestination: null,
             areaEffect: null,
             element: null,
