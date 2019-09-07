@@ -214,9 +214,10 @@ export class MovementComponent {
 
   /**
    * Cycle through the direction of patrol for character
-   * Only move if the next location is free 
+   * Only move if the next location is free
+   * @returns the newLocation of the character
    */
-  public walkRoute(character: Character, gridLocation: string) {
+  public walkRoute(character: Character, gridLocation: string): string {
     const routeIndex = character.currentPositionInRoute;
     const splitLocation = this.areaStateService.splitLocationReference(gridLocation);
     const direction = character.directionsForPatrol[character.currentPositionInRoute];
@@ -235,7 +236,11 @@ export class MovementComponent {
         character.directionsForPatrol[character.currentPositionInRoute - 1];
 
       character.direction = previousDirection;
+
     }
+      // Character has moved to new location, return the new location
+      return newLocation.locationY + newLocation.locationX;
+
   }
 
   /**

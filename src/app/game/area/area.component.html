@@ -1,6 +1,6 @@
 <div class="grid-container" [ngClass]="{ 'show-room-shadow': gameSettingsService.showRoomShadow }">
       <div *ngFor="let key of areaStateService.locationKeys(areaStateService.locations)" class="grid-box">
-            <span style="position: absolute; color: white; z-index: 9999999"> {{ key }} </span>
+            <!-- <span style="position: absolute; color: white; z-index: 9999999"> {{ key }} </span> -->
             <!-- <div *ngIf="element">Has element</div> -->
             <div class="area-exit" *ngIf="areaStateService.locations[key].exitDestination" [ngClass]="locationExit(key, areaStateService.locations[key])">
             </div>
@@ -18,6 +18,7 @@
                         [ngClass]="getCharacterType(areaStateService.locations[key].element)">
 
                         <div class="overlay" [ngClass]="getDeadClass(areaStateService.locations[key].element)">
+                              <span *ngIf="areaStateService.locations[key].element.currentState === CharacterState.hunting" class="alert">!</span>
 
                         </div>
                   </div>

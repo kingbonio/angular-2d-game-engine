@@ -9,7 +9,7 @@ import { BattleCalculatorService } from './battle-calculator.service';
 import { IAreaElement } from '../../area/interfaces';
 import { TimerService } from './timer.service';
 import { GameStateService } from './game-state.service';
-import { CharacterState, ElementClass } from '../enums';
+import { CharacterState, ElementClass, Direction } from '../enums';
 import defaults from '../../../shared/defaults';
 
 @Injectable({
@@ -54,11 +54,18 @@ export class AiService {
   public actionTriggerHandler(playerInput: boolean) {
     const characters: { character: Character, gridLocation: string }[] = this.areaStateService.getCharactersOnGrid();
     characters.forEach(({ character, gridLocation }) => {
+      
+      const previousDirection = character.direction;
+      const previousgridLocation = gridLocation;
+
       if (!playerInput) {
         this.action(character, gridLocation);
+      } else {
+        this.isPlayerInSight(character, gridLocation);
       }
+      console.log("moved from: ", gridLocation);
 
-      this.isPlayerInSight(character, gridLocation);
+      
     });
   }
 
@@ -80,30 +87,15 @@ export class AiService {
           this.movement.wander(character, gridLocation);
           break;
         case CharacterState.patrolling:
-          this.movement.walkRoute(character, gridLocation);
+          const previousDirection = character.direction;
+          const newLocation = this.movement.walkRoute(character, gridLocation);
+          this.isPlayerInSight(character, newLocation);
           break;
         case CharacterState.returningToPatrol:
           this.movement.returnToRouteStart(character, gridLocation);
           break;
         case CharacterState.hunting:
-
-          // Head towards player and attack if next to player, otherwise move towards the player
-          if (this.areaStateService.isCharacterNextToPlayer(gridLocation)) {
-
-            const playerLocation = this.areaStateService.splitLocationReference(this.areaStateService.playerLocation);
-
-            const characterLocation = this.areaStateService.splitLocationReference(gridLocation);
-
-            const directionToPlayer = this.movement.getDirectionWithRespectToPlayer(playerLocation, characterLocation, true);
-
-            character.direction = directionToPlayer;
-
-            this.playerStateService.receiveAttack(character);
-          } else {
-
-            // Character needs to get closer to attack
-            this.movement.moveWithRespectToPlayer(character, gridLocation, true);
-          }
+          this.huntPlayer(character, gridLocation);
           break;
         case CharacterState.afraid:
           // Character is low health and needs to escape
@@ -114,7 +106,7 @@ export class AiService {
           break;
       }
 
-      this.isPlayerInSight(character, gridLocation);
+      // this.isPlayerInSight(character, gridLocation);
     }
   }
 
@@ -124,11 +116,31 @@ export class AiService {
       if (!this.movement.isTargetLocationOutOfBounds(location) &&
           this.areaStateService.locations[location].element &&
           this.areaStateService.locations[location].element.type === ElementClass.player) {
-        console.log("!");
-        console.log(location);
+            // TODO Move this somewhere more sensible
+        character.currentState = CharacterState.hunting;
         return;
       }
-    });
+    }, this);
+  }
+
+  private huntPlayer(character: Character, gridLocation: string) {
+    // Head towards player and attack if next to player, otherwise move towards the player
+    if (this.areaStateService.isCharacterNextToPlayer(gridLocation)) {
+
+      const playerLocation = this.areaStateService.splitLocationReference(this.areaStateService.playerLocation);
+
+      const characterLocation = this.areaStateService.splitLocationReference(gridLocation);
+
+      const directionToPlayer = this.movement.getDirectionWithRespectToPlayer(playerLocation, characterLocation, true);
+
+      character.direction = directionToPlayer;
+
+      this.playerStateService.receiveAttack(character);
+    } else {
+
+      // Character needs to get closer to attack
+      this.movement.moveWithRespectToPlayer(character, gridLocation, true);
+    }
   }
 
 

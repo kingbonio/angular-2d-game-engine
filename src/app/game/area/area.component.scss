@@ -103,6 +103,17 @@
                               width: 80px;
                               height: 80px;
                         }
+
+                        .overlay {
+
+                              .alert {
+                                    position: absolute;
+                                    left: 35px;
+                                    top: 25px;
+                                    color: white;
+                                    font-size: 34px;
+                              }
+                        }
                   }
 
                   // .view-area {

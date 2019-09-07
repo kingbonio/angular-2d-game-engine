@@ -95,7 +95,7 @@ export class AreaStateService implements OnInit {
    * @param targetLocation The location we want the distance from
    */
   public getDistanceBetweenLocations(currentLocation: ILocation, targetLocation: ILocation): { yDistance: number, xDistance: number } {
-    const differenceBetweenY = currentLocation.locationY.charCodeAt(0) - targetLocation.locationY.charCodeAt(0);
+    const differenceBetweenY = targetLocation.locationY.charCodeAt(0) - currentLocation.locationY.charCodeAt(0);
     const differenceBetweenX = currentLocation.locationX - targetLocation.locationX;
     return { yDistance: differenceBetweenY, xDistance: differenceBetweenX };
   }
