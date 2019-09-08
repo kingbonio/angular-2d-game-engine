@@ -55,11 +55,11 @@ export class AiService {
     const characters: { character: Character, gridLocation: string }[] = this.areaStateService.getCharactersOnGrid();
     characters.forEach(({ character, gridLocation }) => {
 
-      if (!playerInput) {
-        this.action(character, gridLocation);
-      }
       if (this.isPlayerInSight(character, gridLocation)) {
         this.restartHunting(character);
+      }
+      if (!playerInput) {
+        this.action(character, gridLocation);
       }
 
     });
@@ -91,10 +91,6 @@ export class AiService {
           }
           break;
         case CharacterState.returningToPosition:
-          if (this.isPlayerInSight(character, gridLocation)) {
-            this.restartHunting(character);
-          }
-
           if (character.startingLocation === gridLocation) {
             character.currentState = character.startingState;
             character.currentPositionInRoute = 0;
