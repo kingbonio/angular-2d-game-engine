@@ -91,8 +91,15 @@ export class AiService {
           const newLocation = this.movement.walkRoute(character, gridLocation);
           this.isPlayerInSight(character, newLocation);
           break;
-        case CharacterState.returningToPatrol:
-          this.movement.returnToRouteStart(character, gridLocation);
+        case CharacterState.returningToPosition:
+          this.isPlayerInSight(character, gridLocation);
+
+          if (character.startingLocation === gridLocation) {
+            character.currentState = character.startingState;
+            character.currentPositionInRoute = 0;
+          } else {
+            this.movement.returnToStartingPosition(character, gridLocation, character.startingLocation);
+          }
           break;
         case CharacterState.hunting:
           this.huntPlayer(character, gridLocation);

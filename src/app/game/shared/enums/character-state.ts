@@ -3,7 +3,7 @@ export enum CharacterState {
       patrolling,
       hunting,
       afraid,
-      returningToPatrol,
+      returningToPosition,
       asleep,
       still,
       dead,

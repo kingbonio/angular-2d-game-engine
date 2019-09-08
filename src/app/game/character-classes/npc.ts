@@ -17,10 +17,12 @@ export class NPC extends Character {
       public isAngry: boolean;
       public isPaused: boolean;
       public direction: Direction;
+      public startingLocation: string;
       public patrolArea: boolean;
       public directionsForPatrol: Direction[];
       public currentPositionInRoute: number;
       public currentState: CharacterState;
+      public startingState: CharacterState;
       public armour: IArmour;
       public weapons: IWeapons;
       public loot: IInventoryItem[];
@@ -37,9 +39,11 @@ export class NPC extends Character {
             this.isAngry = characterDetails.angry;
             this.speechResponse = characterDetails.speechResponse;
             this.direction = characterDetails.direction;
+            this.startingLocation = characterDetails.startingLocation;
             this.patrolArea = characterDetails.patrolArea;
             this.directionsForPatrol = characterDetails.directionsForPatrol;
             this.currentPositionInRoute = 0,
+            this.startingState = characterDetails.startingState;
             this.currentState = characterDetails.startingState;
             this.maxHp = characterDetails.maxHp;
             this.lowHealthThreshold = characterDetails.lowHealthThreshold;

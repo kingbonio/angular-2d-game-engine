@@ -58,6 +58,7 @@ export default {
                               keyItems.rustyOldKey,
                         ],
                         imageFileName: "",
+                        startingLocation: "a2",
                   },
                   startingPositionX: 2,
                   startingPositionY: "a",

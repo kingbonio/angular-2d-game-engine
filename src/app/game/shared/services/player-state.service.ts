@@ -189,6 +189,7 @@ export class PlayerStateService {
             // Emit event for looting modal
             this.openLootingModal.emit(target);
             return;
+            // TODO update state here
           } else if (target.isAsleep) {
             const stealSuccess = this.attemptSteal(target);
             if (stealSuccess) {
@@ -201,6 +202,7 @@ export class PlayerStateService {
                   name: defaults.dialogue.computerName
                 }
               );
+              // TODO change state here
               target.isAsleep = false;
               target.isAngry = true;
             }

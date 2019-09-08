@@ -246,21 +246,29 @@ export class MovementComponent {
   /**
    * Moves the character towards the starting position of their patrol route
    */
-  public returnToRouteStart(character: Character, gridLocation: string) {
+  public returnToStartingPosition(character: Character, gridLocation: string, newLocation: string) {
+    this.moveWithRespectToLocation(character, gridLocation, newLocation, true);
+  }
 
+  /**
+   * Moves the character towards or away from the player
+   */
+  public moveWithRespectToPlayer(character: Character, gridLocation: string, moveTowardsPlayer: boolean) {
+    const playerLocation = this.areaStateService.playerLocation;
+    this.moveWithRespectToLocation(character, gridLocation, playerLocation, moveTowardsPlayer);
   }
 
   /**
    * If direction is available move the chracter towards the player's location
    * @param character The character that will be moving
    * @param characterLocation The location of the character in question
-   * @param moveTowardsPlayer Whether to more towards or away from player's location
+   * @param moveTowardsLocation Whether to more towards or away from player's location
    */
-  public moveWithRespectToPlayer(character: any, characterLocation: string, moveTowardsPlayer: boolean) {
-    const playerLocation = this.areaStateService.playerLocation;
-    const splitPlayerLocation = this.areaStateService.splitLocationReference(playerLocation);
+  public moveWithRespectToLocation(character: any, characterLocation: string, newLocation: string, moveTowardsLocation: boolean) {
+
+    const splitNewLocation = this.areaStateService.splitLocationReference(newLocation);
     const splitCharacterLocation = this.areaStateService.splitLocationReference(characterLocation);
-    const furthestDirectionToPlayer = this.getDirectionWithRespectToPlayer(splitPlayerLocation, splitCharacterLocation, moveTowardsPlayer);
+    const furthestDirectionToPlayer = this.getDirectionWithRespectToPlayer(splitNewLocation, splitCharacterLocation, moveTowardsLocation);
     this.areaStateService.locations[characterLocation].element.direction = furthestDirectionToPlayer;
     const targetLocationDetails = this.getNextLocation(splitCharacterLocation.locationY, splitCharacterLocation.locationX, furthestDirectionToPlayer);
 

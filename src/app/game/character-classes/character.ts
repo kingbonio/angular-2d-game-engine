@@ -10,10 +10,12 @@ export class Character {
       isAngry: boolean;
       type: ElementClass;
       direction: Direction;
+      startingLocation: string;
       patrolArea: boolean;
       directionsForPatrol: Direction[];
       currentPositionInRoute: number;
       currentState: CharacterState;
+      startingState: CharacterState;
       armour?: IArmour;
       weapons?: IWeapons;
       loot: IInventoryItem[];
