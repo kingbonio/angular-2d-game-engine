@@ -57,18 +57,19 @@ export class AiService {
 
       if (!playerInput) {
         this.action(character, gridLocation);
-      } else {
-        if (this.isPlayerInSight(character, gridLocation)) {
-          this.restartHunting(character);
-        }
       }
+      if (this.isPlayerInSight(character, gridLocation)) {
+        this.restartHunting(character);
+      }
+
     });
+
+
   }
 
   // TODO types
   public action(character: any, gridLocation: string) {
     if (character) {
-      console.log(character.name + " " + character.currentState);
       switch (character.currentState) {
         case CharacterState.dead:
           // Do nothing
@@ -83,11 +84,10 @@ export class AiService {
           this.movement.wander(character, gridLocation);
           break;
         case CharacterState.patrolling:
-          const previousDirection = character.direction;
           const newLocation = this.movement.walkRoute(character, gridLocation);
+
           if (this.isPlayerInSight(character, newLocation)) {
-
-
+            this.restartHunting(character);
           }
           break;
         case CharacterState.returningToPosition:
@@ -107,6 +107,7 @@ export class AiService {
           }
           break;
         case CharacterState.hunting:
+          console.log(character.currentHuntingDuration);
           if (character.currentHuntingDuration >= character.maxHuntingDuration) {
             character.currentHuntingDuration = 0;
             character.currentState = CharacterState.returningToPosition;
@@ -116,7 +117,6 @@ export class AiService {
             character.currentHuntingDuration++;
             this.huntPlayer(character, gridLocation);
           }
-          console.log(character.currentHuntingDuration);
 
           break;
         case CharacterState.afraid:
@@ -140,16 +140,12 @@ export class AiService {
   private isPlayerInSight(character: Character, gridLocation: string): boolean {
     const viewAreaLocations = this.movement.getViewAreaLocations(defaults.enemyConfig.viewDistance, character.direction, gridLocation);
 
-    let isPlayerInSight = false;
     // We want to know if we can find the player in the given locations, return true if found
-    isPlayerInSight = !!viewAreaLocations.find(location => {
+    return !!viewAreaLocations.find(location => {
       return (!this.movement.isTargetLocationOutOfBounds(location) &&
         this.areaStateService.locations[location].element &&
         this.areaStateService.locations[location].element.type === ElementClass.player);
     }, this);
-
-    console.log(isPlayerInSight);
-    return isPlayerInSight;
   }
 
   private huntPlayer(character: Character, gridLocation: string) {
