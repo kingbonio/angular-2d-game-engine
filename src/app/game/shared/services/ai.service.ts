@@ -32,9 +32,9 @@ export class AiService {
       // TODO This may need a more specific flag
       // We don't want to perform AI actions if loading game
       if (!this.gameStateService.battleMode &&
-          !this.gameStateService.gamePaused &&
-          !this.areaStateService.loadingPreviousArea &&
-          !this.areaStateService.loadingSavedGame) {
+        !this.gameStateService.gamePaused &&
+        !this.areaStateService.loadingPreviousArea &&
+        !this.areaStateService.loadingSavedGame) {
         this.actionTriggerHandler(true);
       }
     });
@@ -42,9 +42,9 @@ export class AiService {
       // TODO This may need a more specific flag
       // We don't want to perform AI actions if loading game
       if (!this.gameStateService.battleMode &&
-          !this.gameStateService.gamePaused &&
-          !this.areaStateService.loadingPreviousArea &&
-          !this.areaStateService.loadingSavedGame) {
+        !this.gameStateService.gamePaused &&
+        !this.areaStateService.loadingPreviousArea &&
+        !this.areaStateService.loadingSavedGame) {
         this.actionTriggerHandler(false);
       }
     });
@@ -54,18 +54,14 @@ export class AiService {
   public actionTriggerHandler(playerInput: boolean) {
     const characters: { character: Character, gridLocation: string }[] = this.areaStateService.getCharactersOnGrid();
     characters.forEach(({ character, gridLocation }) => {
-      
-      const previousDirection = character.direction;
-      const previousgridLocation = gridLocation;
 
       if (!playerInput) {
         this.action(character, gridLocation);
       } else {
-        this.isPlayerInSight(character, gridLocation);
+        if (this.isPlayerInSight(character, gridLocation)) {
+          this.restartHunting(character);
+        }
       }
-      console.log("moved from: ", gridLocation);
-
-      
     });
   }
 
@@ -89,20 +85,39 @@ export class AiService {
         case CharacterState.patrolling:
           const previousDirection = character.direction;
           const newLocation = this.movement.walkRoute(character, gridLocation);
-          this.isPlayerInSight(character, newLocation);
+          if (this.isPlayerInSight(character, newLocation)) {
+
+
+          }
           break;
         case CharacterState.returningToPosition:
-          this.isPlayerInSight(character, gridLocation);
+          if (this.isPlayerInSight(character, gridLocation)) {
+            this.restartHunting(character);
+          }
 
           if (character.startingLocation === gridLocation) {
             character.currentState = character.startingState;
             character.currentPositionInRoute = 0;
+
+            // Force a new action
+            this.action(character, gridLocation);
+
           } else {
             this.movement.returnToStartingPosition(character, gridLocation, character.startingLocation);
           }
           break;
         case CharacterState.hunting:
-          this.huntPlayer(character, gridLocation);
+          if (character.currentHuntingDuration >= character.maxHuntingDuration) {
+            character.currentHuntingDuration = 0;
+            character.currentState = CharacterState.returningToPosition;
+
+            this.action(character, gridLocation);
+          } else {
+            character.currentHuntingDuration++;
+            this.huntPlayer(character, gridLocation);
+          }
+          console.log(character.currentHuntingDuration);
+
           break;
         case CharacterState.afraid:
           // Character is low health and needs to escape
@@ -117,17 +132,24 @@ export class AiService {
     }
   }
 
-  private isPlayerInSight(character: Character, gridLocation: string) {
+  private restartHunting(character: Character) {
+    character.currentState = CharacterState.hunting;
+    character.currentHuntingDuration = 0;
+  }
+
+  private isPlayerInSight(character: Character, gridLocation: string): boolean {
     const viewAreaLocations = this.movement.getViewAreaLocations(defaults.enemyConfig.viewDistance, character.direction, gridLocation);
-    viewAreaLocations.forEach(location => {
-      if (!this.movement.isTargetLocationOutOfBounds(location) &&
-          this.areaStateService.locations[location].element &&
-          this.areaStateService.locations[location].element.type === ElementClass.player) {
-            // TODO Move this somewhere more sensible
-        character.currentState = CharacterState.hunting;
-        return;
-      }
+
+    let isPlayerInSight = false;
+    // We want to know if we can find the player in the given locations, return true if found
+    isPlayerInSight = !!viewAreaLocations.find(location => {
+      return (!this.movement.isTargetLocationOutOfBounds(location) &&
+        this.areaStateService.locations[location].element &&
+        this.areaStateService.locations[location].element.type === ElementClass.player);
     }, this);
+
+    console.log(isPlayerInSight);
+    return isPlayerInSight;
   }
 
   private huntPlayer(character: Character, gridLocation: string) {
@@ -152,55 +174,55 @@ export class AiService {
 
 
 
-    //   if (character.isAsleep || character.isDead() || character.isPaused) {
+  //   if (character.isAsleep || character.isDead() || character.isPaused) {
 
-    //     // Not expected to move
-    //     if (character.isPaused) {
-    //       character.isPaused = false;
-    //     }
-    //   } else {
+  //     // Not expected to move
+  //     if (character.isPaused) {
+  //       character.isPaused = false;
+  //     }
+  //   } else {
 
-    //     // Expected to perform an action
-    //     if (!character.isAngry && !character.isLowHealth()) {
+  //     // Expected to perform an action
+  //     if (!character.isAngry && !character.isLowHealth()) {
 
-    //       // TODO This needs to accommodate the other states
-    //       if (character.walkRoute) {
-    //         this.movement.walkRoute(character, gridLocation);
-    //       } else {
-    //         // Untroubled character, do some wandering
-    //         this.movement.wander(character, gridLocation);
-    //       }
+  //       // TODO This needs to accommodate the other states
+  //       if (character.walkRoute) {
+  //         this.movement.walkRoute(character, gridLocation);
+  //       } else {
+  //         // Untroubled character, do some wandering
+  //         this.movement.wander(character, gridLocation);
+  //       }
 
-    //       character.isPaused = true;
-    //     } else if (character.isAngry && !character.isLowHealth()) {
+  //       character.isPaused = true;
+  //     } else if (character.isAngry && !character.isLowHealth()) {
 
-    //       // Head towards player and attack if next to player, otherwise move towards the player
-    //       if (this.areaStateService.isCharacterNextToPlayer(gridLocation)) {
+  //       // Head towards player and attack if next to player, otherwise move towards the player
+  //       if (this.areaStateService.isCharacterNextToPlayer(gridLocation)) {
 
-    //         const playerLocation = this.areaStateService.splitLocationReference(this.areaStateService.playerLocation);
+  //         const playerLocation = this.areaStateService.splitLocationReference(this.areaStateService.playerLocation);
 
-    //         const characterLocation = this.areaStateService.splitLocationReference(gridLocation);
+  //         const characterLocation = this.areaStateService.splitLocationReference(gridLocation);
 
-    //         const directionToPlayer = this.movement.getDirectionWithRespectToPlayer(playerLocation, characterLocation, true);
+  //         const directionToPlayer = this.movement.getDirectionWithRespectToPlayer(playerLocation, characterLocation, true);
 
-    //         character.direction = directionToPlayer;
+  //         character.direction = directionToPlayer;
 
-    //         this.playerStateService.receiveAttack(character);
-    //       } else {
+  //         this.playerStateService.receiveAttack(character);
+  //       } else {
 
-    //         // Character needs to get closer to attack
-    //         this.movement.moveWithRespectToPlayer(character, gridLocation, true);
-    //       }
-    //     } else {
+  //         // Character needs to get closer to attack
+  //         this.movement.moveWithRespectToPlayer(character, gridLocation, true);
+  //       }
+  //     } else {
 
-    //       // Character is low health and needs to escape
-    //       this.movement.moveWithRespectToPlayer(character, gridLocation, false);
+  //       // Character is low health and needs to escape
+  //       this.movement.moveWithRespectToPlayer(character, gridLocation, false);
 
-    //       // Maybe move these to a response method on character
-    //       character.angry = false;
-    //     }
+  //       // Maybe move these to a response method on character
+  //       character.angry = false;
+  //     }
 
-    //     character.isPaused = true;
-    //   }
+  //     character.isPaused = true;
+  //   }
 
 }

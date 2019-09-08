@@ -30,6 +30,7 @@ export default {
                         patrolArea: false,
                         directionsForPatrol: [
                         ],
+                        maxHuntingDuration: 3,
                         startingState: CharacterState.wandering,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",

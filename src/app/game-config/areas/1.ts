@@ -37,6 +37,7 @@ export default {
                               Direction.N,
                               Direction.E,
                         ],
+                        maxHuntingDuration: 3,
                         startingState: CharacterState.patrolling,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
@@ -111,6 +112,7 @@ export default {
             //             patrolArea: false,
             //             directionsForPatrol: [
             //             ],
+            // maxHuntingDuration: 3,
             //             startingState: CharacterState.wandering,
             //             speechResponse: "Stop bothering me, you fool!",
             //             sleepResponse: "Zzzzzzzzzzzzzzzz",

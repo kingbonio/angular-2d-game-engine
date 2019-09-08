@@ -21,6 +21,8 @@ export class NPC extends Character {
       public patrolArea: boolean;
       public directionsForPatrol: Direction[];
       public currentPositionInRoute: number;
+      public currentHuntingDuration: number;
+      public maxHuntingDuration: number;
       public currentState: CharacterState;
       public startingState: CharacterState;
       public armour: IArmour;
@@ -42,7 +44,9 @@ export class NPC extends Character {
             this.startingLocation = characterDetails.startingLocation;
             this.patrolArea = characterDetails.patrolArea;
             this.directionsForPatrol = characterDetails.directionsForPatrol;
-            this.currentPositionInRoute = 0,
+            this.currentPositionInRoute = (characterDetails.currentPositionInRoute === undefined) ? 0 : characterDetails.currentPositionInRoute;
+            this.currentHuntingDuration = (characterDetails.currentHuntingDuration === undefined) ? 0 : characterDetails.currentHuntingDuration;
+            this.maxHuntingDuration = characterDetails.maxHuntingDuration;
             this.startingState = characterDetails.startingState;
             this.currentState = characterDetails.startingState;
             this.maxHp = characterDetails.maxHp;

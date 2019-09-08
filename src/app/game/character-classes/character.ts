@@ -14,6 +14,8 @@ export class Character {
       patrolArea: boolean;
       directionsForPatrol: Direction[];
       currentPositionInRoute: number;
+      currentHuntingDuration: number;
+      maxHuntingDuration: number;
       currentState: CharacterState;
       startingState: CharacterState;
       armour?: IArmour;

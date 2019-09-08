@@ -106,12 +106,31 @@
 
                         .overlay {
 
-                              .alert {
+                              .character-state {
                                     position: absolute;
-                                    left: 35px;
-                                    top: 25px;
-                                    color: white;
+                                    top: 50%; right: 50%;
+                                    transform: translate(50%,-50%);
                                     font-size: 34px;
+                              }
+
+                              .hunting {
+                                    color: red;
+                              }
+
+                              .patrolling {
+                                    color: yellow;
+                              }
+
+                              .return-to-position {
+                                    color: orange;
+                              }
+
+                              .asleep {
+                                    color: white;
+                              }
+
+                              .wandering {
+                                    color: blue;
                               }
                         }
                   }
