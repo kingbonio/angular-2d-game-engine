@@ -2,7 +2,6 @@
       width: 400px;
       display: flex;
       justify-content: center;
-      background-color: grey;
       color: white;
       font-family: arial;
       font-weight: 700;
@@ -21,7 +20,7 @@
                   width: 80px;
                   height: 80px;
                   margin: auto;
-                  border: solid red 2px;
+                  border: solid #121010 2px;
 
                   .save-icon {
                         width: 100%;

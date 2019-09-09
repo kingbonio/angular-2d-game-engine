@@ -2,9 +2,8 @@
   <!-- Click on item on character to set in inventory -->
 
   <div class="active-items">
-    Active Item:
-    <div class="active-item">
-      <span class="slot" (click)="removeActiveItem(equipmentManagerService.activeItem)">
+    <div class="active-item"><span class="slot-name">Active Item: </span>
+      <span class="equipped-slot" (click)="removeActiveItem(equipmentManagerService.activeItem)">
         <img *ngIf="equipmentManagerService.activeItem && equipmentManagerService.activeItem.imageFileName"
              [src]="getImageSource(equipmentManagerService.activeItem)" title="{{equipmentManagerService.activeItem.name}}" />
       </span>
@@ -12,10 +11,10 @@
   </div>
 
   <div class="armour">
-    Armour:
+    <div class="title">Armour:</div>
     <div class="head">
-      <span class="title">Head: </span>
-      <div class="slot" (click)="removeArmour(equipmentManagerService.armour.head)">
+      <span class="slot-name">Head: </span>
+      <div class="equipped-slot" (click)="removeArmour(equipmentManagerService.armour.head)">
         <img *ngIf="equipmentManagerService.armour.head && equipmentManagerService.armour.head.imageFileName"
           [src]="getImageSource(equipmentManagerService.armour.head)"
           title="{{equipmentManagerService.armour.head.name}}" />
@@ -27,8 +26,8 @@
     </div>
 
     <div class="arms">
-      <span class="title">Arms: </span>
-      <div class="slot" (click)="removeArmour(equipmentManagerService.armour.arms)">
+      <span class="slot-name">Arms: </span>
+      <div class="equipped-slot" (click)="removeArmour(equipmentManagerService.armour.arms)">
         <img *ngIf="equipmentManagerService.armour.arms && equipmentManagerService.armour.arms.imageFileName"
           [src]="getImageSource(equipmentManagerService.armour.arms)"
           title="{{equipmentManagerService.armour.arms.name}}" />
@@ -40,8 +39,8 @@
     </div>
 
     <div class="hands">
-      <span class="title">Hands: </span>
-      <div class="slot" (click)="removeArmour(equipmentManagerService.armour.hands)">
+      <span class="slot-name">Hands: </span>
+      <div class="equipped-slot" (click)="removeArmour(equipmentManagerService.armour.hands)">
         <img *ngIf="equipmentManagerService.armour.hands && equipmentManagerService.armour.hands.imageFileName"
           [src]="getImageSource(equipmentManagerService.armour.hands)"
           title="{{equipmentManagerService.armour.hands.name}}" />
@@ -53,8 +52,8 @@
     </div>
 
     <div class="torso">
-      <span class="title">Torso: </span>
-      <div class="slot" (click)="removeArmour(equipmentManagerService.armour.torso)">
+      <span class="slot-name">Torso: </span>
+      <div class="equipped-slot" (click)="removeArmour(equipmentManagerService.armour.torso)">
         <img *ngIf="equipmentManagerService.armour.torso && equipmentManagerService.armour.torso.imageFileName"
           [src]="getImageSource(equipmentManagerService.armour.torso)"
           title="{{equipmentManagerService.armour.torso.name}}" />
@@ -66,8 +65,8 @@
     </div>
 
     <div class="legs">
-      <span class="title">Legs: </span>
-      <div class="slot" (click)="removeArmour(equipmentManagerService.armour.legs)">
+      <span class="slot-name">Legs: </span>
+      <div class="equipped-slot" (click)="removeArmour(equipmentManagerService.armour.legs)">
         <img *ngIf="equipmentManagerService.armour.legs && equipmentManagerService.armour.legs.imageFileName"
           [src]="getImageSource(equipmentManagerService.armour.legs)"
           title="{{equipmentManagerService.armour.legs.name}}" />
@@ -79,8 +78,8 @@
     </div>
 
     <div class="boots">
-      <span class="title">Boots: </span>
-      <div class="slot" (click)="removeArmour(equipmentManagerService.armour.boots)">
+      <span class="slot-name">Boots: </span>
+      <div class="equipped-slot" (click)="removeArmour(equipmentManagerService.armour.boots)">
         <img *ngIf="equipmentManagerService.armour.boots && equipmentManagerService.armour.boots.imageFileName"
           [src]="getImageSource(equipmentManagerService.armour.boots)"
           title="{{equipmentManagerService.armour.boots.name}}" />
@@ -91,8 +90,8 @@
     </div>
     
     <div class="shield">
-      <span class="title">Shield: </span>
-      <div class="slot" (click)="removeArmour(equipmentManagerService.armour.shield)">
+      <span class="slot-name">Shield: </span>
+      <div class="equipped-slot" (click)="removeArmour(equipmentManagerService.armour.shield)">
         <img *ngIf="equipmentManagerService.armour.shield && equipmentManagerService.armour.shield.imageFileName"
           [src]="getImageSource(equipmentManagerService.armour.shield)"
           title="{{equipmentManagerService.armour.shield.name}}" />
@@ -105,8 +104,8 @@
 
   <div class="weapons">
     <div class="primary">
-      <span class="title">Weapon: </span>
-      <div class="slot" (click)="removeWeapon(equipmentManagerService.weapons.primary)">
+      <span class="slot-name">Weapon: </span>
+      <div class="equipped-slot" (click)="removeWeapon(equipmentManagerService.weapons.primary)">
         <img *ngIf="equipmentManagerService.weapons.primary && equipmentManagerService.weapons.primary.imageFileName"
              [src]="getImageSource(equipmentManagerService.weapons.primary)"
              title="{{equipmentManagerService.weapons.primary.name}}" />

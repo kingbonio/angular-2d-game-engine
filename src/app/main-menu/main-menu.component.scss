@@ -1,8 +1,10 @@
 .main-menu {
+      position: relative;
       width: 750px;
       height: 747px;
-      background-color: black;
-      position: relative;
+      margin: auto;
+      border: solid rgb(209, 205, 198) 2px;
+      background-color: #121010;
 
       .options-container {
             width: 410px;
@@ -11,7 +13,8 @@
             top: 50%;
             transform: translate(-50%, -50%);
             padding: 40px;
-            background-color: white;
+            background-image: linear-gradient(to bottom right, #737373, #121010);
+            border: solid rgb(209, 205, 198) 2px;
             text-align: center;
             
             .new-game, .load-game, .game-settings {
@@ -21,8 +24,8 @@
                         font-family: arial;
                         font-weight: 700;
                         text-decoration: none;
-                        color: gray;
                         cursor: pointer;
+                        color: rgb(209, 205, 198);
                   }
             }
       }

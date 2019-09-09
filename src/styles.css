@@ -1,19 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
 body {
-    margin: 0px;
+      position: relative;
+      margin: 0px;
+      background-color: black;
+      color: rgb(209, 205, 198);
+}
+
+app-root {
+      margin: auto;
 }
 
 app-area {
       position: relative;
+      z-index: 9999;
+}
+
+app-game-settings {
+      background-image: linear-gradient(to bottom right, #737373, #121010);
 }
 
 .cdk-overlay-container {
       z-index: 99999;
+      padding-top: 0px;
       position: absolute;
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      padding-top: 0px;
 }
 
 .looting-modal .mat-dialog-container, .game-modal .mat-dialog-container {
@@ -29,10 +41,15 @@ app-area {
       max-height: inherit;
 }
 
-.looting-modal {
-      background-color: #ec8013;
+.looting-modal, .menu-modal {
+      background-image: linear-gradient(to bottom right, #737373, #121010);
+      border: solid #121010 3px;
+      margin: auto;
 }
 
-.game-modal {
-      background-color: #ec8013;
+.looting-modal {
 }
+
+.menu-modal {
+}
+

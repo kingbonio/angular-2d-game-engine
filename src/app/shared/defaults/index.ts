@@ -36,7 +36,7 @@ export default {
         minimumOnScreenTime: 4000,
         nullElementResponse: "There is no response",
         keyItemNotActive: "You have not got the correct active item",
-        computerName: "Computer",
+        computerName: "Game",
         computerCharacterType: "computer",
         maximumMessagesOnScreen: 2,
         attackSuccess: (damage) => {
@@ -84,6 +84,9 @@ export default {
     gameSettings: {
         allowInGameMenu: true,
         showRoomShadow: true,
+    },
+    gameConfig: {
+        dialogueLines: 8,
     },
     areaExitDestinations: {
         // TODO This is not ideal

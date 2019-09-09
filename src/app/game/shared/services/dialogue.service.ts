@@ -22,7 +22,7 @@ export class DialogueService {
       const date = new Date();
       message.time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 
-      if (this.messagesOnScreen.length >= 5) {
+      if (this.messagesOnScreen.length >= defaults.gameConfig.dialogueLines) {
         this.messagesOnScreen.pop();
       }
       this.messagesOnScreen.unshift(message);
