@@ -1,27 +1,30 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA } from "@angular/material";
 import { Character } from '../../character-classes/character';
 import { InventoryManagerService } from '../services/inventory-manager.service';
 import { DialogueService } from '../../shared/services/dialogue.service';
 import defaults from '../../../shared/defaults';
+import { GameStateService } from '../../shared/services/game-state.service';
 
 @Component({
   selector: 'app-looting',
   templateUrl: './looting-modal.component.html',
   styleUrls: ['./looting-modal.component.scss']
 })
-export class LootingModalComponent implements OnInit {
+export class LootingModalComponent implements OnInit, OnDestroy {
   public target: Character;
 
   constructor(
     private inventoryManagerService: InventoryManagerService,
     private dialogueService: DialogueService,
+    private gameStateService: GameStateService,
     @Inject(MAT_DIALOG_DATA) data
   ) {
     this.target = data;
   }
 
   ngOnInit() {
+    this.gameStateService.gamePaused = true;
   }
 
   public useItem(itemSlot: string) {
@@ -37,6 +40,10 @@ export class LootingModalComponent implements OnInit {
         name: defaults.dialogue.computerName
       });
     }
+  }
+
+  ngOnDestroy() {
+    this.gameStateService.gamePaused = false;
   }
 
 }

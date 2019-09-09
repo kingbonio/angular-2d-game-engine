@@ -27,40 +27,42 @@ export class UserInputService {
     if (this.gameStateService.awaitingKeyboardSetting) {
       this.userSetKey.next($e.keyCode);
     } else {
-      const characterAction: IUserAction = this.gameSettingsService.getCharacterActionType($e.keyCode);
-      if (characterAction) {
-        switch (characterAction.type) {
+      if (!this.gameStateService.gamePaused) {
+        const characterAction: IUserAction = this.gameSettingsService.getCharacterActionType($e.keyCode);
+        if (characterAction) {
+          switch (characterAction.type) {
 
-          case UserActionTypes.move:
-            this.playerStateService.move(characterAction.direction);
-            this.playerMoved.next("forceCharacterMove");
+            case UserActionTypes.move:
+              this.playerStateService.move(characterAction.direction);
+              this.playerMoved.next("forceCharacterMove");
 
-            break;
+              break;
 
-          case UserActionTypes.direction:
-            this.playerStateService.direction = characterAction.direction;
-            break;
+            case UserActionTypes.direction:
+              this.playerStateService.direction = characterAction.direction;
+              break;
 
-          case UserActionTypes.interaction:
-            switch (characterAction.interaction) {
+            case UserActionTypes.interaction:
+              switch (characterAction.interaction) {
 
-              case UserInteractionTypes.attack:
-                this.playerStateService.attack();
-                this.playerMoved.next("forceCharacterMove");
-                break;
+                case UserInteractionTypes.attack:
+                  this.playerStateService.attack();
+                  this.playerMoved.next("forceCharacterMove");
+                  break;
 
-              case UserInteractionTypes.guard:
-                this.playerStateService.guard();
-                break;
+                case UserInteractionTypes.guard:
+                  this.playerStateService.guard();
+                  break;
 
-              case UserInteractionTypes.interact:
-                this.playerStateService.interact();
-                break;
+                case UserInteractionTypes.interact:
+                  this.playerStateService.interact();
+                  break;
 
-              case UserInteractionTypes.speak:
-                this.playerStateService.speak();
-                break;
-            }
+                case UserInteractionTypes.speak:
+                  this.playerStateService.speak();
+                  break;
+              }
+          }
         }
       }
     }

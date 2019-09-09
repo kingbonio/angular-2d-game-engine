@@ -103,7 +103,6 @@ export class AiService {
           }
           break;
         case CharacterState.hunting:
-          console.log(character.currentHuntingDuration);
           if (character.currentHuntingDuration >= character.maxHuntingDuration) {
             character.currentHuntingDuration = 0;
             character.currentState = CharacterState.returningToPosition;
@@ -138,9 +137,10 @@ export class AiService {
 
     // We want to know if we can find the player in the given locations, return true if found
     return !!viewAreaLocations.find(location => {
-      return (!this.movement.isTargetLocationOutOfBounds(location) &&
-        this.areaStateService.locations[location].element &&
-        this.areaStateService.locations[location].element.type === ElementClass.player);
+      return (location === this.playerStateService.locationY + this.playerStateService.locationX);
+      // return (!this.movement.isTargetLocationOutOfBounds(location) &&
+      //   this.areaStateService.locations[location].element &&
+      //   this.areaStateService.locations[location].element.type === ElementClass.player);
     }, this);
   }
 
