@@ -44,8 +44,6 @@ The application uses local storage to persist game element states
 
 # Current presentation
 
-Please check out the following video for the most recent additions to functionality:
+Please check out the following Youtube channel for the most recent additions to functionality:
 
-https://www.youtube.com/watch?v=yiBFuRUe9sc
-
-Most recently added key items which can be used with interactive grid objects
+https://www.youtube.com/channel/UCmU68D0OK6fXo351hs3qqjQ
