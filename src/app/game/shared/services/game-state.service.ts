@@ -1,14 +1,15 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { IGameStateData } from '../interfaces';
+import { AreaStateService } from './area-state.service';
 
 @Injectable()
 export class GameStateService {
   public gamePaused = false;
   public awaitingKeyboardSetting = false;
-  public battleMode: boolean;
   private _gameMenuOpen;
 
-  constructor() {
+  constructor(
+    public areaStateService: AreaStateService) {
   }
 
   get gameMenuOpen() {
@@ -18,6 +19,10 @@ export class GameStateService {
   set gameMenuOpen(newState: boolean) {
     this._gameMenuOpen = newState;
     this.gamePaused = newState;
+  }
+
+  get battleMode() {
+    return this.areaStateService.huntingList.length > 0;
   }
 
   /**

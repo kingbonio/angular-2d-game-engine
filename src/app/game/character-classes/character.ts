@@ -2,12 +2,15 @@ import { CharacterType, Direction, ElementClass, CharacterState } from "../share
 import { IWeapons, IArmour, IInventoryItem } from "../item/interfaces";
 
 export class Character {
+      id: string;
       name: string;
       currentHp: number;
       maxHp: number;
       xp: number;
       isAsleep: boolean;
       isAngry: boolean;
+      pauseCounter: number;
+      maxPauseDuration: number;
       type: ElementClass;
       direction: Direction;
       startingLocation: string;
@@ -56,6 +59,20 @@ export class Character {
                   e5: null,
             };
             this.locationKeys = Object.keys;
+      }
+
+
+
+      get isPaused(): boolean {
+            return (this.pauseCounter <= this.maxPauseDuration);
+      }
+
+      public wait() {
+            this.pauseCounter++;
+      }
+
+      public resetPauseCounter() {
+            this.pauseCounter = 0;
       }
 
 }

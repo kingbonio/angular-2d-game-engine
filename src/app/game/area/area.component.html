@@ -1,4 +1,4 @@
-<div class="grid-container" [ngClass]="{ 'show-room-shadow': gameSettingsService.showRoomShadow }">
+<div class="grid-container" [ngClass]="{ 'show-room-shadow': gameSettingsService.showRoomShadow, 'battle-mode': gameStateService.battleMode }">
       <div *ngFor="let key of areaStateService.locationKeys(areaStateService.locations)" class="grid-box">
             <!-- <span style="position: absolute; color: white; z-index: 9999999"> {{ key }} </span> -->
             <!-- <div *ngIf="element">Has element</div> -->

@@ -4,6 +4,7 @@ import { UserInteractionTypes } from "../../shared/enums";
 import { IArmour, IWeapons, IInventoryItem } from "../item/interfaces";
 
 export class Enemy extends Character {
+      public id: string;
       public type = ElementClass.enemy;
       public name: string;
       public class: MonsterClass;
@@ -15,7 +16,8 @@ export class Enemy extends Character {
       public sleepResponse: string;
       public isAsleep: boolean;
       public isAngry: boolean;
-      public isPaused: boolean;
+      public pauseCounter: number;
+      public maxPauseDuration: number;
       public direction: Direction;
       public startingLocation: string;
       public patrolArea: boolean;
@@ -33,6 +35,7 @@ export class Enemy extends Character {
       constructor(characterDetails: any) {
             // TODO: Resolve any
             super();
+            this.id = characterDetails.id;
             this.name = characterDetails.name;
             this.class = characterDetails.class;
             this.imageFileName = characterDetails.imageFileName;
@@ -40,6 +43,8 @@ export class Enemy extends Character {
             this.sleepResponse = characterDetails.sleepResponse;
             this.isAsleep = characterDetails.asleep;
             this.isAngry = characterDetails.angry;
+            this.pauseCounter = characterDetails.pauseCounter || 0;
+            this.maxPauseDuration = characterDetails.maxPauseDuration;
             this.direction = characterDetails.direction;
             this.startingLocation = characterDetails.startingLocation;
             this.patrolArea = characterDetails.patrolArea;
@@ -69,7 +74,6 @@ export class Enemy extends Character {
                   });
             }
             this.currentHp = (characterDetails.currentHp !== undefined) ? characterDetails.currentHp : this.maxHp;
-            this.isPaused = false;
             this.xp = 0;
       }
 

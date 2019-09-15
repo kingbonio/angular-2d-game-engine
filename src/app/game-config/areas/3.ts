@@ -19,11 +19,13 @@ export default {
             {
                   type: ElementClass.enemy,
                   elementProperties: {
+                        id: "6938873e-7cdf-4835-89c5-deee1ec9b91c",
                         asleep: false,
                         angry: false,
                         level: 1,
                         maxHp: 30,
                         lowHealthThreshold: 6,
+                        maxPauseDuration: 2,
                         name: "Gary The Dick",
                         class: MonsterClass.Human,
                         direction: Direction.W,

@@ -4,6 +4,7 @@ import { UserInteractionTypes } from "../../shared/enums";
 import { IWeapons, IArmour, IInventoryItem } from "../item/interfaces";
 
 export class NPC extends Character {
+      public id: string;
       public type = ElementClass.npc;
       public name: string;
       public class: NPC;
@@ -15,7 +16,8 @@ export class NPC extends Character {
       public sleepResponse: string;
       public isAsleep: boolean;
       public isAngry: boolean;
-      public isPaused: boolean;
+      public pauseCounter: number;
+      public maxPauseDuration: number;
       public direction: Direction;
       public startingLocation: string;
       public patrolArea: boolean;
@@ -33,12 +35,15 @@ export class NPC extends Character {
       constructor(characterDetails: any) {
             // TODO: Resolve any
             super();
+            this.id = characterDetails.id;
             this.name = characterDetails.name;
             this.class = characterDetails.class;
             // TODO Need to figure out how to use this in the css
             this.imageFileName = characterDetails.imageFileName;
             this.isAsleep = characterDetails.asleep;
             this.isAngry = characterDetails.angry;
+            this.pauseCounter = characterDetails.pauseCounter || 0;
+            this.maxPauseDuration = characterDetails.maxPauseDuration;
             this.speechResponse = characterDetails.speechResponse;
             this.direction = characterDetails.direction;
             this.startingLocation = characterDetails.startingLocation;
@@ -66,7 +71,6 @@ export class NPC extends Character {
                   });
             }
             this.currentHp = (characterDetails.currentHp !== undefined) ? characterDetails.currentHp : this.maxHp;
-            this.isPaused = false;
             this.xp = 0;
       }
 

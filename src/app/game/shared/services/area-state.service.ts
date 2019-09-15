@@ -17,6 +17,7 @@ export class AreaStateService implements OnInit {
   public locationKeys: any;
   public locations: IGridReferences;
   public previousPlayerLocation: string;
+  public huntingList = [];
 
   public areaChange: BehaviorSubject<number>;
   public areaReady: BehaviorSubject<number>;
@@ -50,6 +51,24 @@ export class AreaStateService implements OnInit {
         (this.locations[gridLocation].element.type === ElementClass.player)) {
         return gridLocation;
       }
+    }
+  }
+
+  public removeCharacterFromHuntingList(character: Character): void {
+
+    const index = this.huntingList.indexOf(character.id);
+
+    if (index !== -1) {
+      // Remove the item from the hunting list
+      this.huntingList.splice(index, 1);
+    }
+  }
+
+  public addCharacterToHuntingList(character: Character): void {
+
+    if (this.huntingList.indexOf(character.id) === -1) {
+      // Add the character to the hunting list
+      this.huntingList.push(character.id);
     }
   }
 

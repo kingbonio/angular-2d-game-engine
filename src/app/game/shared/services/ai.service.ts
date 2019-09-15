@@ -31,8 +31,7 @@ export class AiService {
     this.userInputService.playerMoved.subscribe(data => {
       // TODO This may need a more specific flag
       // We don't want to perform AI actions if loading game
-      if (!this.gameStateService.battleMode &&
-        !this.gameStateService.gamePaused &&
+      if (!this.gameStateService.gamePaused &&
         !this.areaStateService.loadingPreviousArea &&
         !this.areaStateService.loadingSavedGame) {
         this.actionTriggerHandler(true);
@@ -51,14 +50,27 @@ export class AiService {
   }
 
   // TODO Change this parameter
-  public actionTriggerHandler(playerInput: boolean) {
+  public actionTriggerHandler(userInput: boolean) {
     const characters: { character: Character, gridLocation: string }[] = this.areaStateService.getCharactersOnGrid();
     characters.forEach(({ character, gridLocation }) => {
 
-      if (this.isPlayerInSight(character, gridLocation)) {
-        this.restartHunting(character);
+      // Either an enemy or an angry npc
+      if ((character.type === ElementClass.enemy || character.currentState === CharacterState.hunting) && this.isPlayerInSight(character, gridLocation)) {
+        this.startHunting(character);
       }
-      if (!playerInput) {
+
+      if (userInput && this.gameStateService.battleMode) {
+
+        // Only act in this way if is user input in battle mode
+        if (character.isPaused) {
+          character.wait();
+        } else {
+          this.action(character, gridLocation);
+          character.resetPauseCounter();
+        }
+      } else if (!userInput && !this.gameStateService.battleMode) {
+
+        // Only act in this way in normal mode
         this.action(character, gridLocation);
       }
 
@@ -87,7 +99,7 @@ export class AiService {
           const newLocation = this.movement.walkRoute(character, gridLocation);
 
           if (this.isPlayerInSight(character, newLocation)) {
-            this.restartHunting(character);
+            this.startHunting(character);
           }
           break;
         case CharacterState.returningToPosition:
@@ -104,8 +116,7 @@ export class AiService {
           break;
         case CharacterState.hunting:
           if (character.currentHuntingDuration >= character.maxHuntingDuration) {
-            character.currentHuntingDuration = 0;
-            character.currentState = CharacterState.returningToPosition;
+            this.stopHunting(character);
 
             this.action(character, gridLocation);
           } else {
@@ -127,9 +138,19 @@ export class AiService {
     }
   }
 
-  private restartHunting(character: Character) {
+  private startHunting(character: Character) {
     character.currentState = CharacterState.hunting;
     character.currentHuntingDuration = 0;
+
+    this.areaStateService.addCharacterToHuntingList(character);
+
+  }
+
+  private stopHunting(character: Character) {
+    character.currentState = CharacterState.returningToPosition;
+    character.currentHuntingDuration = 0;
+
+    this.areaStateService.removeCharacterFromHuntingList(character);
   }
 
   private isPlayerInSight(character: Character, gridLocation: string): boolean {

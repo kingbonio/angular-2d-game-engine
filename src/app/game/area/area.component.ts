@@ -19,6 +19,7 @@ import defaults from '../../shared/defaults';
 import { IGridData } from './interfaces/igrid-data';
 import { Subscription } from 'rxjs/Subscription';
 import { GameSettingsService } from '../../shared/services/game-settings.service';
+import { GameStateService } from '../shared/services/game-state.service';
 
 @Component({
   selector: 'app-area',
@@ -43,6 +44,7 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
     public playerStateService: PlayerStateService,
     public battleCalculatorService: BattleCalculatorService,
     public gameSettingsService: GameSettingsService,
+    public gameStateService: GameStateService,
     private dialog: MatDialog,
   ) {
     this.openLootinModalSubscription = this.playerStateService.openLootingModal.subscribe((target: Character) => {
