@@ -11,6 +11,7 @@ import { WeaponType, PotionType } from '../../item/enums';
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
 import { Character } from '../../character-classes/character';
 import { Dice } from '../util/dice';
+import { UserInputService } from '../../../shared/services/user-input.service';
 
 @Injectable()
 export class PlayerStateService {
@@ -26,6 +27,8 @@ export class PlayerStateService {
   // TODO maybe move this to equipment manager
   public selectedWeaponSlot: WeaponType = WeaponType.primary;
   // public location: string;
+  public currentBuff: IInventoryItem;
+  public buffTimeRemaining: number;
 
   constructor(
     private areaStateService: AreaStateService,
@@ -39,6 +42,7 @@ export class PlayerStateService {
     this.health = defaults.initialPlayerStats.health;
     this.maxHealth = defaults.initialPlayerStats.maxHealth;
     this.direction = defaults.initialPlayerStats.direction;
+
   }
 
   onInit() {
@@ -303,14 +307,23 @@ export class PlayerStateService {
     if (item.class === ItemClass.potion) {
       switch (item.type) {
         case PotionType.healing:
-          this.health += item.properties.healing;
+          this.health += item.properties.effectAmount;
+          break;
+        case PotionType.buff:
+          this.currentBuff = item;
+          this.startBuffTimer(item.properties.effectDuration);
+          break;
       }
       this.dialogueService.displayDialogueMessage({
-        text: defaults.dialogue.consumedHealthPotion(item.name, item.properties.healing),
+        text: defaults.dialogue.consumedHealthPotion(item.name, item.properties.effectAmount),
         character: defaults.dialogue.computerCharacterType,
         name: defaults.dialogue.computerName
       });
     }
+  }
+
+  private startBuffTimer(duration: number): void {
+    this.buffTimeRemaining = duration;
   }
 
   /**
