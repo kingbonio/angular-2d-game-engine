@@ -54,11 +54,6 @@ export class AiService {
     const characters: { character: Character, gridLocation: string }[] = this.areaStateService.getCharactersOnGrid();
     characters.forEach(({ character, gridLocation }) => {
 
-      // Either an enemy or an angry npc
-      if ((character.type === ElementClass.enemy || character.currentState === CharacterState.hunting) && this.isPlayerInSight(character, gridLocation)) {
-        this.startHunting(character);
-      }
-
       if (userInput && this.gameStateService.battleMode) {
 
         // Only act in this way if is user input in battle mode
@@ -72,6 +67,11 @@ export class AiService {
 
         // Only act in this way in normal mode
         this.action(character, gridLocation);
+      }
+
+      // Either an enemy or an angry npc
+      if ((character.type === ElementClass.enemy || character.currentState === CharacterState.hunting) && this.isPlayerInSight(character, gridLocation)) {
+        this.startHunting(character);
       }
 
     });

@@ -273,6 +273,8 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     this.openLootinModalSubscription.unsubscribe();
 
+    // Revert characters who were hunting to normal mode in this area
+    this.areaStateService.huntingList = [];
     this.areaStateService.notifyAreaChange();
   }
 }
