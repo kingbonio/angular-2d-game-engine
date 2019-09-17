@@ -2,7 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import * as areaConfigs from "../../../game-config/areas";
 import * as maps from "../../../game-config/areas/map";
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
-import { weapons, armour } from '../../../game-config/items';
+import { weapons, armour, potions } from '../../../game-config/items';
 import { InventoryManagerService } from '../../item/services/inventory-manager.service';
 
 @Injectable()
@@ -34,6 +34,8 @@ export class AreaConfigProviderService implements OnInit {
   private assignItemsToInventory() {
     // TODO This might be useful when properly setting equipment
     // TODO This is not safeguarded against the inventory being full, when sorting this sort that
+    this.inventoryManagerService.addItemToInventory(potions.smallArmourBuff);
+    this.inventoryManagerService.addItemToInventory(potions.smallHealthPotion);
     this.inventoryManagerService.addItemToInventory(weapons.sword);
     this.inventoryManagerService.addItemToInventory(weapons.axe);
     this.inventoryManagerService.addItemToInventory(armour.leatherChestPiece);

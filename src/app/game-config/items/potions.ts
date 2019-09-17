@@ -38,7 +38,7 @@ export const potions = {
             properties: {
                   effectAmount: 20,
                   effectType: PotionEffectType.armour,
-                  effectDuration: 20,
+                  effectDuration: 10,
             }
       },
 };

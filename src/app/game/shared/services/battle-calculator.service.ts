@@ -6,6 +6,8 @@ import { WeaponType } from '../../item/enums';
 import { DialogueService } from './dialogue.service';
 import { IArmour, IWeapons, IInventoryItem } from '../../item/interfaces';
 import { Dice } from '../util/dice';
+import { PlayerStateService } from './player-state.service';
+import { PotionEffectType } from '../../item/enums/potion-effect-type';
 
 @Injectable()
 export class BattleCalculatorService {
@@ -30,20 +32,32 @@ export class BattleCalculatorService {
     return this.calculateDamage(target.armour, equippedWeapon);
   }
 
-  public getDamageToPlayer(character: Character, armour: IArmour): number {
+  public getDamageToPlayer(character: Character, armour: IArmour, activeBuff: IInventoryItem): number {
 
-    // TODO assumed always using primary
-    return this.calculateDamage(armour, character.weapons.primary);
+    if (activeBuff && activeBuff.properties.effectType === PotionEffectType.armour) {
+
+      return this.calculateDamage(armour, character.weapons.primary, activeBuff.properties.effectAmount);
+    } else {
+
+      // TODO assumed always using primary
+      return this.calculateDamage(armour, character.weapons.primary);
+    }
+
   }
 
-  private calculateDamage(targetArmour: IArmour, weapon: IInventoryItem) {
+  private calculateDamage(targetArmour: IArmour, weapon: IInventoryItem, buff?: number) {
     let totalArmourValue = defaults.enemyProperties.baseArmour;
 
     if (targetArmour) {
       for (const item in targetArmour) {
         if (targetArmour.hasOwnProperty(item) && targetArmour[item]) {
           totalArmourValue += targetArmour[item].properties.defense;
+
         }
+      }
+
+      if (buff) {
+        totalArmourValue += buff;
       }
     }
 

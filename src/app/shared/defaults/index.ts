@@ -53,6 +53,9 @@ export default {
         consumedHealthPotion: (name, healing) => {
             return `You have consumed a ${name}, you have been healed by ${healing} points`;
         },
+        consumedBuffPotion: (name, duration) => {
+            return `You have consumed a ${name}, this will last for ${duration} seconds`;
+        },
         inventoryFull: "Your inventory is full",
         noWeaponEquipped: "You have no weapon equipped to attack with",
         stealAttemptFail: "You failed to steal from the target and you have angered them",
