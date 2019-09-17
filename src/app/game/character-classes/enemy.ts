@@ -1,9 +1,10 @@
 import { Character } from "./character";
-import { MonsterClass, CharacterType, Direction, ElementClass } from "../shared/enums";
+import { MonsterClass, CharacterType, Direction, ElementClass, CharacterState } from "../shared/enums";
 import { UserInteractionTypes } from "../../shared/enums";
 import { IArmour, IWeapons, IInventoryItem } from "../item/interfaces";
 
 export class Enemy extends Character {
+      public id: string;
       public type = ElementClass.enemy;
       public name: string;
       public class: MonsterClass;
@@ -15,8 +16,17 @@ export class Enemy extends Character {
       public sleepResponse: string;
       public isAsleep: boolean;
       public isAngry: boolean;
-      public isPaused: boolean;
+      public pauseCounter: number;
+      public maxPauseDuration: number;
       public direction: Direction;
+      public startingLocation: string;
+      public patrolArea: boolean;
+      public directionsForPatrol: Direction[];
+      public currentPositionInRoute: number;
+      public currentHuntingDuration: number;
+      public maxHuntingDuration: number;
+      public currentState: CharacterState;
+      public startingState: CharacterState;
       public armour: IArmour;
       public weapons: IWeapons;
       public loot: IInventoryItem[];
@@ -25,6 +35,7 @@ export class Enemy extends Character {
       constructor(characterDetails: any) {
             // TODO: Resolve any
             super();
+            this.id = characterDetails.id;
             this.name = characterDetails.name;
             this.class = characterDetails.class;
             this.imageFileName = characterDetails.imageFileName;
@@ -32,7 +43,17 @@ export class Enemy extends Character {
             this.sleepResponse = characterDetails.sleepResponse;
             this.isAsleep = characterDetails.asleep;
             this.isAngry = characterDetails.angry;
+            this.pauseCounter = characterDetails.pauseCounter || 0;
+            this.maxPauseDuration = characterDetails.maxPauseDuration;
             this.direction = characterDetails.direction;
+            this.startingLocation = characterDetails.startingLocation;
+            this.patrolArea = characterDetails.patrolArea;
+            this.directionsForPatrol = characterDetails.directionsForPatrol;
+            this.currentPositionInRoute = (characterDetails.currentPositionInRoute === undefined) ? 0 : characterDetails.currentPositionInRoute;
+            this.currentHuntingDuration = (characterDetails.currentHuntingDuration === undefined) ? 0 : characterDetails.currentHuntingDuration;
+            this.maxHuntingDuration = characterDetails.maxHuntingDuration;
+            this.startingState = characterDetails.startingState;
+            this.currentState = (characterDetails.currentState === undefined) ? characterDetails.startingState : characterDetails.currentState;
             // TODO: Set this manually
             this.maxHp = characterDetails.maxHp;
             this.lowHealthThreshold = characterDetails.lowHealthThreshold;
@@ -53,7 +74,6 @@ export class Enemy extends Character {
                   });
             }
             this.currentHp = (characterDetails.currentHp !== undefined) ? characterDetails.currentHp : this.maxHp;
-            this.isPaused = false;
             this.xp = 0;
       }
 

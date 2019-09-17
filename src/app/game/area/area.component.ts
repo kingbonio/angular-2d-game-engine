@@ -5,7 +5,7 @@ import { AreaType } from './enums/area-type';
 import { ActivatedRoute } from '@angular/router';
 import { AreaStateService } from '../shared/services/area-state.service';
 import { AreaConfigProviderService } from '../shared/services/area-config-provider.service';
-import { CharacterType, Direction, ElementClass } from '../shared/enums';
+import { CharacterType, Direction, ElementClass, CharacterState } from '../shared/enums';
 import { PlayerStateService } from '../shared/services/player-state.service';
 import { Enemy, NPC } from '../character-classes';
 import { Character } from '../character-classes/character';
@@ -19,6 +19,7 @@ import defaults from '../../shared/defaults';
 import { IGridData } from './interfaces/igrid-data';
 import { Subscription } from 'rxjs/Subscription';
 import { GameSettingsService } from '../../shared/services/game-settings.service';
+import { GameStateService } from '../shared/services/game-state.service';
 
 @Component({
   selector: 'app-area',
@@ -33,6 +34,7 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
   public direction = Direction;
   private modalRef: MatDialogRef<any>;
   public ElementClass = ElementClass;
+  public CharacterState = CharacterState;
   public openLootinModalSubscription: Subscription;
 
   constructor(
@@ -42,6 +44,7 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
     public playerStateService: PlayerStateService,
     public battleCalculatorService: BattleCalculatorService,
     public gameSettingsService: GameSettingsService,
+    public gameStateService: GameStateService,
     private dialog: MatDialog,
   ) {
     this.openLootinModalSubscription = this.playerStateService.openLootingModal.subscribe((target: Character) => {
@@ -73,8 +76,8 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
       modalConfig.disableClose = false;
       modalConfig.autoFocus = true; // Maybe not necessary
       modalConfig.hasBackdrop = true;
-      modalConfig.width = '300px';
-      modalConfig.height = '200px';
+      modalConfig.width = '450px';
+      modalConfig.height = '300px';
       modalConfig.data = target;
       modalConfig.panelClass = "looting-modal";
 
@@ -116,8 +119,8 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
       this.rebuildArea();
     } else {
       // get the config from the provider
-      this.areaConfig = this.areaConfigProviderService.getAreaConfig(this.areaStateService.currentLocation);
-      this.areaExits = this.areaConfigProviderService.getAreaExits(this.areaStateService.currentLocation);
+      this.areaConfig = this.areaConfigProviderService.getAreaConfig(this.areaStateService.currentArea);
+      this.areaExits = this.areaConfigProviderService.getAreaExits(this.areaStateService.currentArea);
 
       // Set the player location
       // TODO This won't work, needs moving into the loop with a check on player
@@ -171,12 +174,19 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
         switch (this.areaStateService.locations[location].element.type) {
           case ElementClass.enemy:
             this.areaStateService.locations[location].element = new Enemy(this.areaStateService.locations[location].element);
+            // TODO Maybe this would be better suited somewhere more abstracted from core code
+            if (this.areaStateService.locations[location].element.currentState === CharacterState.hunting) {
+              this.areaStateService.locations[location].element.currentState = CharacterState.returningToPosition;
+            }
             break;
           case ElementClass.player:
             this.areaStateService.locations[location].element = new Player(this.areaStateService.locations[location].element);
             break;
           case ElementClass.npc:
             this.areaStateService.locations[location].element = new NPC(this.areaStateService.locations[location].element);
+            if (this.areaStateService.locations[location].element.currentState === CharacterState.hunting) {
+              this.areaStateService.locations[location].element.currentState = CharacterState.returningToPosition;
+            }
             break;
           case ElementClass.object:
             this.areaStateService.locations[location].element = new GridObject(this.areaStateService.locations[location].element);
@@ -263,6 +273,8 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     this.openLootinModalSubscription.unsubscribe();
 
+    // Revert characters who were hunting to normal mode in this area
+    this.areaStateService.huntingList = [];
     this.areaStateService.notifyAreaChange();
   }
 }

@@ -1,5 +1,6 @@
 export * from './direction';
 export * from './character-type';
+export * from './character-state';
 export * from '../../../shared/enums/menu-setting-types';
 export * from '../../item/enums/item-class';
 export * from '../../item/enums/magic-ability';

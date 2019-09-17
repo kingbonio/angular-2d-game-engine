@@ -1,4 +1,4 @@
-import { MonsterClass, Direction, ElementClass } from "../../game/shared/enums";
+import { MonsterClass, Direction, ElementClass, CharacterState } from "../../game/shared/enums";
 import { IAreaElement } from "../../game/area/interfaces";
 import { armour, weapons, keyItems } from "../items";
 import { IWeapons } from "../../game/item/interfaces";
@@ -19,14 +19,21 @@ export default {
             {
                   type: ElementClass.enemy,
                   elementProperties: {
+                        id: "36d3f958-42d3-4197-bf00-de6119bf4e9a",
                         asleep: false,
                         angry: false,
                         level: 1,
                         maxHp: 30,
                         lowHealthThreshold: 6,
+                        maxPauseDuration: 2,
                         name: "Gary The Dick",
                         class: MonsterClass.Human,
                         direction: Direction.W,
+                        patrolArea: true,
+                        directionsForPatrol: [
+                        ],
+                        maxHuntingDuration: 3,
+                        startingState: CharacterState.wandering,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
                         lootParameters: {
@@ -54,6 +61,7 @@ export default {
                               keyItems.rustyOldKey,
                         ],
                         imageFileName: "",
+                        startingLocation: "b7",
                   },
                   startingPositionX: 7,
                   startingPositionY: "b",

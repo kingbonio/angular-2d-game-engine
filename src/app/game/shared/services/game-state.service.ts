@@ -1,5 +1,6 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { IGameStateData } from '../interfaces';
+import { AreaStateService } from './area-state.service';
 
 @Injectable()
 export class GameStateService {
@@ -7,7 +8,8 @@ export class GameStateService {
   public awaitingKeyboardSetting = false;
   private _gameMenuOpen;
 
-  constructor() {
+  constructor(
+    public areaStateService: AreaStateService) {
   }
 
   get gameMenuOpen() {
@@ -19,6 +21,10 @@ export class GameStateService {
     this.gamePaused = newState;
   }
 
+  get battleMode() {
+    return this.areaStateService.huntingList.length > 0;
+  }
+
   /**
    * Return the game state for storage
    * @returns the state data relevant to this service
@@ -26,6 +32,7 @@ export class GameStateService {
   gatherState(): IGameStateData {
     return {
       gamePaused: this.gamePaused,
+      battleMode: this.battleMode,
     };
   }
 

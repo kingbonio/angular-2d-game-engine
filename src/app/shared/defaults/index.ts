@@ -36,7 +36,7 @@ export default {
         minimumOnScreenTime: 4000,
         nullElementResponse: "There is no response",
         keyItemNotActive: "You have not got the correct active item",
-        computerName: "Computer",
+        computerName: "Game",
         computerCharacterType: "computer",
         maximumMessagesOnScreen: 2,
         attackSuccess: (damage) => {
@@ -56,6 +56,9 @@ export default {
         inventoryFull: "Your inventory is full",
         noWeaponEquipped: "You have no weapon equipped to attack with",
         stealAttemptFail: "You failed to steal from the target and you have angered them",
+    },
+    enemyConfig: {
+        viewDistance: 1,
     },
     gameMenu: {
         loadingText: "Loading Area...",
@@ -82,23 +85,26 @@ export default {
         allowInGameMenu: true,
         showRoomShadow: true,
     },
+    gameConfig: {
+        dialogueLines: 8,
+    },
     areaExitDestinations: {
         // TODO This is not ideal
-        northExit: "`4",
+        northExit: "h4",
         eastExit: "d8",
-        southExit: "h4",
+        southExit: "`4",
         westExit: "d0",
     },
     areaExitLocations: {
         // TODO This is not ideal
-        northExit: "a4",
+        northExit: "g4",
         eastExit: "d7",
-        southExit: "g4",
+        southExit: "a4",
         westExit: "d1",
     },
     areaOuterBoundaries: {
-        lowerYBoundary: "`",
-        upperYBoundary: "h",
+        lowerYBoundary: "h",
+        upperYBoundary: "`",
         lowerXBoundary: "0",
         upperXBoundary: "8",
     },

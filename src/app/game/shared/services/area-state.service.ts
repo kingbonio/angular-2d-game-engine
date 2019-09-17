@@ -4,18 +4,20 @@ import { IGridReferences, IAreaElement } from '../../area/interfaces';
 import { ElementClass } from '../enums';
 import locationDefaults from '../models/locations';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Character } from '../../character-classes/character';
 
 @Injectable()
 export class AreaStateService implements OnInit {
   // Stores the location ID
-  public currentLocation: number;
-  public newLocation: number;
+  public currentArea: number;
+  public newArea: number;
   public loadingPreviousArea = false;
   public loadingExistingArea = false;
   public loadingSavedGame = false;
   public locationKeys: any;
   public locations: IGridReferences;
   public previousPlayerLocation: string;
+  public huntingList = [];
 
   public areaChange: BehaviorSubject<number>;
   public areaReady: BehaviorSubject<number>;
@@ -23,8 +25,8 @@ export class AreaStateService implements OnInit {
   constructor(
   ) {
     // Set the state to be the first level before anything
-    this.currentLocation = 1;
-    this.newLocation = null;
+    this.currentArea = 1;
+    this.newArea = null;
     // TODO Might be worth holding location x and y data on the object alongside the gridObject or null
     this.locations = this.cloneLocations(locationDefaults);
     this.locationKeys = Object.keys;
@@ -52,11 +54,29 @@ export class AreaStateService implements OnInit {
     }
   }
 
+  public removeCharacterFromHuntingList(character: Character): void {
+
+    const index = this.huntingList.indexOf(character.id);
+
+    if (index !== -1) {
+      // Remove the item from the hunting list
+      this.huntingList.splice(index, 1);
+    }
+  }
+
+  public addCharacterToHuntingList(character: Character): void {
+
+    if (this.huntingList.indexOf(character.id) === -1) {
+      // Add the character to the hunting list
+      this.huntingList.push(character.id);
+    }
+  }
+
   /**
    * Push all characters on grid into an array and return it
    */
   // TODO return type as interface
-  public getCharactersOnGrid(): { gridElement: IAreaElement, gridLocation: string }[] {
+  public getCharactersOnGrid(): { character: Character, gridLocation: string }[] {
     const characterData = [];
     for (const gridLocation in this.locations) {
       if (this.locations.hasOwnProperty(gridLocation) &&
@@ -67,7 +87,7 @@ export class AreaStateService implements OnInit {
         const gridElement = this.locations[gridLocation].element;
         if (gridElement.type && (gridElement.type === ElementClass.enemy || gridElement.type === ElementClass.npc)) {
           characterData.push({
-            gridElement: gridElement,
+            character: gridElement,
             gridLocation
           });
         }
@@ -94,7 +114,7 @@ export class AreaStateService implements OnInit {
    * @param targetLocation The location we want the distance from
    */
   public getDistanceBetweenLocations(currentLocation: ILocation, targetLocation: ILocation): { yDistance: number, xDistance: number } {
-    const differenceBetweenY = currentLocation.locationY.charCodeAt(0) - targetLocation.locationY.charCodeAt(0);
+    const differenceBetweenY = targetLocation.locationY.charCodeAt(0) - currentLocation.locationY.charCodeAt(0);
     const differenceBetweenX = currentLocation.locationX - targetLocation.locationX;
     return { yDistance: differenceBetweenY, xDistance: differenceBetweenX };
   }
@@ -132,12 +152,12 @@ export class AreaStateService implements OnInit {
 
   public notifyAreaChange() {
     // Let the area state service handle the death of the component
-    this.areaReady.next(this.newLocation);
+    this.areaReady.next(this.newArea);
   }
 
   public updateLocation() {
-    this.currentLocation = this.newLocation;
-    this.newLocation = null;
+    this.currentArea = this.newArea;
+    this.newArea = null;
   }
 
   // TODO This isn't great, redo this
@@ -148,9 +168,9 @@ export class AreaStateService implements OnInit {
   public loadNewArea(newAreaReference: number) {
     this.loadingPreviousArea = true;
     // Back up current state
-    this.saveAreaState(this.currentLocation);
+    this.saveAreaState(this.currentArea);
     // Save the new area reference
-    this.newLocation = newAreaReference;
+    this.newArea = newAreaReference;
 
     this.previousPlayerLocation = this.playerLocation;
 
@@ -165,11 +185,11 @@ export class AreaStateService implements OnInit {
     }
 
     // TODO this isn't ideal really, look for the other subject type
-    this.areaChange.next(newAreaReference ? newAreaReference : this.currentLocation);
+    this.areaChange.next(newAreaReference ? newAreaReference : this.currentArea);
 
     // Update the location
-    this.currentLocation = this.newLocation;
-    this.newLocation = null;
+    this.currentArea = this.newArea;
+    this.newArea = null;
   }
 
   public loadFromSaveGame(savedState: IAreaStateData) {
@@ -211,8 +231,8 @@ export class AreaStateService implements OnInit {
    */
   public gatherState(): IAreaStateData {
     return {
-      currentLocation: this.currentLocation,
-      newLocation: this.newLocation,
+      currentLocation: this.currentArea,
+      newLocation: this.newArea,
       loadingArea: this.loadingPreviousArea,
       loadingExistingArea: this.loadingExistingArea,
       locationKeys: this.locationKeys,

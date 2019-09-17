@@ -4,9 +4,17 @@
       flex-wrap: wrap;
 
       &.show-room-shadow {
+
             -moz-box-shadow:    inset 0 0 20px 10px #000000;
             -webkit-box-shadow: inset 0 0 20px 10px #000000;
             box-shadow:         inset 0 0 20px 10px #000000;
+            
+            &.battle-mode {
+                  -moz-box-shadow:    inset 0 0 20px 10px #c20000;
+                  -webkit-box-shadow: inset 0 0 20px 10px #c20000;
+                  box-shadow:         inset 0 0 20px 10px #c20000;
+
+            }
       }
 
       .grid-box {
@@ -103,7 +111,48 @@
                               width: 80px;
                               height: 80px;
                         }
+
+                        .overlay {
+
+                              .character-state {
+                                    position: absolute;
+                                    top: 50%; right: 50%;
+                                    transform: translate(50%,-50%);
+                                    font-size: 34px;
+                              }
+
+                              .hunting {
+                                    color: red;
+                              }
+
+                              .patrolling {
+                                    color: yellow;
+                              }
+
+                              .return-to-position {
+                                    color: orange;
+                              }
+
+                              .asleep {
+                                    color: white;
+                              }
+
+                              .wandering {
+                                    color: blue;
+                              }
+                        }
                   }
+
+                  // .view-area {
+                  //       border: solid white 1px;
+                  //       background-color: red;
+                  //       width: 125%;
+                  //       height: 125%;
+                  //       transform: rotate(45deg);
+                  //       position: absolute;
+                  //       top: -125%;
+                  //       left: -12.5%;
+                  // }
             }
       }
 }

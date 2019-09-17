@@ -10,6 +10,7 @@ export interface IMonster {
       name: string;
       class: MonsterClass;
       lootParameters: ILootParameters;
+      startingLocation: string;
       currentDirection: Direction;
       currentLocation?: ILocation;
 }

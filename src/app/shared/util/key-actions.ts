@@ -48,17 +48,17 @@ export default {
             direction: null,
       },
       interactionGuard: {
-            type: UserActionTypes.move,
+            type: UserActionTypes.interaction,
             interaction: UserInteractionTypes.guard,
             direction: null,
       },
       interactionInteract: {
-            type: UserActionTypes.move,
+            type: UserActionTypes.interaction,
             interaction: UserInteractionTypes.interact,
             direction: null,
       },
       interactionSpeak: {
-            type: UserActionTypes.move,
+            type: UserActionTypes.interaction,
             interaction: UserInteractionTypes.speak,
             direction: null,
       },

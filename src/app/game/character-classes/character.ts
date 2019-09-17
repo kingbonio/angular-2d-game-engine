@@ -1,15 +1,26 @@
-import { CharacterType, Direction, ElementClass } from "../shared/enums";
+import { CharacterType, Direction, ElementClass, CharacterState } from "../shared/enums";
 import { IWeapons, IArmour, IInventoryItem } from "../item/interfaces";
 
 export class Character {
+      id: string;
       name: string;
       currentHp: number;
       maxHp: number;
       xp: number;
       isAsleep: boolean;
       isAngry: boolean;
+      pauseCounter: number;
+      maxPauseDuration: number;
       type: ElementClass;
       direction: Direction;
+      startingLocation: string;
+      patrolArea: boolean;
+      directionsForPatrol: Direction[];
+      currentPositionInRoute: number;
+      currentHuntingDuration: number;
+      maxHuntingDuration: number;
+      currentState: CharacterState;
+      startingState: CharacterState;
       armour?: IArmour;
       weapons?: IWeapons;
       loot: IInventoryItem[];
@@ -48,6 +59,20 @@ export class Character {
                   e5: null,
             };
             this.locationKeys = Object.keys;
+      }
+
+
+
+      get isPaused(): boolean {
+            return (this.pauseCounter <= this.maxPauseDuration);
+      }
+
+      public wait() {
+            this.pauseCounter++;
+      }
+
+      public resetPauseCounter() {
+            this.pauseCounter = 0;
       }
 
 }

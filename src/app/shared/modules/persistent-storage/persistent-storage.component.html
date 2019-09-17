@@ -9,6 +9,7 @@
       <button *ngIf="applicationStateService.gameOpen" class="save-game" (click)="saveGame(saveSlot)">Save</button>
       <button *ngIf="saveSlotDoesntExist(saveSlot)" class="load-game" (click)="loadGame(saveSlot)">Load</button>
       <button *ngIf="saveSlotDoesntExist(saveSlot)" class="delete-game" (click)="deleteGame(saveSlot)">Delete</button>
+      <div *ngIf="!saveSlotDoesntExist(saveSlot) && !applicationStateService.gameOpen" class="no-save">No Save</div>
     </div>
   </div>
 </div>

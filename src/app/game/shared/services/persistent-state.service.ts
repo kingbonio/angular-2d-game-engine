@@ -116,7 +116,7 @@ export class PersistentStateService {
   private gatherAreasFromStorage() {
     const areaStates = {};
     for (const areaId in this.areaIds) {
-      if (this.areaIds.hasOwnProperty(areaId) && Number(this.areaIds[areaId]) !== this.areaStateService.currentLocation) {
+      if (this.areaIds.hasOwnProperty(areaId) && Number(this.areaIds[areaId]) !== this.areaStateService.currentArea) {
         const areaFromStorage = localStorage.getItem(this.areaIds[areaId]) || "{}";
         areaStates[this.areaIds[areaId]] = JSON.parse(areaFromStorage);
       }
