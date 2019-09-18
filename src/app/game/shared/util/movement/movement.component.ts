@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AreaStateService } from '../../services/area-state.service';
 import { Direction } from '../../enums';
 import { Dice } from '../dice';
@@ -253,9 +253,9 @@ export class MovementComponent {
   /**
    * Moves the character towards or away from the player
    */
-  public moveWithRespectToPlayer(character: Character, gridLocation: string, moveTowardsPlayer: boolean) {
+  public moveWithRespectToPlayer(character: Character, characterLocation: string, moveTowardsPlayer: boolean) {
     const playerLocation = this.areaStateService.playerLocation;
-    this.moveWithRespectToLocation(character, gridLocation, playerLocation, moveTowardsPlayer);
+    this.moveWithRespectToLocation(character, characterLocation, playerLocation, moveTowardsPlayer);
   }
 
   /**

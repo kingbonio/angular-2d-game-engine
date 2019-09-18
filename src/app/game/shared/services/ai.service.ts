@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Character } from '../../character-classes/character';
-import { MovementComponent } from '../util/movement/movement.component';
-import { AreaStateService } from './area-state.service';
-import { UserInputService } from '../../../shared/services/user-input.service';
 import { Subscription } from 'rxjs/Subscription';
-import { PlayerStateService } from './player-state.service';
-import { BattleCalculatorService } from './battle-calculator.service';
-import { IAreaElement } from '../../area/interfaces';
-import { TimerService } from './timer.service';
+import { AreaStateService } from './area-state.service';
+import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
 import { GameStateService } from './game-state.service';
-import { CharacterState, ElementClass, Direction } from '../enums';
+import { PlayerStateService } from './player-state.service';
+import { UserInputService } from '../../../shared/services/user-input.service';
+import { TimerService } from './timer.service';
+import { MovementComponent } from '../util/movement/movement.component';
+import { Character } from '../../character-classes/character';
+import { PotionEffectType } from '../../item/enums/potion-effect-type';
+import { CharacterState, ElementClass } from '../enums';
 import defaults from '../../../shared/defaults';
 
 @Injectable({
@@ -23,6 +23,7 @@ export class AiService {
   constructor(
     private movement: MovementComponent,
     private areaStateService: AreaStateService,
+    private equipmentManagerService: EquipmentManagerService,
     private userInputService: UserInputService,
     private playerStateService: PlayerStateService,
     private timerService: TimerService,
@@ -75,8 +76,6 @@ export class AiService {
       }
 
     });
-
-
   }
 
   // TODO types
@@ -143,7 +142,6 @@ export class AiService {
     character.currentHuntingDuration = 0;
 
     this.areaStateService.addCharacterToHuntingList(character);
-
   }
 
   private stopHunting(character: Character) {
@@ -154,6 +152,10 @@ export class AiService {
   }
 
   private isPlayerInSight(character: Character, gridLocation: string): boolean {
+    if (this.equipmentManagerService.activeBuff && this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.invisibility) {
+      return false;
+    }
+
     const viewAreaLocations = this.movement.getViewAreaLocations(defaults.enemyConfig.viewDistance, character.direction, gridLocation);
 
     // We want to know if we can find the player in the given locations, return true if found
@@ -166,22 +168,40 @@ export class AiService {
   }
 
   private huntPlayer(character: Character, gridLocation: string) {
+    const playerIsInvisible = (this.equipmentManagerService.activeBuff && this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.invisibility);
+    let targetLocation;
+
+    if (playerIsInvisible) {
+      targetLocation = this.areaStateService.splitLocationReference(this.playerStateService.lastKnownLocation);
+    } else {
+      targetLocation = this.areaStateService.splitLocationReference(this.areaStateService.playerLocation);
+    }
+
     // Head towards player and attack if next to player, otherwise move towards the player
     if (this.areaStateService.isCharacterNextToPlayer(gridLocation)) {
-
-      const playerLocation = this.areaStateService.splitLocationReference(this.areaStateService.playerLocation);
-
       const characterLocation = this.areaStateService.splitLocationReference(gridLocation);
-
-      const directionToPlayer = this.movement.getDirectionWithRespectToPlayer(playerLocation, characterLocation, true);
+      const directionToPlayer = this.movement.getDirectionWithRespectToPlayer(targetLocation, characterLocation, true);
 
       character.direction = directionToPlayer;
 
-      this.playerStateService.receiveAttack(character);
+      if (playerIsInvisible) {
+
+        // Do nothing
+      } else {
+        this.playerStateService.receiveAttack(character);
+      }
     } else {
 
       // Character needs to get closer to attack
-      this.movement.moveWithRespectToPlayer(character, gridLocation, true);
+      if (playerIsInvisible) {
+
+        // TODO This is awful
+        targetLocation = targetLocation.locationY + targetLocation.locationX;
+
+        this.movement.moveWithRespectToLocation(character, gridLocation, targetLocation, true);
+      } else {
+        this.movement.moveWithRespectToPlayer(character, gridLocation, true);
+      }
     }
   }
 

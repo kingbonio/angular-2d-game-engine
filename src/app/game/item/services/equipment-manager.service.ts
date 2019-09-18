@@ -32,10 +32,6 @@ export class EquipmentManagerService {
     private timerService: TimerService,
   ) {
     this.timerService.counter.subscribe(value => {
-      console.log("Buff remaining: ", this.buffTimeRemaining);
-      if (this.activeBuff) {
-        console.log("Current buff: ", this.activeBuff.properties.effectAmount);
-      }
       if (this.buffTimeRemaining > 0) {
         this.buffTimeRemaining--;
       } else {
@@ -62,6 +58,7 @@ export class EquipmentManagerService {
   get getWeaponDamage() {
     return this.weapons.primary ? this.weapons.primary.properties.damage : 0;
   }
+
 
   /**
    * Adds an item to its relevant armour slot

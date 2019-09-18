@@ -11,8 +11,7 @@ import { WeaponType, PotionType } from '../../item/enums';
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
 import { Character } from '../../character-classes/character';
 import { Dice } from '../util/dice';
-import { UserInputService } from '../../../shared/services/user-input.service';
-import { TimerService } from './timer.service';
+import { PotionEffectType } from '../../item/enums/potion-effect-type';
 
 @Injectable()
 export class PlayerStateService {
@@ -24,6 +23,7 @@ export class PlayerStateService {
   public locationX: number;
   public locationY: string;
   public direction: Direction = Direction.N;
+  public lastKnownLocation: string;
   // TODO default (maybe even scrap the whole options for now)
   // TODO maybe move this to equipment manager
   public selectedWeaponSlot: WeaponType = WeaponType.primary;
@@ -321,6 +321,11 @@ export class PlayerStateService {
             character: defaults.dialogue.computerCharacterType,
             name: defaults.dialogue.computerName
           });
+
+          // Set the target if became invisible while being hunted
+          if (item.properties.effectType === PotionEffectType.invisibility) {
+            this.lastKnownLocation = this.locationY + this.locationX;
+          }
           break;
       }
     }

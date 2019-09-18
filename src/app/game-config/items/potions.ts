@@ -4,7 +4,6 @@ import { PotionEffectType } from "../../game/item/enums/potion-effect-type";
 export const potions = {
       smallHealthPotion: {
             name: "Small Health Potion",
-            itemReference: "19e43409-a10a-4d3c-854e-74cd1df18de5",
             class: ItemClass.potion,
             type: PotionType.healing,
             armourSlot: null,
@@ -23,7 +22,6 @@ export const potions = {
       },
       smallArmourBuff: {
             name: "Small Armour Buff",
-            itemReference: "3ec037c4-93e5-4b7f-8395-1d3093663001",
             class: ItemClass.potion,
             type: PotionType.buff,
             armourSlot: null,
@@ -38,6 +36,62 @@ export const potions = {
             properties: {
                   effectAmount: 20,
                   effectType: PotionEffectType.armour,
+                  effectDuration: 10,
+            }
+      },
+      largeArmourBuff: {
+            name: "Large Armour Buff",
+            class: ItemClass.potion,
+            type: PotionType.buff,
+            armourSlot: null,
+            weaponSlot: null,
+            usable: true,
+            level: 1,
+            weight: 1,
+            inventoryHeight: 1,
+            inventoryWidth: 1,
+            value: 40,
+            imageFileName: "armour-buff-potion.png",
+            properties: {
+                  effectAmount: 40,
+                  effectType: PotionEffectType.armour,
+                  effectDuration: 10,
+            }
+      },
+      largeHealthBuff: {
+            name: "Large Health Buff",
+            class: ItemClass.potion,
+            type: PotionType.buff,
+            armourSlot: null,
+            weaponSlot: null,
+            usable: true,
+            level: 1,
+            weight: 1,
+            inventoryHeight: 1,
+            inventoryWidth: 1,
+            value: 30,
+            imageFileName: "health-buff-potion.png",
+            properties: {
+                  effectAmount: 40,
+                  effectType: PotionEffectType.healthOvercharge,
+                  effectDuration: 10,
+            }
+      },
+      invisiblityPotion: {
+            name: "Invisibility Potion",
+            class: ItemClass.potion,
+            type: PotionType.buff,
+            armourSlot: null,
+            weaponSlot: null,
+            usable: true,
+            level: 1,
+            weight: 1,
+            inventoryHeight: 1,
+            inventoryWidth: 1,
+            value: 100,
+            imageFileName: "invisibility-potion.png",
+            properties: {
+                  effectType: PotionEffectType.invisibility,
                   effectDuration: 10,
             }
       },
