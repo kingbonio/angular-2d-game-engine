@@ -280,10 +280,28 @@ export class PlayerStateService {
   }
 
   public receiveAttack(character: Character) {
-    const damage = this.battleCalculatorService.getDamageToPlayer(character, this.equipmentManagerService.armour, this.equipmentManagerService.activeBuff);
+    let damage = this.battleCalculatorService.getDamageToPlayer(character, this.equipmentManagerService.armour, this.equipmentManagerService.activeBuff);
     if (damage) {
 
-      this.health -= damage;
+      if (this.equipmentManagerService.activeBuff &&
+          this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge &&
+          damage <= this.equipmentManagerService.activeBuff.properties.remainingEffect) {
+
+        // Take any damage off the health buff first
+        this.equipmentManagerService.activeBuff.properties.remainingEffect -= damage;
+      } else {
+
+        if (this.equipmentManagerService.activeBuff &&
+            this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge) {
+
+          // Reduce the damage by what remains after health buff used
+          damage = damage - this.equipmentManagerService.activeBuff.properties.remainingEffect;
+          this.equipmentManagerService.activeBuff.properties.remainingEffect = 0;
+        }
+
+        // Reduce health by remaining damage
+        this.health -= damage;
+      }
 
       this.dialogueService.displayDialogueMessage({
         text: defaults.dialogue.enemyAttacks(damage, character.name),
@@ -316,6 +334,7 @@ export class PlayerStateService {
         case PotionType.buff:
           this.equipmentManagerService.activeBuff = item;
           this.equipmentManagerService.startBuffTimer(item.properties.effectDuration);
+
           this.dialogueService.displayDialogueMessage({
             text: defaults.dialogue.consumedBuffPotion(item.name, item.properties.effectDuration),
             character: defaults.dialogue.computerCharacterType,

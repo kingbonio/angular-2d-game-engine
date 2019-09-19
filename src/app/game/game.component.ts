@@ -15,6 +15,7 @@ import { GameModalComponent } from './game-menu/game-modal/game-modal.component'
 import { ApplicationStateService } from '../shared/services/application-state.service';
 import { GameSettingsService } from '../shared/services/game-settings.service';
 import { TimerService } from './shared/services/timer.service';
+import { PotionEffectType } from './item/enums/potion-effect-type';
 
 @Component({
   selector: 'app-game-root',
@@ -30,6 +31,7 @@ export class GameComponent implements OnInit, OnDestroy {
   title = 'game';
   public loadingText = defaults.gameMenu.loadingText;
   public areaComponentAlive = true;
+  public PotionEffectType = PotionEffectType;
 
   constructor(
     public playerStateService: PlayerStateService,
@@ -92,6 +94,14 @@ export class GameComponent implements OnInit, OnDestroy {
         this.gameModalRef = null;
       });
     }
+  }
+
+  getCurrentHealth() {
+    const healthBuff = (this.equipmentManagerService.activeBuff &&
+                        this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge) ?
+                        this.equipmentManagerService.activeBuff.properties.remainingEffect : 0;
+
+    return this.playerStateService.health + healthBuff;
   }
 
   public isAreaComponentAlive() {
