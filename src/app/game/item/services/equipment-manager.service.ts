@@ -6,6 +6,7 @@ import { InventoryManagerService } from './inventory-manager.service';
 import { IEquipmentStateData } from '../../shared/interfaces/iequipment-state-data';
 import { TimerService } from '../../shared/services/timer.service';
 import { PotionEffectType } from '../enums/potion-effect-type';
+import defaults from '../../../shared/defaults';
 
 @Injectable()
 export class EquipmentManagerService {
@@ -56,7 +57,11 @@ export class EquipmentManagerService {
   }
 
   get getWeaponDamage() {
-    return this.weapons.primary ? this.weapons.primary.properties.damage : 0;
+    let totalDamage = this.weapons.primary ? this.weapons.primary.properties.damage : defaults.playerBaseStats.baseDamage;
+    if (this.activeBuff && this.activeBuff.properties.effectType === PotionEffectType.damage) {
+      totalDamage += this.activeBuff.properties.effectAmount;
+    }
+    return totalDamage;
   }
 
   /**

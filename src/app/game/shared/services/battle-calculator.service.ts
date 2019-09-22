@@ -25,27 +25,35 @@ export class BattleCalculatorService {
    * @param target The character with equipped armour
    * @param weaponTypeUsed Reference for player weapon type
    */
-  public getDamageToEnemy(target: Character, weaponTypeUsed: WeaponType): number | undefined {
+  public getDamageToEnemy(target: Character, weaponTypeUsed: WeaponType, activeBuff?: IInventoryItem | null): number | undefined {
 
+    // TODO this may become redundant
     const equippedWeapon = this.equipmentManagerService.getWeaponType(weaponTypeUsed);
 
-    return this.calculateDamage(target.armour, equippedWeapon);
+    // Pass by value here
+    let totalDamage = equippedWeapon ? equippedWeapon.properties.damage : defaults.playerBaseStats.baseDamage;
+
+    if (activeBuff && activeBuff.properties.effectType === PotionEffectType.damage) {
+      totalDamage += activeBuff.properties.effectAmount;
+    }
+
+    return this.calculateDamage(target.armour, totalDamage);
   }
 
-  public getDamageToPlayer(character: Character, armour: IArmour, activeBuff: IInventoryItem): number {
+  public getDamageToPlayer(character: Character, armour: IArmour, activeBuff?: IInventoryItem | null): number {
 
     if (activeBuff && activeBuff.properties.effectType === PotionEffectType.armour) {
 
-      return this.calculateDamage(armour, character.weapons.primary, activeBuff.properties.effectAmount);
+      return this.calculateDamage(armour, character.weapons.primary.properties.damage, activeBuff);
     } else {
 
       // TODO assumed always using primary
-      return this.calculateDamage(armour, character.weapons.primary);
+      return this.calculateDamage(armour, character.weapons.primary.properties.damage);
     }
 
   }
 
-  private calculateDamage(targetArmour: IArmour, weapon: IInventoryItem, buff?: number) {
+  private calculateDamage(targetArmour: IArmour, weaponDamage: number, activeBuff?: IInventoryItem) {
     let totalArmourValue = defaults.enemyProperties.baseArmour;
 
     if (targetArmour) {
@@ -56,8 +64,8 @@ export class BattleCalculatorService {
         }
       }
 
-      if (buff) {
-        totalArmourValue += buff;
+      if (activeBuff && activeBuff.properties.effectType === PotionEffectType.armour) {
+        totalArmourValue += activeBuff.properties.effectAmount;
       }
     }
 
@@ -67,9 +75,9 @@ export class BattleCalculatorService {
       return 0;
     }
 
-    const damageTotal = Math.ceil(weapon.properties.damage * (diceRoll / 20));
+    const damageTotal = Math.ceil(weaponDamage * (diceRoll / 20));
 
-    const defenseTotal = Math.ceil(weapon.properties.damage / totalArmourValue);
+    const defenseTotal = Math.ceil(weaponDamage / totalArmourValue);
 
     const damageTaken = damageTotal * defenseTotal;
 

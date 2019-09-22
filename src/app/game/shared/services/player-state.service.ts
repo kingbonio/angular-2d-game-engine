@@ -12,6 +12,7 @@ import { EquipmentManagerService } from '../../item/services/equipment-manager.s
 import { Character } from '../../character-classes/character';
 import { Dice } from '../util/dice';
 import { PotionEffectType } from '../../item/enums/potion-effect-type';
+import { InventoryManagerService } from '../../item/services/inventory-manager.service';
 
 @Injectable()
 export class PlayerStateService {
@@ -35,6 +36,7 @@ export class PlayerStateService {
     private movement: MovementComponent,
     private battleCalculatorService: BattleCalculatorService,
     private equipmentManagerService: EquipmentManagerService,
+    private inventoryManagerService: InventoryManagerService,
     // private userInputService: UserInputService,
 
   ) {
@@ -102,56 +104,58 @@ export class PlayerStateService {
    * Perform an attack in the direction player is facing
    */
   public attack() {
-    if (this.equipmentManagerService.getWeaponType(this.selectedWeaponSlot)) {
-      const targetReference = this.movement.getNextLocation(this.locationY, this.locationX, this.direction);
-      const target = this.areaStateService.locations[targetReference.locationY + targetReference.locationX].element;
+    // if (this.equipmentManagerService.getWeaponType(this.selectedWeaponSlot)) {
+    const targetReference = this.movement.getNextLocation(this.locationY, this.locationX, this.direction);
+    const target = this.areaStateService.locations[targetReference.locationY + targetReference.locationX].element;
 
-      if (target && (target.type === ElementClass.enemy || target.type === ElementClass.npc)) {
-        if (target.isDead()) {
-          this.dialogueService.displayDialogueMessage({
-            text: defaults.dialogue.nullElementResponse,
-            character: defaults.dialogue.computerCharacterType,
-            name: defaults.dialogue.computerName
-          });
-          return;
-        }
-
-        const damage = this.battleCalculatorService.getDamageToEnemy(target, this.selectedWeaponSlot);
-
-        if (damage) {
-          // No need to assign this
-          target.respond(UserInteractionTypes.attack, this.movement.getDirectionToFace(this.direction), damage);
-
-          this.dialogueService.displayDialogueMessage({
-            text: defaults.dialogue.attackSuccess(damage),
-            character: defaults.dialogue.computerCharacterType,
-            name: defaults.dialogue.computerName
-          });
-
-          if (target.isDead()) {
-            this.dialogueService.displayDialogueMessage({
-              text: defaults.dialogue.targetDead + target.name,
-              character: defaults.dialogue.computerCharacterType,
-              name: defaults.dialogue.computerName
-            });
-          }
-        } else {
-          this.dialogueService.displayDialogueMessage({
-            text: defaults.dialogue.attackFailure,
-            character: defaults.dialogue.computerCharacterType,
-            name: defaults.dialogue.computerName
-          });
-        }
-      }
-    } else {
-      this.dialogueService.displayDialogueMessage(
-        {
-          text: defaults.dialogue.noWeaponEquipped,
+    if (target && (target.type === ElementClass.enemy || target.type === ElementClass.npc)) {
+      if (target.isDead()) {
+        this.dialogueService.displayDialogueMessage({
+          text: defaults.dialogue.nullElementResponse,
           character: defaults.dialogue.computerCharacterType,
           name: defaults.dialogue.computerName
+        });
+        return;
+      }
+
+      const damage = this.battleCalculatorService.getDamageToEnemy(target, this.selectedWeaponSlot, this.equipmentManagerService.activeBuff);
+
+      if (damage) {
+        // No need to assign this
+        target.respond(UserInteractionTypes.attack, this.movement.getDirectionToFace(this.direction), damage);
+
+        this.dialogueService.displayDialogueMessage({
+          text: defaults.dialogue.attackSuccess(damage),
+          character: defaults.dialogue.computerCharacterType,
+          name: defaults.dialogue.computerName
+        });
+
+        if (target.isDead()) {
+          this.dialogueService.displayDialogueMessage({
+            text: defaults.dialogue.targetDead + target.name,
+            character: defaults.dialogue.computerCharacterType,
+            name: defaults.dialogue.computerName
+          });
         }
-      );
+      } else {
+        this.dialogueService.displayDialogueMessage({
+          text: defaults.dialogue.attackFailure,
+          character: defaults.dialogue.computerCharacterType,
+          name: defaults.dialogue.computerName
+        });
+      }
     }
+    // }
+    // } else {
+
+    // this.dialogueService.displayDialogueMessage(
+    //   {
+    //     text: defaults.dialogue.noWeaponEquipped,
+    //     character: defaults.dialogue.computerCharacterType,
+    //     name: defaults.dialogue.computerName
+    //   }
+    // );
+    // }
   }
 
   /**
@@ -284,15 +288,15 @@ export class PlayerStateService {
     if (damage) {
 
       if (this.equipmentManagerService.activeBuff &&
-          this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge &&
-          damage <= this.equipmentManagerService.activeBuff.properties.remainingEffect) {
+        this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge &&
+        damage <= this.equipmentManagerService.activeBuff.properties.remainingEffect) {
 
         // Take any damage off the health buff first
         this.equipmentManagerService.activeBuff.properties.remainingEffect -= damage;
       } else {
 
         if (this.equipmentManagerService.activeBuff &&
-            this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge) {
+          this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge) {
 
           // Reduce the damage by what remains after health buff used
           damage = damage - this.equipmentManagerService.activeBuff.properties.remainingEffect;
@@ -320,16 +324,33 @@ export class PlayerStateService {
     }
   }
 
-  public useConsumable(item: IInventoryItem) {
+  public useConsumable(item: IInventoryItem, itemSlot: any) {
     if (item.class === ItemClass.potion) {
       switch (item.type) {
         case PotionType.healing:
-          this.health += item.properties.effectAmount;
-          this.dialogueService.displayDialogueMessage({
-            text: defaults.dialogue.consumedHealthPotion(item.name, item.properties.effectAmount),
-            character: defaults.dialogue.computerCharacterType,
-            name: defaults.dialogue.computerName
-          });
+          if ((this.maxHealth - this.health) > 0) {
+
+            // We only want to add additional health remaining
+            if (item.properties.effectAmount > (this.maxHealth - this.health)) {
+              this.health += (this.maxHealth - this.health);
+            } else {
+              this.health += item.properties.effectAmount;
+            }
+
+            this.dialogueService.displayDialogueMessage({
+              text: defaults.dialogue.consumedHealthPotion(item.name, item.properties.effectAmount),
+              character: defaults.dialogue.computerCharacterType,
+              name: defaults.dialogue.computerName
+            });
+
+            this.inventoryManagerService.locations[itemSlot] = null;
+          } else {
+            this.dialogueService.displayDialogueMessage({
+              text: defaults.dialogue.alreadyAtFullHealth,
+              character: defaults.dialogue.computerCharacterType,
+              name: defaults.dialogue.computerName
+            });
+          }
           break;
         case PotionType.buff:
           this.equipmentManagerService.activeBuff = item;
@@ -345,6 +366,8 @@ export class PlayerStateService {
           if (item.properties.effectType === PotionEffectType.invisibility) {
             this.lastKnownLocation = this.locationY + this.locationX;
           }
+
+          this.inventoryManagerService.locations[itemSlot] = null;
           break;
       }
     }

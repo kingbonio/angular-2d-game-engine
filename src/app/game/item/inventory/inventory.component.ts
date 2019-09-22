@@ -34,8 +34,7 @@ export class InventoryComponent implements OnInit {
           break;
         case (ItemClass.potion):
           // Drink potion and inbue effect
-          this.playerStateService.useConsumable(this.inventoryManagerService.locations[itemSlot]);
-          this.inventoryManagerService.locations[itemSlot] = null;
+          this.playerStateService.useConsumable(this.inventoryManagerService.locations[itemSlot], itemSlot);
           break;
         case (ItemClass.keyItem):
           // Assign the item to active slot

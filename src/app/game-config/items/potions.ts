@@ -77,6 +77,25 @@ export const potions = {
                   remainingEffect: 10,
             }
       },
+      smallDamageBuff: {
+            name: "Small Damage Buff",
+            class: ItemClass.potion,
+            type: PotionType.buff,
+            armourSlot: null,
+            weaponSlot: null,
+            usable: true,
+            level: 1,
+            weight: 1,
+            inventoryHeight: 1,
+            inventoryWidth: 1,
+            value: 30,
+            imageFileName: "damage-potion.png",
+            properties: {
+                  effectType: PotionEffectType.damage,
+                  effectDuration: 10,
+                  effectAmount: 10,
+            }
+      },
       invisiblityPotion: {
             name: "Invisibility Potion",
             class: ItemClass.potion,

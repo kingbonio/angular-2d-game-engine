@@ -36,7 +36,10 @@ export class AreaConfigProviderService implements OnInit {
     // TODO This is not safeguarded against the inventory being full, when sorting this sort that
     this.inventoryManagerService.addItemToInventory(potions.smallArmourBuff);
     this.inventoryManagerService.addItemToInventory(potions.smallHealthPotion);
+    this.inventoryManagerService.addItemToInventory(potions.smallHealthPotion);
+    this.inventoryManagerService.addItemToInventory(potions.smallHealthPotion);
     this.inventoryManagerService.addItemToInventory(potions.invisiblityPotion);
+    this.inventoryManagerService.addItemToInventory(potions.smallDamageBuff);
     this.inventoryManagerService.addItemToInventory(potions.largeHealthBuff);
     this.inventoryManagerService.addItemToInventory(weapons.sword);
     this.inventoryManagerService.addItemToInventory(weapons.axe);

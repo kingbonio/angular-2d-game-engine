@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AreaStateService } from '../../services/area-state.service';
 import { Direction } from '../../enums';
 import { Dice } from '../dice';
-import { ILocation } from '../../interfaces';
+import { ILocation, ILocationData } from '../../interfaces';
 import defaults from '../../../../shared/defaults';
 import { Character } from '../../../character-classes/character';
 
@@ -217,7 +217,7 @@ export class MovementComponent {
    * Only move if the next location is free
    * @returns the newLocation of the character
    */
-  public walkRoute(character: Character, gridLocation: string): string {
+  public walkRoute(character: Character, gridLocation: string): ILocationData {
     const routeIndex = character.currentPositionInRoute;
     const splitLocation = this.areaStateService.splitLocationReference(gridLocation);
     const direction = character.directionsForPatrol[character.currentPositionInRoute];
@@ -231,16 +231,18 @@ export class MovementComponent {
         character.currentPositionInRoute++;
       }
 
+      // Cycle back around if we're at the end of the route
       const previousDirection = character.currentPositionInRoute === 0 ?
-        character.directionsForPatrol[character.directionsForPatrol.length - 1] :
-        character.directionsForPatrol[character.currentPositionInRoute - 1];
+                                character.directionsForPatrol[character.directionsForPatrol.length - 1] :
+                                character.directionsForPatrol[character.currentPositionInRoute - 1];
 
       character.direction = previousDirection;
-
+    } else {
+      character.direction = character.directionsForPatrol[character.currentPositionInRoute];
     }
-      // Character has moved to new location, return the new location
-      return newLocation.locationY + newLocation.locationX;
 
+    // Character has moved to new location, return the new location data
+    return newLocation;
   }
 
   /**

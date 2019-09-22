@@ -7,5 +7,6 @@ export * from "./iinventory-state-data";
 export * from "../../item/interfaces/iinventory-item";
 export * from "../../area/interfaces/ienemy";
 export * from "./iloot-parameters";
-export * from "./iLocation";
+export * from "./ilocation";
+export * from "./ilocation-data";
 export * from "./igame-settings";
