@@ -3,7 +3,6 @@ import { AreaStateService } from './area-state.service';
 import { PlayerStateService } from './player-state.service';
 import { DialogueService } from './dialogue.service';
 import { InventoryManagerService } from '../../item/services/inventory-manager.service';
-import { GameStateService } from './game-state.service';
 import { IStateData, IAreaStateData, IPlayerStateData, IDialogueStateData, IInventoryStateData, IGameStateData, IGameSettings } from '../interfaces';
 import * as maps from "../../../game-config/areas/map";
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';

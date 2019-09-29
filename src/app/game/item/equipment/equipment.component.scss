@@ -1,7 +1,7 @@
 .character-section {
       border: solid 1px black;
 
-      .armour, .weapons, .active-items {
+      .armour, .weapons, .active-items, .active-buffs {
             padding: 5px;
 
             .title {
@@ -24,11 +24,13 @@
                   border: solid 1px #8a8181;
                   min-width: 30px;
                   height: 30px;
-                  cursor: pointer;
                   -moz-box-shadow:    inset 0 0 3px 3px #000000;
                   -webkit-box-shadow: inset 0 0 3px 3px #000000;
                   box-shadow:         inset 0 0 3px 3px #000000;
 
+                  &.clickable {
+                        cursor: pointer;
+                  }
             }
       }
 }

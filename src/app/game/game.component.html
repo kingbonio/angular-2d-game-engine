@@ -22,7 +22,7 @@
             </div>
             <div class="status">
                   <div class="health">
-                        HP: {{ playerStateService.health }}/{{ playerStateService.maxHealth }}
+                        HP: {{ getCurrentHealth() }}/{{ playerStateService.maxHealth }}
                   </div>
                   <div class="armour">
                         Total Armour: {{ equipmentManagerService.armourTotal }}

@@ -23,6 +23,9 @@ export default {
         levelStatMultiplier: 1.2,
         stealSuccessRequirement: 2,
     },
+    playerBaseStats: {
+        baseDamage: 5,
+    },
     enemyProperties: {
         // Must be 1 or over
         baseArmour: 5,
@@ -39,6 +42,7 @@ export default {
         computerName: "Game",
         computerCharacterType: "computer",
         maximumMessagesOnScreen: 2,
+        alreadyAtFullHealth: "You are already at full health",
         attackSuccess: (damage) => {
             return `Your attack hits with damage: ${damage}`;
         },
@@ -52,6 +56,9 @@ export default {
         },
         consumedHealthPotion: (name, healing) => {
             return `You have consumed a ${name}, you have been healed by ${healing} points`;
+        },
+        consumedBuffPotion: (name, duration) => {
+            return `You have consumed a ${name}, this will last for ${duration} seconds`;
         },
         inventoryFull: "Your inventory is full",
         noWeaponEquipped: "You have no weapon equipped to attack with",

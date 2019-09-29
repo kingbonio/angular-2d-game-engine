@@ -1,9 +1,11 @@
-import { MagicAbility } from "../../shared/enums";
+import { PotionEffectType as EffectType } from "../enums/potion-effect-type";
 
 export interface IItemProperties {
+      effectType?: EffectType;
+      effectAmount?: number;
+      effectDuration?: number;
+      remainingEffect?: number;
       damage?: number;
       defense?: number;
-      healing?: number;
-      magicAbility?: MagicAbility;
-      magicPotency?: number;
+      keyItem?: boolean;
 }

@@ -4,6 +4,9 @@ import { ItemClass, ArmourType } from '../enums';
 import { WeaponType } from '../enums/weapon-type';
 import { InventoryManagerService } from './inventory-manager.service';
 import { IEquipmentStateData } from '../../shared/interfaces/iequipment-state-data';
+import { TimerService } from '../../shared/services/timer.service';
+import { PotionEffectType } from '../enums/potion-effect-type';
+import defaults from '../../../shared/defaults';
 
 @Injectable()
 export class EquipmentManagerService {
@@ -22,10 +25,21 @@ export class EquipmentManagerService {
     shield: null,
   };
   public activeItem: IInventoryItem;
+  public activeBuff: IInventoryItem | null = null;
+  public buffTimeRemaining = 0;
 
   constructor(
-    private inventoryManagerService: InventoryManagerService
-    ) { }
+    private inventoryManagerService: InventoryManagerService,
+    private timerService: TimerService,
+  ) {
+    this.timerService.counter.subscribe(value => {
+      if (this.buffTimeRemaining > 0) {
+        this.buffTimeRemaining--;
+      } else {
+        this.activeBuff = null;
+      }
+    });
+  }
 
   // TODO This is inefficient
   get armourTotal() {
@@ -33,13 +47,21 @@ export class EquipmentManagerService {
     for (const armourSlot in this.armour) {
       if (this.armour.hasOwnProperty(armourSlot) && this.armour[armourSlot]) {
         armourTotal += this.armour[armourSlot].properties.defense;
+
       }
+    }
+    if (this.activeBuff && this.activeBuff.properties.effectType === PotionEffectType.armour) {
+      armourTotal += this.activeBuff.properties.effectAmount;
     }
     return armourTotal;
   }
 
   get getWeaponDamage() {
-    return this.weapons.primary ? this.weapons.primary.properties.damage : 0;
+    let totalDamage = this.weapons.primary ? this.weapons.primary.properties.damage : defaults.playerBaseStats.baseDamage;
+    if (this.activeBuff && this.activeBuff.properties.effectType === PotionEffectType.damage) {
+      totalDamage += this.activeBuff.properties.effectAmount;
+    }
+    return totalDamage;
   }
 
   /**
@@ -116,6 +138,10 @@ export class EquipmentManagerService {
    */
   public getWeaponType(type: WeaponType): IInventoryItem {
     return this.weapons[type];
+  }
+
+  public startBuffTimer(duration: number): void {
+    this.buffTimeRemaining = duration;
   }
 
   /**
