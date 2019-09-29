@@ -342,6 +342,29 @@ export class MovementComponent {
     }
   }
 
+  public isTargetFacingSource(target: Character, sourceDirection: Direction): boolean {
+    if (this.getOppositeDirection(target.direction) === sourceDirection) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  private getOppositeDirection(direction: Direction): Direction | null {
+    switch (direction) {
+      case Direction.N:
+        return Direction.S;
+      case Direction.E:
+        return Direction.W;
+      case Direction.S:
+        return Direction.N;
+      case Direction.W:
+        return Direction.E;
+      default:
+        return null;
+    }
+  }
+
   private previousYReference(yReference: string | null): string {
     return String.fromCharCode(yReference.charCodeAt(0) - 1);
   }

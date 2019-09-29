@@ -105,11 +105,12 @@ export default {
             //       startingPositionX: 6,
             // },
             {
-                  type: ElementClass.enemy,
+                  type: ElementClass.npc,
                   elementProperties: {
                         id: "28be7086-bafe-49f5-9e3c-ec3ca90e45a6",
                         asleep: true,
                         angry: false,
+                        baseDamage: 5,
                         level: 1,
                         maxHp: 30,
                         lowHealthThreshold: 6,
@@ -134,8 +135,8 @@ export default {
                               Direction.S,
                         ],
                         maxHuntingDuration: 3,
-                        startingState: CharacterState.patrolling,
-                        speechResponse: "I'm gonna kill you",
+                        startingState: CharacterState.asleep,
+                        speechResponse: "Stop bothering me, you fool!",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
                         lootParameters: {
                               level: 6,
@@ -144,15 +145,15 @@ export default {
                               allowKey: false,
                         },
                         armour: {
-                              head: armour.leatherHelmet,
+                              head: null,
                               arms: null,
                               hands: null,
                               torso: null,
                               legs: null,
-                              boots: armour.leatherBoots,
+                              boots: null,
                         },
                         weapons: {
-                              primary: weapons.basicKnife,
+                              primary: null,
                               secondary: null,
                               concealed: null,
                               shield: null,

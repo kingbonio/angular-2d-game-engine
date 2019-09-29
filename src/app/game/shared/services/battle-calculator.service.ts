@@ -41,14 +41,14 @@ export class BattleCalculatorService {
   }
 
   public getDamageToPlayer(character: Character, armour: IArmour, activeBuff?: IInventoryItem | null): number {
+    const characterDamage = character.weapons ? character.weapons.primary.properties.damage : character.baseDamage;
 
     if (activeBuff && activeBuff.properties.effectType === PotionEffectType.armour) {
-
-      return this.calculateDamage(armour, character.weapons.primary.properties.damage, activeBuff);
+      return this.calculateDamage(armour, characterDamage, activeBuff);
     } else {
 
       // TODO assumed always using primary
-      return this.calculateDamage(armour, character.weapons.primary.properties.damage);
+      return this.calculateDamage(armour, characterDamage);
     }
 
   }

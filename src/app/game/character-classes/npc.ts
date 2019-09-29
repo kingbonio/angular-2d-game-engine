@@ -16,6 +16,7 @@ export class NPC extends Character {
       public sleepResponse: string;
       public isAsleep: boolean;
       public isAngry: boolean;
+      public baseDamage: number;
       public pauseCounter: number;
       public maxPauseDuration: number;
       public direction: Direction;
@@ -43,6 +44,7 @@ export class NPC extends Character {
             this.imageFileName = characterDetails.imageFileName;
             this.isAsleep = characterDetails.asleep;
             this.isAngry = characterDetails.angry;
+            this.baseDamage = characterDetails.baseDamage;
             this.pauseCounter = characterDetails.pauseCounter || 0;
             this.maxPauseDuration = characterDetails.maxPauseDuration;
             this.speechResponse = characterDetails.speechResponse;
@@ -80,6 +82,7 @@ export class NPC extends Character {
       public respond(interaction: UserInteractionTypes, directionToFace: Direction, damage: number) {
             switch (interaction) {
                   case UserInteractionTypes.speak:
+                        // TODO Replace these references
                         if (!this.isAsleep) {
                               this.direction = directionToFace;
                               return this.speechResponse;
@@ -88,6 +91,7 @@ export class NPC extends Character {
                         }
                   case UserInteractionTypes.attack:
                         this.isAsleep = false;
+                        this.currentState = CharacterState.hunting;
                         this.direction = directionToFace;
                         this.currentHp -= damage;
                         return;

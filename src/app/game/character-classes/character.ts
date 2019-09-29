@@ -9,6 +9,7 @@ export class Character {
       xp: number;
       isAsleep: boolean;
       isAngry: boolean;
+      baseDamage: number;
       pauseCounter: number;
       maxPauseDuration: number;
       type: ElementClass;

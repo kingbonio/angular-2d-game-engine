@@ -110,6 +110,7 @@ export default {
                         id: "424745e4-3bfc-452c-8ff6-78c04251a294",
                         asleep: false,
                         angry: false,
+                        baseDamage: 5,
                         level: 1,
                         maxHp: 20,
                         lowHealthThreshold: 15,

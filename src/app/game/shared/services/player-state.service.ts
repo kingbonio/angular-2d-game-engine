@@ -197,9 +197,7 @@ export class PlayerStateService {
             this.openLootingModal.emit(target);
             return;
             // TODO update state here
-          }
-          if (target.currentState === CharacterState.hunting) {
-          } else if (this.level >= target.level) {
+          } else if (target.currentState === CharacterState.asleep || !this.movement.isTargetFacingSource(target, this.direction)) {
             const stealSuccess = this.attemptSteal(target);
             if (stealSuccess) {
               this.openLootingModal.emit(target);
@@ -211,10 +209,7 @@ export class PlayerStateService {
                   name: defaults.dialogue.computerName
                 }
               );
-
-              // TODO change state here
-              // target.isAsleep = false;
-              // target.isAngry = true;
+              // Set the character to hunting player
               target.currentState = CharacterState.hunting;
             }
           } else {

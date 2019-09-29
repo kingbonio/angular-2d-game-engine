@@ -71,7 +71,8 @@ export class AiService {
       }
 
       // Either an enemy or an angry npc
-      if ((character.type === ElementClass.enemy || character.currentState === CharacterState.hunting) && this.isPlayerInSight(character, gridLocation)) {
+      if ((character.type === ElementClass.enemy || character.currentState === CharacterState.hunting) &&
+          this.isPlayerInSight(character, gridLocation)) {
         this.startHunting(character);
       }
 
@@ -97,7 +98,8 @@ export class AiService {
         case CharacterState.patrolling:
           const newLocation = this.movement.walkRoute(character, gridLocation);
 
-          if (newLocation && this.isPlayerInSight(character, newLocation.locationY + newLocation.locationX)) {
+          if ((character.type === ElementClass.enemy || character.currentState === CharacterState.hunting) &&
+              this.isPlayerInSight(character, newLocation.locationY + newLocation.locationX)) {
             this.startHunting(character);
           }
           break;
