@@ -158,10 +158,12 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log("Testing AI pathfinding");
     this.pathfinding.getShortestPath(
       {
+        // Starting location
         locationY: "g",
-        locationX: 3,
+        locationX: 2,
       },
       {
+        // Target location
         locationY: "a",
         locationX: 2,
       },

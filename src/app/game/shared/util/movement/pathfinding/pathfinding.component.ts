@@ -5,6 +5,7 @@ import { ILocation, ILocationData } from '../../../interfaces';
 import { Direction } from '../../../enums';
 import { IGridData } from '../../../../area/interfaces/igrid-data';
 import { MovementComponent } from '../../../util/movement/movement.component';
+import { AreaStateService } from '../../../services/area-state.service';
 
 @Component({
   selector: 'app-pathfinding',
@@ -15,6 +16,7 @@ export class PathfindingComponent implements OnInit {
 
   constructor(
     private movement: MovementComponent,
+    private areaStateService: AreaStateService,
   ) { }
 
   ngOnInit() {
@@ -28,42 +30,12 @@ export class PathfindingComponent implements OnInit {
    * @returns Path in an array
    */
   public getShortestPath(startLocation: ILocation, targetLocation: ILocation, locationSet: IGridReferences) {
-    // const frontier: IPathfindingLocation[] = [];
-    // const visited = {};
-
-    // // Write the starting location to the frontier queue
-    // frontier.push({ location: startLocation, cameFrom: null, cost: 0 });
-
-    // // Next we need to get location data for the surrounding locations
-    // const locationNeighbours = [];
-
-
-
-    // // Next we need to cycle over these directions and add them to the visited locations
-    // locationNeighbours.forEach((location: ILocationData) => {
-    //   if (location.isLocationFree && !visited[location.locationY + location.locationX]) {
-
-    //   }
-    // });
-
-    /**
-     * Put the starting location into the "queue"
-     * 
-     * Get the neighbours of the current location
-     * 
-     * if (not in came_from)
-     *  Add to came from to the location and add the "valid" neighbours into the "queue"
-     * 
-     * Stop if you find the target
-     */
-
     const _frontierQueue = [];
     const cameFrom = {};
-    const initLocation: IPathfindingLocation = {
-      location: startLocation,
-      cameFrom: null,
-      cost: 0,
-    };
+
+    if (!this.areaStateService.isLocationFree(targetLocation.locationY + targetLocation.locationX)) {
+      return;
+    }
 
     // Set the initial starting location
     this.placeInQueue(_frontierQueue, startLocation);
@@ -71,6 +43,9 @@ export class PathfindingComponent implements OnInit {
     // Start cycling over the locations in the queue
     while (_frontierQueue.length) {
       const current = this.getFromQueue(_frontierQueue);
+      if (current.locationY + current.locationX === targetLocation.locationY + targetLocation.locationX) {
+        break;
+      }
 
       // Cycle over the neighbours
       for (const direction in Direction) {
@@ -90,10 +65,6 @@ export class PathfindingComponent implements OnInit {
             // We now want to know which direction we came from to trace back
             cameFrom[nextLocationCoords] = current.locationY + current.locationX;
           }
-          // neighbours.push(this.movement.getNextLocation(startLocation.locationY, startLocation.locationX, Direction[direction]));
-          if (nextLocationCoords === targetLocation.locationY + targetLocation.locationX) {
-            break;
-          }
         }
       }
     }
@@ -102,21 +73,19 @@ export class PathfindingComponent implements OnInit {
 
     let pathCurrent = targetLocation.locationY + targetLocation.locationX;
 
-    // TODO Need to guard against blocked paths
-    while (pathCurrent !== startLocation.locationY + startLocation.locationX) {
-      this.placeInQueue(pathBackwards, pathCurrent);
-      pathCurrent = cameFrom[pathCurrent];
-      debugger;
-    }
-    this.placeInQueue(pathBackwards, startLocation.locationY + startLocation.locationX);
+    // We only want to proceed if we managed to get to the target
+    if (cameFrom[targetLocation.locationY + targetLocation.locationX]) {
 
-    // while (pathCurrent !== startLocation.locationY + startLocation.locationX) {
-    //   this.placeInQueue(pathBackwards, pathCurrent);
-    //   pathCurrent = cameFrom[pathCurrent];
-    // }
-    pathBackwards.reverse();
-    console.log("came from: ", cameFrom);
-    console.log("path: ", pathBackwards);
+      while (pathCurrent !== startLocation.locationY + startLocation.locationX) {
+        this.placeInQueue(pathBackwards, pathCurrent);
+        pathCurrent = cameFrom[pathCurrent];
+      }
+      this.placeInQueue(pathBackwards, startLocation.locationY + startLocation.locationX);
+
+      pathBackwards.reverse();
+      console.log("came from: ", cameFrom);
+      console.log("path: ", pathBackwards);
+    }
 
 
 
