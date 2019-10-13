@@ -1,5 +1,5 @@
 import { Character } from "./character";
-import { CharacterType, Direction, ElementClass, CharacterState } from "../shared/enums";
+import { Direction, ElementClass, CharacterState } from "../shared/enums";
 import { UserInteractionTypes } from "../../shared/enums";
 import { IWeapons, IArmour, IInventoryItem } from "../item/interfaces";
 

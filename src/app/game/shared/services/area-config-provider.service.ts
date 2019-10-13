@@ -2,7 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import * as areaConfigs from "../../../game-config/areas";
 import * as maps from "../../../game-config/areas/map";
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
-import { weapons, armour, potions } from '../../../game-config/items';
+import { keyItems, weapons, armour, potions } from '../../../game-config/items';
 import { InventoryManagerService } from '../../item/services/inventory-manager.service';
 
 @Injectable()

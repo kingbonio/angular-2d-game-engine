@@ -21,7 +21,7 @@ export class MovementComponent {
   // TODO Look into direction being used from the service
   // TODO Could refactor this switch statement
   // tslint:disable-next-line:max-line-length
-  public getNextLocation(locationY: string, locationX: number, direction: Direction): { locationY: string, locationX: number, isLocationFree: boolean, isTargetAreaExit: boolean } | null {
+  public getNextLocation(locationY: string, locationX: number, direction: Direction): ILocationData | null {
 
     // Attempt movement
     let newLocationY;
@@ -280,6 +280,8 @@ export class MovementComponent {
     this.areaStateService.locations[characterLocation].element.direction = furthestDirectionToPlayer;
     const targetLocationDetails = this.getNextLocation(splitCharacterLocation.locationY, splitCharacterLocation.locationX, furthestDirectionToPlayer);
 
+    // If direction is blocked, try the next shortest distance towards target location
+
     if (targetLocationDetails && targetLocationDetails.isLocationFree) {
       const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
       this.areaStateService.moveCharacter(targetLocation, characterLocation);
@@ -295,8 +297,9 @@ export class MovementComponent {
   public getDirectionWithRespectToPlayer(playerLocation: ILocation, characterLocation: ILocation, towardsPlayer: boolean): Direction {
     const distanceData = this.areaStateService.getDistanceBetweenLocations(playerLocation, characterLocation);
 
-    // Move vertically
+    // Calculate which direction is furthest
     if (Math.abs(distanceData.yDistance) >= Math.abs(distanceData.xDistance)) {
+      // Move vertically
       if (distanceData.yDistance >= 0) {
         return towardsPlayer ? Direction.S : Direction.N;
       } else {
@@ -401,5 +404,28 @@ export class MovementComponent {
     } else {
       return true;
     }
+  }
+
+  private getPathByAStar(targetLocation: string, sourceLocation: string) {
+      // frontier = PriorityQueue()
+      // frontier.put(start, 0)
+      // came_from = {}
+      // cost_so_far = {}
+      // came_from[start] = None
+      // cost_so_far[start] = 0
+
+      // while not frontier.empty():
+      // current = frontier.get()
+
+      // if current == goal:
+      //   break
+
+      // for next in graph.neighbors(current):
+      //   new_cost = cost_so_far[current] + graph.cost(current, next)
+      // if next not in cost_so_far or new_cost < cost_so_far[next]:
+      // cost_so_far[next] = new_cost
+      // priority = new_cost + heuristic(goal, next)
+      // frontier.put(next, priority)
+      // came_from[next] = current
   }
 }

@@ -11,6 +11,7 @@ import { Character } from '../../character-classes/character';
 import { PotionEffectType } from '../../item/enums/potion-effect-type';
 import { CharacterState, ElementClass } from '../enums';
 import defaults from '../../../shared/defaults';
+import { PathfindingComponent } from '../util/movement/pathfinding/pathfinding.component';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,7 @@ export class AiService {
 
   constructor(
     private movement: MovementComponent,
+    private pathfinding: PathfindingComponent,
     private areaStateService: AreaStateService,
     private equipmentManagerService: EquipmentManagerService,
     private userInputService: UserInputService,
@@ -37,6 +39,7 @@ export class AiService {
         !this.areaStateService.loadingSavedGame) {
         this.actionTriggerHandler(true);
       }
+
     });
     this.timerService.counter.subscribe(value => {
       // TODO This may need a more specific flag
@@ -48,6 +51,8 @@ export class AiService {
         this.actionTriggerHandler(false);
       }
     });
+
+
   }
 
   // TODO Change this parameter
@@ -72,7 +77,7 @@ export class AiService {
 
       // Either an enemy or an angry npc
       if ((character.type === ElementClass.enemy || character.currentState === CharacterState.hunting) &&
-          this.isPlayerInSight(character, gridLocation)) {
+        this.isPlayerInSight(character, gridLocation)) {
         this.startHunting(character);
       }
 
@@ -99,7 +104,7 @@ export class AiService {
           const newLocation = this.movement.walkRoute(character, gridLocation);
 
           if ((character.type === ElementClass.enemy || character.currentState === CharacterState.hunting) &&
-              this.isPlayerInSight(character, newLocation.locationY + newLocation.locationX)) {
+            this.isPlayerInSight(character, newLocation.locationY + newLocation.locationX)) {
             this.startHunting(character);
           }
           break;

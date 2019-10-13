@@ -21,6 +21,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { GameSettingsService } from '../../shared/services/game-settings.service';
 import { GameStateService } from '../shared/services/game-state.service';
 import { DialogueService } from '../shared/services/dialogue.service';
+import { PathfindingComponent } from '../shared/util/movement/pathfinding/pathfinding.component';
 
 @Component({
   selector: 'app-area',
@@ -40,6 +41,7 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private route: ActivatedRoute,
+    public pathfinding: PathfindingComponent,
     public areaStateService: AreaStateService,
     public dialogueService: DialogueService,
     public areaConfigProviderService: AreaConfigProviderService,
@@ -153,6 +155,18 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.areaStateService.loadingExistingArea = false;
 
+    console.log("Testing AI pathfinding");
+    this.pathfinding.getShortestPath(
+      {
+        locationY: "g",
+        locationX: 3,
+      },
+      {
+        locationY: "a",
+        locationX: 2,
+      },
+      this.areaStateService.locations
+    );
   }
 
   private addElementsToGrid(elements: IAreaElement[]): void {

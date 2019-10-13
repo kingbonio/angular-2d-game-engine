@@ -1,4 +1,4 @@
-import { CharacterType, Direction, ElementClass, CharacterState } from "../shared/enums";
+import { Direction, ElementClass, CharacterState } from "../shared/enums";
 import { IWeapons, IArmour, IInventoryItem } from "../item/interfaces";
 
 export class Character {
