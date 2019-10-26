@@ -2,6 +2,13 @@
 
 An engine written with prospects of RPG game story and characters. This will be forked into a game once the engine is finished.
 
+# DEMO
+
+You can play the game in its current "master" branch form here:
+
+https://kingbonio.github.io/angular-rpg-game-engine/
+
+
 # Running
 
 Clone the repo using `git clone https://github.com/kingbonio/angular-rpg-game-engine.git`

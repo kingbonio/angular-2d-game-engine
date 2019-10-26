@@ -3,13 +3,13 @@ import { Direction } from '../../game/shared/enums';
 export default {
     // Player defaults
     initialPlayerStats: {
-        health: 30,
+        health: 20,
         maxHealth: 50,
         strength: 10,
         dexterity: 10,
         magicka: 10,
         exp: 1,
-        imageLocation: 'src/assets/images/player-image.jpg',
+        imageLocation: 'assets/images/player-image.jpg',
         locationX: 2,
         locationY: 'B',
         direction: Direction.N

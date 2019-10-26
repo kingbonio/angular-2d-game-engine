@@ -42,7 +42,7 @@ export class GameComponent implements OnInit, OnDestroy {
     public areaStateService: AreaStateService,
     public gameStateService: GameStateService,
     public gameSettingsService: GameSettingsService,
-    private applicationStateService: ApplicationStateService,
+    public applicationStateService: ApplicationStateService,
     private timerService: TimerService,
     private dialog: MatDialog,
   ) {

@@ -1,6 +1,6 @@
 import { MonsterClass, Direction, ElementClass, CharacterState } from "../../game/shared/enums";
 import { IAreaElement } from "../../game/area/interfaces";
-import { armour, weapons, keyItems } from "../items";
+import { armour, weapons, keyItems, potions } from "../items";
 import { IWeapons } from "../../game/item/interfaces";
 
 export default {
@@ -15,6 +15,55 @@ export default {
                   startingPositionX: 4,
                   startingPositionY: "g",
                   direction: Direction.N,
+            },
+            {
+                  type: ElementClass.npc,
+                  elementProperties: {
+            id: "424745e4-3bfc-452c-8ff6-78c04251a294",
+                        asleep: false,
+                        angry: false,
+                        level: 1,
+                        maxHp: 20,
+                        lowHealthThreshold: 15,
+            maxPauseDuration: 2,
+                        name: "David",
+                        direction: Direction.E,
+                        patrolArea: false,
+                        directionsForPatrol: [
+                        ],
+            maxHuntingDuration: 3,
+                        startingState: CharacterState.wandering,
+                        speechResponse: "Stop bothering me, you fool!",
+                        sleepResponse: "Zzzzzzzzzzzzzzzz",
+                        lootParameters: {
+                              level: 6,
+                              allowWeapon: true,
+                              allowPotion: false,
+                              allowKey: false,
+                        },
+                        armour: {
+                              head: null,
+                              arms: null,
+                              hands: null,
+                              torso: null,
+                              legs: null,
+                              boots: null,
+                        },
+                        weapons: {
+                              primary: null,
+                              secondary: null,
+                              concealed: null,
+                              shield: null,
+                        } as IWeapons,
+                        loot: [
+                              keyItems.fancyKey,
+                              potions.smallHealthPotion,
+                        ],
+                        imageFileName: "",
+                        startingLocation: "a4",
+                  },
+                  startingPositionX: 3,
+                  startingPositionY: "e",
             },
             {
                   type: ElementClass.enemy,
