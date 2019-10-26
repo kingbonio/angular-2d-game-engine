@@ -21,7 +21,7 @@
             z-index: -1;
             width: 80px;
             height: 80px;
-            background-image: url("../../../assets/images/floor-style/wooden-floor-small.png");
+            background-image: url("assets/images/floor-style/wooden-floor-small.png");
             position: relative;
             
             .area-exit {
@@ -32,7 +32,7 @@
                         width: 100%;
                         height: 100%;
                         border-color: red;
-                        background-image: url("../../../assets/images/grid-decoration/area-exit.png");
+                        background-image: url("assets/images/grid-decoration/area-exit.png");
                   }
 
                   &.northExit {
@@ -76,13 +76,13 @@
 
                   // TODO Move this into imageFileName property
                   .player {
-                        background-image: url("../../../assets/images/elements/shadow-player.png");
+                        background-image: url("assets/images/elements/shadow-player.png");
                   }
                   .enemy {
-                        background-image: url("../../../assets/images/elements/shadow-enemy.png");
+                        background-image: url("assets/images/elements/shadow-enemy.png");
                   }
                   .npc {
-                        background-image: url("../../../assets/images/elements/shadow-npc.png");
+                        background-image: url("assets/images/elements/shadow-npc.png");
                   }
                   .dead {
                         height: 80px;

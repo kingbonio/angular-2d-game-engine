@@ -104,7 +104,7 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public getDeadClass(character: Character): string {
-    if (character.type !== ElementClass.player) {
+    if (character.currentHp) {
       return character.currentHp > 0 ? "" : "dead";
     }
   }

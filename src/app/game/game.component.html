@@ -35,6 +35,14 @@
 
                   </div>
             </div>
+            <div *ngIf="gameStateService.battleMode" class="battle-mode">
+                  Battle mode
+                  (Turn based)
+                  Escape or fight
+            </div>
+            <div *ngIf="playerStateService.health < 1" class="you-are-dead">
+                  You should be dead, reload the page
+            </div>
             <div class="menu-button">
                   <div *ngIf="gameSettingsService.allowInGameMenu" (click)="openGameMenu()" class="menu-icon">Menu</div>
             </div>

@@ -56,6 +56,13 @@
         padding: 10px;  
         border: solid #000 1px;
         
+        .battle-mode, .you-are-dead {
+            border: solid 1px #b72424;
+            color: #b72424;
+            font-size: 14px;
+            width: 101px;
+        }
+
         .menu-button {
             width: 60px;
             height: 60px;
