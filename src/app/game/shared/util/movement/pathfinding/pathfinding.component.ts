@@ -6,6 +6,7 @@ import { Direction } from '../../../enums';
 import { IGridData } from '../../../../area/interfaces/igrid-data';
 import { MovementComponent } from '../../../util/movement/movement.component';
 import { AreaStateService } from '../../../services/area-state.service';
+import { PriorityQueue } from '../../../../../shared/util/priority-queue';
 
 @Component({
   selector: 'app-pathfinding',
@@ -13,6 +14,7 @@ import { AreaStateService } from '../../../services/area-state.service';
 })
 export class PathfindingComponent implements OnInit {
 
+  private priorityQueue: PriorityQueue;
 
   constructor(
     private movement: MovementComponent,
@@ -20,6 +22,7 @@ export class PathfindingComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.priorityQueue = new PriorityQueue();
   }
 
   /**
