@@ -21,7 +21,7 @@ export default {
             return exp / 3000;
         },
         levelStatMultiplier: 1.2,
-        stealSuccessRequirement: 2,
+        stealSuccessRequirement: 5,
     },
     playerBaseStats: {
         baseDamage: 5,

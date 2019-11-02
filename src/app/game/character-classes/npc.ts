@@ -57,6 +57,7 @@ export class NPC extends Character {
             this.maxHp = characterDetails.maxHp;
             this.lowHealthThreshold = characterDetails.lowHealthThreshold;
             this.armour = characterDetails.equippedArmour;
+            this.weapons = characterDetails.weapons;
             this.loot = characterDetails.loot;
             this.level = characterDetails.level;
             this.imageFileName = characterDetails.imageFileName;
