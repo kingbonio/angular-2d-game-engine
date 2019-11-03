@@ -5,7 +5,7 @@ import { IWeapons } from "../../game/item/interfaces";
 
 export default {
       room: 2,
-      areaLoadMessage: "Sneak up behind and pickpocket the enemy using Interact (default 'E') and take the key, you'll need it later. If the enemy spots you or they realise what you're doing you will enter 'Battle Mode' and will need to away until they give up the chase and return to their patrol route. If you kill the enemy, use Interact on their corpse to loot them. Once you have the key, walk through the north exit",
+      areaLoadMessage: "Sneak up behind and pickpocket the (much tougher) enemy using Interact (default 'E') and take the key, you'll need it later. If the enemy spots you or they realise what you're doing you will enter 'Battle Mode' and will need to away until they give up the chase and return to their patrol route. If you kill the enemy, use Interact on their corpse to loot them. Once you have the key, walk through the north exit",
       areaElements: [
             {
                   type: ElementClass.player,
@@ -74,7 +74,7 @@ export default {
                         asleep: true,
                         angry: false,
                         level: 1,
-                        maxHp: 30,
+                        maxHp: 50,
                         lowHealthThreshold: 6,
                         maxPauseDuration: 1,
                         name: "Gary The Dick",
@@ -112,7 +112,7 @@ export default {
                               boots: armour.leatherBoots,
                         },
                         weapons: {
-                              primary: weapons.basicKnife,
+                              primary: weapons.axe,
                               secondary: null,
                               concealed: null,
                               shield: null,
