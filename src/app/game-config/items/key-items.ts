@@ -2,7 +2,7 @@ import { ItemClass } from "../../game/item/enums";
 
 export const keyItems = {
       rustyOldKey: {
-            name: "Rusty Old Key",
+            name: "Chest Key",
             itemReference: "b27f504c-4fb4-4855-a4e7-9facbf693c76",
             class: ItemClass.keyItem,
             armourSlot: null,
@@ -20,7 +20,7 @@ export const keyItems = {
             }
       },
       fancyKey: {
-            name: "Fancy Key",
+            name: "Door Key",
             itemReference: "64c87a80-4f1a-4dc3-b2c8-c47a9c393f61",
             class: ItemClass.keyItem,
             armourSlot: null,

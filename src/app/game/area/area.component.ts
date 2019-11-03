@@ -140,8 +140,8 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.areaConfig.areaLoadMessage) {
         this.dialogueService.displayDialogueMessage({
           text: this.areaConfig.areaLoadMessage,
-          character: defaults.dialogue.computerCharacterType,
-          name: defaults.dialogue.computerName
+          character: defaults.dialogue.areaTipsType,
+          name: defaults.dialogue.areaTipsName
         });
       }
     }

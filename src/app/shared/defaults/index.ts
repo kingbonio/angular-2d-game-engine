@@ -42,6 +42,8 @@ export default {
         keyItemNotActive: "You have not got the correct active item",
         computerName: "Game",
         computerCharacterType: "computer",
+        areaTipsName: "area tips",
+        areaTipsType: "area-tips",
         maximumMessagesOnScreen: 2,
         alreadyAtFullHealth: "You are already at full health",
         attackSuccess: (damage) => {

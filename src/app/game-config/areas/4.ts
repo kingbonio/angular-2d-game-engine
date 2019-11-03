@@ -5,7 +5,7 @@ import { IWeapons } from "../../game/item/interfaces";
 
 export default {
       room: 4,
-      areaLoadMessage: "Open the chest with the same key you used for the previous chest and take the invisibility potion. When you click on the invisibility potion in your inventory you will have 10 seconds to move to the north exit past the enemies.",
+      areaLoadMessage: "Open the chest with the same key you used for the previous chest and take the invisibility potion. When you click on the invisibility potion in your inventory you will have 10 seconds (Counter is in the top right) to move to the north exit past the enemies.",
       areaElements: [
             {
                   type: ElementClass.player,
