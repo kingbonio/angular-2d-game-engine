@@ -2,18 +2,26 @@
       height: 176px;
       overflow: hidden;
 }
-.character-name {
-      color: inherit;
+
+.message-container {
 
       &.enemy {
-            color: red;
+            color: #ff9999;
       }
 
       &.npc {
-            color: green;
+            color: #46b946;
       }
 
+      &.area-tips {
+            color: #b9b946;
+      }
+
+      .character-name {
+            color: inherit;
+      }
 }
+
 .dialogue {
       display: inline-block
 }
