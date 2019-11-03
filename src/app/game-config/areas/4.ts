@@ -15,6 +15,7 @@ export default {
                   },
                   startingPositionX: 4,
                   startingPositionY: "g",
+                  startingDirection: Direction.N,
                   direction: Direction.N,
             },
             {
@@ -29,12 +30,13 @@ export default {
                         maxPauseDuration: 1,
                         name: "Gary The Dick",
                         class: MonsterClass.Human,
+                        startingDirection: Direction.E,
                         direction: Direction.E,
                         patrolArea: true,
                         directionsForPatrol: [
                         ],
                         maxHuntingDuration: 3,
-                        startingState: CharacterState.patrolling,
+                        startingState: CharacterState.still,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
                         lootParameters: {
@@ -77,12 +79,13 @@ export default {
                         maxPauseDuration: 1,
                         name: "Gary The Dick",
                         class: MonsterClass.Human,
+                        startingDirection: Direction.E,
                         direction: Direction.E,
                         patrolArea: true,
                         directionsForPatrol: [
                         ],
                         maxHuntingDuration: 3,
-                        startingState: CharacterState.patrolling,
+                        startingState: CharacterState.still,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
                         lootParameters: {
@@ -125,12 +128,13 @@ export default {
                         maxPauseDuration: 1,
                         name: "Gary The Dick",
                         class: MonsterClass.Human,
+                        startingDirection: Direction.W,
                         direction: Direction.W,
                         patrolArea: true,
                         directionsForPatrol: [
                         ],
                         maxHuntingDuration: 3,
-                        startingState: CharacterState.patrolling,
+                        startingState: CharacterState.still,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
                         lootParameters: {
@@ -173,12 +177,13 @@ export default {
                         maxPauseDuration: 1,
                         name: "Gary The Dick",
                         class: MonsterClass.Human,
+                        startingDirection: Direction.W,
                         direction: Direction.W,
                         patrolArea: true,
                         directionsForPatrol: [
                         ],
                         maxHuntingDuration: 3,
-                        startingState: CharacterState.patrolling,
+                        startingState: CharacterState.still,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
                         lootParameters: {
@@ -221,12 +226,13 @@ export default {
                         maxPauseDuration: 1,
                         name: "Gary The Dick",
                         class: MonsterClass.Human,
+                        startingDirection: Direction.E,
                         direction: Direction.E,
                         patrolArea: true,
                         directionsForPatrol: [
                         ],
                         maxHuntingDuration: 3,
-                        startingState: CharacterState.patrolling,
+                        startingState: CharacterState.still,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
                         lootParameters: {
@@ -269,12 +275,13 @@ export default {
                         maxPauseDuration: 1,
                         name: "Gary The Dick",
                         class: MonsterClass.Human,
+                        startingDirection: Direction.W,
                         direction: Direction.W,
                         patrolArea: true,
                         directionsForPatrol: [
                         ],
                         maxHuntingDuration: 3,
-                        startingState: CharacterState.patrolling,
+                        startingState: CharacterState.still,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
                         lootParameters: {
@@ -317,7 +324,8 @@ export default {
             //             maxPauseDuration: 2,
             //             name: "Gary The Dick",
             //             class: MonsterClass.Human,
-            //             direction: Direction.W,
+            //             startingDirection: Direction.W,
+            // direction: Direction.W,
             //             patrolArea: true,
             //             directionsForPatrol: [
             //             ],
@@ -360,6 +368,7 @@ export default {
                   elementProperties: {
                         name: "Old chest",
                         objectType: ObjectType.lootObject,
+                        startingDirection: Direction.E,
                         direction: Direction.E,
                         canBeTraversed: false,
                         isInteractive: true,

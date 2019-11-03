@@ -213,7 +213,7 @@ export class AreaStateService implements OnInit {
    */
   public getAreaState(newAreaReference: number): any | null {
     const stateJson = localStorage.getItem(newAreaReference.toString());
-    if (stateJson.length && stateJson !== "{}") {
+    if (stateJson && stateJson.length && stateJson !== "{}") {
       return JSON.parse(stateJson);
     } else {
       return null;

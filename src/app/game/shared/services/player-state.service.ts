@@ -198,22 +198,33 @@ export class PlayerStateService {
             return;
             // TODO update state here
           }
+          if (target.currentState === CharacterState.hunting) {
+          } else if (this.level >= target.level) {
+            const stealSuccess = this.attemptSteal(target);
+            if (stealSuccess) {
+              this.openLootingModal.emit(target);
+            } else {
+              this.dialogueService.displayDialogueMessage(
+                {
+                  text: defaults.dialogue.stealAttemptFail,
+                  character: defaults.dialogue.computerCharacterType,
+                  name: defaults.dialogue.computerName
+                }
+              );
 
-          const stealSuccess = this.attemptSteal(target);
-          if (stealSuccess) {
-            this.openLootingModal.emit(target);
+              // TODO change state here
+              // target.isAsleep = false;
+              // target.isAngry = true;
+              target.currentState = CharacterState.hunting;
+            }
           } else {
             this.dialogueService.displayDialogueMessage(
               {
-                text: defaults.dialogue.stealAttemptFail,
+                text: defaults.dialogue.stealEnemyTooHighLevel,
                 character: defaults.dialogue.computerCharacterType,
                 name: defaults.dialogue.computerName
               }
             );
-
-            // TODO change state here
-            // target.isAsleep = false;
-            // target.isAngry = true;
             target.currentState = CharacterState.hunting;
           }
 
@@ -281,7 +292,7 @@ export class PlayerStateService {
   private attemptSteal(target: Character): boolean {
     // TODO Work this out properly
     const diceRoll = Dice.roll1d20();
-    if (diceRoll > defaults.playerMultipliers.stealSuccessRequirement && this.level >= target.level) {
+    if (diceRoll > defaults.playerMultipliers.stealSuccessRequirement) {
       return true;
     }
     return false;

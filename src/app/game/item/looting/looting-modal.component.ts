@@ -24,6 +24,7 @@ export class LootingModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log(this.target);
     this.gameStateService.gamePaused = true;
   }
 

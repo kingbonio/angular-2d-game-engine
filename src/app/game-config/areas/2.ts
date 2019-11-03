@@ -15,7 +15,8 @@ export default {
                   },
                   startingPositionX: 4,
                   startingPositionY: "g",
-                  direction: Direction.N,
+                  startingDirection: Direction.N,
+direction: Direction.N,
             },
             // {
             //       type: ElementClass.enemy,
@@ -29,7 +30,8 @@ export default {
             //             maxPauseDuration: 2,
             //             name: "Gary The Dick",
             //             class: MonsterClass.Human,
-            //             direction: Direction.W,
+            //             startingDirection: Direction.W,
+// direction: Direction.W,
             //             patrolArea: true,
             //             directionsForPatrol: [
             //             ],
@@ -79,7 +81,8 @@ export default {
                         maxPauseDuration: 1,
                         name: "Gary The Dick",
                         class: MonsterClass.Human,
-                        direction: Direction.W,
+                        startingDirection: Direction.W,
+direction: Direction.W,
                         patrolArea: true,
                         directionsForPatrol: [
                               Direction.W,
@@ -131,7 +134,8 @@ export default {
                   type: ElementClass.object,
                   elementProperties: {
                         name: "Straight Wall",
-                        direction: Direction.N,
+                        startingDirection: Direction.N,
+direction: Direction.N,
                         canBeTraversed: false,
                         isInteractive: false,
                         imageFileName: "wall-straight.png",
@@ -143,7 +147,8 @@ export default {
                   type: ElementClass.object,
                   elementProperties: {
                         name: "Straight Wall",
-                        direction: Direction.N,
+                        startingDirection: Direction.N,
+direction: Direction.N,
                         canBeTraversed: false,
                         isInteractive: false,
                         imageFileName: "wall-straight.png",

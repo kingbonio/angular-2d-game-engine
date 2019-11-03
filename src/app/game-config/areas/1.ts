@@ -16,6 +16,7 @@ export default {
                   },
                   startingPositionX: 4,
                   startingPositionY: "a",
+                  startingDirection: Direction.N,
                   direction: Direction.N,
             },
             // {
@@ -30,7 +31,8 @@ export default {
             //             maxPauseDuration: 2,
             //             name: "Gary The Dick",
             //             class: MonsterClass.Human,
-            //             direction: Direction.S,
+            //             startingDirection: Direction.S,
+            // direction: Direction.S,
             //             patrolArea: true,
             //             directionsForPatrol: [
             //                   Direction.S,
@@ -114,6 +116,7 @@ export default {
                         maxPauseDuration: 1,
                         name: "Gary The Dick",
                         class: MonsterClass.Human,
+                        startingDirection: Direction.W,
                         direction: Direction.W,
                         patrolArea: true,
                         directionsForPatrol: [
@@ -173,7 +176,8 @@ export default {
             //             lowHealthThreshold: 15,
             // maxPauseDuration: 2,
             //             name: "David",
-            //             direction: Direction.E,
+            //             startingDirection: Direction.E,
+            // direction: Direction.E,
             //             patrolArea: false,
             //             directionsForPatrol: [
             //             ],
@@ -206,7 +210,7 @@ export default {
             //                   potions.smallHealthPotion,
             //             ],
             //             imageFileName: "",
-                        // startingLocation: "a4",
+            // startingLocation: "a4",
             //       },
             //       startingPositionX: 3,
             //       startingPositionY: "e",
@@ -215,7 +219,8 @@ export default {
             //       type: ElementClass.object,
             //       elementProperties: {
             //             name: "Straight Wall",
-            //             direction: Direction.N,
+            //             startingDirection: Direction.N,
+            // direction: Direction.N,
             //             canBeTraversed: false,
             //             isInteractive: false,
             //             imageFileName: "wall-straight.png",
@@ -227,7 +232,8 @@ export default {
             //       type: ElementClass.object,
             //       elementProperties: {
             //             name: "Straight Wall",
-            //             direction: Direction.N,
+            //             startingDirection: Direction.N,
+            // direction: Direction.N,
             //             canBeTraversed: false,
             //             isInteractive: false,
             //             imageFileName: "wall-straight.png",
@@ -239,7 +245,8 @@ export default {
             //       type: ElementClass.object,
             //       elementProperties: {
             //             name: "Straight Wall",
-            //             direction: Direction.E,
+            //             startingDirection: Direction.N,
+            // direction: Direction.E,
             //             canBeTraversed: false,
             //             isInteractive: false,
             //             imageFileName: "wall-straight.png",
@@ -251,7 +258,8 @@ export default {
             //       type: ElementClass.object,
             //       elementProperties: {
             //             name: "Straight Wall",
-            //             direction: Direction.E,
+            //             startingDirection: Direction.E,
+            // direction: Direction.E,
             //             canBeTraversed: false,
             //             isInteractive: false,
             //             imageFileName: "wall-straight.png",
@@ -263,7 +271,8 @@ export default {
             //       type: ElementClass.object,
             //       elementProperties: {
             //             name: "Corner Wall",
-            //             direction: Direction.E,
+            //             startingDirection: Direction.E,
+            // direction: Direction.E,
             //             canBeTraversed: false,
             //             isInteractive: false,
             //             imageFileName: "wall-corner.png",
@@ -276,7 +285,8 @@ export default {
             //       elementProperties: {
             //             name: "Door",
             //             objectType: ObjectType.door,
-            //             direction: Direction.N,
+            //             startingDirection: Direction.N,
+            // direction: Direction.N,
             //             canBeTraversed: false,
             //             isInteractive: true,
             //             itemReferenceNeeded: "64c87a80-4f1a-4dc3-b2c8-c47a9c393f61",
@@ -289,7 +299,8 @@ export default {
             //       type: ElementClass.object,
             //       elementProperties: {
             //             name: "Straight Wall",
-            //             direction: Direction.S,
+            //             startingDirection: Direction.S,
+            // direction: Direction.S,
             //             canBeTraversed: false,
             //             isInteractive: false,
             //             imageFileName: "wall-straight.png",
@@ -302,7 +313,8 @@ export default {
             //       elementProperties: {
             //             name: "Old chest",
             //             objectType: ObjectType.lootObject,
-            //             direction: Direction.N,
+            //             startingDirection: Direction.N,
+            // direction: Direction.N,
             //             canBeTraversed: false,
             //             isInteractive: true,
             //             itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbf693c76",

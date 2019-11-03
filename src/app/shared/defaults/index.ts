@@ -12,6 +12,7 @@ export default {
         imageLocation: 'assets/images/player-image.jpg',
         locationX: 2,
         locationY: 'B',
+        startingDirection: Direction.N,
         direction: Direction.N
     },
     playerMultipliers: {
@@ -63,6 +64,7 @@ export default {
         inventoryFull: "Your inventory is full",
         noWeaponEquipped: "You have no weapon equipped to attack with",
         stealAttemptFail: "You failed to steal from the target and you have angered them",
+        stealEnemyTooHighLevel: "The character is too strong to pickpocket, you have angered them",
     },
     enemyConfig: {
         viewDistance: 1,

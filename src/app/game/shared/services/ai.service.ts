@@ -105,6 +105,7 @@ export class AiService {
           if (character.startingLocation === gridLocation) {
             character.currentState = character.startingState;
             character.currentPositionInRoute = 0;
+            character.direction = character.startingDirection;
 
             // Force a new action
             this.action(character, gridLocation);

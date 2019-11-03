@@ -5,7 +5,7 @@ import { IWeapons } from "../../game/item/interfaces";
 
 export default {
       room: 3,
-      areaLoadMessage: "Your first non-player character, they will wander freely and will not attack you unless they catch you pickpocketing, you can either attempt a pickpocket or kill the character (He will fight back) to obtain his key. Once you have the key, click on it in your inventory (bottom right) to set it as your active item and use Interact on the wooden door in the bottom left of the area",
+      areaLoadMessage: "Your first non-player character, they will wander freely and will not attack you unless they catch you pickpocketing, you can either attempt a pickpocket or kill the character (He will fight back) to obtain his key. Once you have the key, click on it in your inventory (bottom right) to set it as your active item and use Interact on the wooden door in the bottom left of the area, switch to your other key to open the chest",
       areaElements: [
             {
                   type: ElementClass.player,
@@ -15,12 +15,14 @@ export default {
                   },
                   startingPositionX: 4,
                   startingPositionY: "g",
+                  startingDirection: Direction.N,
                   direction: Direction.N,
             },
             {
                   type: ElementClass.object,
                   elementProperties: {
                         name: "Straight Wall",
+                        startingDirection: Direction.E,
                         direction: Direction.E,
                         canBeTraversed: false,
                         isInteractive: false,
@@ -33,6 +35,7 @@ export default {
                   type: ElementClass.object,
                   elementProperties: {
                         name: "Straight Wall",
+                        startingDirection: Direction.E,
                         direction: Direction.E,
                         canBeTraversed: false,
                         isInteractive: false,
@@ -45,6 +48,7 @@ export default {
                   type: ElementClass.object,
                   elementProperties: {
                         name: "Corner Wall",
+                        startingDirection: Direction.E,
                         direction: Direction.E,
                         canBeTraversed: false,
                         isInteractive: false,
@@ -58,6 +62,7 @@ export default {
                   elementProperties: {
                         name: "Door",
                         objectType: ObjectType.door,
+                        startingDirection: Direction.N,
                         direction: Direction.N,
                         canBeTraversed: false,
                         isInteractive: true,
@@ -71,6 +76,7 @@ export default {
                   type: ElementClass.object,
                   elementProperties: {
                         name: "Straight Wall",
+                        startingDirection: Direction.S,
                         direction: Direction.S,
                         canBeTraversed: false,
                         isInteractive: false,
@@ -84,6 +90,7 @@ export default {
                   elementProperties: {
                         name: "Old chest",
                         objectType: ObjectType.lootObject,
+                        startingDirection: Direction.N,
                         direction: Direction.N,
                         canBeTraversed: false,
                         isInteractive: true,
@@ -108,6 +115,7 @@ export default {
                         lowHealthThreshold: 15,
                         maxPauseDuration: 2,
                         name: "David",
+                        startingDirection: Direction.E,
                         direction: Direction.E,
                         patrolArea: false,
                         directionsForPatrol: [
@@ -158,7 +166,8 @@ export default {
             //             maxPauseDuration: 2,
             //             name: "Gary The Dick",
             //             class: MonsterClass.Human,
-            //             direction: Direction.W,
+            //             startingDirection: Direction.W,
+            // direction: Direction.W,
             //             patrolArea: false,
             //             directionsForPatrol: [
             //             ],

@@ -7,6 +7,7 @@ export class Player extends Character {
       public class: PlayerClass.fighter;
       public imageFileName: string;
       public direction: Direction;
+      public startingDirection: Direction;
 
       constructor(characterDetails: any) {
             // TODO: Resolve any

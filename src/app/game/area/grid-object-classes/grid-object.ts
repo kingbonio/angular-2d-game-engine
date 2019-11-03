@@ -10,6 +10,7 @@ export class GridObject {
       public isInteractive: boolean;
       public itemReferenceNeeded: string;
       public direction: Direction;
+      public startingDirection: Direction;
       public loot: IInventoryItem[];
       public objectType: ObjectType;
 
@@ -51,10 +52,11 @@ export class GridObject {
             this.canBeTraversed = elementProperties.canBeTraversed;
             this.isInteractive = elementProperties.isInteractive;
             this.direction = elementProperties.direction;
+            this.startingDirection = elementProperties.startingDirection;
             this.itemReferenceNeeded = elementProperties.itemReferenceNeeded;
             this.loot = elementProperties.loot;
             this.objectType = elementProperties.objectType;
-            if (!elementProperties.inventoryLocations && this.loot) {
+            if (this.loot) {
                   elementProperties.loot.forEach((item: IInventoryItem) => {
                         for (const slot in this.inventoryLocations) {
                               if (this.inventoryLocations.hasOwnProperty(slot) && !this.inventoryLocations[slot]) {

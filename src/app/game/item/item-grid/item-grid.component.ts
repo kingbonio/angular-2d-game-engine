@@ -11,7 +11,9 @@ export class ItemGridComponent implements OnInit {
   @Input() gridLocationKeys: any;
   @Output() clickItem = new EventEmitter<string>();
 
-  constructor() { }
+  constructor() {
+    console.log(this.gridLocations);
+  }
 
   ngOnInit() {
   }
