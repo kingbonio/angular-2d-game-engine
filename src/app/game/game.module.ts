@@ -25,6 +25,7 @@ import { GameStateService } from './shared/services/game-state.service';
 import { GameModalComponent } from './game-menu/game-modal/game-modal.component';
 import { PersistentStateService } from './shared/services/persistent-state.service';
 import { PersistentStorageModule } from '../shared/modules/persistent-storage/persistent-storage.module';
+import { DeadModalComponent } from './dead-modal/dead-modal.component';
 
 @NgModule({
   imports: [
@@ -45,6 +46,7 @@ import { PersistentStorageModule } from '../shared/modules/persistent-storage/pe
     ItemGridComponent,
     LootingModalComponent,
     GameModalComponent,
+    DeadModalComponent,
   ],
   providers: [
     AreaConfigProviderService,
@@ -62,6 +64,7 @@ import { PersistentStorageModule } from '../shared/modules/persistent-storage/pe
   entryComponents: [
     LootingModalComponent,
     GameModalComponent,
+    DeadModalComponent,
   ],
 })
 export class GameModule { }

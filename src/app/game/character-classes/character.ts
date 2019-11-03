@@ -13,6 +13,7 @@ export class Character {
       maxPauseDuration: number;
       type: ElementClass;
       direction: Direction;
+      startingDirection: Direction;
       startingLocation: string;
       patrolArea: boolean;
       directionsForPatrol: Direction[];
@@ -29,6 +30,7 @@ export class Character {
 
       inventoryLocations: any;
       locationKeys: any;
+  this: any;
 
       constructor() {
             this.inventoryLocations = {

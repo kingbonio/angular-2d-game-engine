@@ -16,6 +16,7 @@ import { ApplicationStateService } from '../shared/services/application-state.se
 import { GameSettingsService } from '../shared/services/game-settings.service';
 import { TimerService } from './shared/services/timer.service';
 import { PotionEffectType } from './item/enums/potion-effect-type';
+import { DeadModalComponent } from './dead-modal/dead-modal.component';
 
 @Component({
   selector: 'app-game-root',
@@ -27,7 +28,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private areaChangeSubscription: Subscription;
   private areaReadySubscription: Subscription;
   private areaConfigs = areaConfigs;
-  private gameModalRef: MatDialogRef<any>;
+  private deadModalRef: MatDialogRef<any>;
   title = 'game';
   public loadingText = defaults.gameMenu.loadingText;
   public areaComponentAlive = true;
@@ -75,7 +76,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
 
   private openGameModal() {
-    if (!this.gameModalRef) {
+    if (!this.deadModalRef) {
       const modalConfig = new MatDialogConfig();
 
       modalConfig.disableClose = false;
@@ -88,15 +89,42 @@ export class GameComponent implements OnInit, OnDestroy {
       modalConfig.panelClass = "menu-modal";
 
 
-      this.gameModalRef = this.dialog.open(GameModalComponent, modalConfig);
+      this.deadModalRef = this.dialog.open(GameModalComponent, modalConfig);
 
-      this.gameModalRef.afterClosed().subscribe(returnData => {
-        this.gameModalRef = null;
+      this.deadModalRef.afterClosed().subscribe(returnData => {
+        this.deadModalRef = null;
+      });
+    }
+  }
+
+  private openDeadModal() {
+    if (!this.deadModalRef) {
+      const modalConfig = new MatDialogConfig();
+
+      modalConfig.disableClose = true;
+      modalConfig.autoFocus = true; // Maybe not necessary
+      modalConfig.hasBackdrop = true;
+      modalConfig.width = '250px';
+      modalConfig.height = '150px';
+      // TODO here
+      modalConfig.data = "dead";
+      modalConfig.panelClass = "dead-modal";
+
+
+      this.deadModalRef = this.dialog.open(DeadModalComponent, modalConfig);
+
+      this.deadModalRef.afterClosed().subscribe(returnData => {
+        this.deadModalRef = null;
       });
     }
   }
 
   getCurrentHealth() {
+    if (this.playerStateService.health < 1) {
+      this.gameStateService.gameMenuOpen = true;
+      this.openDeadModal();
+      return 0;
+    }
     const healthBuff = (this.equipmentManagerService.activeBuff &&
                         this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge) ?
                         this.equipmentManagerService.activeBuff.properties.remainingEffect : 0;

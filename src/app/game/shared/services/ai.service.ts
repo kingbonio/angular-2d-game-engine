@@ -97,7 +97,7 @@ export class AiService {
         case CharacterState.patrolling:
           const newLocation = this.movement.walkRoute(character, gridLocation);
 
-          if (this.isPlayerInSight(character, newLocation.locationY + newLocation.locationX)) {
+          if (newLocation && this.isPlayerInSight(character, newLocation.locationY + newLocation.locationX)) {
             this.startHunting(character);
           }
           break;
@@ -105,6 +105,7 @@ export class AiService {
           if (character.startingLocation === gridLocation) {
             character.currentState = character.startingState;
             character.currentPositionInRoute = 0;
+            character.direction = character.startingDirection;
 
             // Force a new action
             this.action(character, gridLocation);

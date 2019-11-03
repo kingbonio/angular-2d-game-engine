@@ -34,17 +34,18 @@ export class AreaConfigProviderService implements OnInit {
   private assignItemsToInventory() {
     // TODO This might be useful when properly setting equipment
     // TODO This is not safeguarded against the inventory being full, when sorting this sort that
-    this.inventoryManagerService.addItemToInventory(potions.smallArmourBuff);
-    this.inventoryManagerService.addItemToInventory(potions.smallHealthPotion);
-    this.inventoryManagerService.addItemToInventory(potions.smallHealthPotion);
-    this.inventoryManagerService.addItemToInventory(potions.smallHealthPotion);
-    this.inventoryManagerService.addItemToInventory(potions.invisiblityPotion);
-    this.inventoryManagerService.addItemToInventory(potions.smallDamageBuff);
-    this.inventoryManagerService.addItemToInventory(potions.largeHealthBuff);
-    this.inventoryManagerService.addItemToInventory(weapons.sword);
-    this.inventoryManagerService.addItemToInventory(weapons.axe);
+    // TODO v0.1.1 Move these to config
+    // this.inventoryManagerService.addItemToInventory(potions.smallArmourBuff);
+    // this.inventoryManagerService.addItemToInventory(potions.smallHealthPotion);
+    // this.inventoryManagerService.addItemToInventory(potions.smallHealthPotion);
+    // this.inventoryManagerService.addItemToInventory(potions.smallHealthPotion);
+    // this.inventoryManagerService.addItemToInventory(potions.invisiblityPotion);
+    // this.inventoryManagerService.addItemToInventory(potions.smallDamageBuff);
+    // this.inventoryManagerService.addItemToInventory(potions.largeHealthBuff);
+    // this.inventoryManagerService.addItemToInventory(weapons.sword);
+    // this.inventoryManagerService.addItemToInventory(weapons.axe);
     this.inventoryManagerService.addItemToInventory(armour.leatherChestPiece);
-    this.inventoryManagerService.addItemToInventory(armour.ironHelmet);
+    // this.inventoryManagerService.addItemToInventory(armour.ironHelmet);
   }
 
   /**

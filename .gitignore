@@ -3,6 +3,9 @@
 # Todo
 todo.txt
 
+#Backups
+/areas-0.1.0
+
 # vscode specifics
 /.vscode
 

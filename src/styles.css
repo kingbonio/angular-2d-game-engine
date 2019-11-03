@@ -41,7 +41,7 @@ app-game-settings {
       max-height: inherit;
 }
 
-.looting-modal, .menu-modal {
+.looting-modal, .menu-modal, .dead-modal {
       background-image: linear-gradient(to bottom right, #737373, #121010);
       border: solid #121010 3px;
       margin: auto;

@@ -218,31 +218,37 @@ export class MovementComponent {
    * @returns the newLocation of the character
    */
   public walkRoute(character: Character, gridLocation: string): ILocationData {
-    const routeIndex = character.currentPositionInRoute;
-    const splitLocation = this.areaStateService.splitLocationReference(gridLocation);
-    const direction = character.directionsForPatrol[character.currentPositionInRoute];
-    const newLocation = this.getNextLocation(splitLocation.locationY, splitLocation.locationX, direction);
-    if (newLocation && newLocation.isLocationFree) {
-      this.areaStateService.moveCharacter(newLocation.locationY + newLocation.locationX, gridLocation);
-
-      if (routeIndex >= (character.directionsForPatrol.length - 1)) {
-        character.currentPositionInRoute = 0;
+    if (character.directionsForPatrol.length) {
+      const routeIndex = character.currentPositionInRoute;
+      const splitLocation = this.areaStateService.splitLocationReference(gridLocation);
+      const direction = character.directionsForPatrol[character.currentPositionInRoute];
+      const newLocation = this.getNextLocation(splitLocation.locationY, splitLocation.locationX, direction);
+      if (newLocation && newLocation.isLocationFree) {
+        this.areaStateService.moveCharacter(newLocation.locationY + newLocation.locationX, gridLocation);
+  
+        if (routeIndex >= (character.directionsForPatrol.length - 1)) {
+          character.currentPositionInRoute = 0;
+        } else {
+          character.currentPositionInRoute++;
+        }
+  
+        // Cycle back around if we're at the end of the route
+        const previousDirection = character.currentPositionInRoute === 0 ?
+                                  character.directionsForPatrol[character.directionsForPatrol.length - 1] :
+                                  character.directionsForPatrol[character.currentPositionInRoute - 1];
+  
+        character.direction = previousDirection;
       } else {
-        character.currentPositionInRoute++;
+        character.direction = character.directionsForPatrol[character.currentPositionInRoute];
       }
 
-      // Cycle back around if we're at the end of the route
-      const previousDirection = character.currentPositionInRoute === 0 ?
-                                character.directionsForPatrol[character.directionsForPatrol.length - 1] :
-                                character.directionsForPatrol[character.currentPositionInRoute - 1];
+      // Character has moved to new location, return the new location data
+      return newLocation;
 
-      character.direction = previousDirection;
     } else {
-      character.direction = character.directionsForPatrol[character.currentPositionInRoute];
+      return;
     }
 
-    // Character has moved to new location, return the new location data
-    return newLocation;
   }
 
   /**

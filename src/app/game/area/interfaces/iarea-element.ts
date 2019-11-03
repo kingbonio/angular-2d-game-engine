@@ -10,4 +10,5 @@ export interface IAreaElement {
       startingPositionX: number;
       startingPositionY: string;
       direction: Direction;
+      startingDirection: Direction;
 }

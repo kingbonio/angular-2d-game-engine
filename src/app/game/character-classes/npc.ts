@@ -19,6 +19,7 @@ export class NPC extends Character {
       public pauseCounter: number;
       public maxPauseDuration: number;
       public direction: Direction;
+      public startingDirection: Direction;
       public startingLocation: string;
       public patrolArea: boolean;
       public directionsForPatrol: Direction[];
@@ -46,6 +47,7 @@ export class NPC extends Character {
             this.maxPauseDuration = characterDetails.maxPauseDuration;
             this.speechResponse = characterDetails.speechResponse;
             this.direction = characterDetails.direction;
+            this.startingDirection = characterDetails.startingDirection;
             this.startingLocation = characterDetails.startingLocation;
             this.patrolArea = characterDetails.patrolArea;
             this.directionsForPatrol = characterDetails.directionsForPatrol;
@@ -57,10 +59,11 @@ export class NPC extends Character {
             this.maxHp = characterDetails.maxHp;
             this.lowHealthThreshold = characterDetails.lowHealthThreshold;
             this.armour = characterDetails.equippedArmour;
+            this.weapons = characterDetails.weapons;
             this.loot = characterDetails.loot;
             this.level = characterDetails.level;
             this.imageFileName = characterDetails.imageFileName;
-            if (!characterDetails.inventoryLocations && this.loot) {
+            if (this.loot) {
                   characterDetails.loot.forEach((item: IInventoryItem) => {
                         for (const slot in this.inventoryLocations) {
                               if (this.inventoryLocations.hasOwnProperty(slot) && !this.inventoryLocations[slot]) {

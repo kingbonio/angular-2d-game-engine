@@ -20,6 +20,7 @@ import { IGridData } from './interfaces/igrid-data';
 import { Subscription } from 'rxjs/Subscription';
 import { GameSettingsService } from '../../shared/services/game-settings.service';
 import { GameStateService } from '../shared/services/game-state.service';
+import { DialogueService } from '../shared/services/dialogue.service';
 
 @Component({
   selector: 'app-area',
@@ -40,6 +41,7 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private route: ActivatedRoute,
     public areaStateService: AreaStateService,
+    public dialogueService: DialogueService,
     public areaConfigProviderService: AreaConfigProviderService,
     public playerStateService: PlayerStateService,
     public battleCalculatorService: BattleCalculatorService,
@@ -115,12 +117,18 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private prepareArea(): void {
     if (this.areaStateService.loadingExistingArea) {
-      // Do nothing as area state service should be updating
+      // get the config from the provider
+      this.areaConfig = this.areaConfigProviderService.getAreaConfig(this.areaStateService.currentArea);
+      this.areaExits = this.areaConfigProviderService.getAreaExits(this.areaStateService.currentArea);
+      this.addExitsToGrid(this.areaExits);
+
+      // TODO Do nothing as area state service should be updating
       this.rebuildArea();
     } else {
       // get the config from the provider
       this.areaConfig = this.areaConfigProviderService.getAreaConfig(this.areaStateService.currentArea);
       this.areaExits = this.areaConfigProviderService.getAreaExits(this.areaStateService.currentArea);
+      this.addExitsToGrid(this.areaExits);
 
       // Set the player location
       // TODO This won't work, needs moving into the loop with a check on player
@@ -128,14 +136,23 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
       this.playerStateService.locationX = this.areaConfig.areaElements[0].startingPositionX;
       // Set the monsters
       this.addElementsToGrid(this.areaConfig.areaElements);
-      this.addExitsToGrid(this.areaExits);
+  
+      if (this.areaConfig.areaLoadMessage) {
+        this.dialogueService.displayDialogueMessage({
+          text: this.areaConfig.areaLoadMessage,
+          character: defaults.dialogue.computerCharacterType,
+          name: defaults.dialogue.computerName
+        });
+      }
     }
+
 
     // If player is entering a new area we want to update the location to be opposite the way they came in
     if (this.areaStateService.loadingPreviousArea) {
       this.updatePlayerLocation();
     }
     this.areaStateService.loadingExistingArea = false;
+
   }
 
   private addElementsToGrid(elements: IAreaElement[]): void {

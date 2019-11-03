@@ -1,6 +1,6 @@
 import defaults from '../../../shared/defaults';
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { Direction, ElementClass, ObjectType, ItemClass } from '../enums';
+import { Direction, ElementClass, ObjectType, ItemClass, CharacterState } from '../enums';
 import { IPlayerStateData, IInventoryItem } from '../interfaces';
 import { AreaStateService } from './area-state.service';
 import { DialogueService } from './dialogue.service';
@@ -197,7 +197,9 @@ export class PlayerStateService {
             this.openLootingModal.emit(target);
             return;
             // TODO update state here
-          } else if (target.isAsleep) {
+          }
+          if (target.currentState === CharacterState.hunting) {
+          } else if (this.level >= target.level) {
             const stealSuccess = this.attemptSteal(target);
             if (stealSuccess) {
               this.openLootingModal.emit(target);
@@ -209,23 +211,37 @@ export class PlayerStateService {
                   name: defaults.dialogue.computerName
                 }
               );
+
               // TODO change state here
-              target.isAsleep = false;
-              target.isAngry = true;
+              // target.isAsleep = false;
+              // target.isAngry = true;
+              target.currentState = CharacterState.hunting;
             }
           } else {
             this.dialogueService.displayDialogueMessage(
               {
-                text: target.respond(UserInteractionTypes.speak, this.movement.getDirectionToFace(this.direction)),
-                character: target.type,
-                name: target.name
+                text: defaults.dialogue.stealEnemyTooHighLevel,
+                character: defaults.dialogue.computerCharacterType,
+                name: defaults.dialogue.computerName
               }
             );
+            target.currentState = CharacterState.hunting;
           }
+
+        } else {
+          // TODO Reusable, turn and respond to player
+          // this.dialogueService.displayDialogueMessage(
+          //   {
+          //     text: target.respond(UserInteractionTypes.speak, this.movement.getDirectionToFace(this.direction)),
+          //     character: target.type,
+          //     name: target.name
+          //   }
+          // );
         }
       }
-      // TODO else...
     }
+    // TODO else...
+
   }
 
   /**
@@ -244,7 +260,7 @@ export class PlayerStateService {
     if (nextGridLocation) {
       const target = this.areaStateService.locations[nextGridLocation.locationY + nextGridLocation.locationX].element;
 
-      if (target.isDead()) {
+      if (target && target.isDead()) {
         this.dialogueService.displayDialogueMessage({
           text: defaults.dialogue.nullElementResponse,
           character: defaults.dialogue.computerCharacterType,
@@ -276,7 +292,7 @@ export class PlayerStateService {
   private attemptSteal(target: Character): boolean {
     // TODO Work this out properly
     const diceRoll = Dice.roll1d20();
-    if (diceRoll > defaults.playerMultipliers.stealSuccessRequirement && this.level >= target.level) {
+    if (diceRoll > defaults.playerMultipliers.stealSuccessRequirement) {
       return true;
     }
     return false;
