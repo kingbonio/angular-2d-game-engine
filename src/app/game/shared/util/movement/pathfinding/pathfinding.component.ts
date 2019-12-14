@@ -17,8 +17,8 @@ export class PathfindingComponent implements OnInit {
   private priorityQueue: PriorityQueue;
 
   constructor(
-    private movement: MovementComponent,
     private areaStateService: AreaStateService,
+    private movement: MovementComponent
   ) { }
 
   ngOnInit() {
@@ -100,9 +100,6 @@ export class PathfindingComponent implements OnInit {
 
 
 
-
-
-
     // frontier = PriorityQueue()
     // frontier.put(start, 0)
     // came_from = {}
@@ -138,6 +135,34 @@ export class PathfindingComponent implements OnInit {
     const selectedItem = queue.splice(0, 1);
 
     return selectedItem[0];
+  }
+
+
+
+
+  public testPriorityQueue() {
+
+    const priorityQueue = new PriorityQueue();
+    priorityQueue.push({ name: "", priority: 7 });
+    priorityQueue.push({ name: "", priority: 4 });
+    priorityQueue.push({ name: "", priority: 1 });
+    priorityQueue.push({ name: "", priority: 8 });
+    priorityQueue.push({ name: "", priority: 4 });
+    priorityQueue.push({ name: "", priority: 2 });
+    priorityQueue.push({ name: "", priority: 4 });
+    priorityQueue.push({ name: "", priority: 2 });
+
+    const orderedQueue = [];
+
+    console.log(priorityQueue._heap);
+
+    console.log(priorityQueue.pop());
+
+    // while (priorityQueue.size() !== 0) {
+    //   orderedQueue.push(priorityQueue.pop());
+    // }
+    // console.log("Should be ordered:");
+    // console.log(orderedQueue);
   }
 
 }

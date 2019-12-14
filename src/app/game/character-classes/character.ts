@@ -1,5 +1,6 @@
 import { Direction, ElementClass, CharacterState } from "../shared/enums";
 import { IWeapons, IArmour, IInventoryItem } from "../item/interfaces";
+import { ILocation } from "../shared/interfaces";
 
 export class Character {
       id: string;
@@ -21,6 +22,8 @@ export class Character {
       currentPositionInRoute: number;
       currentHuntingDuration: number;
       maxHuntingDuration: number;
+      currentPathToDestination: any[]; // TODO PriorityQueue
+      pathfindingDestination: ILocation;
       currentState: CharacterState;
       startingState: CharacterState;
       armour?: IArmour;

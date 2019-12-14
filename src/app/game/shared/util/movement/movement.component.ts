@@ -5,6 +5,7 @@ import { Dice } from '../dice';
 import { ILocation, ILocationData } from '../../interfaces';
 import defaults from '../../../../shared/defaults';
 import { Character } from '../../../character-classes/character';
+import { PathfindingComponent as pathfinding } from './pathfinding/pathfinding.component';
 
 @Component({
   selector: 'app-movement',
@@ -146,7 +147,7 @@ export class MovementComponent {
         break;
 
       default:
-        // Do nothing
+      // Do nothing
     }
 
     return gridReferences;
@@ -225,18 +226,18 @@ export class MovementComponent {
       const newLocation = this.getNextLocation(splitLocation.locationY, splitLocation.locationX, direction);
       if (newLocation && newLocation.isLocationFree) {
         this.areaStateService.moveCharacter(newLocation.locationY + newLocation.locationX, gridLocation);
-  
+
         if (routeIndex >= (character.directionsForPatrol.length - 1)) {
           character.currentPositionInRoute = 0;
         } else {
           character.currentPositionInRoute++;
         }
-  
+
         // Cycle back around if we're at the end of the route
         const previousDirection = character.currentPositionInRoute === 0 ?
-                                  character.directionsForPatrol[character.directionsForPatrol.length - 1] :
-                                  character.directionsForPatrol[character.currentPositionInRoute - 1];
-  
+          character.directionsForPatrol[character.directionsForPatrol.length - 1] :
+          character.directionsForPatrol[character.currentPositionInRoute - 1];
+
         character.direction = previousDirection;
       } else {
         character.direction = character.directionsForPatrol[character.currentPositionInRoute];
@@ -272,20 +273,46 @@ export class MovementComponent {
    * @param characterLocation The location of the character in question
    * @param moveTowardsLocation Whether to more towards or away from player's location
    */
-  public moveWithRespectToLocation(character: any, characterLocation: string, newLocation: string, moveTowardsLocation: boolean) {
+  public moveWithRespectToLocation(character: Character, characterLocation: string, newLocation: string, moveTowardsLocation: boolean) {
 
-    const splitNewLocation = this.areaStateService.splitLocationReference(newLocation);
-    const splitCharacterLocation = this.areaStateService.splitLocationReference(characterLocation);
-    const furthestDirectionToPlayer = this.getDirectionWithRespectToPlayer(splitNewLocation, splitCharacterLocation, moveTowardsLocation);
-    this.areaStateService.locations[characterLocation].element.direction = furthestDirectionToPlayer;
-    const targetLocationDetails = this.getNextLocation(splitCharacterLocation.locationY, splitCharacterLocation.locationX, furthestDirectionToPlayer);
+    const splitNewLocation: ILocation = this.areaStateService.splitLocationReference(newLocation);
+    const splitCharacterLocation: ILocation = this.areaStateService.splitLocationReference(characterLocation);
 
-    // If direction is blocked, try the next shortest distance towards target location
+    // if (character.currentPathToDestination && character.currentPathToDestination.length) {
+    //   if (character.pathfindingDestination !== splitNewLocation) {
 
-    if (targetLocationDetails && targetLocationDetails.isLocationFree) {
-      const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
-      this.areaStateService.moveCharacter(targetLocation, characterLocation);
-    }
+    //     // Generate a new path
+    //     character.currentPathToDestination = pathfinding.getNewPath(splitCharacterLocation, splitNewLocation);
+
+    //     // Move to next location
+    //     const targetLocationDetails = this.getNextLocation(splitCharacterLocation.locationY, splitCharacterLocation.locationX, character.currentPathToDestination.getNextDirection());
+
+    //     // TODO It can probably be implied that the next location is free 
+    //     if (targetLocationDetails && targetLocationDetails.isLocationFree) {
+    //       const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
+    //       this.areaStateService.moveCharacter(targetLocation, characterLocation);
+    //     }
+    //   } else {
+
+    //     // TODO We need to make sure that if the next location is not free we create a new path
+
+    //     // Continue path
+    //     const nextLocation = character.currentPathToDestination.getNextDirection();
+    //     const targetLocation = nextLocation.locationY + nextLocation.locationX;
+    //     this.areaStateService.moveCharacter(targetLocation, characterLocation);
+    //   }
+    // }
+
+    // const furthestDirectionToPlayer = this.getDirectionWithRespectToPlayer(splitNewLocation, splitCharacterLocation, moveTowardsLocation);
+    // this.areaStateService.locations[characterLocation].element.direction = furthestDirectionToPlayer;
+    // // const targetLocationDetails = this.getNextLocation(splitCharacterLocation.locationY, splitCharacterLocation.locationX, furthestDirectionToPlayer);
+
+    // // If direction is blocked, try the next shortest distance towards target location
+
+    // // if (targetLocationDetails && targetLocationDetails.isLocationFree) {
+    // //   const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
+    // //   this.areaStateService.moveCharacter(targetLocation, characterLocation);
+    // // }
   }
 
   /**
@@ -407,25 +434,25 @@ export class MovementComponent {
   }
 
   private getPathByAStar(targetLocation: string, sourceLocation: string) {
-      // frontier = PriorityQueue()
-      // frontier.put(start, 0)
-      // came_from = {}
-      // cost_so_far = {}
-      // came_from[start] = None
-      // cost_so_far[start] = 0
+    // frontier = PriorityQueue()
+    // frontier.put(start, 0)
+    // came_from = {}
+    // cost_so_far = {}
+    // came_from[start] = None
+    // cost_so_far[start] = 0
 
-      // while not frontier.empty():
-      // current = frontier.get()
+    // while not frontier.empty():
+    // current = frontier.get()
 
-      // if current == goal:
-      //   break
+    // if current == goal:
+    //   break
 
-      // for next in graph.neighbors(current):
-      //   new_cost = cost_so_far[current] + graph.cost(current, next)
-      // if next not in cost_so_far or new_cost < cost_so_far[next]:
-      // cost_so_far[next] = new_cost
-      // priority = new_cost + heuristic(goal, next)
-      // frontier.put(next, priority)
-      // came_from[next] = current
+    // for next in graph.neighbors(current):
+    //   new_cost = cost_so_far[current] + graph.cost(current, next)
+    // if next not in cost_so_far or new_cost < cost_so_far[next]:
+    // cost_so_far[next] = new_cost
+    // priority = new_cost + heuristic(goal, next)
+    // frontier.put(next, priority)
+    // came_from[next] = current
   }
 }

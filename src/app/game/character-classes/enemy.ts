@@ -2,6 +2,7 @@ import { Character } from "./character";
 import { MonsterClass, CharacterType, Direction, ElementClass, CharacterState } from "../shared/enums";
 import { UserInteractionTypes } from "../../shared/enums";
 import { IArmour, IWeapons, IInventoryItem } from "../item/interfaces";
+import { ILocation } from "../shared/interfaces";
 
 export class Enemy extends Character {
       public id: string;
@@ -27,6 +28,8 @@ export class Enemy extends Character {
       public currentPositionInRoute: number;
       public currentHuntingDuration: number;
       public maxHuntingDuration: number;
+      public currentPathToDestination: any[]; // TODO PriorityQueue
+      public pathfindingDestination: ILocation;
       public currentState: CharacterState;
       public startingState: CharacterState;
       public armour: IArmour;

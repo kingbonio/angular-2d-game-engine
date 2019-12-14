@@ -169,6 +169,7 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
       },
       this.areaStateService.locations
     );
+    this.pathfinding.testPriorityQueue();
   }
 
   private addElementsToGrid(elements: IAreaElement[]): void {
