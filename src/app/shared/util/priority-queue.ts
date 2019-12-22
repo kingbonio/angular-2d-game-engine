@@ -1,26 +1,24 @@
-export interface IPriortyItem {
+export interface IPriorityItem {
       priority: number;
 }
 
 export class PriorityQueue {
-
-      public _heap: any[];
+      private _heap: any[];
       private _comparator: any;
       private top = 0;
 
       constructor() {
             this._heap = [];
-            this._comparator = (a: IPriortyItem, b: IPriortyItem) => {
+            this._comparator = (a: IPriorityItem, b: IPriorityItem) => {
                   return a.priority < b.priority;
-            }
+            };
       }
-
 
       /**
        * Get the current size of the heap
        * @returns { number } The heap size
        */
-      public size() {
+      get size() {
             return this._heap.length;
       }
 
@@ -29,7 +27,7 @@ export class PriorityQueue {
        * @returns { boolean } If heap is empty
        */
       public isEmpty() {
-            return this.size() === 0;
+            return this.size === 0;
       }
 
       /**
@@ -46,7 +44,7 @@ export class PriorityQueue {
        * @returns { number } The heap size
        */
       public push(...values) {
-            values.forEach(value => {
+            values.forEach((value: IPriorityItem) => {
 
                   // Push item to the end of the heap array
                   this._heap.push(value);
@@ -55,7 +53,7 @@ export class PriorityQueue {
                   this._siftUp();
             });
 
-            return this.size();
+            return this.size;
       }
 
       /**
@@ -68,7 +66,7 @@ export class PriorityQueue {
             const poppedValue = this.peek();
 
             // Get the index of the bottom of the heap
-            const bottom = this.size() - 1;
+            const bottom = this.size - 1;
 
             // Only switch if the item's priority is higher than its parent
             // TODO item.priority should be used instead
@@ -84,7 +82,8 @@ export class PriorityQueue {
             this._heap.pop();
 
             // TODO come back to this
-            // TODO Why would it sift down 
+            // TODO Why would it sift down
+            //
             this._siftDown();
 
             return poppedValue;
@@ -162,7 +161,7 @@ export class PriorityQueue {
       private _siftUp() {
 
             // Get the last item in the heap
-            let node = this.size() - 1;
+            let node = this.size - 1;
 
             // Cycle over the items all the way down the heap and switch any items that aren't ordered
             while (node > this.top && this._greater(node, this._parent(node))) {
@@ -185,11 +184,11 @@ export class PriorityQueue {
 
             // Restrict the loop to only when we are not at the bottom of the heap and one of the current item's children is of higher priority
             while (
-                  (this._left(node) < this.size() && this._greater(this._left(node), node)) ||
-                  (this._right(node) < this.size() && this._greater(this._right(node), node))
+                  (this._left(node) < this.size && this._greater(this._left(node), node)) ||
+                  (this._right(node) < this.size && this._greater(this._right(node), node))
             ) {
                   // Figure out which child we want to replace
-                  const maxChild = (this._right(node) < this.size() && this._greater(this._right(node), this._left(node))) ? this._right(node) : this._left(node);
+                  const maxChild = (this._right(node) < this.size && this._greater(this._right(node), this._left(node))) ? this._right(node) : this._left(node);
 
                   // Swap the current item with the selected child
                   this._swap(node, maxChild);

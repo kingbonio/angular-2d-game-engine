@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IPathfindingLocation } from './interfaces';
 import { IGridReferences } from '../../../../area/interfaces';
 import { ILocation, ILocationData } from '../../../interfaces';
-import { Direction } from '../../../enums';
-import { IGridData } from '../../../../area/interfaces/igrid-data';
+import { Direction } from '../../../enums';;
 import { MovementComponent } from '../../../util/movement/movement.component';
 import { AreaStateService } from '../../../services/area-state.service';
 import { PriorityQueue } from '../../../../../shared/util/priority-queue';
@@ -12,18 +11,13 @@ import { PriorityQueue } from '../../../../../shared/util/priority-queue';
   selector: 'app-pathfinding',
   template: '',
 })
-export class PathfindingComponent implements OnInit {
+export class PathfindingComponent {
 
-  private priorityQueue: PriorityQueue;
 
   constructor(
     private areaStateService: AreaStateService,
     private movement: MovementComponent
   ) { }
-
-  ngOnInit() {
-    this.priorityQueue = new PriorityQueue();
-  }
 
   /**
    * Discovers and returns the best direction to the location from the source
@@ -33,36 +27,77 @@ export class PathfindingComponent implements OnInit {
    * @returns Path in an array
    */
   public getShortestPath(startLocation: ILocation, targetLocation: ILocation, locationSet: IGridReferences) {
-    const _frontierQueue = [];
+    // const _frontierQueue = [];
+    const _frontierQueue = new PriorityQueue();
     const cameFrom = {};
+    const costSoFar = {};
 
+    // TODO Remove this, it's cack
     if (!this.areaStateService.isLocationFree(targetLocation.locationY + targetLocation.locationX)) {
       return;
     }
 
+    // Add the priority of 0 to the start location
+    const startLocationForPriorityQueue: any = startLocation;
+    startLocationForPriorityQueue.priority = 0;
+
     // Set the initial starting location
-    this.placeInQueue(_frontierQueue, startLocation);
+    this.placeInQueue(_frontierQueue, startLocationForPriorityQueue);
+
+    // Set the initial cost
+    costSoFar[startLocation.locationY + startLocation.locationX] = 0;
 
     // Start cycling over the locations in the queue
-    while (_frontierQueue.length) {
+    while (_frontierQueue.size > 0) {
+
+      // We want to give up trying if we've scanned the whole map and can't get to the target location
+      if (_frontierQueue.size === 0) {
+        console.log("Couldn't get to target");
+        break;
+      }
+
       const current = this.getFromQueue(_frontierQueue);
+
+
+      // We have found a path to the destination
       if (current.locationY + current.locationX === targetLocation.locationY + targetLocation.locationX) {
         break;
       }
+      console.log(current.locationY + current.locationX);
 
       // Cycle over the neighbours
       for (const direction in Direction) {
         if (Direction.hasOwnProperty(direction)) {
+
+          // Get the next locations
           const nextLocation = this.movement.getNextLocation(current.locationY, current.locationX, Direction[direction] as Direction);
+
+          // TODO Handle inaccessible locations (come back to this)
+          if (!nextLocation.isLocationFree) {
+            continue;
+          }
+
           const nextLocationCoords = nextLocation.locationY + nextLocation.locationX;
 
-          // We're only interested in taking an unobstructed path
-          if (nextLocation.isLocationFree && typeof cameFrom[nextLocationCoords] === "undefined") {
+          // For now we want to set the grid location weighting to 1
+          const newCost = costSoFar[current.locationY + current.locationX] + 1;
+
+          console.log(nextLocation, nextLocation.isLocationFree);
+
+          // We want to only check locations which are new or have a lower travel cost
+          if (typeof costSoFar[nextLocationCoords] === "undefined" || newCost < costSoFar[nextLocationCoords]) {
+            // if (typeof costSoFar[nextLocationCoords] === "undefined" || newCost < costSoFar[nextLocationCoords]) {
+
+            costSoFar[nextLocationCoords] = newCost;
+
+            // We need to apply the priority to the location for the Priority Queue
+            const priority = newCost;
 
             // We want to check this area soon, so add it to the queue
             this.placeInQueue(_frontierQueue, {
               locationY: nextLocation.locationY,
               locationX: nextLocation.locationX,
+              priority
             });
 
             // We now want to know which direction we came from to trace back
@@ -80,10 +115,10 @@ export class PathfindingComponent implements OnInit {
     if (cameFrom[targetLocation.locationY + targetLocation.locationX]) {
 
       while (pathCurrent !== startLocation.locationY + startLocation.locationX) {
-        this.placeInQueue(pathBackwards, pathCurrent);
+        pathBackwards.push(pathCurrent);
         pathCurrent = cameFrom[pathCurrent];
       }
-      this.placeInQueue(pathBackwards, startLocation.locationY + startLocation.locationX);
+      pathBackwards.push(startLocation.locationY + startLocation.locationX);
 
       pathBackwards.reverse();
       console.log("came from: ", cameFrom);
@@ -127,14 +162,17 @@ export class PathfindingComponent implements OnInit {
     // return abs(a.x - b.x) + abs(a.y - b.y)
   }
 
-  private placeInQueue(queue: any[], item: any) {
+  private placeInQueue(queue: PriorityQueue, item: any) {
     queue.push(item);
   }
 
-  private getFromQueue(queue: any[]): any {
-    const selectedItem = queue.splice(0, 1);
+  private getFromQueue(queue: PriorityQueue): any {
 
-    return selectedItem[0];
+    return queue.pop();
+
+    // const selectedItem = queue.splice(0, 1);
+
+    // return selectedItem[0];
   }
 
 
@@ -142,23 +180,23 @@ export class PathfindingComponent implements OnInit {
 
   public testPriorityQueue() {
 
-    const priorityQueue = new PriorityQueue();
-    priorityQueue.push({ name: "", priority: 7 });
-    priorityQueue.push({ name: "", priority: 4 });
-    priorityQueue.push({ name: "", priority: 1 });
-    priorityQueue.push({ name: "", priority: 8 });
-    priorityQueue.push({ name: "", priority: 4 });
-    priorityQueue.push({ name: "", priority: 2 });
-    priorityQueue.push({ name: "", priority: 4 });
-    priorityQueue.push({ name: "", priority: 2 });
+    // const priorityQueue = new PriorityQueue();
+    // priorityQueue.push({ name: "", priority: 7 });
+    // priorityQueue.push({ name: "", priority: 4 });
+    // priorityQueue.push({ name: "", priority: 1 });
+    // priorityQueue.push({ name: "", priority: 8 });
+    // priorityQueue.push({ name: "", priority: 4 });
+    // priorityQueue.push({ name: "", priority: 2 });
+    // priorityQueue.push({ name: "", priority: 4 });
+    // priorityQueue.push({ name: "", priority: 2 });
 
-    const orderedQueue = [];
+    // const orderedQueue = [];
 
-    console.log(priorityQueue._heap);
+    // // // console.log(priorityQueue._heap);
 
-    console.log(priorityQueue.pop());
+    // // console.log(priorityQueue.pop());
 
-    // while (priorityQueue.size() !== 0) {
+    // while (priorityQueue.size !== 0) {
     //   orderedQueue.push(priorityQueue.pop());
     // }
     // console.log("Should be ordered:");
