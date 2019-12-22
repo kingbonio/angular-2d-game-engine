@@ -148,7 +148,6 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
 
-
     // If player is entering a new area we want to update the location to be opposite the way they came in
     if (this.areaStateService.loadingPreviousArea) {
       this.updatePlayerLocation();
@@ -159,8 +158,8 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
     this.pathfinding.getShortestPath(
       {
         // Starting location
-        locationY: "g",
-        locationX: 2,
+        locationY: "d",
+        locationX: 1,
       },
       {
         // Target location
@@ -169,7 +168,6 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
       },
       this.areaStateService.locations
     );
-    this.pathfinding.testPriorityQueue();
   }
 
   private addElementsToGrid(elements: IAreaElement[]): void {

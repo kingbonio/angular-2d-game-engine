@@ -27,12 +27,12 @@ export class PathfindingComponent {
    * @returns Path in an array
    */
   public getShortestPath(startLocation: ILocation, targetLocation: ILocation, locationSet: IGridReferences) {
-    // const _frontierQueue = [];
+
     const _frontierQueue = new PriorityQueue();
     const cameFrom = {};
     const costSoFar = {};
 
-    // TODO Remove this, it's cack
+    // If we can't get there there's no point in trying
     if (!this.areaStateService.isLocationFree(targetLocation.locationY + targetLocation.locationX)) {
       return;
     }
@@ -56,23 +56,22 @@ export class PathfindingComponent {
         break;
       }
 
+      // Get the next location from the priority queue
       const current = this.getFromQueue(_frontierQueue);
-
 
       // We have found a path to the destination
       if (current.locationY + current.locationX === targetLocation.locationY + targetLocation.locationX) {
         break;
       }
-      console.log(current.locationY + current.locationX);
 
-      // Cycle over the neighbours
+      // Cycle over the current location's neighbours
       for (const direction in Direction) {
         if (Direction.hasOwnProperty(direction)) {
 
           // Get the next locations
           const nextLocation = this.movement.getNextLocation(current.locationY, current.locationX, Direction[direction] as Direction);
 
-          // TODO Handle inaccessible locations (come back to this)
+          // Ignore any locations which are impassable
           if (!nextLocation.isLocationFree) {
             continue;
           }
@@ -82,16 +81,13 @@ export class PathfindingComponent {
           // For now we want to set the grid location weighting to 1
           const newCost = costSoFar[current.locationY + current.locationX] + 1;
 
-          console.log(nextLocation, nextLocation.isLocationFree);
-
           // We want to only check locations which are new or have a lower travel cost
           if (typeof costSoFar[nextLocationCoords] === "undefined" || newCost < costSoFar[nextLocationCoords]) {
-            // if (typeof costSoFar[nextLocationCoords] === "undefined" || newCost < costSoFar[nextLocationCoords]) {
 
             costSoFar[nextLocationCoords] = newCost;
 
-            // We need to apply the priority to the location for the Priority Queue
-            const priority = newCost;
+            // Add the item into the priority queue with priority based on A*
+            const priority = (newCost + this._heuristic(startLocation, nextLocation));
 
             // We want to check this area soon, so add it to the queue
             this.placeInQueue(_frontierQueue, {
@@ -107,6 +103,13 @@ export class PathfindingComponent {
       }
     }
 
+    return this._getPathBackwards(cameFrom, startLocation, targetLocation);
+
+  }
+
+  private _getPathBackwards(cameFrom: any, startLocation: ILocation, targetLocation: ILocation): any[] {
+
+    // Create the path backwards based on the cameFrom array
     const pathBackwards = [];
 
     let pathCurrent = targetLocation.locationY + targetLocation.locationX;
@@ -125,41 +128,21 @@ export class PathfindingComponent {
       console.log("path: ", pathBackwards);
     }
 
+    return pathBackwards;
+  }
 
+  private _heuristic(a: ILocation, b: ILocation): number {
+    const heuristicA = {
+      x: a.locationX,
+      y: this.movement.getNumberFromYCoordinate(a.locationY)
+    };
 
+    const heuristicB = {
+      x: b.locationX,
+      y: this.movement.getNumberFromYCoordinate(b.locationY)
+    };
 
-
-
-
-
-
-
-
-    // frontier = PriorityQueue()
-    // frontier.put(start, 0)
-    // came_from = {}
-    // cost_so_far = {}
-    // came_from[start] = None
-    // cost_so_far[start] = 0
-
-    // while not frontier.empty():
-    // current = frontier.get()
-
-    // if current == goal:
-    //   break
-
-    // for next in graph.neighbors(current):
-    //   new_cost = cost_so_far[current] + graph.cost(current, next)
-    // if next not in cost_so_far or new_cost < cost_so_far[next]:
-    // cost_so_far[next] = new_cost
-    // priority = new_cost + heuristic(goal, next)
-    // frontier.put(next, priority)
-    // came_from[next] = current
-
-
-    // def heuristic(a, b):
-    // # Manhattan distance on a square grid
-    // return abs(a.x - b.x) + abs(a.y - b.y)
+    return (heuristicA.x - heuristicB.x) + (heuristicA.y - heuristicB.y);
   }
 
   private placeInQueue(queue: PriorityQueue, item: any) {
@@ -169,38 +152,5 @@ export class PathfindingComponent {
   private getFromQueue(queue: PriorityQueue): any {
 
     return queue.pop();
-
-    // const selectedItem = queue.splice(0, 1);
-
-    // return selectedItem[0];
   }
-
-
-
-
-  public testPriorityQueue() {
-
-    // const priorityQueue = new PriorityQueue();
-    // priorityQueue.push({ name: "", priority: 7 });
-    // priorityQueue.push({ name: "", priority: 4 });
-    // priorityQueue.push({ name: "", priority: 1 });
-    // priorityQueue.push({ name: "", priority: 8 });
-    // priorityQueue.push({ name: "", priority: 4 });
-    // priorityQueue.push({ name: "", priority: 2 });
-    // priorityQueue.push({ name: "", priority: 4 });
-    // priorityQueue.push({ name: "", priority: 2 });
-
-    // const orderedQueue = [];
-
-    // // // console.log(priorityQueue._heap);
-
-    // // console.log(priorityQueue.pop());
-
-    // while (priorityQueue.size !== 0) {
-    //   orderedQueue.push(priorityQueue.pop());
-    // }
-    // console.log("Should be ordered:");
-    // console.log(orderedQueue);
-  }
-
 }

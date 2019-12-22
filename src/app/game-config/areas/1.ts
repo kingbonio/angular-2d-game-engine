@@ -330,6 +330,19 @@ export default {
                   elementProperties: {
                         name: "Straight Wall",
                         startingDirection: Direction.N,
+                        direction: Direction.N,
+                        canBeTraversed: false,
+                        isInteractive: false,
+                        imageFileName: "wall-straight.png",
+                  },
+                  startingPositionX: 2,
+                  startingPositionY: "d",
+            },
+            {
+                  type: ElementClass.object,
+                  elementProperties: {
+                        name: "Straight Wall",
+                        startingDirection: Direction.N,
                         direction: Direction.E,
                         canBeTraversed: false,
                         isInteractive: false,
@@ -364,21 +377,21 @@ export default {
                   startingPositionX: 3,
                   startingPositionY: "c",
             },
-            {
-                  type: ElementClass.object,
-                  elementProperties: {
-                        name: "Door",
-                        objectType: ObjectType.door,
-                        startingDirection: Direction.N,
-                        direction: Direction.N,
-                        canBeTraversed: false,
-                        isInteractive: true,
-                        itemReferenceNeeded: "64c87a80-4f1a-4dc3-b2c8-c47a9c393f61",
-                        imageFileName: "door.png",
-                  },
-                  startingPositionX: 3,
-                  startingPositionY: "b",
-            },
+            // {
+            //       type: ElementClass.object,
+            //       elementProperties: {
+            //             name: "Door",
+            //             objectType: ObjectType.door,
+            //             startingDirection: Direction.N,
+            //             direction: Direction.N,
+            //             canBeTraversed: false,
+            //             isInteractive: true,
+            //             itemReferenceNeeded: "64c87a80-4f1a-4dc3-b2c8-c47a9c393f61",
+            //             imageFileName: "door.png",
+            //       },
+            //       startingPositionX: 3,
+            //       startingPositionY: "b",
+            // },
             {
                   type: ElementClass.object,
                   elementProperties: {

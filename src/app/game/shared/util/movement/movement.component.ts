@@ -278,6 +278,14 @@ export class MovementComponent {
     const splitNewLocation: ILocation = this.areaStateService.splitLocationReference(newLocation);
     const splitCharacterLocation: ILocation = this.areaStateService.splitLocationReference(characterLocation);
 
+
+
+    // TODO Get this working
+    // const path = pathfinding.getShortestPath(splitCharacterLocation, splitNewLocation, this.areaStateService.locations);
+
+
+
+
     // if (character.currentPathToDestination && character.currentPathToDestination.length) {
     //   if (character.pathfindingDestination !== splitNewLocation) {
 
@@ -340,6 +348,29 @@ export class MovementComponent {
         return towardsPlayer ? Direction.W : Direction.E;
       }
     }
+  }
+
+  public getNumberFromYCoordinate(coordinate: string): number {
+
+    // a will always equal 1
+    if (coordinate === "a") {
+      return 1;
+    }
+
+    // Set the starting number
+    let numberCoordinate = 2;
+
+    // Loop until the newCoordinate matches the difference of the source coordinate accounting for ascii starting number
+    while (numberCoordinate !== ((coordinate.charCodeAt(0) + 1) - "a".charCodeAt(0))) {
+      numberCoordinate++;
+
+      // Infinite loop insurance
+      if (numberCoordinate > 100) {
+        break;
+      }
+    }
+
+    return numberCoordinate;
   }
 
   private getDirectionFromNumber(numberReference: number): Direction | null {
