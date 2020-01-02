@@ -100,6 +100,43 @@ export class AiService {
         case CharacterState.wandering:
           this.movement.wander(character, gridLocation);
           break;
+        case CharacterState.walkingPath:
+          console.log("Testing pathfinding");
+
+          const newPathfindingLocation = {
+            locationY: "a",
+            locationX: 1
+          };
+
+          const splitCurrentLocation = this.areaStateService.splitLocationReference(gridLocation);
+
+          // This will need to be if the new target destination is different from the current one
+          if (character.currentPathToDestination) {
+
+            // Get the next target location
+            const nextPathfindingLocation = character.currentPathToDestination.shift();
+
+            console.log("Pathfinding object: ", nextPathfindingLocation);
+
+            // Walk the path
+            // TODO Make a more efficient movement method
+            this.movement.moveWithRespectToLocation(character, gridLocation, nextPathfindingLocation, true);
+          } else {
+            character.currentPathToDestination = this.pathfinding.getShortestPath(splitCurrentLocation, newPathfindingLocation, this.areaStateService.locations);
+
+            // Get the next target location
+            const nextPathfindingLocation = character.currentPathToDestination.shift();
+
+            console.log("Pathfinding object: ", nextPathfindingLocation);
+
+            // Walk the path
+            // TODO Make a more efficient movement method
+            this.movement.moveWithRespectToLocation(character, gridLocation, nextPathfindingLocation, true);
+          }
+
+          console.log("Path to destination: ", character.currentPathToDestination);
+
+          break;
         case CharacterState.patrolling:
           const newLocation = this.movement.walkRoute(character, gridLocation);
 

@@ -7,4 +7,5 @@ export enum CharacterState {
       asleep,
       still,
       dead,
+      walkingPath,
 }

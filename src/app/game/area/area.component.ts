@@ -154,20 +154,20 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.areaStateService.loadingExistingArea = false;
 
-    console.log("Testing AI pathfinding");
-    this.pathfinding.getShortestPath(
-      {
-        // Starting location
-        locationY: "d",
-        locationX: 1,
-      },
-      {
-        // Target location
-        locationY: "a",
-        locationX: 2,
-      },
-      this.areaStateService.locations
-    );
+    // console.log("Testing AI pathfinding");
+    // this.pathfinding.getShortestPath(
+    //   {
+    //     // Starting location
+    //     locationY: "d",
+    //     locationX: 1,
+    //   },
+    //   {
+    //     // Target location
+    //     locationY: "a",
+    //     locationX: 2,
+    //   },
+    //   this.areaStateService.locations
+    // );
   }
 
   private addElementsToGrid(elements: IAreaElement[]): void {

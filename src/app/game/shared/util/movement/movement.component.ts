@@ -275,8 +275,8 @@ export class MovementComponent {
    */
   public moveWithRespectToLocation(character: Character, characterLocation: string, newLocation: string, moveTowardsLocation: boolean) {
 
-    const splitNewLocation: ILocation = this.areaStateService.splitLocationReference(newLocation);
-    const splitCharacterLocation: ILocation = this.areaStateService.splitLocationReference(characterLocation);
+    // const splitNewLocation: ILocation = this.areaStateService.splitLocationReference(newLocation);
+    // const splitCharacterLocation: ILocation = this.areaStateService.splitLocationReference(characterLocation);
 
 
 

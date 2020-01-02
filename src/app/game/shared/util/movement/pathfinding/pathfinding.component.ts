@@ -124,8 +124,8 @@ export class PathfindingComponent {
       pathBackwards.push(startLocation.locationY + startLocation.locationX);
 
       pathBackwards.reverse();
-      console.log("came from: ", cameFrom);
-      console.log("path: ", pathBackwards);
+      // console.log("came from: ", cameFrom);
+      // console.log("path: ", pathBackwards);
     }
 
     return pathBackwards;
