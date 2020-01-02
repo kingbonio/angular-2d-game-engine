@@ -3,6 +3,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { timer } from 'rxjs/internal/observable/timer';
 import { Observable } from 'rxjs/Observable';
 
+import defaults from '../../../shared/defaults';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +22,7 @@ export class TimerService {
   }
 
   private startCounter() {
-    this.timer = timer(0, 1000);
+    this.timer = timer(0, defaults.gameTimer);
   }
 
 }

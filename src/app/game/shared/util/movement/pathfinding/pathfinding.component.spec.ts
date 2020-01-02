@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PathfindingComponent } from './pathfinding.component';
+import { Pathfinding } from './pathfinding.component';
 
 describe('PathfindingComponent', () => {
-  let component: PathfindingComponent;
-  let fixture: ComponentFixture<PathfindingComponent>;
+  let component: Pathfinding;
+  let fixture: ComponentFixture<Pathfinding>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PathfindingComponent ]
+      declarations: [ Pathfinding ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PathfindingComponent);
+    fixture = TestBed.createComponent(Pathfinding);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

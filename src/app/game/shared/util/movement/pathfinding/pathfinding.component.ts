@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { IPathfindingLocation } from './interfaces';
 import { IGridReferences } from '../../../../area/interfaces';
 import { ILocation, ILocationData } from '../../../interfaces';
-import { Direction } from '../../../enums';;
+import { Direction } from '../../../enums';
 import { MovementComponent } from '../../../util/movement/movement.component';
 import { AreaStateService } from '../../../services/area-state.service';
 import { PriorityQueue } from '../../../../../shared/util/priority-queue';
+import { GridHelper } from '../../area/grid-helper';
 
 @Component({
   selector: 'app-pathfinding',
@@ -14,10 +15,7 @@ import { PriorityQueue } from '../../../../../shared/util/priority-queue';
 export class PathfindingComponent {
 
 
-  constructor(
-    private areaStateService: AreaStateService,
-    private movement: MovementComponent
-  ) { }
+  constructor() { }
 
   /**
    * Discovers and returns the best direction to the location from the source
@@ -31,11 +29,6 @@ export class PathfindingComponent {
     const _frontierQueue = new PriorityQueue();
     const cameFrom = {};
     const costSoFar = {};
-
-    // If we can't get there there's no point in trying
-    if (!this.areaStateService.isLocationFree(targetLocation.locationY + targetLocation.locationX)) {
-      return;
-    }
 
     // Add the priority of 0 to the start location
     const startLocationForPriorityQueue: any = startLocation;
@@ -69,7 +62,7 @@ export class PathfindingComponent {
         if (Direction.hasOwnProperty(direction)) {
 
           // Get the next locations
-          const nextLocation = this.movement.getNextLocation(current.locationY, current.locationX, Direction[direction] as Direction);
+          const nextLocation = GridHelper.getNextLocation(current.locationY, current.locationX, Direction[direction] as Direction, locationSet);
 
           // Ignore any locations which are impassable
           if (!nextLocation.isLocationFree) {
@@ -121,7 +114,7 @@ export class PathfindingComponent {
         pathBackwards.push(pathCurrent);
         pathCurrent = cameFrom[pathCurrent];
       }
-      pathBackwards.push(startLocation.locationY + startLocation.locationX);
+      // pathBackwards.push(startLocation.locationY + startLocation.locationX);
 
       pathBackwards.reverse();
       // console.log("came from: ", cameFrom);
@@ -134,12 +127,12 @@ export class PathfindingComponent {
   private _heuristic(a: ILocation, b: ILocation): number {
     const heuristicA = {
       x: a.locationX,
-      y: this.movement.getNumberFromYCoordinate(a.locationY)
+      y: GridHelper.getNumberFromYCoordinate(a.locationY)
     };
 
     const heuristicB = {
       x: b.locationX,
-      y: this.movement.getNumberFromYCoordinate(b.locationY)
+      y: GridHelper.getNumberFromYCoordinate(b.locationY)
     };
 
     return (heuristicA.x - heuristicB.x) + (heuristicA.y - heuristicB.y);
@@ -153,4 +146,8 @@ export class PathfindingComponent {
 
     return queue.pop();
   }
+
+
+
+
 }

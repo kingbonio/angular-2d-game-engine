@@ -1,6 +1,8 @@
 import { Direction } from '../../game/shared/enums';
 
 export default {
+    // Game ticker in milliseconds
+    gameTimer: 500,
     // Player defaults
     initialPlayerStats: {
         health: 20,

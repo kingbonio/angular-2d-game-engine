@@ -13,6 +13,7 @@ import { Character } from '../../character-classes/character';
 import { Dice } from '../util/dice';
 import { PotionEffectType } from '../../item/enums/potion-effect-type';
 import { InventoryManagerService } from '../../item/services/inventory-manager.service';
+import { GridHelper } from '../util/area/grid-helper';
 
 @Injectable()
 export class PlayerStateService {
@@ -68,7 +69,7 @@ export class PlayerStateService {
   public move(direction: Direction) {
 
     // TODO Might be worth getting location of player from area state service
-    const newLocation = this.movement.getNextLocation(this.locationY, this.locationX, direction);
+    const newLocation = GridHelper.getNextLocation(this.locationY, this.locationX, direction, this.areaStateService.locations);
 
     // TODO Might be worth moving this somewhere more apprpriate, maybe listener in movement component
     if (newLocation.isTargetAreaExit) {
@@ -105,7 +106,7 @@ export class PlayerStateService {
    */
   public attack() {
     // if (this.equipmentManagerService.getWeaponType(this.selectedWeaponSlot)) {
-    const targetReference = this.movement.getNextLocation(this.locationY, this.locationX, this.direction);
+    const targetReference = GridHelper.getNextLocation(this.locationY, this.locationX, this.direction, this.areaStateService.locations);
     const target = this.areaStateService.locations[targetReference.locationY + targetReference.locationX].element;
 
     if (target && (target.type === ElementClass.enemy || target.type === ElementClass.npc)) {
@@ -122,7 +123,7 @@ export class PlayerStateService {
 
       if (damage) {
         // No need to assign this
-        target.respond(UserInteractionTypes.attack, this.movement.getDirectionToFace(this.direction), damage);
+        target.respond(UserInteractionTypes.attack, GridHelper.getDirectionToFace(this.direction), damage);
 
         this.dialogueService.displayDialogueMessage({
           text: defaults.dialogue.attackSuccess(damage),
@@ -162,7 +163,7 @@ export class PlayerStateService {
    * Interact with the object in the direction player is facing
    */
   public interact() {
-    const targetReference = this.movement.getNextLocation(this.locationY, this.locationX, this.direction);
+    const targetReference = GridHelper.getNextLocation(this.locationY, this.locationX, this.direction, this.areaStateService.locations);
     // TODO Types
     const target: any = this.areaStateService.locations[targetReference.locationY + targetReference.locationX].element;
     if (target) {
@@ -197,7 +198,7 @@ export class PlayerStateService {
             this.openLootingModal.emit(target);
             return;
             // TODO update state here
-          } else if (target.currentState === CharacterState.asleep || !this.movement.isTargetFacingSource(target, this.direction)) {
+          } else if (target.currentState === CharacterState.asleep || !GridHelper.isTargetFacingSource(target, this.direction)) {
             const stealSuccess = this.attemptSteal(target);
             if (stealSuccess) {
               this.openLootingModal.emit(target);
@@ -250,7 +251,7 @@ export class PlayerStateService {
    * speak to the object in the direction player is facing
    */
   public speak() {
-    const nextGridLocation = this.movement.getNextLocation(this.locationY, this.locationX, this.direction);
+    const nextGridLocation = GridHelper.getNextLocation(this.locationY, this.locationX, this.direction, this.areaStateService.locations);
     // TODO rename this
     if (nextGridLocation) {
       const target = this.areaStateService.locations[nextGridLocation.locationY + nextGridLocation.locationX].element;
@@ -275,7 +276,7 @@ export class PlayerStateService {
       } else {
         this.dialogueService.displayDialogueMessage(
           {
-            text: target.respond(UserInteractionTypes.speak, this.movement.getDirectionToFace(this.direction)),
+            text: target.respond(UserInteractionTypes.speak, GridHelper.getDirectionToFace(this.direction)),
             character: target.type,
             name: target.name
           }
