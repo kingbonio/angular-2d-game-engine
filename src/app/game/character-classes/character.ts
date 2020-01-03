@@ -19,6 +19,7 @@ export class Character {
       startingLocation: string;
       patrolArea: boolean;
       directionsForPatrol: Direction[];
+      startingTargetLocation: string;
       currentPositionInRoute: number;
       currentHuntingDuration: number;
       maxHuntingDuration: number;

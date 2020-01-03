@@ -36,6 +36,7 @@ export default {
                         patrolArea: true,
                         directionsForPatrol: [
                         ],
+                        startingTargetLocation: "e1",
                         maxHuntingDuration: 3,
                         startingState: CharacterState.walkingPath,
                         speechResponse: "I'm gonna kill you",
@@ -93,6 +94,7 @@ export default {
             //                   Direction.N,
             //                   Direction.E,
             //             ],
+            //             startingTargetLocation: "",
             //             maxHuntingDuration: 3,
             //             startingState: CharacterState.patrolling,
             //             speechResponse: "I'm gonna kill you",
@@ -185,6 +187,7 @@ export default {
             //                   Direction.S,
             //                   Direction.S,
             //             ],
+            //             startingTargetLocation: "",
             //             maxHuntingDuration: 3,
             //             startingState: CharacterState.asleep,
             //             speechResponse: "Stop bothering me, you fool!",
@@ -233,6 +236,7 @@ export default {
             //             patrolArea: false,
             //             directionsForPatrol: [
             //             ],
+            //             startingTargetLocation: "",
             // maxHuntingDuration: 3,
             //             startingState: CharacterState.wandering,
             //             speechResponse: "Stop bothering me, you fool!",

@@ -36,6 +36,7 @@ export default {
                         patrolArea: true,
                         directionsForPatrol: [
                         ],
+                        startingTargetLocation: "",
                         maxHuntingDuration: 3,
                         startingState: CharacterState.still,
                         speechResponse: "I'm gonna kill you",
@@ -85,6 +86,7 @@ export default {
                         patrolArea: true,
                         directionsForPatrol: [
                         ],
+                        startingTargetLocation: "",
                         maxHuntingDuration: 3,
                         startingState: CharacterState.still,
                         speechResponse: "I'm gonna kill you",
@@ -134,6 +136,7 @@ export default {
                         patrolArea: true,
                         directionsForPatrol: [
                         ],
+                        startingTargetLocation: "",
                         maxHuntingDuration: 3,
                         startingState: CharacterState.still,
                         speechResponse: "I'm gonna kill you",
@@ -183,6 +186,7 @@ export default {
                         patrolArea: true,
                         directionsForPatrol: [
                         ],
+                        startingTargetLocation: "",
                         maxHuntingDuration: 3,
                         startingState: CharacterState.still,
                         speechResponse: "I'm gonna kill you",
@@ -232,6 +236,7 @@ export default {
                         patrolArea: true,
                         directionsForPatrol: [
                         ],
+                        startingTargetLocation: "",
                         maxHuntingDuration: 3,
                         startingState: CharacterState.still,
                         speechResponse: "I'm gonna kill you",
@@ -281,6 +286,7 @@ export default {
                         patrolArea: true,
                         directionsForPatrol: [
                         ],
+                        startingTargetLocation: "",
                         maxHuntingDuration: 3,
                         startingState: CharacterState.still,
                         speechResponse: "I'm gonna kill you",
@@ -330,6 +336,7 @@ export default {
             //             patrolArea: true,
             //             directionsForPatrol: [
             //             ],
+            //             startingTargetLocation: "",
             //             maxHuntingDuration: 3,
             //             startingState: CharacterState.wandering,
             //             speechResponse: "I'm gonna kill you",

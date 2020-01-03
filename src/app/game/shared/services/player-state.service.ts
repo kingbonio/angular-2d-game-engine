@@ -80,7 +80,7 @@ export class PlayerStateService {
 
     // Update area state
     if (newLocation && newLocation.locationX && newLocation.locationY && newLocation.isLocationFree) {
-      this.areaStateService.moveCharacter(newLocation.locationY + newLocation.locationX, this.locationY + this.locationX);
+      this.areaStateService.repositionCharacter(newLocation.locationY + newLocation.locationX, this.locationY + this.locationX);
       this.locationY = newLocation.locationY;
       this.locationX = newLocation.locationX;
     } else {

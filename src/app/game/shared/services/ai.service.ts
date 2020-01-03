@@ -11,7 +11,6 @@ import { Character } from '../../character-classes/character';
 import { PotionEffectType } from '../../item/enums/potion-effect-type';
 import { CharacterState, ElementClass } from '../enums';
 import defaults from '../../../shared/defaults';
-import { PathfindingComponent } from '../util/movement/pathfinding/pathfinding.component';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +22,6 @@ export class AiService {
 
   constructor(
     private movement: MovementComponent,
-    private pathfinding: PathfindingComponent,
     private areaStateService: AreaStateService,
     private equipmentManagerService: EquipmentManagerService,
     private userInputService: UserInputService,
@@ -109,34 +107,19 @@ export class AiService {
 
           const newTargetLocationString = "e1";
 
+          // TODO Maybe this would be better to approach the location anyway
           // If we can't get there there's no point in trying
           if (!this.areaStateService.isLocationFree(newPathfindingLocation.locationY + newPathfindingLocation.locationX)) {
             return;
           }
 
+          // If we're already there don't do anything
           if (gridLocation === newPathfindingLocation.locationY + newPathfindingLocation.locationX) {
+            character.currentState = CharacterState.still;
             return;
           }
 
           this.movement.moveTowardsLocation(character, gridLocation, newTargetLocationString);
-
-          // const splitCurrentLocation = this.areaStateService.splitLocationReference(gridLocation);
-
-          // character.currentPathToDestination = this.pathfinding.getShortestPath(splitCurrentLocation, newPathfindingLocation, this.areaStateService.locations);
-
-          // // This will need to be if the new target destination is different from the current one
-          // // TODO this needs figuring out
-
-          // if (!character.currentPathToDestination || !character.currentPathToDestination.length) {
-          //   return;
-          // }
-
-          // // Get the next target location
-          // const nextPathfindingLocation = character.currentPathToDestination[0];
-
-          // // Walk the path
-          // // TODO Make a more efficient movement method
-          // this.movement.moveWithRespectToLocation(character, gridLocation, nextPathfindingLocation, true);
 
           break;
         case CharacterState.patrolling:

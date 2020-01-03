@@ -121,6 +121,7 @@ export default {
                         patrolArea: false,
                         directionsForPatrol: [
                         ],
+                        startingTargetLocation: "",
                         maxHuntingDuration: 3,
                         startingState: CharacterState.wandering,
                         speechResponse: "Stop bothering me, you fool!",
@@ -172,6 +173,7 @@ export default {
             //             patrolArea: false,
             //             directionsForPatrol: [
             //             ],
+            //             startingTargetLocation: "",
             //             maxHuntingDuration: 3,
             //             startingState: CharacterState.wandering,
             //             speechResponse: "I'm gonna kill you",

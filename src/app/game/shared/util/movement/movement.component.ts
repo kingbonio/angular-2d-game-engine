@@ -108,7 +108,7 @@ export class MovementComponent {
     if (targetLocationDetails && targetLocationDetails.isLocationFree) {
       const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
       this.areaStateService.locations[currentLocation].element.direction = direction;
-      this.areaStateService.moveCharacter(targetLocation, currentLocation);
+      this.areaStateService.repositionCharacter(targetLocation, currentLocation);
     } else {
       // Select a direction to move
       for (let i = 1; i < 4; i++) {
@@ -126,7 +126,7 @@ export class MovementComponent {
         if (targetLocationDetails && targetLocationDetails.isLocationFree) {
           const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
           this.areaStateService.locations[currentLocation].element.direction = direction;
-          this.areaStateService.moveCharacter(targetLocation, currentLocation);
+          this.areaStateService.repositionCharacter(targetLocation, currentLocation);
 
           return;
         }
@@ -148,7 +148,7 @@ export class MovementComponent {
       const direction = character.directionsForPatrol[character.currentPositionInRoute];
       const newLocation = GridHelper.getNextLocation(splitLocation.locationY, splitLocation.locationX, direction, this.areaStateService.locations);
       if (newLocation && newLocation.isLocationFree) {
-        this.areaStateService.moveCharacter(newLocation.locationY + newLocation.locationX, gridLocation);
+        this.areaStateService.repositionCharacter(newLocation.locationY + newLocation.locationX, gridLocation);
 
         if (routeIndex >= (character.directionsForPatrol.length - 1)) {
           character.currentPositionInRoute = 0;
@@ -179,82 +179,37 @@ export class MovementComponent {
    * Moves the character towards the starting position of their patrol route
    */
   public returnToStartingPosition(character: Character, gridLocation: string, newLocation: string) {
-    this.moveWithRespectToLocation(character, gridLocation, newLocation, true);
-  }
-
-  /**
-   * Moves the character towards or away from the player
-   */
-  public moveWithRespectToPlayer(character: Character, characterLocation: string) {
-    const playerLocation = this.areaStateService.playerLocation;
-    this.moveTowardsLocation(character, characterLocation, playerLocation);
+    this.moveCharacterToLocation(character, gridLocation, newLocation, true);
   }
 
   /**
    * If direction is available move the chracter towards the player's location
    * @param character The character that will be moving
-   * @param characterLocation The location of the character in question
-   * @param moveTowardsLocation Whether to more towards or away from player's location
+   * @param characterLocation The current location of the character in question
+   * @param moveTowardsLocation Whether to more towards or away from target's location
    */
-  public moveWithRespectToLocation(character: Character, characterLocation: string, newLocation: string, moveTowardsLocation: boolean) {
+  public moveCharacterToLocation(character: Character, characterLocation: string, targetLocation: string, moveTowardsLocation = true) {
 
-
-    // TODO Will need to strip this down
-
-
-
-
-
-    const splitNewLocation: ILocation = this.areaStateService.splitLocationReference(newLocation);
+    const splitNewLocation: ILocation = this.areaStateService.splitLocationReference(targetLocation);
     const splitCharacterLocation: ILocation = this.areaStateService.splitLocationReference(characterLocation);
 
-
-
-    // TODO Get this working
-    // const path = pathfinding.getShortestPath(splitCharacterLocation, splitNewLocation, this.areaStateService.locations);
-
-
-
-
-    // if (character.currentPathToDestination && character.currentPathToDestination.length) {
-    //   if (character.pathfindingDestination !== splitNewLocation) {
-
-    //     // Generate a new path
-    //     character.currentPathToDestination = pathfinding.getNewPath(splitCharacterLocation, splitNewLocation);
-
-    //     // Move to next location
-    //     const targetLocationDetails = this.getNextLocation(splitCharacterLocation.locationY, splitCharacterLocation.locationX, character.currentPathToDestination.getNextDirection());
-
-    //     // TODO It can probably be implied that the next location is free
-    //     if (targetLocationDetails && targetLocationDetails.isLocationFree) {
-    //       const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
-    //       this.areaStateService.moveCharacter(targetLocation, characterLocation);
-    //     }
-    //   } else {
-
-    //     // TODO We need to make sure that if the next location is not free we create a new path
-
-    //     // Continue path
-    //     const nextLocation = character.currentPathToDestination.getNextDirection();
-    //     const targetLocation = nextLocation.locationY + nextLocation.locationX;
-    //     this.areaStateService.moveCharacter(targetLocation, characterLocation);
-    //   }
-    // }
-
+    // Get and apply the direction to face
     const furthestDirectionToPlayer = this.getDirectionWithRespectToPlayer(splitNewLocation, splitCharacterLocation, moveTowardsLocation);
     this.areaStateService.locations[characterLocation].element.direction = furthestDirectionToPlayer;
     const targetLocationDetails = GridHelper.getNextLocation(splitCharacterLocation.locationY, splitCharacterLocation.locationX, furthestDirectionToPlayer, this.areaStateService.locations);
 
-    // If direction is blocked, try the next shortest distance towards target location
-
+    // If the target location is free, move into it
     if (targetLocationDetails && targetLocationDetails.isLocationFree) {
-      const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
-      this.areaStateService.moveCharacter(targetLocation, characterLocation);
+      const targetLocationCoords = targetLocationDetails.locationY + targetLocationDetails.locationX;
+      this.areaStateService.repositionCharacter(targetLocationCoords, characterLocation);
     }
   }
 
   /**
-   * Pathfinding version of the above
+   * Get the path to the target location and make the first step towards it
+   * @param character The character that will be moving
+   * @param characterLocation The current location of the character in question
+   * @param targetLocation Whether to more towards or away from player's location
    */
   public moveTowardsLocation(character: Character, characterLocation: string, targetLocation: string) {
 
@@ -277,13 +232,14 @@ export class MovementComponent {
     const nextPathfindingLocation = character.currentPathToDestination[0];
 
     // Walk the path
-    // TODO Make a more efficient movement method
-    this.moveWithRespectToLocation(character, characterLocation, nextPathfindingLocation, true);
+    this.moveCharacterToLocation(character, characterLocation, nextPathfindingLocation, true);
   }
 
-  /**
-   * 
-   */
+/**
+ * Get the path to the player location and make the first step towards it
+ * @param character The character that will be moving
+ * @param characterLocation The current location of the character in question
+ */
   public moveTowardsPlayer(character: Character, characterLocation: string) {
     const playerLocation = this.areaStateService.playerLocation;
 
@@ -300,7 +256,7 @@ export class MovementComponent {
     // Get the next target location
     const nextPathfindingLocation = character.currentPathToDestination[0];
 
-    this.moveTowardsLocation(character, characterLocation, playerLocation);
+    this.moveTowardsLocation(character, characterLocation, nextPathfindingLocation);
   }
 
   /**
