@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Movement } from './movement.component';
+import { Pathfinding } from './pathfinding.component';
 
-describe('MovementComponent', () => {
-  let component: Movement;
-  let fixture: ComponentFixture<Movement>;
+describe('PathfindingComponent', () => {
+  let component: Pathfinding;
+  let fixture: ComponentFixture<Pathfinding>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ Movement ]
+      declarations: [ Pathfinding ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(Movement);
+    fixture = TestBed.createComponent(Pathfinding);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

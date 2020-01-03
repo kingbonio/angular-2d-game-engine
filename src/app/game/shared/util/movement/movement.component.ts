@@ -5,6 +5,8 @@ import { Dice } from '../dice';
 import { ILocation, ILocationData } from '../../interfaces';
 import defaults from '../../../../shared/defaults';
 import { Character } from '../../../character-classes/character';
+import { GridHelper } from '../area/grid-helper';
+import { PathfindingComponent } from './pathfinding/pathfinding.component';
 
 @Component({
   selector: 'app-movement',
@@ -14,81 +16,15 @@ export class MovementComponent {
 
   constructor(
     private areaStateService: AreaStateService,
+    private pathfinding: PathfindingComponent,
   ) { }
 
-
-  // TODO Maybe update this location interface/enum
-  // TODO Look into direction being used from the service
-  // TODO Could refactor this switch statement
-  // tslint:disable-next-line:max-line-length
-  public getNextLocation(locationY: string, locationX: number, direction: Direction): { locationY: string, locationX: number, isLocationFree: boolean, isTargetAreaExit: boolean } | null {
-
-    // Attempt movement
-    let newLocationY;
-    let newLocationX;
-    let isTargetLocationAreaExit;
-    let isLocationFree;
-    switch (direction) {
-      case Direction.N:
-        newLocationY = this.nextYReference(locationY);
-        newLocationX = locationX;
-        isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
-        isLocationFree = (!isTargetLocationAreaExit && !this.isTargetLocationOutOfBounds(newLocationY + newLocationX)) ?
-          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
-          false;
-        return {
-          locationY: newLocationY,
-          locationX: newLocationX,
-          isTargetAreaExit: isTargetLocationAreaExit,
-          isLocationFree: isLocationFree,
-        };
-      case Direction.E:
-        newLocationX = this.nextXReference(locationX);
-        newLocationY = locationY;
-        isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
-        isLocationFree = (!isTargetLocationAreaExit && !this.isTargetLocationOutOfBounds(newLocationY + newLocationX)) ?
-          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
-          false;
-        return {
-          locationY: newLocationY,
-          locationX: newLocationX,
-          isTargetAreaExit: isTargetLocationAreaExit,
-          isLocationFree: isLocationFree,
-        };
-      case Direction.S:
-        newLocationY = this.previousYReference(locationY);
-        newLocationX = locationX;
-        // Make sure the location isn't off the edge of the grid and get new reference
-        // TODO This may need tidying up
-        isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
-        isLocationFree = (!isTargetLocationAreaExit && !this.isTargetLocationOutOfBounds(newLocationY + newLocationX)) ?
-          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
-          false;
-        return {
-          locationY: newLocationY,
-          locationX: newLocationX,
-          isTargetAreaExit: isTargetLocationAreaExit,
-          isLocationFree: isLocationFree,
-        };
-        return null;
-      case Direction.W:
-        newLocationX = this.previousXReference(locationX);
-        newLocationY = locationY;
-        isTargetLocationAreaExit = this.isTargetLocationAreaExit(locationY + locationX, newLocationY + newLocationX);
-        isLocationFree = (!isTargetLocationAreaExit && !this.isTargetLocationOutOfBounds(newLocationY + newLocationX)) ?
-          this.areaStateService.isLocationFree(newLocationY + newLocationX) :
-          false;
-        return {
-          locationY: newLocationY,
-          locationX: newLocationX,
-          isTargetAreaExit: isTargetLocationAreaExit,
-          isLocationFree: isLocationFree,
-        };
-      default:
-        return null;
-    }
-  }
-
+  /**
+   * Return the locations the character can see at any time
+   * @param viewDistance How many squares out the character can see
+   * @param direction Which way the character is facing
+   * @param gridLocation The current location of the character
+   */
   public getViewAreaLocations(viewDistance: number, direction: Direction, gridLocation: string): string[] {
     const gridReferences = [];
     const splitLocation = this.areaStateService.splitLocationReference(gridLocation);
@@ -99,71 +35,59 @@ export class MovementComponent {
 
       case Direction.N:
         // Get first location
-        location = this.nextYReference(splitLocation.locationY) + this.previousXReference(splitLocation.locationX);
+        location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
         gridReferences.push(location);
         // Get second location
-        location = this.nextYReference(splitLocation.locationY) + splitLocation.locationX;
+        location = GridHelper.nextYReference(splitLocation.locationY) + splitLocation.locationX;
         gridReferences.push(location);
         // Get third location
-        location = this.nextYReference(splitLocation.locationY) + this.nextXReference(splitLocation.locationX);
+        location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
         gridReferences.push(location);
         break;
 
       case Direction.E:
         // Get first location
-        location = this.nextYReference(splitLocation.locationY) + this.nextXReference(splitLocation.locationX);
+        location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
         gridReferences.push(location);
         // Get second location
-        location = splitLocation.locationY + this.nextXReference(splitLocation.locationX);
+        location = splitLocation.locationY + GridHelper.nextXReference(splitLocation.locationX);
         gridReferences.push(location);
         // Get third location
-        location = this.previousYReference(splitLocation.locationY) + this.nextXReference(splitLocation.locationX);
+        location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
         gridReferences.push(location);
         break;
 
       case Direction.S:
         // Get first location
-        location = this.previousYReference(splitLocation.locationY) + this.nextXReference(splitLocation.locationX);
+        location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
         gridReferences.push(location);
         // Get second location
-        location = this.previousYReference(splitLocation.locationY) + splitLocation.locationX;
+        location = GridHelper.previousYReference(splitLocation.locationY) + splitLocation.locationX;
         gridReferences.push(location);
         // Get third location
-        location = this.previousYReference(splitLocation.locationY) + this.previousXReference(splitLocation.locationX);
+        location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
         gridReferences.push(location);
         break;
 
       case Direction.W:
         // Get first location
-        location = this.previousYReference(splitLocation.locationY) + this.previousXReference(splitLocation.locationX);
+        location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
         gridReferences.push(location);
         // Get second location
-        location = splitLocation.locationY + this.previousXReference(splitLocation.locationX);
+        location = splitLocation.locationY + GridHelper.previousXReference(splitLocation.locationX);
         gridReferences.push(location);
         // Get third location
-        location = this.nextYReference(splitLocation.locationY) + this.previousXReference(splitLocation.locationX);
+        location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
         gridReferences.push(location);
         break;
 
       default:
-        // Do nothing
+      // Do nothing
     }
 
     return gridReferences;
   }
 
-  public getDirectionToFace(direction: Direction) {
-    switch (direction) {
-      case Direction.N:
-        return Direction.S;
-      case Direction.E:
-        return Direction.W;
-      case Direction.S:
-        return Direction.N;
-      case Direction.W:
-        return Direction.E;
-    }
-  }
 
   /**
    * Try a random direction then move to that location, if it's blocked, try the other 3 directions or do nothing
@@ -174,17 +98,17 @@ export class MovementComponent {
 
     const directionDiceRoll = Dice.roll1d4();
 
-    let direction: Direction = this.getDirectionFromNumber(directionDiceRoll);
+    let direction: Direction = GridHelper.getDirectionFromNumber(directionDiceRoll);
 
     // TODO This seems unnecessary but will need to refactor the method and other dependencies
     let currentLocationDetails = this.areaStateService.splitLocationReference(currentLocation);
 
-    let targetLocationDetails = this.getNextLocation(currentLocationDetails.locationY, currentLocationDetails.locationX, direction);
+    let targetLocationDetails = GridHelper.getNextLocation(currentLocationDetails.locationY, currentLocationDetails.locationX, direction, this.areaStateService.locations);
 
     if (targetLocationDetails && targetLocationDetails.isLocationFree) {
       const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
       this.areaStateService.locations[currentLocation].element.direction = direction;
-      this.areaStateService.moveCharacter(targetLocation, currentLocation);
+      this.areaStateService.repositionCharacter(targetLocation, currentLocation);
     } else {
       // Select a direction to move
       for (let i = 1; i < 4; i++) {
@@ -193,16 +117,16 @@ export class MovementComponent {
           continue;
         }
 
-        direction = this.getDirectionFromNumber(i);
+        direction = GridHelper.getDirectionFromNumber(i);
 
         currentLocationDetails = this.areaStateService.splitLocationReference(currentLocation);
 
-        targetLocationDetails = this.getNextLocation(currentLocationDetails.locationY, currentLocationDetails.locationX, direction);
+        targetLocationDetails = GridHelper.getNextLocation(currentLocationDetails.locationY, currentLocationDetails.locationX, direction, this.areaStateService.locations);
 
         if (targetLocationDetails && targetLocationDetails.isLocationFree) {
           const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
           this.areaStateService.locations[currentLocation].element.direction = direction;
-          this.areaStateService.moveCharacter(targetLocation, currentLocation);
+          this.areaStateService.repositionCharacter(targetLocation, currentLocation);
 
           return;
         }
@@ -222,21 +146,21 @@ export class MovementComponent {
       const routeIndex = character.currentPositionInRoute;
       const splitLocation = this.areaStateService.splitLocationReference(gridLocation);
       const direction = character.directionsForPatrol[character.currentPositionInRoute];
-      const newLocation = this.getNextLocation(splitLocation.locationY, splitLocation.locationX, direction);
+      const newLocation = GridHelper.getNextLocation(splitLocation.locationY, splitLocation.locationX, direction, this.areaStateService.locations);
       if (newLocation && newLocation.isLocationFree) {
-        this.areaStateService.moveCharacter(newLocation.locationY + newLocation.locationX, gridLocation);
-  
+        this.areaStateService.repositionCharacter(newLocation.locationY + newLocation.locationX, gridLocation);
+
         if (routeIndex >= (character.directionsForPatrol.length - 1)) {
           character.currentPositionInRoute = 0;
         } else {
           character.currentPositionInRoute++;
         }
-  
+
         // Cycle back around if we're at the end of the route
         const previousDirection = character.currentPositionInRoute === 0 ?
-                                  character.directionsForPatrol[character.directionsForPatrol.length - 1] :
-                                  character.directionsForPatrol[character.currentPositionInRoute - 1];
-  
+          character.directionsForPatrol[character.directionsForPatrol.length - 1] :
+          character.directionsForPatrol[character.currentPositionInRoute - 1];
+
         character.direction = previousDirection;
       } else {
         character.direction = character.directionsForPatrol[character.currentPositionInRoute];
@@ -255,35 +179,84 @@ export class MovementComponent {
    * Moves the character towards the starting position of their patrol route
    */
   public returnToStartingPosition(character: Character, gridLocation: string, newLocation: string) {
-    this.moveWithRespectToLocation(character, gridLocation, newLocation, true);
-  }
-
-  /**
-   * Moves the character towards or away from the player
-   */
-  public moveWithRespectToPlayer(character: Character, characterLocation: string, moveTowardsPlayer: boolean) {
-    const playerLocation = this.areaStateService.playerLocation;
-    this.moveWithRespectToLocation(character, characterLocation, playerLocation, moveTowardsPlayer);
+    this.moveCharacterToLocation(character, gridLocation, newLocation, true);
   }
 
   /**
    * If direction is available move the chracter towards the player's location
    * @param character The character that will be moving
-   * @param characterLocation The location of the character in question
-   * @param moveTowardsLocation Whether to more towards or away from player's location
+   * @param characterLocation The current location of the character in question
+   * @param moveTowardsLocation Whether to more towards or away from target's location
    */
-  public moveWithRespectToLocation(character: any, characterLocation: string, newLocation: string, moveTowardsLocation: boolean) {
+  public moveCharacterToLocation(character: Character, characterLocation: string, targetLocation: string, moveTowardsLocation = true) {
 
-    const splitNewLocation = this.areaStateService.splitLocationReference(newLocation);
-    const splitCharacterLocation = this.areaStateService.splitLocationReference(characterLocation);
+    const splitNewLocation: ILocation = this.areaStateService.splitLocationReference(targetLocation);
+    const splitCharacterLocation: ILocation = this.areaStateService.splitLocationReference(characterLocation);
+
+    // Get and apply the direction to face
     const furthestDirectionToPlayer = this.getDirectionWithRespectToPlayer(splitNewLocation, splitCharacterLocation, moveTowardsLocation);
     this.areaStateService.locations[characterLocation].element.direction = furthestDirectionToPlayer;
-    const targetLocationDetails = this.getNextLocation(splitCharacterLocation.locationY, splitCharacterLocation.locationX, furthestDirectionToPlayer);
+    const targetLocationDetails = GridHelper.getNextLocation(splitCharacterLocation.locationY, splitCharacterLocation.locationX, furthestDirectionToPlayer, this.areaStateService.locations);
 
+    // If the target location is free, move into it
     if (targetLocationDetails && targetLocationDetails.isLocationFree) {
-      const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
-      this.areaStateService.moveCharacter(targetLocation, characterLocation);
+      const targetLocationCoords = targetLocationDetails.locationY + targetLocationDetails.locationX;
+      this.areaStateService.repositionCharacter(targetLocationCoords, characterLocation);
     }
+  }
+
+  /**
+   * Get the path to the target location and make the first step towards it
+   * @param character The character that will be moving
+   * @param characterLocation The current location of the character in question
+   * @param targetLocation Whether to more towards or away from player's location
+   */
+  public moveTowardsLocation(character: Character, characterLocation: string, targetLocation: string) {
+
+    // If we can't get there there's no point in trying
+    if (!this.areaStateService.isLocationFree(targetLocation)) {
+      return;
+    }
+
+    const splitCurrentLocation = this.areaStateService.splitLocationReference(characterLocation);
+
+    const splitNewLocation = this.areaStateService.splitLocationReference(targetLocation);
+
+    character.currentPathToDestination = this.pathfinding.getShortestPath(splitCurrentLocation, splitNewLocation, this.areaStateService.locations);
+
+    if (!character.currentPathToDestination || !character.currentPathToDestination.length) {
+      return;
+    }
+
+    // Get the next target location
+    const nextPathfindingLocation = character.currentPathToDestination[0];
+
+    // Walk the path
+    this.moveCharacterToLocation(character, characterLocation, nextPathfindingLocation, true);
+  }
+
+/**
+ * Get the path to the player location and make the first step towards it
+ * @param character The character that will be moving
+ * @param characterLocation The current location of the character in question
+ */
+  public moveTowardsPlayer(character: Character, characterLocation: string) {
+    const playerLocation = this.areaStateService.playerLocation;
+
+    const splitCurrentLocation = this.areaStateService.splitLocationReference(characterLocation);
+
+    const splitNewLocation = this.areaStateService.splitLocationReference(playerLocation);
+
+    character.currentPathToDestination = this.pathfinding.getShortestPath(splitCurrentLocation, splitNewLocation, this.areaStateService.locations);
+
+    if (!character.currentPathToDestination || !character.currentPathToDestination.length) {
+      return;
+    }
+
+    // Get the next target location
+    const nextPathfindingLocation = character.currentPathToDestination[0];
+
+    this.moveTowardsLocation(character, characterLocation, nextPathfindingLocation);
   }
 
   /**
@@ -295,8 +268,9 @@ export class MovementComponent {
   public getDirectionWithRespectToPlayer(playerLocation: ILocation, characterLocation: ILocation, towardsPlayer: boolean): Direction {
     const distanceData = this.areaStateService.getDistanceBetweenLocations(playerLocation, characterLocation);
 
-    // Move vertically
+    // Calculate which direction is furthest
     if (Math.abs(distanceData.yDistance) >= Math.abs(distanceData.xDistance)) {
+      // Move vertically
       if (distanceData.yDistance >= 0) {
         return towardsPlayer ? Direction.S : Direction.N;
       } else {
@@ -312,71 +286,5 @@ export class MovementComponent {
     }
   }
 
-  private getDirectionFromNumber(numberReference: number): Direction | null {
-    switch (numberReference) {
-      case 1:
-        return Direction.N;
-      case 2:
-        return Direction.E;
-      case 3:
-        return Direction.S;
-      case 4:
-        return Direction.W;
-      default:
-        return null;
-    }
-  }
 
-  private getNumberFromDirection(direction: Direction): number | null {
-    switch (direction) {
-      case Direction.N:
-        return 1;
-      case Direction.E:
-        return 2;
-      case Direction.S:
-        return 3;
-      case Direction.W:
-        return 4;
-      default:
-        return null;
-    }
-  }
-
-  private previousYReference(yReference: string | null): string {
-    return String.fromCharCode(yReference.charCodeAt(0) - 1);
-  }
-
-  private nextYReference(yReference: string): string {
-    return String.fromCharCode(yReference.charCodeAt(0) + 1);
-  }
-
-  private previousXReference(xReference: number): number {
-    return xReference - 1;
-  }
-
-  private nextXReference(xReference: number): number {
-    return xReference + 1;
-  }
-
-  private isTargetLocationAreaExit(currentLocation: string, targetLocation: string): boolean {
-    for (const exit in defaults.areaExitDestinations) {
-      if (defaults.areaExitDestinations.hasOwnProperty(exit) && targetLocation === defaults.areaExitDestinations[exit]) {
-        return !!this.areaStateService.locations[currentLocation].exitDestination;
-      }
-    }
-
-    return false;
-  }
-
-  public isTargetLocationOutOfBounds(targetLocation: string): boolean {
-    if (targetLocation.indexOf(defaults.areaOuterBoundaries.lowerYBoundary) === -1 &&
-      targetLocation.indexOf(defaults.areaOuterBoundaries.upperYBoundary) === -1 &&
-      targetLocation.indexOf(defaults.areaOuterBoundaries.lowerXBoundary) === -1 &&
-      targetLocation.indexOf(defaults.areaOuterBoundaries.upperXBoundary) === -1
-    ) {
-      return false;
-    } else {
-      return true;
-    }
-  }
 }

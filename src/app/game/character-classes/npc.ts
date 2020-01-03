@@ -1,7 +1,8 @@
 import { Character } from "./character";
-import { CharacterType, Direction, ElementClass, CharacterState } from "../shared/enums";
+import { Direction, ElementClass, CharacterState } from "../shared/enums";
 import { UserInteractionTypes } from "../../shared/enums";
 import { IWeapons, IArmour, IInventoryItem } from "../item/interfaces";
+import { ILocation } from "../shared/interfaces";
 
 export class NPC extends Character {
       public id: string;
@@ -16,6 +17,7 @@ export class NPC extends Character {
       public sleepResponse: string;
       public isAsleep: boolean;
       public isAngry: boolean;
+      public baseDamage: number;
       public pauseCounter: number;
       public maxPauseDuration: number;
       public direction: Direction;
@@ -23,9 +25,12 @@ export class NPC extends Character {
       public startingLocation: string;
       public patrolArea: boolean;
       public directionsForPatrol: Direction[];
+      public startingTargetLocation: string;
       public currentPositionInRoute: number;
       public currentHuntingDuration: number;
       public maxHuntingDuration: number;
+      public currentPathToDestination: any[]; // TODO PriorityQueue
+      public pathfindingDestination: ILocation;
       public currentState: CharacterState;
       public startingState: CharacterState;
       public armour: IArmour;
@@ -43,6 +48,7 @@ export class NPC extends Character {
             this.imageFileName = characterDetails.imageFileName;
             this.isAsleep = characterDetails.asleep;
             this.isAngry = characterDetails.angry;
+            this.baseDamage = characterDetails.baseDamage;
             this.pauseCounter = characterDetails.pauseCounter || 0;
             this.maxPauseDuration = characterDetails.maxPauseDuration;
             this.speechResponse = characterDetails.speechResponse;
@@ -51,6 +57,7 @@ export class NPC extends Character {
             this.startingLocation = characterDetails.startingLocation;
             this.patrolArea = characterDetails.patrolArea;
             this.directionsForPatrol = characterDetails.directionsForPatrol;
+            this.startingTargetLocation = characterDetails.startingTargetLocation;
             this.currentPositionInRoute = (characterDetails.currentPositionInRoute === undefined) ? 0 : characterDetails.currentPositionInRoute;
             this.currentHuntingDuration = (characterDetails.currentHuntingDuration === undefined) ? 0 : characterDetails.currentHuntingDuration;
             this.maxHuntingDuration = characterDetails.maxHuntingDuration;
@@ -80,6 +87,7 @@ export class NPC extends Character {
       public respond(interaction: UserInteractionTypes, directionToFace: Direction, damage: number) {
             switch (interaction) {
                   case UserInteractionTypes.speak:
+                        // TODO Replace these references
                         if (!this.isAsleep) {
                               this.direction = directionToFace;
                               return this.speechResponse;
@@ -88,6 +96,7 @@ export class NPC extends Character {
                         }
                   case UserInteractionTypes.attack:
                         this.isAsleep = false;
+                        this.currentState = CharacterState.hunting;
                         this.direction = directionToFace;
                         this.currentHp -= damage;
                         return;

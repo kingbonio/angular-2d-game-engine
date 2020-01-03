@@ -120,14 +120,14 @@ export class AreaStateService implements OnInit {
   }
 
   /**
-   * Checks whether the location on the grid can be moved into
+   * Checks whether the location on the grid exists and can be moved into
    * @param location the grid reference for the location
    */
   public isLocationFree(location: string): boolean {
-    return (!this.locations[location].element);
+    return (this.locations[location] && !this.locations[location].element);
   }
 
-  public moveCharacter(newLocation: string, currentLocation: string) {
+  public repositionCharacter(newLocation: string, currentLocation: string) {
     // TODO: We need to store a reference to the player object here
     this.locations[newLocation].element = this.locations[currentLocation].element;
     this.locations[currentLocation].element = null;
@@ -135,7 +135,7 @@ export class AreaStateService implements OnInit {
 
   public movePlayer(newLocation: string) {
     if (newLocation !== this.playerLocation) {
-      this.moveCharacter(newLocation, this.playerLocation);
+      this.repositionCharacter(newLocation, this.playerLocation);
     }
   }
 

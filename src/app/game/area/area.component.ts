@@ -136,7 +136,7 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
       this.playerStateService.locationX = this.areaConfig.areaElements[0].startingPositionX;
       // Set the monsters
       this.addElementsToGrid(this.areaConfig.areaElements);
-  
+
       if (this.areaConfig.areaLoadMessage) {
         this.dialogueService.displayDialogueMessage({
           text: this.areaConfig.areaLoadMessage,
@@ -146,13 +146,26 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
 
-
     // If player is entering a new area we want to update the location to be opposite the way they came in
     if (this.areaStateService.loadingPreviousArea) {
       this.updatePlayerLocation();
     }
     this.areaStateService.loadingExistingArea = false;
 
+    // console.log("Testing AI pathfinding");
+    // this.pathfinding.getShortestPath(
+    //   {
+    //     // Starting location
+    //     locationY: "d",
+    //     locationX: 1,
+    //   },
+    //   {
+    //     // Target location
+    //     locationY: "a",
+    //     locationX: 2,
+    //   },
+    //   this.areaStateService.locations
+    // );
   }
 
   private addElementsToGrid(elements: IAreaElement[]): void {

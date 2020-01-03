@@ -2,6 +2,7 @@ import { Character } from "./character";
 import { MonsterClass, CharacterType, Direction, ElementClass, CharacterState } from "../shared/enums";
 import { UserInteractionTypes } from "../../shared/enums";
 import { IArmour, IWeapons, IInventoryItem } from "../item/interfaces";
+import { ILocation } from "../shared/interfaces";
 
 export class Enemy extends Character {
       public id: string;
@@ -16,6 +17,7 @@ export class Enemy extends Character {
       public sleepResponse: string;
       public isAsleep: boolean;
       public isAngry: boolean;
+      public baseDamage: number;
       public pauseCounter: number;
       public maxPauseDuration: number;
       public direction: Direction;
@@ -23,9 +25,12 @@ export class Enemy extends Character {
       public startingLocation: string;
       public patrolArea: boolean;
       public directionsForPatrol: Direction[];
+      public startingTargetLocation: string;
       public currentPositionInRoute: number;
       public currentHuntingDuration: number;
       public maxHuntingDuration: number;
+      public currentPathToDestination: any[]; // TODO PriorityQueue
+      public pathfindingDestination: ILocation;
       public currentState: CharacterState;
       public startingState: CharacterState;
       public armour: IArmour;
@@ -44,6 +49,7 @@ export class Enemy extends Character {
             this.sleepResponse = characterDetails.sleepResponse;
             this.isAsleep = characterDetails.asleep;
             this.isAngry = characterDetails.angry;
+            this.baseDamage = characterDetails.baseDamage;
             this.pauseCounter = characterDetails.pauseCounter || 0;
             this.maxPauseDuration = characterDetails.maxPauseDuration;
             this.direction = characterDetails.direction;
@@ -51,6 +57,7 @@ export class Enemy extends Character {
             this.startingLocation = characterDetails.startingLocation;
             this.patrolArea = characterDetails.patrolArea;
             this.directionsForPatrol = characterDetails.directionsForPatrol;
+            this.startingTargetLocation = characterDetails.startingTargetLocation;
             this.currentPositionInRoute = (characterDetails.currentPositionInRoute === undefined) ? 0 : characterDetails.currentPositionInRoute;
             this.currentHuntingDuration = (characterDetails.currentHuntingDuration === undefined) ? 0 : characterDetails.currentHuntingDuration;
             this.maxHuntingDuration = characterDetails.maxHuntingDuration;
@@ -90,6 +97,7 @@ export class Enemy extends Character {
                         }
                   case UserInteractionTypes.attack:
                         this.isAsleep = false;
+                        this.currentState = CharacterState.hunting;
                         this.direction = directionToFace;
                         this.currentHp -= damage;
                         return;

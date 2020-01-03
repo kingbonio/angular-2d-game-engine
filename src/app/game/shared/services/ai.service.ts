@@ -37,6 +37,7 @@ export class AiService {
         !this.areaStateService.loadingSavedGame) {
         this.actionTriggerHandler(true);
       }
+
     });
     this.timerService.counter.subscribe(value => {
       // TODO This may need a more specific flag
@@ -48,6 +49,8 @@ export class AiService {
         this.actionTriggerHandler(false);
       }
     });
+
+
   }
 
   // TODO Change this parameter
@@ -71,7 +74,8 @@ export class AiService {
       }
 
       // Either an enemy or an angry npc
-      if ((character.type === ElementClass.enemy || character.currentState === CharacterState.hunting) && this.isPlayerInSight(character, gridLocation)) {
+      if ((character.type === ElementClass.enemy || character.currentState === CharacterState.hunting) &&
+        this.isPlayerInSight(character, gridLocation)) {
         this.startHunting(character);
       }
 
@@ -94,10 +98,35 @@ export class AiService {
         case CharacterState.wandering:
           this.movement.wander(character, gridLocation);
           break;
+        case CharacterState.walkingPath:
+
+          const newPathfindingLocation = {
+            locationY: "e",
+            locationX: 1
+          };
+
+          const newTargetLocationString = "e1";
+
+          // TODO Maybe this would be better to approach the location anyway
+          // If we can't get there there's no point in trying
+          if (!this.areaStateService.isLocationFree(newPathfindingLocation.locationY + newPathfindingLocation.locationX)) {
+            return;
+          }
+
+          // If we're already there don't do anything
+          if (gridLocation === newPathfindingLocation.locationY + newPathfindingLocation.locationX) {
+            character.currentState = CharacterState.still;
+            return;
+          }
+
+          this.movement.moveTowardsLocation(character, gridLocation, newTargetLocationString);
+
+          break;
         case CharacterState.patrolling:
           const newLocation = this.movement.walkRoute(character, gridLocation);
 
-          if (newLocation && this.isPlayerInSight(character, newLocation.locationY + newLocation.locationX)) {
+          if ((character.type === ElementClass.enemy || character.currentState === CharacterState.hunting) &&
+            this.isPlayerInSight(character, newLocation.locationY + newLocation.locationX)) {
             this.startHunting(character);
           }
           break;
@@ -111,7 +140,8 @@ export class AiService {
             this.action(character, gridLocation);
 
           } else {
-            this.movement.returnToStartingPosition(character, gridLocation, character.startingLocation);
+            this.movement.moveTowardsLocation(character, gridLocation, character.startingLocation);
+            // this.movement.returnToStartingPosition(character, gridLocation, character.startingLocation);
           }
           break;
         case CharacterState.hunting:
@@ -127,7 +157,8 @@ export class AiService {
           break;
         case CharacterState.afraid:
           // Character is low health and needs to escape
-          this.movement.moveWithRespectToPlayer(character, gridLocation, false);
+          // TODO Figure out a better way of doing this
+          // this.movement.moveWithRespectToPlayer(character, gridLocation, false);
           break;
         default:
           // Do nothing
@@ -193,70 +224,20 @@ export class AiService {
       }
     } else {
 
+      console.log("Testing hunting");
+      console.log("character: ", character);
+      console.log("gridLocation: ", gridLocation);
+
       // Character needs to get closer to attack
       if (playerIsInvisible) {
 
         // TODO This is awful
         targetLocation = targetLocation.locationY + targetLocation.locationX;
 
-        this.movement.moveWithRespectToLocation(character, gridLocation, targetLocation, true);
+        this.movement.moveTowardsLocation(character, gridLocation, targetLocation);
       } else {
-        this.movement.moveWithRespectToPlayer(character, gridLocation, true);
+        this.movement.moveTowardsPlayer(character, gridLocation);
       }
     }
   }
-
-
-
-  //   if (character.isAsleep || character.isDead() || character.isPaused) {
-
-  //     // Not expected to move
-  //     if (character.isPaused) {
-  //       character.isPaused = false;
-  //     }
-  //   } else {
-
-  //     // Expected to perform an action
-  //     if (!character.isAngry && !character.isLowHealth()) {
-
-  //       // TODO This needs to accommodate the other states
-  //       if (character.walkRoute) {
-  //         this.movement.walkRoute(character, gridLocation);
-  //       } else {
-  //         // Untroubled character, do some wandering
-  //         this.movement.wander(character, gridLocation);
-  //       }
-
-  //       character.isPaused = true;
-  //     } else if (character.isAngry && !character.isLowHealth()) {
-
-  //       // Head towards player and attack if next to player, otherwise move towards the player
-  //       if (this.areaStateService.isCharacterNextToPlayer(gridLocation)) {
-
-  //         const playerLocation = this.areaStateService.splitLocationReference(this.areaStateService.playerLocation);
-
-  //         const characterLocation = this.areaStateService.splitLocationReference(gridLocation);
-
-  //         const directionToPlayer = this.movement.getDirectionWithRespectToPlayer(playerLocation, characterLocation, true);
-
-  //         character.direction = directionToPlayer;
-
-  //         this.playerStateService.receiveAttack(character);
-  //       } else {
-
-  //         // Character needs to get closer to attack
-  //         this.movement.moveWithRespectToPlayer(character, gridLocation, true);
-  //       }
-  //     } else {
-
-  //       // Character is low health and needs to escape
-  //       this.movement.moveWithRespectToPlayer(character, gridLocation, false);
-
-  //       // Maybe move these to a response method on character
-  //       character.angry = false;
-  //     }
-
-  //     character.isPaused = true;
-  //   }
-
 }

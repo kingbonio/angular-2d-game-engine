@@ -26,6 +26,7 @@ import { GameModalComponent } from './game-menu/game-modal/game-modal.component'
 import { PersistentStateService } from './shared/services/persistent-state.service';
 import { PersistentStorageModule } from '../shared/modules/persistent-storage/persistent-storage.module';
 import { DeadModalComponent } from './dead-modal/dead-modal.component';
+import { PathfindingComponent } from './shared/util/movement/pathfinding/pathfinding.component';
 
 @NgModule({
   imports: [
@@ -41,6 +42,7 @@ import { DeadModalComponent } from './dead-modal/dead-modal.component';
     AreaComponent,
     DialogueComponent,
     MovementComponent,
+    PathfindingComponent,
     EquipmentComponent,
     InventoryComponent,
     ItemGridComponent,
@@ -54,6 +56,7 @@ import { DeadModalComponent } from './dead-modal/dead-modal.component';
     DialogueService,
     BattleCalculatorService,
     MovementComponent,
+    PathfindingComponent,
     EquipmentManagerService,
     InventoryManagerService,
     AiService,
