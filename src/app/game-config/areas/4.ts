@@ -14,7 +14,7 @@ export default {
                         imageFileName: "player1.jpg",
                   },
                   startingPositionX: 4,
-                  startingPositionY: "g",
+                  startingPositionY: "a",
                   startingDirection: Direction.N,
                   direction: Direction.N,
             },

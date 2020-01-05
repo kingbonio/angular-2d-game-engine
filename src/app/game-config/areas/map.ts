@@ -26,9 +26,15 @@ export default {
             west: null,
       } as IAreaExits,
       5: {
-            north: null,
+            north: 6,
             east: null,
             south: 4,
+            west: null,
+      } as IAreaExits,
+      6: {
+            north: null,
+            east: null,
+            south: 5,
             west: null,
       } as IAreaExits,
 };

@@ -171,6 +171,7 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
     elements.forEach(element => {
       // Check element's preferred grid reference and attempt to add it there
       const gridReference = element.startingPositionY + element.startingPositionX;
+      console.log("Grid Location: ", this.areaStateService.locations[gridReference]);
       if (!this.areaStateService.locations[gridReference].element) {
         // We want to create instances of each character in the config
         switch (element.type) {

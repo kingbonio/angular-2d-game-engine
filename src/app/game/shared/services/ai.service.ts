@@ -100,26 +100,28 @@ export class AiService {
           break;
         case CharacterState.walkingPath:
 
-          const newPathfindingLocation = {
-            locationY: "e",
-            locationX: 1
-          };
-
-          const newTargetLocationString = "e1";
-
           // TODO Maybe this would be better to approach the location anyway
           // If we can't get there there's no point in trying
-          if (!this.areaStateService.isLocationFree(newPathfindingLocation.locationY + newPathfindingLocation.locationX)) {
+          if (!this.areaStateService.isLocationFree(character.startingTargetLocation)) {
+
+            if (gridLocation !== character.startingTargetLocation) {
+
+              // Ranmdoly move if target cannot be gotten to
+              this.movement.wander(character, gridLocation);
+            } else {
+              character.direction = character.startingDirection;
+            }
+            // Maybe update state
             return;
           }
 
           // If we're already there don't do anything
-          if (gridLocation === newPathfindingLocation.locationY + newPathfindingLocation.locationX) {
+          if (gridLocation === character.startingTargetLocation) {
             character.currentState = CharacterState.still;
             return;
           }
 
-          this.movement.moveTowardsLocation(character, gridLocation, newTargetLocationString);
+          this.movement.moveTowardsLocation(character, gridLocation, character.startingTargetLocation);
 
           break;
         case CharacterState.patrolling:
