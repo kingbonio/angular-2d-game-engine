@@ -118,12 +118,12 @@ export class PathfindingComponent {
     if (cameFrom[targetLocation.locationY + targetLocation.locationX]) {
 
       while (pathCurrent !== startLocation.locationY + startLocation.locationX) {
-        pathBackwards.push(pathCurrent);
+        pathBackwards.unshift(pathCurrent);
         pathCurrent = cameFrom[pathCurrent];
       }
       // pathBackwards.push(startLocation.locationY + startLocation.locationX);
 
-      pathBackwards.reverse();
+      // pathBackwards.reverse();
       // console.log("came from: ", cameFrom);
       // console.log("path: ", pathBackwards);
     }

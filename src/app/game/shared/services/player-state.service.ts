@@ -105,6 +105,10 @@ export class PlayerStateService {
    * Perform an attack in the direction player is facing
    */
   public attack() {
+
+    // Allow the player attack animation
+    this.areaStateService.locations[this.areaStateService.playerLocation].element.attack();
+
     // if (this.equipmentManagerService.getWeaponType(this.selectedWeaponSlot)) {
     const targetReference = GridHelper.getNextLocation(this.locationY, this.locationX, this.direction, this.areaStateService.locations);
     const target = this.areaStateService.locations[targetReference.locationY + targetReference.locationX].element;
@@ -124,6 +128,9 @@ export class PlayerStateService {
       if (damage) {
         // No need to assign this
         target.respond(UserInteractionTypes.attack, GridHelper.getDirectionToFace(this.direction), damage);
+
+        // Allow the character to animate receiving an attack
+        target.receiveAttack();
 
         this.dialogueService.displayDialogueMessage({
           text: defaults.dialogue.attackSuccess(damage),
@@ -298,6 +305,9 @@ export class PlayerStateService {
   public receiveAttack(character: Character) {
     let damage = this.battleCalculatorService.getDamageToPlayer(character, this.equipmentManagerService.armour, this.equipmentManagerService.activeBuff);
     if (damage) {
+
+      // Allow the player to animate receiving an attack
+      this.areaStateService.locations[this.areaStateService.playerLocation].element.receiveAttack();
 
       if (this.equipmentManagerService.activeBuff &&
         this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge &&

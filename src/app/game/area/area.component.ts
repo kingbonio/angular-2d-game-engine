@@ -106,9 +106,8 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public getDeadClass(character: Character): string {
-    if (character.currentHp) {
-      return character.currentHp > 0 ? "" : "dead";
-    }
+    // TODO This is representative of the character parent class issue
+    return character.currentHp < 1 ? "dead" : "";
   }
 
   public getCharacterType(gridCharacter: Character): ElementClass {
@@ -205,7 +204,7 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
           case ElementClass.enemy:
             this.areaStateService.locations[location].element = new Enemy(this.areaStateService.locations[location].element);
             // TODO Maybe this would be better suited somewhere more abstracted from core code
-            if (this.areaStateService.locations[location].element.currentState === CharacterState.hunting) {
+            if (this.areaStateService.locations[location].element.currentState === CharacterState.hunting && !this.areaStateService.locations[location].element.isDead()) {
               this.areaStateService.locations[location].element.currentState = CharacterState.returningToPosition;
             }
             break;
@@ -214,7 +213,7 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
             break;
           case ElementClass.npc:
             this.areaStateService.locations[location].element = new NPC(this.areaStateService.locations[location].element);
-            if (this.areaStateService.locations[location].element.currentState === CharacterState.hunting) {
+            if (this.areaStateService.locations[location].element.currentState === CharacterState.hunting && !this.areaStateService.locations[location].element.isDead()) {
               this.areaStateService.locations[location].element.currentState = CharacterState.returningToPosition;
             }
             break;

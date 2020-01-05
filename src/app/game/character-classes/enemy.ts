@@ -3,6 +3,7 @@ import { MonsterClass, CharacterType, Direction, ElementClass, CharacterState } 
 import { UserInteractionTypes } from "../../shared/enums";
 import { IArmour, IWeapons, IInventoryItem } from "../item/interfaces";
 import { ILocation } from "../shared/interfaces";
+import defaults from "../../shared/defaults";
 
 export class Enemy extends Character {
       public id: string;
@@ -17,6 +18,8 @@ export class Enemy extends Character {
       public sleepResponse: string;
       public isAsleep: boolean;
       public isAngry: boolean;
+      public isAttacking: boolean;
+      public isReceivingAttack: boolean;
       public baseDamage: number;
       public pauseCounter: number;
       public maxPauseDuration: number;
@@ -49,6 +52,8 @@ export class Enemy extends Character {
             this.sleepResponse = characterDetails.sleepResponse;
             this.isAsleep = characterDetails.asleep;
             this.isAngry = characterDetails.angry;
+            this.isAttacking = false;
+            this.isReceivingAttack = false;
             this.baseDamage = characterDetails.baseDamage;
             this.pauseCounter = characterDetails.pauseCounter || 0;
             this.maxPauseDuration = characterDetails.maxPauseDuration;

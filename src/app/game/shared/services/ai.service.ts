@@ -220,6 +220,7 @@ export class AiService {
 
         // Do nothing
       } else {
+        character.attack();
         this.playerStateService.receiveAttack(character);
       }
     } else {

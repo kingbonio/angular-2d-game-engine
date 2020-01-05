@@ -24,6 +24,13 @@
                               <span *ngIf="areaStateService.locations[key].element.currentState === CharacterState.asleep" class="character-state asleep">zzZZ</span>
                               <span *ngIf="areaStateService.locations[key].element.currentState === CharacterState.patrolling" class="character-state patrolling">...</span>
                         </div>
+
+                        <div *ngIf="areaStateService.locations[key].element.isAttacking" class="swing-weapon">
+                              <!-- Is swinging their weapon -->
+                        </div>
+                        <div *ngIf="areaStateService.locations[key].element.isReceivingAttack" class="receive-attack">
+                              <!-- Is receiving an attack -->
+                        </div>
                   </div>
 <!-- 
                   <div *ngIf="(areaStateService.locations[key].element.type === ElementClass.enemy || areaStateService.locations[key].element.type === ElementClass.npc) && 

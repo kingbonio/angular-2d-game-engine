@@ -1,5 +1,6 @@
 import { Character } from "./character";
 import { PlayerClass, Direction, ElementClass } from "../shared/enums";
+import defaults from "../../shared/defaults";
 
 export class Player extends Character {
       public type = ElementClass.player;
@@ -16,4 +17,5 @@ export class Player extends Character {
             this.class = characterDetails.class;
             this.imageFileName = characterDetails.imageFileName;
       }
+
 }
