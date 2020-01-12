@@ -6,7 +6,7 @@ import { ObjectType } from "../../game/shared/enums";
 
 export default {
       room: 1,
-      areaLoadMessage: "Room 1",
+      areaLoadMessage: "Room 13",
       areaElements: [
             {
                   type: ElementClass.player,

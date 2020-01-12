@@ -5,7 +5,7 @@ import { IWeapons } from "../../game/item/interfaces";
 
 export default {
       room: 5,
-      areaLoadMessage: "Room 5",
+      areaLoadMessage: "Room 11",
       areaElements: [
             {
                   type: ElementClass.player,

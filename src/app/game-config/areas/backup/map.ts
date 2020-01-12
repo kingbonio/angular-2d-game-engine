@@ -2,7 +2,7 @@ import { IAreaExits } from "../interfaces";
 
 export default {
       1: {
-            north: 5,
+            north: 2,
             east: null,
             south: null,
             west: null,
