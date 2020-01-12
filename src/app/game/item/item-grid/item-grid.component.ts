@@ -12,7 +12,7 @@ export class ItemGridComponent implements OnInit {
   @Output() clickItem = new EventEmitter<string>();
 
   constructor() {
-    console.log(this.gridLocations);
+    console.log("Creating item grid");
   }
 
   ngOnInit() {

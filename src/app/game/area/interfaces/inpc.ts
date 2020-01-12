@@ -5,4 +5,5 @@ export interface INpc {
       name: string;
       imageFileName: string;
       startingLocation: string;
+      loot: any[];
 }

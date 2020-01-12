@@ -42,7 +42,6 @@ export class PathfindingComponent {
 
       // We want to give up trying if we've scanned the whole map and can't get to the target location
       if (_frontierQueue.size === 0) {
-        console.log("Couldn't get to target");
         break;
       }
 
@@ -121,14 +120,7 @@ export class PathfindingComponent {
         pathBackwards.unshift(pathCurrent);
         pathCurrent = cameFrom[pathCurrent];
       }
-      // pathBackwards.push(startLocation.locationY + startLocation.locationX);
-
-      // pathBackwards.reverse();
-      // console.log("came from: ", cameFrom);
     }
-    console.log("Starting location: ", startLocation.locationY + startLocation.locationX);
-    console.log("Destination: ", targetLocation.locationY + targetLocation.locationX);
-    console.log("path: ", pathBackwards);
 
     return pathBackwards;
   }

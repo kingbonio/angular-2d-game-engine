@@ -14,6 +14,7 @@ import { Dice } from '../util/dice';
 import { PotionEffectType } from '../../item/enums/potion-effect-type';
 import { InventoryManagerService } from '../../item/services/inventory-manager.service';
 import { GridHelper } from '../util/area/grid-helper';
+import { IGridData } from '../../area/interfaces';
 
 @Injectable()
 export class PlayerStateService {
@@ -111,10 +112,11 @@ export class PlayerStateService {
 
     // if (this.equipmentManagerService.getWeaponType(this.selectedWeaponSlot)) {
     const targetReference = GridHelper.getNextLocation(this.locationY, this.locationX, this.direction, this.areaStateService.locations);
-    const target = this.areaStateService.locations[targetReference.locationY + targetReference.locationX].element;
+    const targetLocation = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
+    const targetElement = targetLocation.element;
 
-    if (target && (target.type === ElementClass.enemy || target.type === ElementClass.npc)) {
-      if (target.isDead()) {
+    if (targetElement && (targetElement.type === ElementClass.enemy || targetElement.type === ElementClass.npc)) {
+      if (targetElement.isDead()) {
         this.dialogueService.displayDialogueMessage({
           text: defaults.dialogue.nullElementResponse,
           character: defaults.dialogue.computerCharacterType,
@@ -123,14 +125,14 @@ export class PlayerStateService {
         return;
       }
 
-      const damage = this.battleCalculatorService.getDamageToEnemy(target, this.selectedWeaponSlot, this.equipmentManagerService.activeBuff);
+      const damage = this.battleCalculatorService.getDamageToEnemy(targetElement, this.selectedWeaponSlot, this.equipmentManagerService.activeBuff);
 
       if (damage) {
         // No need to assign this
-        target.respond(UserInteractionTypes.attack, GridHelper.getDirectionToFace(this.direction), damage);
+        targetElement.respond(UserInteractionTypes.attack, GridHelper.getDirectionToFace(this.direction), damage);
 
         // Allow the character to animate receiving an attack
-        target.receiveAttack();
+        targetElement.receiveAttack();
 
         this.dialogueService.displayDialogueMessage({
           text: defaults.dialogue.attackSuccess(damage),
@@ -138,9 +140,14 @@ export class PlayerStateService {
           name: defaults.dialogue.computerName
         });
 
-        if (target.isDead()) {
+        if (targetElement.isDead()) {
+          console.log("Target details", targetLocation);
+
+          // Remove element and leave trace of the character on the grid
+          GridHelper.decomposeCharacter(targetElement, targetReference.locationY + targetReference.locationX, this.areaStateService.locations);
+
           this.dialogueService.displayDialogueMessage({
-            text: defaults.dialogue.targetDead + target.name,
+            text: defaults.dialogue.targetDead + targetElement.name,
             character: defaults.dialogue.computerCharacterType,
             name: defaults.dialogue.computerName
           });
@@ -172,18 +179,26 @@ export class PlayerStateService {
   public interact() {
     const targetReference = GridHelper.getNextLocation(this.locationY, this.locationX, this.direction, this.areaStateService.locations);
     // TODO Types
-    const target: any = this.areaStateService.locations[targetReference.locationY + targetReference.locationX].element;
-    if (target) {
-      if (target.type === ElementClass.object) {
+    const targetLocation: IGridData = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
+    const targetElement: any = targetLocation.element;
+
+    // If there's no target and there are ground items
+    if (!targetElement && targetLocation.groundItem) {
+      this.openLootingModal.emit(targetLocation);
+
+    }
+
+    if (targetElement) {
+      if (targetElement.type === ElementClass.object) {
         const activeItem = this.equipmentManagerService.activeItem;
         // TODO Maybe organise these ifs
-        if (activeItem && activeItem.itemReference && target.itemReferenceNeeded === activeItem.itemReference) {
-          switch (target.objectType) {
+        if (!targetElement.itemReferenceNeeded || (activeItem && activeItem.itemReference && targetElement.itemReferenceNeeded === activeItem.itemReference)) {
+          switch (targetElement.objectType) {
             case ObjectType.lootObject:
-              this.openLootingModal.emit(target);
+              this.openLootingModal.emit(targetLocation);
               break;
             case ObjectType.door:
-              this.areaStateService.removeElementFromArea(target, targetReference.locationY + targetReference.locationX);
+              this.areaStateService.removeElementFromArea(targetElement, targetReference.locationY + targetReference.locationX);
               break;
             default:
               // Do nothing...
@@ -198,17 +213,19 @@ export class PlayerStateService {
           return;
         }
       } else {
-        if (target.loot) {
+        if (targetElement.loot) {
           // Loot body if dead
-          if (target.isDead()) {
-            // Emit event for looting modal
-            this.openLootingModal.emit(target);
-            return;
+          if (targetElement.isDead()) {
+            // // TODO This needs moving/removing
+
+            // // Emit event for looting modal
+            // this.openLootingModal.emit(targetLocation);
+            // return;
             // TODO update state here
-          } else if (target.currentState === CharacterState.asleep || !GridHelper.isTargetFacingSource(target, this.direction)) {
-            const stealSuccess = this.attemptSteal(target);
+          } else if (targetElement.currentState === CharacterState.asleep || !GridHelper.isTargetFacingSource(targetElement, this.direction)) {
+            const stealSuccess = this.attemptSteal(targetElement);
             if (stealSuccess) {
-              this.openLootingModal.emit(target);
+              this.openLootingModal.emit(targetLocation);
             } else {
               this.dialogueService.displayDialogueMessage(
                 {
@@ -218,7 +235,7 @@ export class PlayerStateService {
                 }
               );
               // Set the character to hunting player
-              target.currentState = CharacterState.hunting;
+              targetElement.currentState = CharacterState.hunting;
             }
           } else {
             this.dialogueService.displayDialogueMessage(
@@ -228,7 +245,7 @@ export class PlayerStateService {
                 name: defaults.dialogue.computerName
               }
             );
-            target.currentState = CharacterState.hunting;
+            targetElement.currentState = CharacterState.hunting;
           }
 
         } else {

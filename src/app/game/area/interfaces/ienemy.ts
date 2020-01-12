@@ -3,7 +3,7 @@ import { IInventoryItem } from "../../item/interfaces/iinventory-item";
 import { ILocation } from "selenium-webdriver";
 import { ILootParameters } from "../../shared/interfaces";
 
-export interface IMonster {
+export interface IEnemy {
       type: CharacterType.enemy;
       asleep: boolean;
       level: number;
@@ -13,4 +13,5 @@ export interface IMonster {
       startingLocation: string;
       currentDirection: Direction;
       currentLocation?: ILocation;
+      loot: any[];
 }

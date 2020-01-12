@@ -52,8 +52,31 @@
                   }
 
             }
+            
+            .floor-style {
+                  &.blood {
+                        height: 80px;
+                        width: 80px;
+                        position: absolute;
+                        border-radius: 50%;
+                        background-color: rgba(255, 0, 0, 0.6);
+                        z-index: 0;
+                  }
+            }
+            
+            .ground-item {
+                  &.loot-bag {
+                        width: 100%;
+                        height: 100%;
+                        position: absolute;
+                        border-color: red;
+                        background-image: url("assets/images/ground-item/loot-bag.png");
+                        z-index: 1;
+                  }
+            }
 
             .grid-item {
+                  position: absolute;
                   z-index: 11;
                   width: 100%;
                   height: 100%;
@@ -91,6 +114,7 @@
                         display: inline-block;
                         background-color: rgba(255, 0, 0, 0.6);
                   }
+
                   // &.direction-n {
                   //       border-top: solid red 2px;
                   // }

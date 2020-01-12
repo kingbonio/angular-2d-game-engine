@@ -8,3 +8,4 @@ export * from '../../item/enums/armour-type';
 export * from './monster-class';
 export * from './player-class';
 export * from './object-type';
+export * from './floor-style';
