@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { IAreaElement } from './interfaces';
+import { IAreaElement, IGridObject } from './interfaces';
 import { ILevelData } from './interfaces/ilevel-data';
 import { AreaType } from './enums/area-type';
 import { ActivatedRoute } from '@angular/router';
 import { AreaStateService } from '../shared/services/area-state.service';
 import { AreaConfigProviderService } from '../shared/services/area-config-provider.service';
-import { CharacterType, Direction, ElementClass, CharacterState } from '../shared/enums';
+import { CharacterType, Direction, ElementClass, CharacterState, ObjectType } from '../shared/enums';
 import { PlayerStateService } from '../shared/services/player-state.service';
 import { Enemy, NPC } from '../character-classes';
 import { Character } from '../character-classes/character';
@@ -21,6 +21,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { GameSettingsService } from '../../shared/services/game-settings.service';
 import { GameStateService } from '../shared/services/game-state.service';
 import { DialogueService } from '../shared/services/dialogue.service';
+import { GridHelper } from '../shared/util/area/grid-helper';
 
 @Component({
   selector: 'app-area',
@@ -49,7 +50,7 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
     public gameStateService: GameStateService,
     private dialog: MatDialog,
   ) {
-    this.openLootinModalSubscription = this.playerStateService.openLootingModal.subscribe((target: Character) => {
+    this.openLootinModalSubscription = this.playerStateService.openLootingModal.subscribe((target: IGridData) => {
       this.openLootingModal(target);
     });
     // // Build the area
@@ -69,9 +70,9 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
 
   /**
    * Opens the looting component modal allowing manipulation of target's inventory
-   * @param items The character we want to loot
+   * @param target The target grid data for looting
    */
-  private openLootingModal(target: Character) {
+  private openLootingModal(target: IGridData) {
     if (!this.modalRef) {
       const modalConfig = new MatDialogConfig();
 
@@ -80,13 +81,35 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
       modalConfig.hasBackdrop = true;
       modalConfig.width = '450px';
       modalConfig.height = '300px';
-      modalConfig.data = target;
       modalConfig.panelClass = "looting-modal";
 
+      // TODO This probably isn't the best way of doing this
+      // Select which part of the grid data we want to loot
+      if (target.element) {
+        modalConfig.data = target.element;
+      } else if (target.groundItem) {
+        modalConfig.data = target.groundItem;
+      }
 
       this.modalRef = this.dialog.open(LootingModalComponent, modalConfig);
 
       this.modalRef.afterClosed().subscribe(returnData => {
+
+        if (target.element) {
+         // Do nothing
+        } else if (target.groundItem && target.groundItem.isEmpty) {
+          // Get rid of the bag
+          target.groundItem = null;
+        }
+
+        // if (target.objectType === ObjectType.lootBag && !target.inventoryLocations.length) {
+
+        //   // GridHelper.decomposeCharacter(target
+
+
+        //   // TODO Remove ground item
+        // }
+
         this.modalRef = null;
       });
     }
@@ -150,28 +173,12 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
       this.updatePlayerLocation();
     }
     this.areaStateService.loadingExistingArea = false;
-
-    // console.log("Testing AI pathfinding");
-    // this.pathfinding.getShortestPath(
-    //   {
-    //     // Starting location
-    //     locationY: "d",
-    //     locationX: 1,
-    //   },
-    //   {
-    //     // Target location
-    //     locationY: "a",
-    //     locationX: 2,
-    //   },
-    //   this.areaStateService.locations
-    // );
   }
 
   private addElementsToGrid(elements: IAreaElement[]): void {
     elements.forEach(element => {
       // Check element's preferred grid reference and attempt to add it there
       const gridReference = element.startingPositionY + element.startingPositionX;
-      console.log("Grid Location: ", this.areaStateService.locations[gridReference]);
       if (!this.areaStateService.locations[gridReference].element) {
         // We want to create instances of each character in the config
         switch (element.type) {

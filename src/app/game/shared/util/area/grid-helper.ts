@@ -1,7 +1,10 @@
 import defaults from "../../../../shared/defaults";
-import { Direction } from "../../enums";
+import { Direction, FloorStyle, ElementClass, ObjectType } from "../../enums";
 import { Character } from "../../../character-classes/character";
-import { ILocationData } from "../../interfaces";
+import { ILocationData, ILocation } from "../../interfaces";
+import { IGridReferences } from "../../../area/interfaces";
+import { IGridData } from "./../../../area/interfaces";
+import { LootBag } from "../../../area/grid-object-classes/loot-bag";
 
 export class GridHelper {
 
@@ -16,6 +19,36 @@ export class GridHelper {
                   return false;
             } else {
                   return true;
+            }
+      }
+
+      /**
+       * Removes the element from the grid and adds effects to the location and any loot dropped
+       * @param character The character we want to remove
+       * @param gridLocation The location to remove the character from and update area effects
+       * @param locations The list of locations from Area State Service
+       */
+      public static decomposeCharacter(character: Character, gridLocation: string, locations: IGridReferences) {
+
+            if (locations[gridLocation].element.type === ElementClass.enemy || locations[gridLocation].element.type === ElementClass.npc) {
+                  const targetLocation = locations[gridLocation];
+
+                  const targetElement: Character = targetLocation.element;
+
+                  // Lay down the blood floor style
+                  targetLocation.floorStyle = FloorStyle.blood;
+
+                  // Drop a loot bag if there is one
+                  if (!targetElement.hasNoLoot ) {
+                        if (targetLocation.groundItem && targetLocation.groundItem.objectType === ObjectType.lootBag) {
+                              targetLocation.groundItem.addLoot(targetElement.inventoryLocations);
+                        } else {
+                              targetLocation.groundItem = new LootBag(targetElement.inventoryLocations);
+                        }
+                  }
+
+                  // Remove the element from the location
+                  targetLocation.element = null;
             }
       }
 

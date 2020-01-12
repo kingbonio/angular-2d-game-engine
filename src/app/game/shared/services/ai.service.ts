@@ -227,10 +227,6 @@ export class AiService {
       }
     } else {
 
-      console.log("Testing hunting");
-      console.log("character: ", character);
-      console.log("gridLocation: ", gridLocation);
-
       // Character needs to get closer to attack
       if (playerIsInvisible) {
 

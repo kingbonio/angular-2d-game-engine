@@ -2,8 +2,19 @@
       <div *ngFor="let key of areaStateService.locationKeys(areaStateService.locations)" class="grid-box">
             <!-- <span style="position: absolute; color: white; z-index: 9999999"> {{ key }} </span> -->
             <!-- <div *ngIf="element">Has element</div> -->
-            <div class="area-exit" *ngIf="areaStateService.locations[key].exitDestination" [ngClass]="locationExit(key, areaStateService.locations[key])">
+
+            <div class="ground-item" *ngIf="areaStateService.locations[key].groundItem" [ngClass]="areaStateService.locations[key].groundItem.name">
+                  
             </div>
+
+            <div class="floor-style" [ngClass]="areaStateService.locations[key].floorStyle">
+
+            </div>
+
+            <div class="area-exit" *ngIf="areaStateService.locations[key].exitDestination" [ngClass]="locationExit(key, areaStateService.locations[key])">
+
+            </div>
+
             <div class="grid-item" *ngIf="areaStateService.locations[key].element"
                   [ngClass]="getDirectionClass(areaStateService.locations[key].element)">
 

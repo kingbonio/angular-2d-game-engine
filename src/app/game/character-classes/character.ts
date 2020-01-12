@@ -77,6 +77,24 @@ export class Character {
             return (this.pauseCounter <= this.maxPauseDuration);
       }
 
+      /**
+       * Checks to see if there are any objects in the inventory and returns false if there are any
+       */
+      get hasNoLoot(): boolean {
+            let _isEmpty = true;
+
+            for (const slot in this.inventoryLocations) {
+
+                  // Check if the key exists and the slot contains an element
+                  if (this.inventoryLocations.hasOwnProperty(slot) && this.inventoryLocations[slot]) {
+                        _isEmpty = false;
+                        break;
+                  }
+            }
+
+            return _isEmpty;
+      }
+
       public wait() {
             this.pauseCounter++;
       }
@@ -86,45 +104,31 @@ export class Character {
       }
 
       public attack() {
-
-            // console.log("Attempting attack");
-
             this.isAttacking = false;
 
-
-            // console.log("Status: ", this.isAttacking);
             // Allow the page to rerender before starting animation
             setTimeout(() => {
                   this.isAttacking = true;
-                  // console.log("Status: ", this.isAttacking);
             }, 0);
 
             // Clear the attack animation once it's played out
             setTimeout(() => {
                   this.isAttacking = false;
-                  // console.log("Status: ", this.isAttacking);
             }, defaults.animations.attackDurationMilliseconds);
 
       }
 
       public receiveAttack() {
-
-            console.log("Attempting receive attack");
-
             this.isReceivingAttack = false;
 
-
-            console.log("Status: ", this.isReceivingAttack);
             // Allow the page to rerender before starting animation
             setTimeout(() => {
                   this.isReceivingAttack = true;
-                  console.log("Status: ", this.isReceivingAttack);
             }, 0);
 
             // Clear the attack animation once it's played out
             setTimeout(() => {
                   this.isReceivingAttack = false;
-                  console.log("Status: ", this.isReceivingAttack);
             }, defaults.animations.receiveAttackDurationMilliseconds);
       }
 
