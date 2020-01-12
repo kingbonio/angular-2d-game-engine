@@ -1,5 +1,5 @@
 import defaults from "../../../../shared/defaults";
-import { Direction, FloorStyle, ElementClass } from "../../enums";
+import { Direction, FloorStyle, ElementClass, ObjectType } from "../../enums";
 import { Character } from "../../../character-classes/character";
 import { ILocationData, ILocation } from "../../interfaces";
 import { IGridReferences } from "../../../area/interfaces";
@@ -39,8 +39,12 @@ export class GridHelper {
                   targetLocation.floorStyle = FloorStyle.blood;
 
                   // Drop a loot bag if there is one
-                  if (!targetElement.hasNoLoot) {
-                        targetLocation.groundItem = new LootBag(targetElement.inventoryLocations);
+                  if (!targetElement.hasNoLoot ) {
+                        if (targetLocation.groundItem && targetLocation.groundItem.objectType === ObjectType.lootBag) {
+                              targetLocation.groundItem.addLoot(targetElement.inventoryLocations);
+                        } else {
+                              targetLocation.groundItem = new LootBag(targetElement.inventoryLocations);
+                        }
                   }
 
                   // Remove the element from the location

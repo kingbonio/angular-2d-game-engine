@@ -40,7 +40,7 @@ export class LootBag {
             };
             this.locationKeys = Object.keys;
 
-            this._addLoot(loot);
+            this.addLoot(loot);
       }
 
       /**
@@ -65,19 +65,25 @@ export class LootBag {
        * Add the initial loot to the bag
        * @param loot Items to be added to the bag
        */
-      private _addLoot(loot: any) {
+      public addLoot(loot: any) {
 
-            // if (loot) {
-            //       loot.forEach((item: IInventoryItem) => {
-            //             for (const slot in this.inventoryLocations) {
-            //                   if (this.inventoryLocations.hasOwnProperty(slot) && !this.inventoryLocations[slot]) {
-            //                         this.inventoryLocations[slot] = item;
-            //                         return;
-            //                   }
-            //             }
-            //       });
-            // }
+            if (!this.isEmpty) {
 
-            this.inventoryLocations = loot;
+                  lootLoop:
+                  for (const inventoryLocation in loot) {
+                        if (loot.hasOwnProperty(inventoryLocation) && loot[inventoryLocation])  {
+
+                              inventoryLocationLoop:
+                              for (const slot in this.inventoryLocations) {
+                                    if (this.inventoryLocations.hasOwnProperty(slot) && !this.inventoryLocations[slot]) {
+                                          this.inventoryLocations[slot] = loot[inventoryLocation];
+                                          break inventoryLocationLoop;
+                                    }
+                              }
+                        }
+                  }
+            } else {
+                  this.inventoryLocations = loot;
+            }
       }
 }

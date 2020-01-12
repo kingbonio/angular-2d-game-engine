@@ -40,6 +40,7 @@ export class AreaConfigProviderService implements OnInit {
     // this.inventoryManagerService.addItemToInventory(potions.smallHealthPotion);
     this.inventoryManagerService.addItemToInventory(potions.smallHealthPotion);
     this.inventoryManagerService.addItemToInventory(potions.invisiblityPotion);
+    this.inventoryManagerService.addItemToInventory(weapons.sword);
     // this.inventoryManagerService.addItemToInventory(potions.smallDamageBuff);
     // this.inventoryManagerService.addItemToInventory(potions.largeHealthBuff);
     // this.inventoryManagerService.addItemToInventory(weapons.sword);
