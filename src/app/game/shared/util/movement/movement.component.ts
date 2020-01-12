@@ -225,6 +225,9 @@ export class MovementComponent {
     character.currentPathToDestination = this.pathfinding.getShortestPath(splitCurrentLocation, splitNewLocation, this.areaStateService.locations);
 
     if (!character.currentPathToDestination || !character.currentPathToDestination.length) {
+
+      // Ranmdoly move if target cannot be gotten to
+      this.wander(character, characterLocation);
       return;
     }
 

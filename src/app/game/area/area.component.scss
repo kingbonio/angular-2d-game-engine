@@ -143,6 +143,99 @@
                         }
                   }
 
+                  @-moz-keyframes swing { 
+                        100% { 
+                              -moz-transform: rotate(30deg) translate(30px, 0px) scale(0.5);
+                        } 
+                  }
+                  @-webkit-keyframes swing {
+                        100% { 
+                              -webkit-transform: rotate(30deg) translate(30px, 0px) scale(0.5);
+                        } 
+                  }
+                  @keyframes swing { 
+                        100% { 
+                              -webkit-transform: rotate(30deg) translate(30px, 0px) scale(0.5);
+                              transform: rotate(30deg) translate(30px, 0px) scale(0.5);
+                        } 
+                  }
+
+                  @-moz-keyframes receive-attack {
+                        from {
+                              -moz-transform: scale(1) rotate(180deg);
+                        }
+                        to { 
+                              -moz-transform: scale(0.3) translate(-70px, 0px) rotate(180deg);
+                        } 
+                  }
+                  @-webkit-keyframes receive-attack {
+                        from {
+                              -webkit-transform: scale(1) rotate(180deg);
+                        }
+                        to { 
+                              -webkit-transform: scale(0.3) translate(-70px, 0px) rotate(180deg);
+                        } 
+                  }
+                  @keyframes receive-attack {
+                        from {
+                              -webkit-transform: scale(1) rotate(180deg);
+                              transform: scale(1) rotate(180deg);
+                        }
+                        to { 
+                              -webkit-transform: scale(0.3) translate(-70px, 0px) rotate(180deg);
+                              transform: scale(0.3) translate(-70px, 0px) rotate(180deg);
+                        } 
+                  }
+
+                  .swing-weapon, .receive-attack {
+                        width: 100%;
+                        height: 100%;
+                        position: absolute;
+
+                        background-repeat: no-repeat;
+                        // background-size: 80px 80px;
+                  }
+
+                  .swing-weapon {
+                        // width: 100%;
+                        // height: 100%;
+                        // position: absolute;
+                        animation-name: swing;
+                        
+                        // Must match the same duration as in defaults config
+                        animation-duration: 0.17s;
+                        // background-repeat: no-repeat;
+                        // background-position: right 0px top 0px;
+                        background-position: right 0px top 0px;
+                        background-size: 80px 80px;
+                  }
+                  
+                  .receive-attack {
+                        // width: 100%;
+                        // height: 100%;
+                        // position: absolute;
+
+                        // transform: rotate(225deg);
+                        // transform-origin: 50% 25%;
+
+                        animation-name: receive-attack;
+                        
+                        // Must match the same duration as in defaults config
+                        animation-duration: 0.17s;
+                        // background-repeat: no-repeat;
+                        background-position: right 0px top -10px;
+                        // background-position: right 0px top 0px;
+                        background-size: 160px 160px;
+                  }
+
+                  .swing-weapon {
+                        background-image: url("assets/images/animations/slash.svg");
+                  }
+
+                  .receive-attack {
+                        background-image: url("assets/images/animations/receive-attack.svg");
+                  }
+
                   // .view-area {
                   //       border: solid white 1px;
                   //       background-color: red;

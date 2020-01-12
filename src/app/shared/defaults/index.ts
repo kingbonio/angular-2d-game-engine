@@ -17,6 +17,10 @@ export default {
         startingDirection: Direction.N,
         direction: Direction.N
     },
+    animations: {
+        attackDurationMilliseconds: 170,
+        receiveAttackDurationMilliseconds: 170,
+    },
     playerMultipliers: {
         inventoryStorageMultiplier: 30,
         inventoryCapacityMultiplier: 30,
