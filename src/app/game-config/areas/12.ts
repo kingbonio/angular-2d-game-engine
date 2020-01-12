@@ -4,7 +4,7 @@ import { armour, weapons, keyItems, potions } from "../items";
 import { IWeapons } from "../../game/item/interfaces";
 
 export default {
-      room: 6,
+      room: 12,
       areaLoadMessage: "Room 12",
       areaElements: [
             {

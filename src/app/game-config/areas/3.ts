@@ -101,8 +101,8 @@ export default {
                               potions.smallHealthPotion,
                         ]
                   },
-                  startingPositionX: 1,
                   startingPositionY: "a",
+                  startingPositionX: 1,
             },
             {
                   type: ElementClass.npc,

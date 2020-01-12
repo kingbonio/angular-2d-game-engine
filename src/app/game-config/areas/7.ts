@@ -5,7 +5,7 @@ import { IWeapons } from "../../game/item/interfaces";
 import { ObjectType } from "../../game/shared/enums";
 
 export default {
-      room: 1,
+      room: 7,
       areaLoadMessage: "Room 7",
       areaElements: [
             {
