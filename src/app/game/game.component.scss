@@ -1,6 +1,6 @@
 .game-container {
-    width: 750px;
-    height: 747px;
+    width: 762px;
+    height: 759px;
     margin: auto;
     background-image: linear-gradient(to bottom right, #737373, #121010);
     border: solid #d1cdc6 2px;
@@ -13,8 +13,8 @@
             position: fixed;
             z-index: 11;
             // TODO Fix this
-            width: 569px;
-            height: 569px;
+            width: 580px;
+            height: 580px;
             background-color: black;
 
             .loading-text {
@@ -35,7 +35,8 @@
             display: inline-block;
             float: left;
             height: 560px;
-            border: solid #000 4px;
+            border: solid grey 10px;
+            border-style: inset;
         }
     }
     
@@ -43,8 +44,9 @@
         position: relative;
         display: inline-block;
         float: left;
-        width: 567px;
-        height: 177px;
+        width: 569px;;
+        height: 167px;
+        padding: 5px;
         border: solid #000 1px;
         z-index: 2;
     }
@@ -52,7 +54,7 @@
     .player-menu {
         position: absolute;
         display: inline-block;
-        height: 725px;
+        height: 737px;
         padding: 10px;  
         border: solid #000 1px;
         
