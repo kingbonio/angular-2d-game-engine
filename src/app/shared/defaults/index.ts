@@ -105,7 +105,7 @@ export default {
     },
     gameSettings: {
         allowInGameMenu: true,
-        showRoomShadow: true,
+        showRoomShadow: false,
         oneHandedControls: true,
     },
     gameConfig: {

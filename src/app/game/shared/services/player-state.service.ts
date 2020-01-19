@@ -142,15 +142,6 @@ export class PlayerStateService {
     if (targetLocation && targetLocation.element && (targetLocation.element.type === ElementClass.enemy || targetLocation.element.type === ElementClass.npc)) {
       const targetElement = targetLocation.element;
 
-      if (targetElement.isDead()) {
-        this.dialogueService.displayDialogueMessage({
-          text: defaults.dialogue.nullElementResponse,
-          character: defaults.dialogue.computerCharacterType,
-          name: defaults.dialogue.computerName
-        });
-        return;
-      }
-
       const damage = this.battleCalculatorService.getDamageToEnemy(targetElement, this.selectedWeaponSlot, this.equipmentManagerService.activeBuff);
 
       if (damage) {
@@ -167,6 +158,8 @@ export class PlayerStateService {
         });
 
         if (targetElement.isDead()) {
+
+          this.areaStateService.removeCharacterFromHuntingList(targetElement);
 
           // Remove element and leave trace of the character on the grid
           GridHelper.decomposeCharacter(targetElement, targetReference.locationY + targetReference.locationX, this.areaStateService.locations);
