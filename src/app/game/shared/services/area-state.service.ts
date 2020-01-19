@@ -37,10 +37,6 @@ export class AreaStateService implements OnInit {
   }
 
   ngOnInit() {
-
-    // this.playerStateService.playerMoved.subscribe(data => {
-    //   this.actionTriggerHandler();
-    // });
   }
 
   get playerLocation(): string {

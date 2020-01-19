@@ -62,6 +62,19 @@ export class GameControlsComponent implements OnInit {
     this.gameStateService.awaitingKeyboardSetting = false;
   }
 
+  public isHiddenControl(keyName: string) {
+
+    // TODO This could be tidier
+    const isHidden = (
+      this.gameSettingsService.oneHandedControls &&
+      (keyName === "directionNorth" ||
+       keyName === "directionEast" ||
+       keyName === "directionSouth" ||
+       keyName === "directionWest")
+    );
+    return isHidden;
+  }
+
   public saveSettings() {
     this.gameSettingsService.saveGameSettings();
   }

@@ -1,9 +1,9 @@
-import { IAreaElement } from ".";
+import { IAreaElement, IAreaExit } from ".";
 import { Direction, FloorStyle } from "../../shared/enums";
 import { LootBag } from "../grid-object-classes/loot-bag";
 
 export interface IGridData {
-      exitDestination: number | null;
+      areaExit: IAreaExit;
       areaEffect: string | null;
       element: IAreaElement | null;
       floorStyle: FloorStyle | null;

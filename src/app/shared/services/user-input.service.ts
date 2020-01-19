@@ -27,19 +27,28 @@ export class UserInputService {
     if (this.gameStateService.awaitingKeyboardSetting) {
       this.userSetKey.next($e.keyCode);
     } else {
-      if (!this.gameStateService.gamePaused) {
+      if (!this.gameStateService.gamePaused && !this.gameStateService.inputPaused) {
+
+        if (this.gameSettingsService.oneHandedControls) {
+
+          // First pause input for x seconds
+          this.gameStateService.pauseInput();
+        }
+
         const characterAction: IUserAction = this.gameSettingsService.getCharacterActionType($e.keyCode);
         if (characterAction) {
           switch (characterAction.type) {
 
             case UserActionTypes.move:
-              this.playerStateService.move(characterAction.direction);
+              this.playerStateService.move(characterAction.direction, this.gameSettingsService.oneHandedControls);
               this.playerMoved.next("forceCharacterMove");
 
               break;
 
             case UserActionTypes.direction:
-              this.playerStateService.direction = characterAction.direction;
+              if (!this.gameSettingsService.oneHandedControls) {
+                this.playerStateService.direction = characterAction.direction;
+              }
               break;
 
             case UserActionTypes.interaction:
@@ -52,6 +61,7 @@ export class UserInputService {
 
                 case UserInteractionTypes.guard:
                   this.playerStateService.guard();
+                  this.playerMoved.next("forceCharacterMove");
                   break;
 
                 case UserInteractionTypes.interact:
@@ -60,6 +70,7 @@ export class UserInputService {
 
                 case UserInteractionTypes.speak:
                   this.playerStateService.speak();
+                  this.playerMoved.next("forceCharacterMove");
                   break;
               }
           }

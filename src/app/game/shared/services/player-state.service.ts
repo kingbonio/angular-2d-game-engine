@@ -15,6 +15,7 @@ import { PotionEffectType } from '../../item/enums/potion-effect-type';
 import { InventoryManagerService } from '../../item/services/inventory-manager.service';
 import { GridHelper } from '../util/area/grid-helper';
 import { IGridData } from '../../area/interfaces';
+import { AreaExitStatus } from '../../area/enums';
 
 @Injectable()
 export class PlayerStateService {
@@ -67,16 +68,39 @@ export class PlayerStateService {
    * Attempts to move the character in a direction
    * @param direction The direction to attempt to move
    */
-  public move(direction: Direction) {
+  public move(direction: Direction, isOneHandedControls: boolean) {
+
+    // Two handed controls need direction as part of the move
+    if (isOneHandedControls) {
+      this.direction = direction;
+    }
 
     // TODO Might be worth getting location of player from area state service
     const newLocation = GridHelper.getNextLocation(this.locationY, this.locationX, direction, this.areaStateService.locations);
 
     // TODO Might be worth moving this somewhere more apprpriate, maybe listener in movement component
     if (newLocation.isTargetAreaExit) {
-      // Emit event that new location access attempted, pass exitDestination
-      this.areaStateService.loadNewArea(this.areaStateService.locations[this.locationY + this.locationX].exitDestination);
-      return;
+
+      // If it's closed don't allow through
+      if (this.areaStateService.locations[this.locationY + this.locationX].areaExit.status === AreaExitStatus.closed) {
+
+        return;
+      }
+      // If it's locked, don't allow access
+      if (this.areaStateService.locations[this.locationY + this.locationX].areaExit.status === AreaExitStatus.locked) {
+        this.dialogueService.displayDialogueMessage({
+          text: defaults.dialogue.areaExitLocked,
+          character: defaults.dialogue.computerCharacterType,
+          name: defaults.dialogue.computerName
+        });
+        return;
+      } else {
+        // Emit event that new location access attempted, pass areaExit
+        this.areaStateService.locations[this.locationY + this.locationX].areaExit.status = AreaExitStatus.open;
+        this.areaStateService.loadNewArea(this.areaStateService.locations[this.locationY + this.locationX].areaExit.destination);
+        return;
+      }
+
     }
 
     // Update area state
@@ -84,6 +108,7 @@ export class PlayerStateService {
       this.areaStateService.repositionCharacter(newLocation.locationY + newLocation.locationX, this.locationY + this.locationX);
       this.locationY = newLocation.locationY;
       this.locationX = newLocation.locationX;
+
     } else {
       // TODO: Possibly inform user you cannot move here
       // this.dialogueService.displaySpeech(
@@ -113,17 +138,9 @@ export class PlayerStateService {
     // if (this.equipmentManagerService.getWeaponType(this.selectedWeaponSlot)) {
     const targetReference = GridHelper.getNextLocation(this.locationY, this.locationX, this.direction, this.areaStateService.locations);
     const targetLocation = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
-    const targetElement = targetLocation.element;
 
-    if (targetElement && (targetElement.type === ElementClass.enemy || targetElement.type === ElementClass.npc)) {
-      if (targetElement.isDead()) {
-        this.dialogueService.displayDialogueMessage({
-          text: defaults.dialogue.nullElementResponse,
-          character: defaults.dialogue.computerCharacterType,
-          name: defaults.dialogue.computerName
-        });
-        return;
-      }
+    if (targetLocation && targetLocation.element && (targetLocation.element.type === ElementClass.enemy || targetLocation.element.type === ElementClass.npc)) {
+      const targetElement = targetLocation.element;
 
       const damage = this.battleCalculatorService.getDamageToEnemy(targetElement, this.selectedWeaponSlot, this.equipmentManagerService.activeBuff);
 
@@ -141,7 +158,8 @@ export class PlayerStateService {
         });
 
         if (targetElement.isDead()) {
-          console.log("Target details", targetLocation);
+
+          this.areaStateService.removeCharacterFromHuntingList(targetElement);
 
           // Remove element and leave trace of the character on the grid
           GridHelper.decomposeCharacter(targetElement, targetReference.locationY + targetReference.locationX, this.areaStateService.locations);
@@ -178,19 +196,60 @@ export class PlayerStateService {
    */
   public interact() {
     const targetReference = GridHelper.getNextLocation(this.locationY, this.locationX, this.direction, this.areaStateService.locations);
+    const currentLocation = this.areaStateService.locations[this.locationY + this.locationX];
+    const activeItem = this.equipmentManagerService.activeItem;
+
+    // If this is an area exit:
+    if (targetReference.isTargetAreaExit) {
+
+      if (currentLocation.areaExit.status === AreaExitStatus.closed) {
+
+        // Open the door
+        currentLocation.areaExit.status = AreaExitStatus.opening;
+      }
+
+      // Unlock and open the door if the correct keyItem is active
+      if (currentLocation.areaExit.status === AreaExitStatus.locked) {
+
+        if (activeItem && activeItem.itemReference && currentLocation.areaExit.itemReferenceNeeded === activeItem.itemReference) {
+          if (currentLocation.areaExit.status !== AreaExitStatus.open && currentLocation.areaExit.status !== AreaExitStatus.opening) {
+
+            // Open the door
+            currentLocation.areaExit.status = AreaExitStatus.opening;
+          } else {
+
+            // Do nothing
+            return;
+          }
+        } else {
+          this.dialogueService.displayDialogueMessage({
+            text: defaults.dialogue.areaExitKeyNotActive(currentLocation.areaExit.keyColourNeeded),
+            character: defaults.dialogue.computerCharacterType,
+            name: defaults.dialogue.computerName
+          });
+        }
+      }
+      return;
+    }
+
+    if (GridHelper.isTargetLocationOutOfBounds(targetReference.locationY + targetReference.locationX)) {
+
+      // We don't want interaction with anything out of bounds unless it's an area exit
+      return;
+    }
+
     // TODO Types
     const targetLocation: IGridData = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
     const targetElement: any = targetLocation.element;
 
+
     // If there's no target and there are ground items
     if (!targetElement && targetLocation.groundItem) {
       this.openLootingModal.emit(targetLocation);
-
     }
 
     if (targetElement) {
       if (targetElement.type === ElementClass.object) {
-        const activeItem = this.equipmentManagerService.activeItem;
         // TODO Maybe organise these ifs
         if (!targetElement.itemReferenceNeeded || (activeItem && activeItem.itemReference && targetElement.itemReferenceNeeded === activeItem.itemReference)) {
           switch (targetElement.objectType) {
@@ -277,7 +336,7 @@ export class PlayerStateService {
   public speak() {
     const nextGridLocation = GridHelper.getNextLocation(this.locationY, this.locationX, this.direction, this.areaStateService.locations);
     // TODO rename this
-    if (nextGridLocation) {
+    if (nextGridLocation && !GridHelper.isTargetLocationOutOfBounds(nextGridLocation.locationY + nextGridLocation.locationX)) {
       const target = this.areaStateService.locations[nextGridLocation.locationY + nextGridLocation.locationX].element;
 
       if (target && target.isDead()) {

@@ -38,7 +38,7 @@ export class AreaConfigProviderService implements OnInit {
     // this.inventoryManagerService.addItemToInventory(potions.smallArmourBuff);
     // this.inventoryManagerService.addItemToInventory(potions.smallHealthPotion);
     // this.inventoryManagerService.addItemToInventory(potions.smallHealthPotion);
-    this.inventoryManagerService.addItemToInventory(potions.smallHealthPotion);
+    // this.inventoryManagerService.addItemToInventory(potions.smallHealthPotion);
     // this.inventoryManagerService.addItemToInventory(potions.invisiblityPotion);
     // this.inventoryManagerService.addItemToInventory(weapons.sword);
     // this.inventoryManagerService.addItemToInventory(potions.smallDamageBuff);
@@ -47,7 +47,7 @@ export class AreaConfigProviderService implements OnInit {
     // this.inventoryManagerService.addItemToInventory(weapons.axe);
     this.inventoryManagerService.addItemToInventory(armour.leatherChestPiece);
     // this.inventoryManagerService.addItemToInventory(armour.ironHelmet);
-    this.inventoryManagerService.addItemToInventory(keyItems.greenDoorKey);
+    // this.inventoryManagerService.addItemToInventory(keyItems.greenDoorKey);
   }
 
   /**

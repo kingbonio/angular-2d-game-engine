@@ -12,7 +12,6 @@ export class ItemGridComponent implements OnInit {
   @Output() clickItem = new EventEmitter<string>();
 
   constructor() {
-    console.log("Creating item grid");
   }
 
   ngOnInit() {

@@ -1,4 +1,5 @@
 export * from "./ipuzzle";
+export * from "./iarea-exit";
 export * from "./igrid-references";
 export * from "./igrid-data";
 export * from "./iplayer";

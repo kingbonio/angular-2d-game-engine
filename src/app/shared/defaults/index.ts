@@ -2,7 +2,8 @@ import { Direction } from '../../game/shared/enums';
 
 export default {
     // Game ticker in milliseconds
-    gameTimer: 500,
+    gameTimer: 700,
+    userInputPauseTime: 50,
     // Player defaults
     initialPlayerStats: {
         health: 20,
@@ -51,7 +52,11 @@ export default {
         areaTipsName: "area tips",
         areaTipsType: "area-tips",
         maximumMessagesOnScreen: 2,
+        areaExitLocked: "The door is locked",
         alreadyAtFullHealth: "You are already at full health",
+        areaExitKeyNotActive: (keyColour) => {
+            return `You need a ${keyColour} key to open this door`;
+        },
         attackSuccess: (damage) => {
             return `Your attack hits with damage: ${damage}`;
         },
@@ -100,7 +105,8 @@ export default {
     },
     gameSettings: {
         allowInGameMenu: true,
-        showRoomShadow: true,
+        showRoomShadow: false,
+        oneHandedControls: true,
     },
     gameConfig: {
         dialogueLines: 8,
