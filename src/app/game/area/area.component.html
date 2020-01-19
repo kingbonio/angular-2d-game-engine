@@ -12,7 +12,10 @@
             </div>
 
             <div class="area-exit" *ngIf="areaStateService.locations[key].exitDestination" [ngClass]="locationExit(key, areaStateService.locations[key])">
-
+                  <div class="door">
+                        <div class="left-door open"></div>
+                        <div class="right-door open"></div>
+                  </div>
             </div>
 
             <div class="grid-item" *ngIf="areaStateService.locations[key].element"

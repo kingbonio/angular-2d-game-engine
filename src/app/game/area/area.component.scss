@@ -29,25 +29,93 @@
                   position: absolute;
                   
                   &.northExit, &.eastExit, &.southExit, &.westExit {
-                        width: 100%;
-                        height: 100%;
                         border-color: red;
-                        background-image: url("assets/images/grid-decoration/area-exit.png");
+                        background-image: url("assets/images/floor-style/wooden-floor-small.png");
+                        position: absolute;
+                        overflow: hidden;
+                        // width: 100%;
+                        // height: 100%;
+                        // border-color: red;
+                        // background-image: url("assets/images/grid-decoration/area-exit.png");
                   }
 
                   &.northExit {
-                        transform: rotate(0deg);
+                        width: 100%;
+                        height: 10px;
+                        top: -10px;
                   }
                   
                   &.eastExit {
-                        transform: rotate(90deg);
+                        width: 10px;
+                        height: 100%;
+                        left: -10px;
                   }
                   
                   &.southExit {
-                        transform: rotate(180deg);
+                        width: 100%;
+                        height: 10px;
+                        bottom: -10px;
                   }
                   
                   &.westExit {
+                        width: 10px;
+                        height: 100%;
+                        right: -10px;
+                  }
+            }
+
+            .door {
+
+                  .left-door, .right-door {
+                        position: absolute;
+                        width: 50%;
+                        height: 10px;
+                        background-color: white;
+                        border: solid grey 1px;
+                        box-sizing: border-box;
+                  }
+
+                  @-moz-keyframes openLeftDoor { 100% { -moz-transform: translate(-40px, 0px); } }
+                  @-webkit-keyframes openLeftDoor { 100% { -webkit-transform: translate(-40px, 0px); } }
+                  @keyframes openLeftDoor { 100% { -webkit-transform: translate(-40px, 0px); } }
+
+                  @-moz-keyframes openRightDoor { 100% { -moz-transform: translate(40px, 0px); } }
+                  @-webkit-keyframes openRightDoor { 100% { -webkit-transform: translate(40px, 0px); } }
+                  @keyframes openRightDoor { 100% { -webkit-transform: translate(40px, 0px); } }
+                  
+                  .left-door {
+                        left: 0px;
+
+                        &.open {
+                              animation-name: openLeftDoor;
+                              animation-fill-mode:forwards;
+                              animation-duration: 2s;
+                        }
+                  }
+
+                  .right-door {
+                        right: 0px;
+
+                        &.open {
+                              animation-name: openRightDoor;
+                              animation-fill-mode:forwards;
+                              animation-duration: 2s;
+                        }
+                  }
+                  
+                  &.north {
+                        transform: rotate(0deg);
+                  }
+                  
+                  &.east {
+                        transform: rotate(90deg);
+                  }
+                  
+                  &.south {
+                        transform: rotate(180deg);
+                  }
+                  
+                  &.west {
                         transform: rotate(270deg);
                   }
 
