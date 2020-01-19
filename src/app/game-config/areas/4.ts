@@ -110,7 +110,7 @@ export default {
                               shield: null,
                         } as IWeapons,
                         loot: [
-                              armour.leatherBoots,
+                              potions.smallDamageBuff,
                         ],
                         imageFileName: "",
                         startingLocation: "e3",
