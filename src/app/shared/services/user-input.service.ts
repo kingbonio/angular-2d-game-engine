@@ -29,21 +29,24 @@ export class UserInputService {
     } else {
       if (!this.gameStateService.gamePaused && !this.gameStateService.inputPaused) {
 
-        // First pause input for x seconds
-        this.gameStateService.pauseInput();
+        if (this.gameSettingsService.oneHandedControls) {
+
+          // First pause input for x seconds
+          this.gameStateService.pauseInput();
+        }
 
         const characterAction: IUserAction = this.gameSettingsService.getCharacterActionType($e.keyCode);
         if (characterAction) {
           switch (characterAction.type) {
 
             case UserActionTypes.move:
-              this.playerStateService.move(characterAction.direction, this.gameSettingsService.twoHandedControls);
+              this.playerStateService.move(characterAction.direction, this.gameSettingsService.oneHandedControls);
               this.playerMoved.next("forceCharacterMove");
 
               break;
 
             case UserActionTypes.direction:
-              if (!this.gameSettingsService.twoHandedControls) {
+              if (!this.gameSettingsService.oneHandedControls) {
                 this.playerStateService.direction = characterAction.direction;
               }
               break;

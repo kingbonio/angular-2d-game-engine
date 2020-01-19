@@ -68,10 +68,10 @@ export class PlayerStateService {
    * Attempts to move the character in a direction
    * @param direction The direction to attempt to move
    */
-  public move(direction: Direction, isTwoHandedControls: boolean) {
+  public move(direction: Direction, isOneHandedControls: boolean) {
 
     // Two handed controls need direction as part of the move
-    if (isTwoHandedControls) {
+    if (isOneHandedControls) {
       this.direction = direction;
     }
 
@@ -81,6 +81,11 @@ export class PlayerStateService {
     // TODO Might be worth moving this somewhere more apprpriate, maybe listener in movement component
     if (newLocation.isTargetAreaExit) {
 
+      // If it's closed don't allow through
+      if (this.areaStateService.locations[this.locationY + this.locationX].areaExit.status === AreaExitStatus.closed) {
+
+        return;
+      }
       // If it's locked, don't allow access
       if (this.areaStateService.locations[this.locationY + this.locationX].areaExit.status === AreaExitStatus.locked) {
         this.dialogueService.displayDialogueMessage({
@@ -133,9 +138,10 @@ export class PlayerStateService {
     // if (this.equipmentManagerService.getWeaponType(this.selectedWeaponSlot)) {
     const targetReference = GridHelper.getNextLocation(this.locationY, this.locationX, this.direction, this.areaStateService.locations);
     const targetLocation = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
-    const targetElement = targetLocation.element;
 
-    if (targetElement && (targetElement.type === ElementClass.enemy || targetElement.type === ElementClass.npc)) {
+    if (targetLocation && targetLocation.element && (targetLocation.element.type === ElementClass.enemy || targetLocation.element.type === ElementClass.npc)) {
+      const targetElement = targetLocation.element;
+
       if (targetElement.isDead()) {
         this.dialogueService.displayDialogueMessage({
           text: defaults.dialogue.nullElementResponse,
@@ -203,6 +209,12 @@ export class PlayerStateService {
     // If this is an area exit:
     if (targetReference.isTargetAreaExit) {
 
+      if (currentLocation.areaExit.status === AreaExitStatus.closed) {
+
+        // Open the door
+        currentLocation.areaExit.status = AreaExitStatus.opening;
+      }
+
       // Unlock and open the door if the correct keyItem is active
       if (currentLocation.areaExit.status === AreaExitStatus.locked) {
 
@@ -227,6 +239,11 @@ export class PlayerStateService {
       return;
     }
 
+    if (GridHelper.isTargetLocationOutOfBounds(targetReference.locationY + targetReference.locationX)) {
+
+      // We don't want interaction with anything out of bounds unless it's an area exit
+      return;
+    }
 
     // TODO Types
     const targetLocation: IGridData = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
@@ -326,7 +343,7 @@ export class PlayerStateService {
   public speak() {
     const nextGridLocation = GridHelper.getNextLocation(this.locationY, this.locationX, this.direction, this.areaStateService.locations);
     // TODO rename this
-    if (nextGridLocation) {
+    if (nextGridLocation && !GridHelper.isTargetLocationOutOfBounds(nextGridLocation.locationY + nextGridLocation.locationX)) {
       const target = this.areaStateService.locations[nextGridLocation.locationY + nextGridLocation.locationX].element;
 
       if (target && target.isDead()) {

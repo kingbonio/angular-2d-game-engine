@@ -13,8 +13,8 @@
 
             <div class="area-exit" *ngIf="areaStateService.locations[key].areaExit" [ngClass]="locationExit(key, areaStateService.locations[key])">
                   <div class="door">
-                        <div class="left-door" [ngClass]="areaStateService.locations[key].areaExit.status"></div>
-                        <div class="right-door" [ngClass]="areaStateService.locations[key].areaExit.status"></div>
+                        <div class="left-door" [ngClass]="[areaStateService.locations[key].areaExit.status, areaStateService.locations[key].areaExit.keyColourNeeded]"></div>
+                        <div class="right-door" [ngClass]="[areaStateService.locations[key].areaExit.status, areaStateService.locations[key].areaExit.keyColourNeeded]"></div>
                   </div>
             </div>
 

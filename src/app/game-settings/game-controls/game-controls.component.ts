@@ -64,21 +64,15 @@ export class GameControlsComponent implements OnInit {
 
   public isHiddenControl(keyName: string) {
 
-    console.log(keyName);
-    console.log(this.gameSettingsService.twoHandedControls);
-
     // TODO This could be tidier
     const isHidden = (
-      this.gameSettingsService.twoHandedControls &&
+      this.gameSettingsService.oneHandedControls &&
       (keyName === "directionNorth" ||
        keyName === "directionEast" ||
        keyName === "directionSouth" ||
        keyName === "directionWest")
     );
-
-    console.log(isHidden);
     return isHidden;
-
   }
 
   public saveSettings() {

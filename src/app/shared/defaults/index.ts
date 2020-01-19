@@ -106,7 +106,7 @@ export default {
     gameSettings: {
         allowInGameMenu: true,
         showRoomShadow: true,
-        twoHandedControls: true,
+        oneHandedControls: true,
     },
     gameConfig: {
         dialogueLines: 8,
