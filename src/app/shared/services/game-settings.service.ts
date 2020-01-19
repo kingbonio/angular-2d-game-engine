@@ -15,6 +15,7 @@ export class GameSettingsService {
 
   public allowInGameMenu = defaults.gameSettings.allowInGameMenu;
   public showRoomShadow = defaults.gameSettings.showRoomShadow;
+  public twoHandedControls = defaults.gameSettings.twoHandedControls;
   public keyMap = defaults.defaultKeyMap;
   public keysMapped = {};
 
@@ -88,6 +89,7 @@ export class GameSettingsService {
     return {
       showRoomShadow: this.showRoomShadow,
       allowInGameMenu: this.allowInGameMenu,
+      twoHandedControls: this.twoHandedControls,
       keyMap: this.keyMap,
       keysMapped: this.keysMapped,
     };

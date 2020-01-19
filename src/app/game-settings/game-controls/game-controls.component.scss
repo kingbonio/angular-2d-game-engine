@@ -17,12 +17,15 @@
             }
 
             .key-bindings-table {
-                  width: 300px;
+                  border-collapse: collapse;
 
                   th {
                   }
 
                   td {
+                        min-width: 130px;
+                        padding: 2px;
+                        border-bottom: solid 1px grey;
 
                         .key-name {
 
@@ -33,7 +36,7 @@
                         }
 
                         .key-input-button {
-
+                              float: right;
                         }
                   }
             }

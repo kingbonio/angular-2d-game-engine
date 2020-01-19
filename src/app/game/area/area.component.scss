@@ -86,20 +86,28 @@
                   .left-door {
                         left: 0px;
 
-                        &.open {
+                        &.opening {
                               animation-name: openLeftDoor;
                               animation-fill-mode:forwards;
                               animation-duration: 2s;
+                        }
+
+                        &.open {
+                              display: none;
                         }
                   }
 
                   .right-door {
                         right: 0px;
 
-                        &.open {
+                        &.opening {
                               animation-name: openRightDoor;
                               animation-fill-mode:forwards;
                               animation-duration: 2s;
+                        }
+
+                        &.open {
+                              display: none;
                         }
                   }
                   

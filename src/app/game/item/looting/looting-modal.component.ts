@@ -25,7 +25,6 @@ export class LootingModalComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) data
   ) {
     this.targetGridData = data;
-    console.log("Inventory locations: ", this.targetGridData.inventoryLocations);
   }
 
   ngOnInit() {

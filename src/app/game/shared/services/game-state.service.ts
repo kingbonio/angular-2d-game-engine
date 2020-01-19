@@ -1,15 +1,19 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { IGameStateData } from '../interfaces';
 import { AreaStateService } from './area-state.service';
+import { TimerService } from './timer.service';
+import defaults from '../../../shared/defaults';
 
 @Injectable()
 export class GameStateService {
   public gamePaused = false;
+  public inputPaused = false;
   public awaitingKeyboardSetting = false;
   private _gameMenuOpen;
 
   constructor(
-    public areaStateService: AreaStateService) {
+    public areaStateService: AreaStateService,
+    private timerService: TimerService) {
   }
 
   get gameMenuOpen() {
@@ -23,6 +27,15 @@ export class GameStateService {
 
   get battleMode() {
     return this.areaStateService.huntingList.length > 0;
+  }
+
+  public pauseInput() {
+    this.inputPaused = true;
+
+    this.timerService.startTimer(defaults.userInputPauseTime)
+    .then((res) => {
+      this.inputPaused = false;
+    });
   }
 
   /**

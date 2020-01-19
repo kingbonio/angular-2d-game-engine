@@ -268,16 +268,18 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private addExitsToGrid(areaExits: IAreaExits) {
     if (areaExits.north) {
-      this.areaStateService.locations[defaults.areaExitLocations.northExit].exitDestination = areaExits.north;
+
+      // TODO HERE:
+      this.areaStateService.locations[defaults.areaExitLocations.northExit].areaExit = areaExits.north;
     }
     if (areaExits.east) {
-      this.areaStateService.locations[defaults.areaExitLocations.eastExit].exitDestination = areaExits.east;
+      this.areaStateService.locations[defaults.areaExitLocations.eastExit].areaExit = areaExits.east;
     }
     if (areaExits.south) {
-      this.areaStateService.locations[defaults.areaExitLocations.southExit].exitDestination = areaExits.south;
+      this.areaStateService.locations[defaults.areaExitLocations.southExit].areaExit = areaExits.south;
     }
     if (areaExits.west) {
-      this.areaStateService.locations[defaults.areaExitLocations.westExit].exitDestination = areaExits.west;
+      this.areaStateService.locations[defaults.areaExitLocations.westExit].areaExit = areaExits.west;
     }
   }
 
@@ -299,7 +301,7 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
     for (const locationReference in defaults.areaExitLocations) {
       if (defaults.areaExitLocations.hasOwnProperty(locationReference) &&
         defaults.areaExitLocations[locationReference] === location &&
-        gridObject.exitDestination
+        gridObject.areaExit
       ) {
         return locationReference;
       }

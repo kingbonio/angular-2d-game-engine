@@ -162,7 +162,7 @@ export class GridHelper {
       public static isTargetLocationAreaExit(currentLocation: string, targetLocation: string, locations: any): boolean {
             for (const exit in defaults.areaExitDestinations) {
                   if (defaults.areaExitDestinations.hasOwnProperty(exit) && targetLocation === defaults.areaExitDestinations[exit]) {
-                        return !!locations[currentLocation].exitDestination;
+                        return !!locations[currentLocation].areaExit;
                   }
             }
 

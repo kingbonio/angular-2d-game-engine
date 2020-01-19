@@ -25,4 +25,12 @@ export class TimerService {
     this.timer = timer(0, defaults.gameTimer);
   }
 
+  public startTimer(timeToCount: number): Promise<any> {
+    return new Promise((res, rej) => {
+      return setTimeout(() => {
+        res("inputUnpaused");
+      }, timeToCount);
+    });
+  }
+
 }
