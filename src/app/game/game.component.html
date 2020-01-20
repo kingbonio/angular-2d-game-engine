@@ -1,47 +1,66 @@
-<div class="game-container">
-      <div class="top-menu">
+<div class="outer-container">
 
-      </div>
-      <div class="area-container">
-            <div *ngIf="isLoadingArea()" class="loading-overlay">
-                  <div class="loading-text">
-                        {{ loadingText }}
-                  </div>
+      <div class="direction-controls">
+      <!-- <div *ngIf="gameSettingsService.oneHandedControls" class="direction-controls"> -->
+            
+            <div class="direction-buttons">
+                  <div class="north"></div>
+                  <div class="east"></div>
+                  <div class="south"></div>
+                  <div class="west"></div>
             </div>
-            <app-area *ngIf="isAreaComponentAlive() && applicationStateService.gameOpen"></app-area>
       </div>
-      <div class="dialogue-area">
-            <app-dialogue class="dialogue-box"></app-dialogue>
-      </div>
-      <div class="player-menu">
-            <div class="equipment-section">
-                  <app-equipment></app-equipment>
-            </div>
-            <div class="inventory-section">
-                  <app-inventory></app-inventory>
-            </div>
-            <div class="status">
-                  <div class="health">
-                        HP: {{ getCurrentHealth() }}/{{ playerStateService.maxHealth }}
-                  </div>
-                  <div class="armour">
-                        Total Armour: {{ equipmentManagerService.armourTotal }}
-                  </div>
-                  <div class="weapon">
-                        Weapon Damage: {{ equipmentManagerService.getWeaponDamage }}
-                  </div>
 
-                  <div class="status-effects">
+      <div class="game-container">
+            <div class="top-menu">
 
+            </div>
+            <div class="area-container">
+                  <div *ngIf="isLoadingArea()" class="loading-overlay">
+                        <div class="loading-text">
+                              {{ loadingText }}
+                        </div>
+                  </div>
+                  <app-area *ngIf="isAreaComponentAlive() && applicationStateService.gameOpen"></app-area>
+            </div>
+            <div class="dialogue-area">
+                  <app-dialogue class="dialogue-box"></app-dialogue>
+            </div>
+            <div class="player-menu">
+                  <div class="equipment-section">
+                        <app-equipment></app-equipment>
+                  </div>
+                  <div class="inventory-section">
+                        <app-inventory></app-inventory>
+                  </div>
+                  <div class="status">
+                        <div class="health">
+                              HP: {{ getCurrentHealth() }}/{{ playerStateService.maxHealth }}
+                        </div>
+                        <div class="armour">
+                              Total Armour: {{ equipmentManagerService.armourTotal }}
+                        </div>
+                        <div class="weapon">
+                              Weapon Damage: {{ equipmentManagerService.getWeaponDamage }}
+                        </div>
+
+                        <div class="status-effects">
+
+                        </div>
+                  </div>
+                  <div *ngIf="gameStateService.battleMode" class="battle-mode">
+                        Battle mode
+                        (Turn based)
+                        Escape or fight
+                  </div>
+                  <div class="menu-button">
+                        <div *ngIf="gameSettingsService.allowInGameMenu" (click)="openGameMenu()" class="menu-icon">Menu</div>
                   </div>
             </div>
-            <div *ngIf="gameStateService.battleMode" class="battle-mode">
-                  Battle mode
-                  (Turn based)
-                  Escape or fight
-            </div>
-            <div class="menu-button">
-                  <div *ngIf="gameSettingsService.allowInGameMenu" (click)="openGameMenu()" class="menu-icon">Menu</div>
-            </div>
+      </div>
+
+      <div class="interaction-controls">
+            <!-- <div *ngIf="gameSettingsService.oneHandedControls" class="direction-controls"> -->
+            
       </div>
 </div>

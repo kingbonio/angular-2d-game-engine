@@ -1,93 +1,162 @@
-.game-container {
-    width: 762px;
-    height: 759px;
+.outer-container {
+    width: 1174px;
+    float: none;
     margin: auto;
-    background-image: linear-gradient(to bottom right, #737373, #121010);
-    border: solid #d1cdc6 2px;
-    font-family: arial;
-    font-weight: 500;
-    color: rgb(209, 205, 198);
 
-    .area-container {
-        .loading-overlay {
-            position: fixed;
-            z-index: 11;
-            // TODO Fix this
-            width: 580px;
-            height: 580px;
-            background-color: black;
+    .direction-controls {
+        width: 200px;
+        height: 759px;
+        position: relative;
+        float: left;
+        border: solid #d1cdc6 2px;
+        color: white;
 
-            .loading-text {
+        .direction-buttons {
+            width: 120px;
+            height: 120px;
+            position: absolute;
+            bottom: 100px;
+            left: 38px;
+            background-color: grey;
+            border: solid #d1cdc6 1px;
+            border-radius: 61px;
+            /* margin: auto; */
+
+            .north, .east, .south, .west {
+                width: 48px;
+                height: 48px;
                 position: absolute;
-                width: 200px;
-                height: 30px;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-                color: white;
-                font-size: 30px;
-                text-align: centre;
+                border: solid #d1cdc6 1px;
+                background: url("assets/images/icons/arrow.svg") no-repeat center;
+                background-size: 48px 48px;
+                fill: red;
+            }
+            
+            .north {
+                transform: rotate(45deg);
+                top: 0px;
+                left: 35px;
+            }
+            
+            .east {
+                transform: rotate(135deg);
+                top: 35px;
+                right: 00px;
+            }
+            
+            .south {
+                transform: rotate(225deg);
+                bottom: 00px;
+                right: 35px;
+            }
+            
+            .west {
+                transform: rotate(315deg);
+                bottom: 35px;
+                left: 0px;
             }
         }
+    }
 
-        app-area {
+    .game-container {
+        width: 762px;
+        height: 759px;
+        float: left;
+        background-image: linear-gradient(to bottom right, #737373, #121010);
+        border: solid #d1cdc6 2px;
+        font-family: arial;
+        font-weight: 500;
+        color: rgb(209, 205, 198);
+        
+        .area-container {
+            .loading-overlay {
+                position: fixed;
+                z-index: 11;
+                // TODO Fix this
+                width: 580px;
+                height: 580px;
+                background-color: black;
+                
+                .loading-text {
+                    position: absolute;
+                    width: 200px;
+                    height: 30px;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    color: white;
+                    font-size: 30px;
+                    text-align: centre;
+                }
+            }
+            
+            app-area {
+                position: relative;
+                display: inline-block;
+                float: left;
+                height: 560px;
+                border: solid grey 10px;
+                border-style: inset;
+            }
+        }
+        
+        .dialogue-area {
             position: relative;
             display: inline-block;
             float: left;
-            height: 560px;
-            border: solid grey 10px;
-            border-style: inset;
+            width: 569px;;
+            height: 167px;
+            padding: 5px;
+            border: solid #000 1px;
+            z-index: 2;
+        }
+        
+        .player-menu {
+            position: absolute;
+            display: inline-block;
+            height: 737px;
+            padding: 10px;  
+            border: solid #000 1px;
+            
+            .battle-mode, .you-are-dead {
+                border: solid 1px #b72424;
+                color: #b72424;
+                font-size: 14px;
+                width: 101px;
+            }
+            
+            .menu-button {
+                width: 60px;
+                height: 60px;
+                background-color: white;
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                cursor: pointer;
+                
+                .menu-icon {
+                    text-align: center;
+                    color: #000;
+                    // TODO Bad juju
+                    line-height: 3.7;
+                    border: solid #121010 2px;
+                }
+            }
+        }
+        
+        .game-control {
+            cursor: pointer;
+            border: solid #5A4107 1px;
+            border-radius: 5px;
+            margin: 3px;
         }
     }
     
-    .dialogue-area {
-        position: relative;
-        display: inline-block;
+    .interaction-controls {
+        width: 200px;
+        height: 759px;
         float: left;
-        width: 569px;;
-        height: 167px;
-        padding: 5px;
-        border: solid #000 1px;
-        z-index: 2;
-    }
-
-    .player-menu {
-        position: absolute;
-        display: inline-block;
-        height: 737px;
-        padding: 10px;  
-        border: solid #000 1px;
-        
-        .battle-mode, .you-are-dead {
-            border: solid 1px #b72424;
-            color: #b72424;
-            font-size: 14px;
-            width: 101px;
-        }
-
-        .menu-button {
-            width: 60px;
-            height: 60px;
-            background-color: white;
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            cursor: pointer;
-
-            .menu-icon {
-                text-align: center;
-                color: #000;
-                // TODO Bad juju
-                line-height: 3.7;
-                border: solid #121010 2px;
-            }
-        }
-    }
-
-    .game-control {
-        cursor: pointer;
-        border: solid #5A4107 1px;
-        border-radius: 5px;
-        margin: 3px;
+        border: solid #d1cdc6 2px;
+        color: white;
     }
 }
