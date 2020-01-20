@@ -10,21 +10,21 @@
         float: left;
         border: solid #d1cdc6 2px;
         color: white;
-
+        
         .direction-buttons {
-            width: 120px;
-            height: 120px;
+            width: 170px;
+            height: 170px;
             position: absolute;
             bottom: 100px;
-            left: 38px;
+            left: 14px;
             background-color: grey;
             border: solid #d1cdc6 1px;
-            border-radius: 61px;
-            /* margin: auto; */
+            border-radius: 90px;
+            cursor: pointer;
 
             .north, .east, .south, .west {
-                width: 48px;
-                height: 48px;
+                width: 68px;
+                height: 68px;
                 position: absolute;
                 border: solid #d1cdc6 1px;
                 background: url("assets/images/icons/arrow.svg") no-repeat center;
@@ -35,24 +35,24 @@
             .north {
                 transform: rotate(45deg);
                 top: 0px;
-                left: 35px;
+                left: 50px;
             }
             
             .east {
                 transform: rotate(135deg);
-                top: 35px;
+                top: 50px;
                 right: 00px;
             }
             
             .south {
                 transform: rotate(225deg);
                 bottom: 00px;
-                right: 35px;
+                right: 50px;
             }
             
             .west {
                 transform: rotate(315deg);
-                bottom: 35px;
+                bottom: 50px;
                 left: 0px;
             }
         }
@@ -155,8 +155,96 @@
     .interaction-controls {
         width: 200px;
         height: 759px;
+        position: relative;
         float: left;
         border: solid #d1cdc6 2px;
         color: white;
+
+        .interaction-buttons {
+            width: 170px;
+            height: 170px;
+            position: absolute;
+            bottom: 100px;
+            left: 14px;
+            background-color: grey;
+            border: solid #d1cdc6 1px;
+            border-radius: 90px;
+
+            .top, .right, .bottom, .left {
+                width: 68px;
+                height: 68px;
+                position: absolute;
+                overflow: visible;
+                transform: rotate(-45deg);
+                display: block;
+                cursor: pointer;
+                font-family: arial;
+                font-weight: 500;
+            }
+            
+            .top {
+                transform: rotate(45deg);
+                top: 0px;
+                left: 50px;
+                background: url("assets/images/icons/blue-button.svg") no-repeat center;
+                background-size: 53px 53px;
+
+                .top-text {
+                    display: block;
+                    transform: rotate(-45deg);
+                    position: absolute;
+                    top: 49px;
+                    left: 39px;
+                }
+            }
+            
+            .right {
+                transform: rotate(135deg);
+                top: 50px;
+                right: 00px;
+                background: url("assets/images/icons/green-button.svg") no-repeat center;
+                background-size: 53px 53px;
+
+                .right-text {
+                    display: block;
+                    transform: rotate(-135deg);
+                    position: absolute;
+                    top: -2px;
+                    left: 39px;
+                }
+            }
+            
+            .bottom {
+                transform: rotate(225deg);
+                bottom: 00px;
+                right: 50px;
+                background: url("assets/images/icons/yellow-button.svg") no-repeat center;
+                background-size: 53px 53px;
+                
+                .bottom-text {
+                    display: block;
+                    transform: rotate(-225deg);
+                    position: absolute;
+                    top: -6px;
+                    left: -25px;
+                }
+            }
+            
+            .left {
+                transform: rotate(315deg);
+                bottom: 50px;
+                left: 0px;
+                background: url("assets/images/icons/pink-button.svg") no-repeat center;
+                background-size: 53px 53px;
+                
+                .left-text {
+                    display: block;
+                    transform: rotate(-315deg);
+                    position: absolute;
+                    top: 53px;
+                    left: -11px;
+                }
+            }
+        }
     }
 }
