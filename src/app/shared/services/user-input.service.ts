@@ -36,47 +36,51 @@ export class UserInputService {
         }
 
         const characterAction: IUserAction = this.gameSettingsService.getCharacterActionType($e.keyCode);
-        if (characterAction) {
-          switch (characterAction.type) {
 
-            case UserActionTypes.move:
-              this.playerStateService.move(characterAction.direction, this.gameSettingsService.oneHandedControls);
-              this.playerMoved.next("forceCharacterMove");
-
-              break;
-
-            case UserActionTypes.direction:
-              if (!this.gameSettingsService.oneHandedControls) {
-                this.playerStateService.direction = characterAction.direction;
-              }
-              break;
-
-            case UserActionTypes.interaction:
-              switch (characterAction.interaction) {
-
-                case UserInteractionTypes.attack:
-                  this.playerStateService.attack();
-                  this.playerMoved.next("forceCharacterMove");
-                  break;
-
-                case UserInteractionTypes.guard:
-                  this.playerStateService.guard();
-                  this.playerMoved.next("forceCharacterMove");
-                  break;
-
-                case UserInteractionTypes.interact:
-                  this.playerStateService.interact();
-                  break;
-
-                case UserInteractionTypes.speak:
-                  this.playerStateService.speak();
-                  this.playerMoved.next("forceCharacterMove");
-                  break;
-              }
-          }
-        }
+        this.invokeAction(characterAction);
       }
     }
   }
 
+  public invokeAction(characterAction: IUserAction) {
+    if (characterAction) {
+      switch (characterAction.type) {
+
+        case UserActionTypes.move:
+          this.playerStateService.move(characterAction.direction, this.gameSettingsService.oneHandedControls);
+          this.playerMoved.next("forceCharacterMove");
+
+          break;
+
+        case UserActionTypes.direction:
+          if (!this.gameSettingsService.oneHandedControls) {
+            this.playerStateService.direction = characterAction.direction;
+          }
+          break;
+
+        case UserActionTypes.interaction:
+          switch (characterAction.interaction) {
+
+            case UserInteractionTypes.attack:
+              this.playerStateService.attack();
+              this.playerMoved.next("forceCharacterMove");
+              break;
+
+            case UserInteractionTypes.guard:
+              this.playerStateService.guard();
+              this.playerMoved.next("forceCharacterMove");
+              break;
+
+            case UserInteractionTypes.interact:
+              this.playerStateService.interact();
+              break;
+
+            case UserInteractionTypes.speak:
+              this.playerStateService.speak();
+              this.playerMoved.next("forceCharacterMove");
+              break;
+          }
+      }
+    }
+  }
 }
