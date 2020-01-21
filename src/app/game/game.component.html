@@ -4,10 +4,10 @@
       <!-- <div *ngIf="gameSettingsService.oneHandedControls" class="direction-controls"> -->
             
             <div class="direction-buttons">
-                  <div class="north" (click)="buttonPress({ type: 'move', direction:'n'})"></div>
-                  <div class="east" (click)="buttonPress({ type: 'move', direction:'e'})"></div>
-                  <div class="south" (click)="buttonPress({ type: 'move', direction:'s'})"></div>
-                  <div class="west" (click)="buttonPress({ type: 'move', direction:'w'})"></div>
+                  <div class="north" (click)="buttonPress({ type: UserActionTypes.move, direction: Direction.N })"></div>
+                  <div class="east" (click)="buttonPress({ type: UserActionTypes.move, direction: Direction.E })"></div>
+                  <div class="south" (click)="buttonPress({ type: UserActionTypes.move, direction: Direction.S })"></div>
+                  <div class="west" (click)="buttonPress({ type: UserActionTypes.move, direction: Direction.W })"></div>
             </div>
       </div>
 
@@ -63,16 +63,16 @@
             <!-- <div *ngIf="gameSettingsService.oneHandedControls" class="direction-controls"> -->
 
             <div class="interaction-buttons">
-                  <div class="top" (click)="buttonPress({ type: 'interaction', interaction:'speak'})">
+                  <div class="top" (click)="buttonPress({ type: UserActionTypes.interaction, interaction: UserInteractionTypes.speak })">
                         <span class="top-text">speak</span>
                   </div>
-                  <div class="right" (click)="buttonPress({ type: 'interaction', interaction:'guard'})">
+                  <div class="right" (click)="buttonPress({ type: UserActionTypes.interaction, interaction:UserInteractionTypes.guard })">
                         <span class="right-text">guard</span>
                   </div>
-                  <div class="bottom" (click)="buttonPress({ type: 'interaction', interaction:'interact'})">
+                  <div class="bottom" (click)="buttonPress({ type: UserActionTypes.interaction, interaction:UserInteractionTypes.interact })">
                         <span class="bottom-text">interact</span>
                   </div>
-                  <div class="left" (click)="buttonPress({ type: 'interaction', interaction:'attack'})">                        
+                  <div class="left" (click)="buttonPress({ type: UserActionTypes.interaction, interaction:UserInteractionTypes.attack })">                        
                         <span class="left-text">attack</span>
                   </div>
             </div>

@@ -18,6 +18,8 @@ import { TimerService } from './shared/services/timer.service';
 import { PotionEffectType } from './item/enums/potion-effect-type';
 import { DeadModalComponent } from './dead-modal/dead-modal.component';
 import { IUserAction } from '../shared/interfaces';
+import { Direction } from './shared/enums';
+import { UserInteractionTypes, UserActionTypes } from '../shared/enums';
 
 @Component({
   selector: 'app-game-root',
@@ -34,6 +36,9 @@ export class GameComponent implements OnInit, OnDestroy {
   public loadingText = defaults.gameMenu.loadingText;
   public areaComponentAlive = true;
   public PotionEffectType = PotionEffectType;
+  public Direction = Direction;
+  public UserInteractionTypes = UserInteractionTypes;
+  public UserActionTypes = UserActionTypes;
 
   constructor(
     public playerStateService: PlayerStateService,
@@ -125,6 +130,7 @@ export class GameComponent implements OnInit, OnDestroy {
    * @param input Data from the on-screen button
    */
   public buttonPress(input: IUserAction) {
+
     this.userInputService.invokeAction(input);
   }
 
