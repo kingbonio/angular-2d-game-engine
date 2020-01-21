@@ -17,6 +17,7 @@ import { GameSettingsService } from '../shared/services/game-settings.service';
 import { TimerService } from './shared/services/timer.service';
 import { PotionEffectType } from './item/enums/potion-effect-type';
 import { DeadModalComponent } from './dead-modal/dead-modal.component';
+import { IUserAction } from '../shared/interfaces';
 
 @Component({
   selector: 'app-game-root',
@@ -117,6 +118,14 @@ export class GameComponent implements OnInit, OnDestroy {
         this.deadModalRef = null;
       });
     }
+  }
+
+  /**
+   * Enacts the action requested by the button press
+   * @param input Data from the on-screen button
+   */
+  public buttonPress(input: IUserAction) {
+    this.userInputService.invokeAction(input);
   }
 
   getCurrentHealth() {

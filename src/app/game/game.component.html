@@ -4,10 +4,10 @@
       <!-- <div *ngIf="gameSettingsService.oneHandedControls" class="direction-controls"> -->
             
             <div class="direction-buttons">
-                  <div class="north"></div>
-                  <div class="east"></div>
-                  <div class="south"></div>
-                  <div class="west"></div>
+                  <div class="north" (click)="buttonPress({ type: 'move', direction:'n'})"></div>
+                  <div class="east" (click)="buttonPress({ type: 'move', direction:'e'})"></div>
+                  <div class="south" (click)="buttonPress({ type: 'move', direction:'s'})"></div>
+                  <div class="west" (click)="buttonPress({ type: 'move', direction:'w'})"></div>
             </div>
       </div>
 
@@ -63,16 +63,16 @@
             <!-- <div *ngIf="gameSettingsService.oneHandedControls" class="direction-controls"> -->
 
             <div class="interaction-buttons">
-                  <div class="top">
+                  <div class="top" (click)="buttonPress({ type: 'interaction', interaction:'speak'})">
                         <span class="top-text">speak</span>
                   </div>
-                  <div class="right">
+                  <div class="right" (click)="buttonPress({ type: 'interaction', interaction:'guard'})">
                         <span class="right-text">guard</span>
                   </div>
-                  <div class="bottom">
+                  <div class="bottom" (click)="buttonPress({ type: 'interaction', interaction:'interact'})">
                         <span class="bottom-text">interact</span>
                   </div>
-                  <div class="left">                        
+                  <div class="left" (click)="buttonPress({ type: 'interaction', interaction:'attack'})">                        
                         <span class="left-text">attack</span>
                   </div>
             </div>
