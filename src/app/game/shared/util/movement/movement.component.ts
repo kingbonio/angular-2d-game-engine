@@ -3,7 +3,6 @@ import { AreaStateService } from '../../services/area-state.service';
 import { Direction } from '../../enums';
 import { Dice } from '../dice';
 import { ILocation, ILocationData } from '../../interfaces';
-import defaults from '../../../../shared/defaults';
 import { Character } from '../../../character-classes/character';
 import { GridHelper } from '../area/grid-helper';
 import { PathfindingComponent } from './pathfinding/pathfinding.component';

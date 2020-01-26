@@ -1,3 +1,39 @@
+.area-overlay {
+      z-index: 99;
+      background-color: black;
+      width: 560px;
+      height: 560px;
+      position: absolute;
+      overflow: hidden;
+      // background: radial-gradient(circle at top center, transparent, transparent 140px, black 140px, black);
+      
+
+      &.darkness10 { opacity: 0.1 }
+      &.darkness20 { opacity: 0.2 }
+      &.darkness30 { opacity: 0.3 }
+      &.darkness40 { opacity: 0.4 }
+      &.darkness50 { opacity: 0.5 }
+      &.darkness60 { opacity: 0.6 }
+      &.darkness70 { opacity: 0.7 }
+      &.darkness80 { opacity: 0.8 }
+      &.darkness90 { opacity: 0.9 }
+      &.darkness100 { opacity: 1 }
+
+      // .area-light-effect {
+      //       position: relative;
+      //       top: 125px;
+      //       left: -125px;
+      //       width: 250px;
+      //       height: 250px;
+      //       border-radius: 125px;
+      //       opacity: 0.8;
+      //       background-color: white;
+      //       -moz-box-shadow: 0px 0px 30px rgba(0,0,0,.5);
+      //       -webkit-box-shadow: 0px 0px 30px rgba(0,0,0,.5);
+      //       box-shadow: 0px 02px 30px rgba(0,0,0,.5);
+      // }
+}
+
 .grid-container {
       width: 560px;
       display: flex;

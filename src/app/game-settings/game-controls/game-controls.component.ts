@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { IGameSettings } from '../../game/shared/interfaces';
 import { Subscription } from 'rxjs/Subscription';
 import { UserInputService } from '../../shared/services/user-input.service';
 import { GameStateService } from '../../game/shared/services/game-state.service';

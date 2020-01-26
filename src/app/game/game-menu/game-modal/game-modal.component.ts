@@ -1,7 +1,5 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import defaults from '../../../shared/defaults';
-import { PersistentStateService } from '../../shared/services/persistent-state.service';
 import { Router } from '@angular/router';
 import { GameStateService } from '../../shared/services/game-state.service';
 

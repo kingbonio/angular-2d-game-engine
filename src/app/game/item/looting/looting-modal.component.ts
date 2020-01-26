@@ -1,13 +1,10 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA } from "@angular/material";
-import { Character } from '../../character-classes/character';
 import { InventoryManagerService } from '../services/inventory-manager.service';
 import { DialogueService } from '../../shared/services/dialogue.service';
 import defaults from '../../../shared/defaults';
 import { GameStateService } from '../../shared/services/game-state.service';
 import { LootBag } from '../../area/grid-object-classes/loot-bag';
-import { ObjectType } from "../../shared/enums";
-import { Enemy, NPC } from '../../character-classes';
 import { GridObject } from '../../area/grid-object-classes/grid-object';
 
 @Component({

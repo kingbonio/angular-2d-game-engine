@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { IAreaElement, IGridObject } from './interfaces';
+import { IAreaElement } from './interfaces';
 import { ILevelData } from './interfaces/ilevel-data';
 import { AreaType } from './enums/area-type';
 import { ActivatedRoute } from '@angular/router';
@@ -21,7 +21,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { GameSettingsService } from '../../shared/services/game-settings.service';
 import { GameStateService } from '../shared/services/game-state.service';
 import { DialogueService } from '../shared/services/dialogue.service';
-import { GridHelper } from '../shared/util/area/grid-helper';
 
 @Component({
   selector: 'app-area',
@@ -126,6 +125,11 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
       return 'direction-' + this.playerStateService.direction;
     }
     return gridElement ? 'direction-' + gridElement.direction : "";
+  }
+
+  public getAreaDarkness() {
+    const opacity = this.areaConfig.areaDarkness * 100;
+    return "darkness" + opacity;
   }
 
   public getDeadClass(character: Character): string {

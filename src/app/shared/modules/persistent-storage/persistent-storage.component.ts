@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PersistentStateService } from '../../../game/shared/services/persistent-state.service';
 import defaults from '../../defaults';
 import { ApplicationStateService } from '../../services/application-state.service';

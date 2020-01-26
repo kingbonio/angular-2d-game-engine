@@ -1,8 +1,7 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PlayerStateService } from './shared/services/player-state.service';
 import { DialogueService } from './shared/services/dialogue.service';
 import { UserInputService } from '../shared/services/user-input.service';
-import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Subscription } from 'rxjs/Subscription';
 import { AiService } from './shared/services/ai.service';
 import { EquipmentManagerService } from './item/services/equipment-manager.service';
