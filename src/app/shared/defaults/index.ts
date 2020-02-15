@@ -20,6 +20,7 @@ export default {
     },
     animations: {
         attackDurationMilliseconds: 170,
+        guardDurationMilliseconds: 170,
         receiveAttackDurationMilliseconds: 170,
     },
     playerMultipliers: {
@@ -30,6 +31,9 @@ export default {
         },
         levelStatMultiplier: 1.2,
         stealSuccessRequirement: 5,
+    },
+    battleMultipliers: {
+        guardDivider: 0.5,
     },
     playerBaseStats: {
         baseDamage: 5,

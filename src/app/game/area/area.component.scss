@@ -270,6 +270,33 @@
                         } 
                   }
 
+                  @-moz-keyframes guard { 
+                        from {
+                              -moz-transform: rotate(-10deg) scaleX(0.1) scaleY(0.1);
+                        }
+                        to { 
+                              -moz-transform: rotate(0deg) scaleX(1) scaleY(1);
+                        } 
+                  }
+                  @-webkit-keyframes guard {
+                        from {
+                              -webkit-transform: rotate(-10deg) scaleX(0.1) scaleY(0.1);
+                        }
+                        to { 
+                              -webkit-transform: rotate(0deg) scaleX(1) scaleY(1);
+                        } 
+                  }
+                  @keyframes guard { 
+                        from {
+                              -webkit-transform: rotate(-10deg) scaleX(0.1) scaleY(0.1);
+                              transform: rotate(-10deg) scaleX(0.1) scaleY(0.1);
+                        }
+                        to { 
+                              -webkit-transform: rotate(0deg) scaleX(1) scaleY(1);
+                              transform: rotate(0deg) scaleX(1) scaleY(1);
+                        } 
+                  }
+
                   @-moz-keyframes receive-attack {
                         from {
                               -moz-transform: scale(1) rotate(180deg);
@@ -297,20 +324,22 @@
                         } 
                   }
 
-                  .swing-weapon, .receive-attack {
+                  .swing-weapon, .receive-attack, .guard {
                         width: 100%;
                         height: 100%;
                         position: absolute;
-
+                        
                         background-repeat: no-repeat;
                         // background-size: 80px 80px;
                   }
 
                   .swing-weapon {
+                        background-image: url("assets/images/animations/slash.svg");
                         // width: 100%;
                         // height: 100%;
                         // position: absolute;
                         animation-name: swing;
+
                         
                         // Must match the same duration as in defaults config
                         animation-duration: 0.17s;
@@ -320,7 +349,23 @@
                         background-size: 80px 80px;
                   }
                   
+                  .guard {
+                        background-image: url("assets/images/animations/guard.svg");
+                        // // width: 100%;
+                        // // height: 100%;
+                        // // position: absolute;
+                        animation-name: guard;
+                        
+                        // // Must match the same duration as in defaults config
+                        animation-duration: 0.17s;
+                        // background-repeat: no-repeat;
+                        // background-position: right 0px top 0px;
+                        background-position: right 0px top 0px;
+                        background-size: 80px 80px;
+                  }
+                  
                   .receive-attack {
+                        background-image: url("assets/images/animations/receive-attack.svg");
                         // width: 100%;
                         // height: 100%;
                         // position: absolute;
@@ -336,14 +381,6 @@
                         background-position: right 0px top -10px;
                         // background-position: right 0px top 0px;
                         background-size: 160px 160px;
-                  }
-
-                  .swing-weapon {
-                        background-image: url("assets/images/animations/slash.svg");
-                  }
-
-                  .receive-attack {
-                        background-image: url("assets/images/animations/receive-attack.svg");
                   }
 
                   // .view-area {

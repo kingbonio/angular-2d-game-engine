@@ -24,8 +24,10 @@ export class BattleCalculatorService {
    * Checks the armour on the target and calculates damage to from chosen weapon
    * @param target The character with equipped armour
    * @param weaponTypeUsed Reference for player weapon type
+   * @param isGuarding Whether or not to consider reducing damage
+   * @param activeBuff Magical effects to attack or defence
    */
-  public getDamageToEnemy(target: Character, weaponTypeUsed: WeaponType, activeBuff?: IInventoryItem | null): number | undefined {
+  public getDamageToEnemy(target: Character, weaponTypeUsed: WeaponType, isGuarding = false, activeBuff?: IInventoryItem | null): number | undefined {
 
     // TODO this may become redundant
     const equippedWeapon = this.equipmentManagerService.getWeaponType(weaponTypeUsed);
@@ -37,23 +39,36 @@ export class BattleCalculatorService {
       totalDamage += activeBuff.properties.effectAmount;
     }
 
-    return this.calculateDamage(target.armour, totalDamage);
+    return this.calculateDamage(target.armour, totalDamage, target.isGuarding);
   }
 
-  public getDamageToPlayer(character: Character, armour: IArmour, activeBuff?: IInventoryItem | null): number {
+  /**
+   * Checks the armour on the player and calculates damage to from character's weapon
+   * @param target The character with equipped armour
+   * @param weaponTypeUsed Reference for player weapon type
+   * @param isGuarding Whether or not to consider reducing damage
+   * @param activeBuff Magical effects to attack or defence
+   */
+  public getDamageToPlayer(character: Character, armour: IArmour, isGuarding = false, activeBuff?: IInventoryItem | null): number {
     const characterDamage = character.weapons ? character.weapons.primary.properties.damage : character.baseDamage;
 
     if (activeBuff && activeBuff.properties.effectType === PotionEffectType.armour) {
-      return this.calculateDamage(armour, characterDamage, activeBuff);
+      return this.calculateDamage(armour, characterDamage, isGuarding, activeBuff);
     } else {
 
       // TODO assumed always using primary
-      return this.calculateDamage(armour, characterDamage);
+      return this.calculateDamage(armour, characterDamage, isGuarding);
     }
-
   }
 
-  private calculateDamage(targetArmour: IArmour, weaponDamage: number, activeBuff?: IInventoryItem) {
+  /**
+   * 
+   * @param targetArmour The set of items use to reduce the damage
+   * @param weaponDamage base amount of damage done by the weapon
+   * @param isGuarding whether or not to consider reducing damage
+   * @param activeBuff Magical effects to attack or defence
+   */
+  private calculateDamage(targetArmour: IArmour, weaponDamage: number, isGuarding = false, activeBuff?: IInventoryItem) {
     let totalArmourValue = defaults.enemyProperties.baseArmour;
 
     if (targetArmour) {
@@ -79,7 +94,12 @@ export class BattleCalculatorService {
 
     const defenseTotal = Math.ceil(weaponDamage / totalArmourValue);
 
-    const damageTaken = damageTotal * defenseTotal;
+    let damageTaken = (damageTotal * defenseTotal);
+
+    // Reduce the final amount if the target is guarding
+    if (isGuarding) {
+       damageTaken = Math.floor(damageTaken * defaults.battleMultipliers.guardDivider);
+    }
 
     return damageTaken;
   }

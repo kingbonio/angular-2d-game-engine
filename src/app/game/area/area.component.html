@@ -42,6 +42,10 @@
                         <div *ngIf="areaStateService.locations[key].element.isAttacking" class="swing-weapon">
                               <!-- Is swinging their weapon -->
                         </div>
+                        <!-- {{ areaStateService.locations[key].element.isGuarding }} -->
+                        <div *ngIf="areaStateService.locations[key].element.isGuarding" class="guard">
+                              <!-- Is guarding from attacks -->
+                        </div>
                         <div *ngIf="areaStateService.locations[key].element.isReceivingAttack" class="receive-attack">
                               <!-- Is receiving an attack -->
                         </div>
