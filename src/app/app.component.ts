@@ -27,6 +27,14 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
+  public toggleBorder() {
+    this.gameSettingsService.border = !this.gameSettingsService.border;
+  }
+
+  public getBorderState() {
+    return this.gameSettingsService.border ? "on" : "off";
+  }
+
   ngOnDestroy() {
     this.userInputSubscription.unsubscribe();
   }

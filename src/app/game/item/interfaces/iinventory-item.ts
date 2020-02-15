@@ -7,6 +7,7 @@ export interface IInventoryItem {
       name: string;
       class: ItemClass;
       type?: any;
+      destroyedOnUse?: boolean;
       armourSlot: ArmourType | null;
       weaponSlot: WeaponType | null;
       usable: boolean;

@@ -12,6 +12,7 @@ todo.txt
 # compiled output
 /dist
 /dist-server
+/www
 /tmp
 /out-tsc
 

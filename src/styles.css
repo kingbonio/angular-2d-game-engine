@@ -30,7 +30,7 @@ app-game-settings {
       transform: translate(-50%, -50%);
 }
 
-.looting-modal .mat-dialog-container, .game-modal .mat-dialog-container {
+.looting-modal .mat-dialog-container, .game-modal .mat-dialog-container, .dialogue-modal .mat-dialog-container {
       display: block;
       padding: 15px;
       border-radius: 3px;
@@ -43,7 +43,7 @@ app-game-settings {
       max-height: inherit;
 }
 
-.looting-modal, .menu-modal, .dead-modal {
+.looting-modal, .menu-modal, .dead-modal, .dialogue-modal {
       background-image: linear-gradient(to bottom right, #737373, #121010);
       border: solid #121010 3px;
       margin: auto;

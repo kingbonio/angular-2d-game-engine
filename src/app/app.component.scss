@@ -1,0 +1,13 @@
+
+.border-selection {
+      width: 1px;
+      height: 1px;
+      position: fixed;
+      bottom: 0px;
+      right: 0px;
+      cursor: pointer;
+
+      &.on {
+            border: solid red 1px;
+      }
+}

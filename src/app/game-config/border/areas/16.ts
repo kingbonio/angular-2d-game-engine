@@ -1,11 +1,11 @@
-import { MonsterClass, Direction, ElementClass, CharacterState, ObjectType } from "../../game/shared/enums";
-import { IAreaElement } from "../../game/area/interfaces";
-import { armour, weapons, keyItems, potions } from "../items";
-import { IWeapons } from "../../game/item/interfaces";
+import { MonsterClass, Direction, ElementClass, CharacterState, ObjectType } from "../../../game/shared/enums";
+import { IAreaElement } from "../../../game/area/interfaces";
+import { armour, weapons, keyItems, potions } from "../../items";
+import { IWeapons } from "../../../game/item/interfaces";
 
 export default {
-      room: 6,
-      areaLoadMessage: "Test area",
+      room: 16,
+      areaLoadMessage: "Room 16",
       areaElements: [
             {
                   type: ElementClass.player,

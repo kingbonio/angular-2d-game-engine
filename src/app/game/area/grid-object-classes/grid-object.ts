@@ -8,6 +8,8 @@ export class GridObject {
       public imageFileName: string;
       public canBeTraversed: boolean;
       public isInteractive: boolean;
+      public isLocked: boolean;
+      public lockedDialogue: string;
       public itemReferenceNeeded: string;
       public direction: Direction;
       public startingDirection: Direction;
@@ -53,6 +55,8 @@ export class GridObject {
             this.isInteractive = elementProperties.isInteractive;
             this.direction = elementProperties.direction;
             this.startingDirection = elementProperties.startingDirection;
+            this.isLocked = elementProperties.isLocked;
+            this.lockedDialogue = elementProperties.lockedDialogue;
             this.itemReferenceNeeded = elementProperties.itemReferenceNeeded;
             this.loot = elementProperties.loot;
             this.objectType = elementProperties.objectType;
@@ -65,6 +69,16 @@ export class GridObject {
                               }
                         }
                   });
+            }
+      }
+
+      public unlock(item: IInventoryItem) {
+            if (this.isLocked) {
+                  if (item.itemReference && (item.itemReference === this.itemReferenceNeeded)) {
+                        this.isLocked = false;
+                  }
+            } else {
+                  this.isLocked = false;
             }
       }
 }

@@ -47,6 +47,7 @@ export default {
         minimumOnScreenTime: 4000,
         nullElementResponse: "There is no response",
         keyItemNotActive: "You have not got the correct active item",
+        keyItemDestroyed: "You have discarded the key item as it has no more use",
         computerName: "Game",
         computerCharacterType: "computer",
         areaTipsName: "area tips",

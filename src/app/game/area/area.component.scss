@@ -37,30 +37,30 @@
                         // height: 100%;
                         // border-color: red;
                         // background-image: url("assets/images/grid-decoration/area-exit.png");
-                  }
-
-                  &.northExit {
                         width: 100%;
                         height: 10px;
+                  }
+                  
+                  &.northExit {
                         top: -10px;
+                        transform: rotate(0deg);
                   }
                   
                   &.eastExit {
-                        width: 10px;
-                        height: 100%;
-                        left: -10px;
+                        left: 45px;
+                        top: 35px;
+                        transform: rotate(90deg);
                   }
                   
                   &.southExit {
-                        width: 100%;
-                        height: 10px;
                         bottom: -10px;
+                        transform: rotate(180deg);
                   }
                   
                   &.westExit {
-                        width: 10px;
-                        height: 100%;
-                        right: -10px;
+                        left: -45px;
+                        top: 35px;
+                        transform: rotate(270deg);
                   }
             }
 
@@ -121,21 +121,21 @@
                         }
                   }
                   
-                  &.north {
-                        transform: rotate(0deg);
-                  }
+                  // &.north {
+                  //       transform: rotate(0deg);
+                  // }
                   
-                  &.east {
-                        transform: rotate(90deg);
-                  }
+                  // &.east {
+                  //       transform: rotate(90deg);
+                  // }
                   
-                  &.south {
-                        transform: rotate(180deg);
-                  }
+                  // &.south {
+                  //       transform: rotate(180deg);
+                  // }
                   
-                  &.west {
-                        transform: rotate(270deg);
-                  }
+                  // &.west {
+                  //       transform: rotate(270deg);
+                  // }
 
             }
             

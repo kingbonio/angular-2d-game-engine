@@ -1,11 +1,11 @@
-import { MonsterClass, Direction, ElementClass, CharacterState, ObjectType } from "../../game/shared/enums";
-import { IAreaElement } from "../../game/area/interfaces";
-import { armour, weapons, keyItems, potions } from "../items";
-import { IWeapons } from "../../game/item/interfaces";
+import { MonsterClass, Direction, ElementClass, CharacterState, ObjectType } from "../../../game/shared/enums";
+import { IAreaElement } from "../../../game/area/interfaces";
+import { armour, weapons, keyItems, potions } from "../../items";
+import { IWeapons } from "../../../game/item/interfaces";
 
 export default {
-      room: 3,
-      areaLoadMessage: "Your first non-player character, they will wander freely and will not attack you unless they catch you pickpocketing, you can either attempt a pickpocket or kill the character (He will fight back) to obtain his key. Once you have the key, click on it in your inventory (bottom right) to set it as your active item and use Interact on the wooden door in the bottom left of the area, switch to your other key to open the chest",
+      room: 15,
+      areaLoadMessage: "Room 15",
       areaElements: [
             {
                   type: ElementClass.player,

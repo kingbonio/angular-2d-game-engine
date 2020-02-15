@@ -27,6 +27,7 @@ import { PersistentStateService } from './shared/services/persistent-state.servi
 import { PersistentStorageModule } from '../shared/modules/persistent-storage/persistent-storage.module';
 import { DeadModalComponent } from './dead-modal/dead-modal.component';
 import { PathfindingComponent } from './shared/util/movement/pathfinding/pathfinding.component';
+import { MessageModalComponent } from './message/message-modal.component';
 
 @NgModule({
   imports: [
@@ -47,8 +48,10 @@ import { PathfindingComponent } from './shared/util/movement/pathfinding/pathfin
     InventoryComponent,
     ItemGridComponent,
     LootingModalComponent,
+    MessageModalComponent,
     GameModalComponent,
     DeadModalComponent,
+    MessageModalComponent,
   ],
   providers: [
     AreaConfigProviderService,
@@ -66,6 +69,7 @@ import { PathfindingComponent } from './shared/util/movement/pathfinding/pathfin
   ],
   entryComponents: [
     LootingModalComponent,
+    MessageModalComponent,
     GameModalComponent,
     DeadModalComponent,
   ],

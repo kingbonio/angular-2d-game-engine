@@ -1,11 +1,11 @@
-import { MonsterClass, Direction, ElementClass, CharacterState, ObjectType } from "../../game/shared/enums";
-import { IAreaElement } from "../../game/area/interfaces";
-import { armour, weapons, keyItems, potions } from "../items";
-import { IWeapons } from "../../game/item/interfaces";
+import { MonsterClass, Direction, ElementClass, CharacterState, ObjectType } from "../../../game/shared/enums";
+import { IAreaElement } from "../../../game/area/interfaces";
+import { armour, weapons, keyItems, potions } from "../../items";
+import { IWeapons } from "../../../game/item/interfaces";
 
 export default {
-      room: 5,
-      areaLoadMessage: "In the chest you will find a damage buff potion, which boosts your strength for 10 seconds, use it to attack this strong enemy. Remember to equip any armour and weapons you have to make the fight easier.",
+      room: 12,
+      areaLoadMessage: "Room 12",
       areaElements: [
             {
                   type: ElementClass.player,
@@ -25,18 +25,28 @@ export default {
                         asleep: true,
                         angry: false,
                         level: 1,
-                        maxHp: 50,
+                        maxHp: 15,
                         lowHealthThreshold: 6,
                         maxPauseDuration: 1,
                         name: "Gary The Dick",
                         class: MonsterClass.Human,
-                        startingDirection: Direction.S,
-                        direction: Direction.S,
+                        startingDirection: Direction.W,
+                        direction: Direction.W,
                         patrolArea: true,
                         directionsForPatrol: [
+                              Direction.W,
+                              Direction.W,
+                              Direction.N,
+                              Direction.N,
+                              Direction.N,
+                              Direction.E,
+                              Direction.E,
+                              Direction.S,
+                              Direction.S,
+                              Direction.S,
                         ],
                         maxHuntingDuration: 3,
-                        startingState: CharacterState.still,
+                        startingState: CharacterState.patrolling,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
                         lootParameters: {
@@ -49,44 +59,25 @@ export default {
                               head: armour.leatherHelmet,
                               arms: null,
                               hands: null,
-                              torso: armour.leatherChestPiece,
+                              torso: null,
                               legs: null,
                               boots: armour.leatherBoots,
                         },
                         weapons: {
-                              primary: weapons.axe,
+                              primary: weapons.basicKnife,
                               secondary: null,
                               concealed: null,
                               shield: null,
                         } as IWeapons,
                         loot: [
-                              potions.largeHealthBuff,
-                              potions.smallDamageBuff,
+                              armour.ironHelmet,
+                              keyItems.rustyOldKey,
                         ],
                         imageFileName: "",
-                        startingLocation: "e5",
+                        startingLocation: "d3",
                   },
-                  startingPositionY: "e",
-                  startingPositionX: 5,
-            },
-            {
-                  type: ElementClass.object,
-                  elementProperties: {
-                        name: "Old chest",
-                        objectType: ObjectType.lootObject,
-                        startingDirection: Direction.E,
-                        direction: Direction.E,
-                        canBeTraversed: false,
-                        isInteractive: true,
-                        isLocked: true,
-                        itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbf693c76",
-                        imageFileName: "old-chest.png",
-                        loot: [
-                              potions.smallDamageBuff,
-                        ]
-                  },
+                  startingPositionY: "d",
                   startingPositionX: 3,
-                  startingPositionY: "a",
             },
       ] as IAreaElement[],
       areaCompleteRequirements: {

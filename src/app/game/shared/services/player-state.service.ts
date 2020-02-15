@@ -20,6 +20,7 @@ import { AreaExitStatus } from '../../area/enums';
 @Injectable()
 export class PlayerStateService {
   @Output() openLootingModal: EventEmitter<any> = new EventEmitter();
+  @Output() openMessageModal: EventEmitter<any> = new EventEmitter();
 
   public health: number;
   public maxHealth: number;
@@ -178,17 +179,6 @@ export class PlayerStateService {
         });
       }
     }
-    // }
-    // } else {
-
-    // this.dialogueService.displayDialogueMessage(
-    //   {
-    //     text: defaults.dialogue.noWeaponEquipped,
-    //     character: defaults.dialogue.computerCharacterType,
-    //     name: defaults.dialogue.computerName
-    //   }
-    // );
-    // }
   }
 
   /**
@@ -199,128 +189,115 @@ export class PlayerStateService {
     const currentLocation = this.areaStateService.locations[this.locationY + this.locationX];
     const activeItem = this.equipmentManagerService.activeItem;
 
-    // If this is an area exit:
-    if (targetReference.isTargetAreaExit) {
+    if (GridHelper.isTargetLocationOutOfBounds(targetReference.locationY + targetReference.locationX)) {
 
-      if (currentLocation.areaExit.status === AreaExitStatus.closed) {
+      // If target is an area exit:
+      if (targetReference.isTargetAreaExit) {
+        if ((currentLocation.areaExit.status === AreaExitStatus.closed) ||
+          (currentLocation.areaExit.status === AreaExitStatus.locked &&
+            activeItem &&
+            activeItem.itemReference &&
+            currentLocation.areaExit.itemReferenceNeeded === activeItem.itemReference)) {
 
-        // Open the door
-        currentLocation.areaExit.status = AreaExitStatus.opening;
-      }
-
-      // Unlock and open the door if the correct keyItem is active
-      if (currentLocation.areaExit.status === AreaExitStatus.locked) {
-
-        if (activeItem && activeItem.itemReference && currentLocation.areaExit.itemReferenceNeeded === activeItem.itemReference) {
-          if (currentLocation.areaExit.status !== AreaExitStatus.open && currentLocation.areaExit.status !== AreaExitStatus.opening) {
-
-            // Open the door
-            currentLocation.areaExit.status = AreaExitStatus.opening;
-          } else {
-
-            // Do nothing
-            return;
-          }
+          // Open the door
+          currentLocation.areaExit.status = AreaExitStatus.opening;
         } else {
           this.dialogueService.displayDialogueMessage({
             text: defaults.dialogue.areaExitKeyNotActive(currentLocation.areaExit.keyColourNeeded),
             character: defaults.dialogue.computerCharacterType,
             name: defaults.dialogue.computerName
           });
+
         }
       }
+
       return;
     }
 
-    if (GridHelper.isTargetLocationOutOfBounds(targetReference.locationY + targetReference.locationX)) {
-
-      // We don't want interaction with anything out of bounds unless it's an area exit
-      return;
-    }
-
-    // TODO Types
+    // Otherwise it's an actual location
     const targetLocation: IGridData = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
     const targetElement: any = targetLocation.element;
-
 
     // If there's no target and there are ground items
     if (!targetElement && targetLocation.groundItem) {
       this.openLootingModal.emit(targetLocation);
+
+      return;
     }
 
     if (targetElement) {
       if (targetElement.type === ElementClass.object) {
-        // TODO Maybe organise these ifs
-        if (!targetElement.itemReferenceNeeded || (activeItem && activeItem.itemReference && targetElement.itemReferenceNeeded === activeItem.itemReference)) {
-          switch (targetElement.objectType) {
-            case ObjectType.lootObject:
-              this.openLootingModal.emit(targetLocation);
-              break;
-            case ObjectType.door:
-              this.areaStateService.removeElementFromArea(targetElement, targetReference.locationY + targetReference.locationX);
-              break;
-            default:
-              // Do nothing...
-              break;
-          }
-        } else {
-          this.dialogueService.displayDialogueMessage({
-            text: defaults.dialogue.keyItemNotActive,
-            character: defaults.dialogue.computerCharacterType,
-            name: defaults.dialogue.computerName
-          });
-          return;
-        }
-      } else {
-        if (targetElement.loot) {
-          // Loot body if dead
-          if (targetElement.isDead()) {
-            // // TODO This needs moving/removing
 
-            // // Emit event for looting modal
-            // this.openLootingModal.emit(targetLocation);
-            // return;
-            // TODO update state here
-          } else if (targetElement.currentState === CharacterState.asleep || !GridHelper.isTargetFacingSource(targetElement, this.direction)) {
-            const stealSuccess = this.attemptSteal(targetElement);
-            if (stealSuccess) {
-              this.openLootingModal.emit(targetLocation);
-            } else {
-              this.dialogueService.displayDialogueMessage(
-                {
-                  text: defaults.dialogue.stealAttemptFail,
-                  character: defaults.dialogue.computerCharacterType,
-                  name: defaults.dialogue.computerName
-                }
-              );
-              // Set the character to hunting player
-              targetElement.currentState = CharacterState.hunting;
+        // Target is an inanimate object
+        if (targetElement.itemReferenceNeeded && targetElement.isLocked) {
+
+          if (activeItem && activeItem.itemReference === targetElement.itemReferenceNeeded) {
+
+            // React to loot objects or doors differently
+            switch (targetElement.objectType) {
+              case ObjectType.lootObject:
+
+                // Open the item modal
+                this.openLootingModal.emit(targetLocation);
+                targetElement.unlock(activeItem);
+
+                break;
+              case ObjectType.door:
+                this.areaStateService.removeElementFromArea(targetElement, targetReference.locationY + targetReference.locationX);
+
+                break;
+              default:
+                // Do nothing...
+                break;
             }
-          } else {
-            this.dialogueService.displayDialogueMessage(
-              {
-                text: defaults.dialogue.stealEnemyTooHighLevel,
+
+            if (activeItem.destroyedOnUse) {
+              this.equipmentManagerService.destroyActiveItem();
+
+              this.dialogueService.displayDialogueMessage({
+                text: defaults.dialogue.keyItemDestroyed,
                 character: defaults.dialogue.computerCharacterType,
                 name: defaults.dialogue.computerName
-              }
-            );
-            targetElement.currentState = CharacterState.hunting;
+              });
+            }
+          } else if (targetElement.lockedDialogue) {
+
+            // Open message modal
+            this.openMessageModal.emit(targetElement.lockedDialogue);
+          } else {
+            this.dialogueService.displayDialogueMessage({
+              text: defaults.dialogue.keyItemNotActive,
+              character: defaults.dialogue.computerCharacterType,
+              name: defaults.dialogue.computerName
+            });
           }
 
-        } else {
-          // TODO Reusable, turn and respond to player
-          // this.dialogueService.displayDialogueMessage(
-          //   {
-          //     text: target.respond(UserInteractionTypes.speak, this.movement.getDirectionToFace(this.direction)),
-          //     character: target.type,
-          //     name: target.name
-          //   }
-          // );
+        } else if (targetElement.loot && (!targetElement.itemReferenceNeeded || !targetElement.locked)) {
+          this.openLootingModal.emit(targetLocation);
+        }
+      } else {
+
+        // Otherwise target is a character
+        if (!GridHelper.isTargetFacingSource(targetElement, this.direction)) {
+          const stealSuccess = this.attemptSteal(targetElement);
+
+          if (stealSuccess) {
+            this.openLootingModal.emit(targetLocation);
+          } else {
+            this.dialogueService.displayDialogueMessage({
+              text: defaults.dialogue.stealAttemptFail,
+              character: defaults.dialogue.computerCharacterType,
+              name: defaults.dialogue.computerName
+            });
+
+            // Set the character to hunting player
+            targetElement.currentState = CharacterState.hunting;
+          }
         }
       }
-    }
-    // TODO else...
 
+      return;
+    }
   }
 
   /**
