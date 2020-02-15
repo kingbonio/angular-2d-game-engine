@@ -1,0 +1,21 @@
+.close {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+}
+
+.message-section {
+      position: absolute;
+      top: 50%;
+      right: 50%;
+      transform: translate(50%,-50%);
+      width: 90%;
+      font-family: arial;
+      text-align: center;
+
+      .message {
+            padding: 10px;
+            // border: solid white 1px;
+            border-radius: 3px;
+      }
+}

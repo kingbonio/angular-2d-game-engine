@@ -124,6 +124,10 @@ export class EquipmentManagerService {
     this.activeItem = null;
   }
 
+  public destroyActiveItem() {
+    this.activeItem = null;
+  }
+
   /**
    * Returns the armour item in the *type* slot
    * @param type for selecting armour slot

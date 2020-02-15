@@ -1,11 +1,11 @@
-import { MonsterClass, Direction, ElementClass, CharacterState, ObjectType } from "../../game/shared/enums";
-import { IAreaElement } from "../../game/area/interfaces";
-import { armour, weapons, keyItems, potions } from "../items";
-import { IWeapons } from "../../game/item/interfaces";
+import { MonsterClass, Direction, ElementClass, CharacterState, ObjectType } from "../../../game/shared/enums";
+import { IAreaElement } from "../../../game/area/interfaces";
+import { armour, weapons, keyItems, potions } from "../../items";
+import { IWeapons } from "../../../game/item/interfaces";
 
 export default {
       room: 4,
-      areaLoadMessage: "Open the chest with the same key you used for the previous chest and take the invisibility potion. When you click on the invisibility potion in your inventory you will have 10 seconds (Counter is in the top right) to move to the north exit past the enemies.",
+      areaLoadMessage: "Room 4",
       areaElements: [
             {
                   type: ElementClass.player,

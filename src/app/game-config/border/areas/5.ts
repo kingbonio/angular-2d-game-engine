@@ -1,11 +1,11 @@
-import { MonsterClass, Direction, ElementClass, CharacterState, ObjectType } from "../../game/shared/enums";
-import { IAreaElement } from "../../game/area/interfaces";
-import { armour, weapons, keyItems, potions } from "../items";
-import { IWeapons } from "../../game/item/interfaces";
+import { MonsterClass, Direction, ElementClass, CharacterState, ObjectType } from "../../../game/shared/enums";
+import { IAreaElement } from "../../../game/area/interfaces";
+import { armour, weapons, keyItems, potions } from "../../items";
+import { IWeapons } from "../../../game/item/interfaces";
 
 export default {
       room: 5,
-      areaLoadMessage: "In the chest you will find a damage buff potion, which boosts your strength for 10 seconds, use it to attack this strong enemy. Remember to equip any armour and weapons you have to make the fight easier.",
+      areaLoadMessage: "Room 5",
       areaElements: [
             {
                   type: ElementClass.player,

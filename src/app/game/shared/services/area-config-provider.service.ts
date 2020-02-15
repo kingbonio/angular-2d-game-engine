@@ -1,9 +1,12 @@
 import { Injectable, OnInit } from '@angular/core';
 import * as areaConfigs from "../../../game-config/areas";
 import * as maps from "../../../game-config/areas/map";
+import * as borderAreaConfigs from "../../../game-config/border/areas";
+import * as borderMaps from "../../../game-config/border/areas/map";
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
 import { keyItems, weapons, armour, potions } from '../../../game-config/items';
 import { InventoryManagerService } from '../../item/services/inventory-manager.service';
+import { GameSettingsService } from '../../../shared/services/game-settings.service';
 
 @Injectable()
 export class AreaConfigProviderService implements OnInit {
@@ -14,10 +17,16 @@ export class AreaConfigProviderService implements OnInit {
   constructor(
     private equipmentManagerService: EquipmentManagerService,
     public inventoryManagerService: InventoryManagerService,
+    public gameSettingsService: GameSettingsService,
     ) {
       // TODO: This needs fixing
-      this.areas = areaConfigs;
-      this.map = maps.default;
+      if (this.gameSettingsService.border) {
+        this.areas = borderAreaConfigs;
+        this.map = borderMaps.default;
+      } else {
+        this.areas = areaConfigs;
+        this.map = maps.default;
+      }
       this.assignEquipmentToPlayer();
       this.assignItemsToInventory();
   }

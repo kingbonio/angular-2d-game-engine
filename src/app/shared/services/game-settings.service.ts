@@ -17,6 +17,7 @@ export class GameSettingsService {
   public showRoomShadow = defaults.gameSettings.showRoomShadow;
   public oneHandedControls = defaults.gameSettings.oneHandedControls;
   public keyMap = defaults.defaultKeyMap;
+  public border = false;
   public keysMapped = {};
 
   constructor(
@@ -92,6 +93,7 @@ export class GameSettingsService {
       oneHandedControls: this.oneHandedControls,
       keyMap: this.keyMap,
       keysMapped: this.keysMapped,
+      border: this.border,
     };
   }
 

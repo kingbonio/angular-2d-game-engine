@@ -1,12 +1,12 @@
-import { MonsterClass, Direction, CharacterType, ElementClass, CharacterState } from "../../game/shared/enums";
-import { IAreaElement } from "../../game/area/interfaces";
-import { armour, weapons, keyItems, potions } from "../items";
-import { IWeapons } from "../../game/item/interfaces";
-import { ObjectType } from "../../game/shared/enums";
+import { MonsterClass, Direction, CharacterType, ElementClass, CharacterState } from "../../../game/shared/enums";
+import { IAreaElement } from "../../../game/area/interfaces";
+import { armour, weapons, keyItems, potions } from "../../items";
+import { IWeapons } from "../../../game/item/interfaces";
+import { ObjectType } from "../../../game/shared/enums";
 
 export default {
-      room: 1,
-      areaLoadMessage: "Your first enemy! If you attack the enemy or step in their (short) line of sight, you will enter a turn-based 'Battle Mode' where they will move slower than you but only when you do. The enemy will chase you and attack you. They will give up chasing you if you stay out of sight for a few rounds of movement. Click on the blue armour icon on the right to equip so you can protect yourself. Attack with (Default) 'Space'. After the enemy has been defeated, interact with the dropped loot bag to get the door key and set it to your active item, then unlock and walk through north door.",
+      room: 7,
+      areaLoadMessage: "Room 7",
       areaElements: [
             {
                   type: ElementClass.player,
@@ -158,8 +158,6 @@ export default {
                               shield: null,
                         } as IWeapons,
                         loot: [
-                              keyItems.greenDoorKey,
-                              keyItems.lightBulb
                         ],
                         imageFileName: "",
                         startingLocation: "d7",
@@ -274,7 +272,7 @@ export default {
             //       elementProperties: {
             //             name: "Corner Wall",
             //             startingDirection: Direction.E,
-            //             direction: Direction.E,
+            // direction: Direction.E,
             //             canBeTraversed: false,
             //             isInteractive: false,
             //             imageFileName: "wall-corner.png",
@@ -311,27 +309,26 @@ export default {
             //       startingPositionX: 3,
             //       startingPositionY: "a",
             // },
-            {
-                  type: ElementClass.object,
-                  elementProperties: {
-                        name: "Old chest",
-                        objectType: ObjectType.lootObject,
-                        startingDirection: Direction.N,
-                        direction: Direction.N,
-                        canBeTraversed: false,
-                        isInteractive: true,
-                        isLocked: true,
-                        lockedDialogue: "Kill the darkness to open the chest",
-                        itemReferenceNeeded: "58e99098-ede4-4c2f-813d-40c77ab304d4",
-                        imageFileName: "old-chest.png",
-                        loot: [
-                              weapons.axe,
-                              potions.smallHealthPotion,
-                        ]
-                  },
-                  startingPositionX: 1,
-                  startingPositionY: "a",
-            },
+            // {
+            //       type: ElementClass.object,
+            //       elementProperties: {
+            //             name: "Old chest",
+            //             objectType: ObjectType.lootObject,
+            //             startingDirection: Direction.N,
+            // direction: Direction.N,
+            //             canBeTraversed: false,
+            //             isInteractive: true,
+            //                isLocked: true,
+            //             itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbf693c76",
+            //             imageFileName: "old-chest.png",
+            //             loot: [
+            //                   weapons.axe,
+            //                   potions.smallHealthPotion,
+            //             ]
+            //       },
+            //       startingPositionX: 1,
+            //       startingPositionY: "a",
+            // },
       ] as IAreaElement[],
       areaCompleteRequirements: {
             item: false,

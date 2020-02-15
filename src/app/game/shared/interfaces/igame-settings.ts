@@ -5,4 +5,5 @@ export interface IGameSettings {
       // TODO Any
       keyMap: any;
       keysMapped: any;
+      border: boolean;
 }

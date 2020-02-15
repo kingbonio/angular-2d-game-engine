@@ -22,6 +22,7 @@ import { GameSettingsService } from '../../shared/services/game-settings.service
 import { GameStateService } from '../shared/services/game-state.service';
 import { DialogueService } from '../shared/services/dialogue.service';
 import { GridHelper } from '../shared/util/area/grid-helper';
+import { MessageModalComponent } from '../message/message-modal.component';
 
 @Component({
   selector: 'app-area',
@@ -38,6 +39,7 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
   public ElementClass = ElementClass;
   public CharacterState = CharacterState;
   public openLootinModalSubscription: Subscription;
+  public openMessageModalSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -50,8 +52,13 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
     public gameStateService: GameStateService,
     private dialog: MatDialog,
   ) {
+
     this.openLootinModalSubscription = this.playerStateService.openLootingModal.subscribe((target: IGridData) => {
       this.openLootingModal(target);
+    });
+
+    this.openMessageModalSubscription = this.playerStateService.openMessageModal.subscribe((message: string) => {
+      this.openMessageModal(message);
     });
     // // Build the area
     this.prepareArea();
@@ -73,7 +80,9 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
    * @param target The target grid data for looting
    */
   private openLootingModal(target: IGridData) {
-    if (!this.modalRef) {
+    if (this.modalRef) {
+      this.modalRef.close();
+    } else {
       const modalConfig = new MatDialogConfig();
 
       modalConfig.disableClose = false;
@@ -96,19 +105,38 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
       this.modalRef.afterClosed().subscribe(returnData => {
 
         if (target.element) {
-         // Do nothing
+          // Do nothing
         } else if (target.groundItem && target.groundItem.isEmpty) {
           // Get rid of the bag
           target.groundItem = null;
         }
 
-        // if (target.objectType === ObjectType.lootBag && !target.inventoryLocations.length) {
+        this.modalRef = null;
+      });
+    }
+  }
 
-        //   // GridHelper.decomposeCharacter(target
+  /**
+   * Opens the dialogue component modal to show dialogue from the target element
+   * @param target The target grid data for looting
+   */
+  private openMessageModal(message: string) {
+    if (this.modalRef) {
+      this.modalRef.close();
+    } else {
+      const modalConfig = new MatDialogConfig();
 
+      modalConfig.disableClose = false;
+      modalConfig.autoFocus = true; // Maybe not necessary
+      modalConfig.hasBackdrop = true;
+      modalConfig.width = '250px';
+      modalConfig.height = '150px';
+      modalConfig.panelClass = "dialogue-modal";
+      modalConfig.data = message;
 
-        //   // TODO Remove ground item
-        // }
+      this.modalRef = this.dialog.open(MessageModalComponent, modalConfig);
+
+      this.modalRef.afterClosed().subscribe(returnData => {
 
         this.modalRef = null;
       });
