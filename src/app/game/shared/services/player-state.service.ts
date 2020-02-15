@@ -189,24 +189,26 @@ export class PlayerStateService {
     const currentLocation = this.areaStateService.locations[this.locationY + this.locationX];
     const activeItem = this.equipmentManagerService.activeItem;
 
-    // If target is an area exit:
-    if (GridHelper.isTargetLocationOutOfBounds(targetReference.locationY + targetReference.locationX) && targetReference.isTargetAreaExit) {
+    if (GridHelper.isTargetLocationOutOfBounds(targetReference.locationY + targetReference.locationX)) {
 
-      if ((currentLocation.areaExit.status === AreaExitStatus.closed) ||
-        (currentLocation.areaExit.status === AreaExitStatus.locked &&
-          activeItem &&
-          activeItem.itemReference &&
-          currentLocation.areaExit.itemReferenceNeeded === activeItem.itemReference)) {
+      // If target is an area exit:
+      if (targetReference.isTargetAreaExit) {
+        if ((currentLocation.areaExit.status === AreaExitStatus.closed) ||
+          (currentLocation.areaExit.status === AreaExitStatus.locked &&
+            activeItem &&
+            activeItem.itemReference &&
+            currentLocation.areaExit.itemReferenceNeeded === activeItem.itemReference)) {
 
-        // Open the door
-        currentLocation.areaExit.status = AreaExitStatus.opening;
-      } else {
-        this.dialogueService.displayDialogueMessage({
-          text: defaults.dialogue.areaExitKeyNotActive(currentLocation.areaExit.keyColourNeeded),
-          character: defaults.dialogue.computerCharacterType,
-          name: defaults.dialogue.computerName
-        });
+          // Open the door
+          currentLocation.areaExit.status = AreaExitStatus.opening;
+        } else {
+          this.dialogueService.displayDialogueMessage({
+            text: defaults.dialogue.areaExitKeyNotActive(currentLocation.areaExit.keyColourNeeded),
+            character: defaults.dialogue.computerCharacterType,
+            name: defaults.dialogue.computerName
+          });
 
+        }
       }
 
       return;
