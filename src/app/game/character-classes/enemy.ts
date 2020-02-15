@@ -19,6 +19,7 @@ export class Enemy extends Character {
       public isAsleep: boolean;
       public isAngry: boolean;
       public isAttacking: boolean;
+      public isGuarding: boolean;
       public isReceivingAttack: boolean;
       public baseDamage: number;
       public pauseCounter: number;
@@ -53,6 +54,7 @@ export class Enemy extends Character {
             this.isAsleep = characterDetails.asleep;
             this.isAngry = characterDetails.angry;
             this.isAttacking = false;
+            this.isGuarding = false;
             this.isReceivingAttack = false;
             this.baseDamage = characterDetails.baseDamage;
             this.pauseCounter = characterDetails.pauseCounter || 0;

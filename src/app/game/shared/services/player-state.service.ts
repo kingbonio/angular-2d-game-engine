@@ -143,7 +143,7 @@ export class PlayerStateService {
     if (targetLocation && targetLocation.element && (targetLocation.element.type === ElementClass.enemy || targetLocation.element.type === ElementClass.npc)) {
       const targetElement = targetLocation.element;
 
-      const damage = this.battleCalculatorService.getDamageToEnemy(targetElement, this.selectedWeaponSlot, this.equipmentManagerService.activeBuff);
+      const damage = this.battleCalculatorService.getDamageToEnemy(targetElement, this.selectedWeaponSlot, targetElement.isGuarding, this.equipmentManagerService.activeBuff);
 
       if (damage) {
         // No need to assign this
@@ -305,6 +305,8 @@ export class PlayerStateService {
    */
   public guard() {
 
+    // Allow the player attack animation
+    this.areaStateService.locations[this.areaStateService.playerLocation].element.guard();
   }
 
   /**
@@ -356,11 +358,14 @@ export class PlayerStateService {
   }
 
   public receiveAttack(character: Character) {
-    let damage = this.battleCalculatorService.getDamageToPlayer(character, this.equipmentManagerService.armour, this.equipmentManagerService.activeBuff);
+
+    const player = this.areaStateService.locations[this.areaStateService.playerLocation].element;
+
+    let damage = this.battleCalculatorService.getDamageToPlayer(character, this.equipmentManagerService.armour, !!player.isGuarding, this.equipmentManagerService.activeBuff);
     if (damage) {
 
       // Allow the player to animate receiving an attack
-      this.areaStateService.locations[this.areaStateService.playerLocation].element.receiveAttack();
+      player.receiveAttack();
 
       if (this.equipmentManagerService.activeBuff &&
         this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge &&

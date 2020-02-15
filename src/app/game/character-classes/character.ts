@@ -12,6 +12,7 @@ export class Character {
       isAsleep: boolean;
       isAngry: boolean;
       isAttacking: boolean;
+      isGuarding: boolean;
       isReceivingAttack: boolean;
       baseDamage: number;
       pauseCounter: number;
@@ -101,6 +102,20 @@ export class Character {
 
       public resetPauseCounter() {
             this.pauseCounter = 0;
+      }
+
+      public guard() {
+            this.isGuarding = true;
+
+            // // Allow the page to rerender before starting animation
+            // setTimeout(() => {
+            //       this.isGuarding = true;
+            // }, 0);
+
+            // Clear the attack animation once it's played out
+            setTimeout(() => {
+                  this.isGuarding = false;
+            }, defaults.animations.guardDurationMilliseconds);
       }
 
       public attack() {
