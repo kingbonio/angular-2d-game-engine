@@ -530,8 +530,8 @@ export default {
                   elementProperties: {
                         name: "Old chest",
                         objectType: ObjectType.lootObject,
-                        startingDirection: Direction.N,
-                        direction: Direction.N,
+                        startingDirection: Direction.E,
+                        direction: Direction.E,
                         canBeTraversed: false,
                         isInteractive: true,
                         isLocked: true,
