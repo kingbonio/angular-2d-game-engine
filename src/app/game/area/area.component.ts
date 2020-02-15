@@ -38,7 +38,7 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
   private modalRef: MatDialogRef<any>;
   public ElementClass = ElementClass;
   public CharacterState = CharacterState;
-  public openLootinModalSubscription: Subscription;
+  public openLootingModalSubscription: Subscription;
   public openMessageModalSubscription: Subscription;
 
   constructor(
@@ -53,7 +53,7 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
     private dialog: MatDialog,
   ) {
 
-    this.openLootinModalSubscription = this.playerStateService.openLootingModal.subscribe((target: IGridData) => {
+    this.openLootingModalSubscription = this.playerStateService.openLootingModal.subscribe((target: IGridData) => {
       this.openLootingModal(target);
     });
 
@@ -338,7 +338,8 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-    this.openLootinModalSubscription.unsubscribe();
+    this.openLootingModalSubscription.unsubscribe();
+    this.openMessageModalSubscription.unsubscribe();
 
     // Revert characters who were hunting to normal mode in this area
     this.areaStateService.huntingList = [];
