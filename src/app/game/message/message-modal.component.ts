@@ -8,7 +8,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./message-modal.component.scss']
 })
 export class MessageModalComponent implements OnInit, OnDestroy {
-  private message: string;
+  public message: string;
 
   constructor(
     private gameStateService: GameStateService,
