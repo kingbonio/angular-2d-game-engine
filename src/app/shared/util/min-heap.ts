@@ -35,6 +35,7 @@ export class MinHeap {
       }
 
       public remove(): any {
+            
             // Get the first node at index 1
             const smallest = this._heap[1];
 

@@ -1,4 +1,4 @@
-import { ItemClass, ArmourType } from "../../game/item/enums";
+import { ArmourType, ItemClass } from "../../game/item/enums";
 
 // TODO these should have interfaces
 export const armour = {

@@ -1,6 +1,5 @@
 import { IInventoryItem } from "../../item/interfaces";
-import { ElementClass, Direction } from "../../shared/enums";
-import { ObjectType } from "../../shared/enums";
+import { Direction, ElementClass, ObjectType } from "../../shared/enums";
 
 export class GridObject {
       public type = ElementClass.object;

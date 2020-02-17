@@ -1,10 +1,10 @@
 import { Injectable, OnInit } from '@angular/core';
-import { IAreaStateData, ILocation } from '../interfaces';
-import { IGridReferences, IAreaElement } from '../../area/interfaces';
-import { ElementClass } from '../enums';
-import locationDefaults from '../models/locations';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { IAreaElement, IGridReferences } from '../../area/interfaces';
 import { Character } from '../../character-classes/character';
+import { ElementClass } from '../enums';
+import { IAreaStateData, ILocation } from '../interfaces';
+import locationDefaults from '../models/locations';
 
 @Injectable()
 export class AreaStateService implements OnInit {

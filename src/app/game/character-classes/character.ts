@@ -1,7 +1,7 @@
-import { Direction, ElementClass, CharacterState } from "../shared/enums";
-import { IWeapons, IArmour, IInventoryItem } from "../item/interfaces";
-import { ILocation } from "../shared/interfaces";
 import defaults from "../../shared/defaults";
+import { IArmour, IInventoryItem, IWeapons } from "../item/interfaces";
+import { CharacterState, Direction, ElementClass } from "../shared/enums";
+import { ILocation } from "../shared/interfaces";
 
 export class Character {
       id: string;

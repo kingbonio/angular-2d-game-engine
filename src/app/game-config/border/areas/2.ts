@@ -1,7 +1,6 @@
-import { MonsterClass, Direction, ElementClass, CharacterState, ObjectType } from "../../../game/shared/enums";
 import { IAreaElement } from "../../../game/area/interfaces";
-import { armour, weapons, keyItems, potions } from "../../items";
-import { IWeapons } from "../../../game/item/interfaces";
+import { Direction, ElementClass, ObjectType } from "../../../game/shared/enums";
+import { keyItems, potions, weapons } from "../../items";
 
 export default {
       room: 2,

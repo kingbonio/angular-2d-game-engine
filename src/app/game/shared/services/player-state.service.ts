@@ -1,21 +1,21 @@
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import defaults from '../../../shared/defaults';
-import { Injectable, Output, EventEmitter } from '@angular/core';
-import { Direction, ElementClass, ObjectType, ItemClass, CharacterState } from '../enums';
-import { IPlayerStateData, IInventoryItem } from '../interfaces';
-import { AreaStateService } from './area-state.service';
-import { DialogueService } from './dialogue.service';
 import { UserInteractionTypes } from '../../../shared/enums';
-import { MovementComponent } from '../util/movement/movement.component';
-import { BattleCalculatorService } from './battle-calculator.service';
-import { WeaponType, PotionType } from '../../item/enums';
-import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
-import { Character } from '../../character-classes/character';
-import { Dice } from '../util/dice';
-import { PotionEffectType } from '../../item/enums/potion-effect-type';
-import { InventoryManagerService } from '../../item/services/inventory-manager.service';
-import { GridHelper } from '../util/area/grid-helper';
-import { IGridData } from '../../area/interfaces';
 import { AreaExitStatus } from '../../area/enums';
+import { IGridData } from '../../area/interfaces';
+import { Character } from '../../character-classes/character';
+import { PotionType, WeaponType } from '../../item/enums';
+import { PotionEffectType } from '../../item/enums/potion-effect-type';
+import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
+import { InventoryManagerService } from '../../item/services/inventory-manager.service';
+import { CharacterState, Direction, ElementClass, ItemClass, ObjectType } from '../enums';
+import { IInventoryItem, IPlayerStateData } from '../interfaces';
+import { GridHelper } from '../util/area/grid-helper';
+import { Dice } from '../util/dice';
+import { MovementComponent } from '../util/movement/movement.component';
+import { AreaStateService } from './area-state.service';
+import { BattleCalculatorService } from './battle-calculator.service';
+import { DialogueService } from './dialogue.service';
 
 @Injectable()
 export class PlayerStateService {

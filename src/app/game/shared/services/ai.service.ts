@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { AreaStateService } from './area-state.service';
-import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
-import { GameStateService } from './game-state.service';
-import { PlayerStateService } from './player-state.service';
+import defaults from '../../../shared/defaults';
 import { UserInputService } from '../../../shared/services/user-input.service';
-import { TimerService } from './timer.service';
-import { MovementComponent } from '../util/movement/movement.component';
 import { Character } from '../../character-classes/character';
 import { PotionEffectType } from '../../item/enums/potion-effect-type';
+import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
 import { CharacterState, ElementClass } from '../enums';
-import defaults from '../../../shared/defaults';
+import { MovementComponent } from '../util/movement/movement.component';
+import { AreaStateService } from './area-state.service';
+import { GameStateService } from './game-state.service';
+import { PlayerStateService } from './player-state.service';
+import { TimerService } from './timer.service';
 
 @Injectable({
   providedIn: 'root'

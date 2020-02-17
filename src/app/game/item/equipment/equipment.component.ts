@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { EquipmentManagerService } from '../services/equipment-manager.service';
-import { IInventoryItem } from '../interfaces';
-import { InventoryManagerService } from '../services/inventory-manager.service';
-import { DialogueService } from '../../shared/services/dialogue.service';
 import defaults from '../../../shared/defaults';
+import { DialogueService } from '../../shared/services/dialogue.service';
+import { IInventoryItem } from '../interfaces';
+import { EquipmentManagerService } from '../services/equipment-manager.service';
+import { InventoryManagerService } from '../services/inventory-manager.service';
 
 @Component({
   selector: 'app-equipment',

@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MenuStateService } from './shared/services/menu-state.service';
-import { GameSettingsService } from './shared/services/game-settings.service';
-import { UserInputService } from './shared/services/user-input.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Subscription } from 'rxjs/Subscription';
+import { GameSettingsService } from './shared/services/game-settings.service';
+import { MenuStateService } from './shared/services/menu-state.service';
+import { UserInputService } from './shared/services/user-input.service';
 
 @Component({
   selector: 'app-root',
@@ -22,20 +22,30 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
+    // Listen for keyboard input events
     this.userInputSubscription = fromEvent(document, 'keydown').subscribe(($e: KeyboardEvent) => {
       this.userInputService.keyDownEventHandler($e);
     });
   }
 
+  /**
+   * Adds or removes border
+   */
   public toggleBorder() {
     this.gameSettingsService.border = !this.gameSettingsService.border;
   }
 
+  /**
+   * Gets whether border is set or not
+   */
   public getBorderState() {
     return this.gameSettingsService.border ? "on" : "off";
   }
 
   ngOnDestroy() {
+
+    // Remove the listener for key events
     this.userInputSubscription.unsubscribe();
   }
 }

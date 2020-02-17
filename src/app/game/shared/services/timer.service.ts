@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { timer } from 'rxjs/internal/observable/timer';
 import { Observable } from 'rxjs/Observable';
-
 import defaults from '../../../shared/defaults';
+
 
 @Injectable({
   providedIn: 'root'

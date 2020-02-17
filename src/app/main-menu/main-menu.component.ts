@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuStateService } from '../shared/services/menu-state.service';
 import { PersistentStateService } from '../game/shared/services/persistent-state.service';
 import { ApplicationStateService } from '../shared/services/application-state.service';
+import { MenuStateService } from '../shared/services/menu-state.service';
 
 @Component({
   selector: 'app-main-menu',

@@ -1,6 +1,6 @@
-import { ItemClass, ArmourType } from "../../shared/enums";
-import { IItemProperties } from "../interfaces";
+import { ArmourType, ItemClass } from "../../shared/enums";
 import { WeaponType } from "../enums/weapon-type";
+import { IItemProperties } from "../interfaces";
 
 
 export interface IInventoryItem {

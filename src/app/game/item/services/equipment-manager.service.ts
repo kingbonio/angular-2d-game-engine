@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { IArmour, IInventoryItem, IWeapons } from '../interfaces';
-import { ItemClass, ArmourType } from '../enums';
-import { WeaponType } from '../enums/weapon-type';
-import { InventoryManagerService } from './inventory-manager.service';
+import defaults from '../../../shared/defaults';
 import { IEquipmentStateData } from '../../shared/interfaces/iequipment-state-data';
 import { TimerService } from '../../shared/services/timer.service';
+import { ArmourType, ItemClass } from '../enums';
 import { PotionEffectType } from '../enums/potion-effect-type';
-import defaults from '../../../shared/defaults';
+import { WeaponType } from '../enums/weapon-type';
+import { IArmour, IInventoryItem, IWeapons } from '../interfaces';
+import { InventoryManagerService } from './inventory-manager.service';
 
 @Injectable()
 export class EquipmentManagerService {

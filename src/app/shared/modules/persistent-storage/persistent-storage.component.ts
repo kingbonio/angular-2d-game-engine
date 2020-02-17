@@ -1,8 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { PersistentStateService } from '../../../game/shared/services/persistent-state.service';
 import defaults from '../../defaults';
 import { ApplicationStateService } from '../../services/application-state.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-persistent-storage',

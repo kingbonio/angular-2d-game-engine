@@ -1,4 +1,3 @@
-import { ILocation } from "./iLocation";
 import { IGridReferences } from "../../area/interfaces";
 
 export interface IAreaStateData {

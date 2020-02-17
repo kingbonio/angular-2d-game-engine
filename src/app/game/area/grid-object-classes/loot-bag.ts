@@ -1,4 +1,3 @@
-import { IInventoryItem } from "../../item/interfaces";
 import { ObjectType } from "../../shared/enums";
 
 export class LootBag {

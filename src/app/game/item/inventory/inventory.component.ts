@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { InventoryManagerService } from '../services/inventory-manager.service';
-import { IInventoryItem } from '../interfaces';
+import { PlayerStateService } from '../../shared/services/player-state.service';
 import { ItemClass } from '../enums';
 import { EquipmentManagerService } from '../services/equipment-manager.service';
-import { PlayerStateService } from '../../shared/services/player-state.service';
+import { InventoryManagerService } from '../services/inventory-manager.service';
 
 @Component({
   selector: 'app-inventory',

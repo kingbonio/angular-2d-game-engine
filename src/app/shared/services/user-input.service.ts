@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import defaults from '../defaults';
-import { IUserAction } from '../interfaces';
-import { UserActionTypes, UserInteractionTypes } from '../enums';
-import { PlayerStateService } from '../../game/shared/services/player-state.service';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { GameSettingsService } from './game-settings.service';
 import { GameStateService } from '../../game/shared/services/game-state.service';
+import { PlayerStateService } from '../../game/shared/services/player-state.service';
+import { UserActionTypes, UserInteractionTypes } from '../enums';
+import { IUserAction } from '../interfaces';
+import { GameSettingsService } from './game-settings.service';
 
 
 @Injectable()
