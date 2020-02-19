@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
@@ -28,7 +28,7 @@ import { ILevelData } from './interfaces/ilevel-data';
   templateUrl: './area.component.html',
   styleUrls: ['./area.component.scss']
 })
-export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
+export class AreaComponent implements OnDestroy, AfterViewInit {
 
   private areaConfig: any;
   private areaExits: any;
@@ -59,15 +59,13 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
     this.openMessageModalSubscription = this.playerStateService.openMessageModal.subscribe((message: string) => {
       this.openMessageModal(message);
     });
-    // // Build the area
+
+    // Build the area
     this.prepareArea();
 
   }
-
-  ngOnInit() {
-  }
-
   ngAfterViewInit() {
+
     // Declare component loading complete
     setTimeout(() => {
       this.areaStateService.loadingPreviousArea = false;
@@ -104,8 +102,10 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
       this.modalRef.afterClosed().subscribe(returnData => {
 
         if (target.element) {
+
           // Do nothing
         } else if (target.groundItem && target.groundItem.isEmpty) {
+
           // Get rid of the bag
           target.groundItem = null;
         }

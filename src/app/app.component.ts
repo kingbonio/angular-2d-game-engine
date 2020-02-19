@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Subscription } from 'rxjs/Subscription';
 import { GameSettingsService } from './shared/services/game-settings.service';
-import { MenuStateService } from './shared/services/menu-state.service';
 import { UserInputService } from './shared/services/user-input.service';
 
 @Component({
@@ -15,11 +14,9 @@ export class AppComponent implements OnInit, OnDestroy {
   private userInputSubscription: Subscription;
 
   constructor(
-    private menuStateService: MenuStateService,
     private gameSettingsService: GameSettingsService,
     private userInputService: UserInputService,
-  ) {
-  }
+  ) { }
 
   ngOnInit() {
 

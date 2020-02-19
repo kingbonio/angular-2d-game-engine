@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { AreaStateService } from '../../services/area-state.service';
-import { Direction } from '../../enums';
-import { Dice } from '../dice';
-import { ILocation, ILocationData } from '../../interfaces';
-import defaults from '../../../../shared/defaults';
 import { Character } from '../../../character-classes/character';
+import { Direction } from '../../enums';
+import { ILocation, ILocationData } from '../../interfaces';
+import { AreaStateService } from '../../services/area-state.service';
 import { GridHelper } from '../area/grid-helper';
+import { Dice } from '../dice';
 import { PathfindingComponent } from './pathfinding/pathfinding.component';
 
 @Component({
@@ -88,7 +87,6 @@ export class MovementComponent {
     return gridReferences;
   }
 
-
   /**
    * Try a random direction then move to that location, if it's blocked, try the other 3 directions or do nothing
    * @param character wandering character
@@ -132,6 +130,7 @@ export class MovementComponent {
         }
       }
     }
+
     // Do nothing
     return;
   }
@@ -170,9 +169,9 @@ export class MovementComponent {
       return newLocation;
 
     } else {
+
       return;
     }
-
   }
 
   /**
@@ -238,11 +237,11 @@ export class MovementComponent {
     this.moveCharacterToLocation(character, characterLocation, nextPathfindingLocation, true);
   }
 
-/**
- * Get the path to the player location and make the first step towards it
- * @param character The character that will be moving
- * @param characterLocation The current location of the character in question
- */
+  /**
+   * Get the path to the player location and make the first step towards it
+   * @param character The character that will be moving
+   * @param characterLocation The current location of the character in question
+   */
   public moveTowardsPlayer(character: Character, characterLocation: string) {
     const playerLocation = this.areaStateService.playerLocation;
 
@@ -253,6 +252,7 @@ export class MovementComponent {
     character.currentPathToDestination = this.pathfinding.getShortestPath(splitCurrentLocation, splitNewLocation, this.areaStateService.locations);
 
     if (!character.currentPathToDestination || !character.currentPathToDestination.length) {
+
       return;
     }
 
@@ -275,19 +275,21 @@ export class MovementComponent {
     if (Math.abs(distanceData.yDistance) >= Math.abs(distanceData.xDistance)) {
       // Move vertically
       if (distanceData.yDistance >= 0) {
+
         return towardsPlayer ? Direction.S : Direction.N;
       } else {
+
         return towardsPlayer ? Direction.N : Direction.S;
       }
     } else {
       // Move horizontally
       if (distanceData.xDistance >= 0) {
+
         return towardsPlayer ? Direction.E : Direction.W;
       } else {
+
         return towardsPlayer ? Direction.W : Direction.E;
       }
     }
   }
-
-
 }

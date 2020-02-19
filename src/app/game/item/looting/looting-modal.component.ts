@@ -32,7 +32,7 @@ export class LootingModalComponent implements OnInit, OnDestroy {
     try {
       this.inventoryManagerService.addItemToInventory(this.targetGridData.inventoryLocations[itemSlot]);
 
-      // Only perform this is error not thrown
+      // Only perform this if error not thrown
       this.targetGridData.inventoryLocations[itemSlot] = null;
     } catch (err) {
       this.dialogueService.displayDialogueMessage({
@@ -46,5 +46,4 @@ export class LootingModalComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.gameStateService.gamePaused = false;
   }
-
 }

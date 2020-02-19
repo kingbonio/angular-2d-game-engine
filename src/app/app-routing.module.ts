@@ -20,16 +20,6 @@ const appRoutes = [
             pathMatch: "full",
             component: MainMenuComponent
       },
-      // {
-      //       path: 'heroes',
-      //       component: HeroListComponent,
-      //       data: { title: 'Heroes List' }
-      // },
-      // {
-      //       path: '',
-      //       redirectTo: '/heroes',
-      //       pathMatch: 'full'
-      // },
       {
             path: '**',
             redirectTo: ''

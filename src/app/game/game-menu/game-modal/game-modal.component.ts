@@ -19,7 +19,6 @@ export class GameModalComponent implements OnInit, OnDestroy {
     this.data = data;
   }
 
-
   ngOnInit() {
     this.gameStateService.gamePaused = true;
   }
@@ -31,5 +30,4 @@ export class GameModalComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.gameStateService.gamePaused = false;
   }
-
 }

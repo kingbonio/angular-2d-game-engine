@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import defaults from '../../../shared/defaults';
 import { DialogueService } from '../../shared/services/dialogue.service';
 import { IInventoryItem } from '../interfaces';
@@ -10,7 +10,7 @@ import { InventoryManagerService } from '../services/inventory-manager.service';
   templateUrl: './equipment.component.html',
   styleUrls: ['./equipment.component.scss']
 })
-export class EquipmentComponent implements OnInit {
+export class EquipmentComponent {
 
   constructor(
     public equipmentManagerService: EquipmentManagerService,
@@ -18,9 +18,6 @@ export class EquipmentComponent implements OnInit {
     private dialogueService: DialogueService,
 
   ) { }
-
-  ngOnInit() {
-  }
 
   public removeArmour(item: IInventoryItem) {
     if (item) {

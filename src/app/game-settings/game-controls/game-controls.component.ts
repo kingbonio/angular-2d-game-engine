@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { GameStateService } from '../../game/shared/services/game-state.service';
 import defaults from '../../shared/defaults';
@@ -12,7 +12,7 @@ import keyFullNames from '../../shared/util/key-full-names';
   templateUrl: './game-controls.component.html',
   styleUrls: ['./game-controls.component.scss']
 })
-export class GameControlsComponent implements OnInit {
+export class GameControlsComponent {
   public keyActionSelected: KeyInputType;
   public userSetKeySubscription: Subscription;
   public keyNames: string[];
@@ -40,10 +40,6 @@ export class GameControlsComponent implements OnInit {
         this.unsetAwaitingKey();
       }
     });
-  }
-
-  ngOnInit() {
-
   }
 
   private userSetKeyHandler(key: number) {

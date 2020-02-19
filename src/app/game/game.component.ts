@@ -18,7 +18,6 @@ import { AreaStateService } from './shared/services/area-state.service';
 import { DialogueService } from './shared/services/dialogue.service';
 import { GameStateService } from './shared/services/game-state.service';
 import { PlayerStateService } from './shared/services/player-state.service';
-import { TimerService } from './shared/services/timer.service';
 
 @Component({
   selector: 'app-game-root',
@@ -31,7 +30,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private areaReadySubscription: Subscription;
   private areaConfigs = areaConfigs;
   private deadModalRef: MatDialogRef<any>;
-  title = 'game';
+  public title = 'game';
   public loadingText = defaults.gameMenu.loadingText;
   public areaComponentAlive = true;
   public PotionEffectType = PotionEffectType;
@@ -49,7 +48,6 @@ export class GameComponent implements OnInit, OnDestroy {
     public gameStateService: GameStateService,
     public gameSettingsService: GameSettingsService,
     public applicationStateService: ApplicationStateService,
-    private timerService: TimerService,
     private dialog: MatDialog,
   ) {
     this.applicationStateService.gameOpen = true;
@@ -140,8 +138,8 @@ export class GameComponent implements OnInit, OnDestroy {
       return 0;
     }
     const healthBuff = (this.equipmentManagerService.activeBuff &&
-                        this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge) ?
-                        this.equipmentManagerService.activeBuff.properties.remainingEffect : 0;
+      this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge) ?
+      this.equipmentManagerService.activeBuff.properties.remainingEffect : 0;
 
     return this.playerStateService.health + healthBuff;
   }
@@ -183,12 +181,6 @@ export class GameComponent implements OnInit, OnDestroy {
     this.areaChangeSubscription.unsubscribe();
     this.areaReadySubscription.unsubscribe();
   }
-
-  // public onKeyDown($e) {
-  //   this.userInputService.keyDownEventHandler($e);
-  // }
-
-
 
   // TODO: Look for a way to check menu on site load
 }
