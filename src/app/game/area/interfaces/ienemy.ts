@@ -1,6 +1,5 @@
-import { MonsterClass, Direction, CharacterType } from "../../shared/enums";
-import { IInventoryItem } from "../../item/interfaces/iinventory-item";
 import { ILocation } from "selenium-webdriver";
+import { CharacterType, Direction, MonsterClass } from "../../shared/enums";
 import { ILootParameters } from "../../shared/interfaces";
 
 export interface IEnemy {

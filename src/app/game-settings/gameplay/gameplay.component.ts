@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { GameSettingsService } from '../../shared/services/game-settings.service';
 
 @Component({
@@ -6,14 +6,11 @@ import { GameSettingsService } from '../../shared/services/game-settings.service
   templateUrl: './gameplay.component.html',
   styleUrls: ['./gameplay.component.scss']
 })
-export class GameplayComponent implements OnInit {
+export class GameplayComponent {
 
   constructor(
     public gameSettingsService: GameSettingsService,
   ) { }
-
-  ngOnInit() {
-  }
 
   public saveSettings() {
     this.gameSettingsService.saveGameSettings();

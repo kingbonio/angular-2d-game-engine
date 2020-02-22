@@ -1,19 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { IGameSettings } from '../../game/shared/interfaces';
+import { Component } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { UserInputService } from '../../shared/services/user-input.service';
 import { GameStateService } from '../../game/shared/services/game-state.service';
-import { KeyInputType } from '../../shared/enums';
-import keyFullNames from '../../shared/util/key-full-names';
 import defaults from '../../shared/defaults';
+import { KeyInputType } from '../../shared/enums';
 import { GameSettingsService } from '../../shared/services/game-settings.service';
+import { UserInputService } from '../../shared/services/user-input.service';
+import keyFullNames from '../../shared/util/key-full-names';
 
 @Component({
   selector: 'app-game-controls',
   templateUrl: './game-controls.component.html',
   styleUrls: ['./game-controls.component.scss']
 })
-export class GameControlsComponent implements OnInit {
+export class GameControlsComponent {
   public keyActionSelected: KeyInputType;
   public userSetKeySubscription: Subscription;
   public keyNames: string[];
@@ -41,10 +40,6 @@ export class GameControlsComponent implements OnInit {
         this.unsetAwaitingKey();
       }
     });
-  }
-
-  ngOnInit() {
-
   }
 
   private userSetKeyHandler(key: number) {

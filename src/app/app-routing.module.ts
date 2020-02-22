@@ -1,8 +1,8 @@
-import { Routes, RouterModule } from "@angular/router";
-import { MainMenuComponent } from "./main-menu/main-menu.component";
 import { NgModule } from "@angular/core";
-import { GameComponent } from "./game/game.component";
+import { RouterModule, Routes } from "@angular/router";
 import { GameSettingsComponent } from "./game-settings/game-settings.component";
+import { GameComponent } from "./game/game.component";
+import { MainMenuComponent } from "./main-menu/main-menu.component";
 
 const appRoutes = [
       {
@@ -20,16 +20,6 @@ const appRoutes = [
             pathMatch: "full",
             component: MainMenuComponent
       },
-      // {
-      //       path: 'heroes',
-      //       component: HeroListComponent,
-      //       data: { title: 'Heroes List' }
-      // },
-      // {
-      //       path: '',
-      //       redirectTo: '/heroes',
-      //       pathMatch: 'full'
-      // },
       {
             path: '**',
             redirectTo: ''

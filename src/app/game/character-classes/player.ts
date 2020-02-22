@@ -1,6 +1,5 @@
+import { Direction, ElementClass, PlayerClass } from "../shared/enums";
 import { Character } from "./character";
-import { PlayerClass, Direction, ElementClass } from "../shared/enums";
-import defaults from "../../shared/defaults";
 
 export class Player extends Character {
       public type = ElementClass.player;

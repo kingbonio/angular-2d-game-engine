@@ -1,9 +1,7 @@
-import { IEnemy } from "./ienemy";
-import { IInventoryItem } from "../../item/interfaces/iinventory-item";
-import { Direction, CharacterType, ElementClass } from "../../shared/enums";
-import { IPlayer, INpc } from ".";
-import { IGridObject } from "./ipuzzle-element";
 import { Character } from "../../character-classes/character";
+import { IInventoryItem } from "../../item/interfaces/iinventory-item";
+import { Direction, ElementClass } from "../../shared/enums";
+import { IGridObject } from "./ipuzzle-element";
 
 export interface IAreaElement {
       type: ElementClass;

@@ -1,4 +1,3 @@
-import { IAreaElement } from "./iarea-element";
 import { IGridData } from "./igrid-data";
 
 export interface IGridReferences {

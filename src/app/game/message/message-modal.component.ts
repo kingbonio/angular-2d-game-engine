@@ -1,6 +1,6 @@
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
-import { GameStateService } from '../shared/services/game-state.service';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
+import { GameStateService } from '../shared/services/game-state.service';
 
 @Component({
   selector: 'app-message-modal',

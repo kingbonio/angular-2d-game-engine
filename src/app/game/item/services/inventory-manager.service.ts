@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { IInventoryStateData, IInventoryItem } from '../../shared/interfaces';
-import defaults from '../../../shared/defaults';
-import { IInventoryReferences } from '../inventory/interfaces';
+import { IInventoryItem, IInventoryStateData } from '../../shared/interfaces';
 import { DialogueService } from '../../shared/services/dialogue.service';
+import { IInventoryReferences } from '../inventory/interfaces';
 
 @Injectable()
 export class InventoryManagerService {

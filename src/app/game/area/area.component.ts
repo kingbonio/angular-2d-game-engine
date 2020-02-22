@@ -1,35 +1,34 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { IAreaElement, IGridObject } from './interfaces';
-import { ILevelData } from './interfaces/ilevel-data';
-import { AreaType } from './enums/area-type';
+import { AfterViewInit, Component, OnDestroy } from '@angular/core';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { AreaStateService } from '../shared/services/area-state.service';
-import { AreaConfigProviderService } from '../shared/services/area-config-provider.service';
-import { CharacterType, Direction, ElementClass, CharacterState, ObjectType } from '../shared/enums';
-import { PlayerStateService } from '../shared/services/player-state.service';
-import { Enemy, NPC } from '../character-classes';
-import { Character } from '../character-classes/character';
-import { BattleCalculatorService } from '../shared/services/battle-calculator.service';
-import { MatDialogConfig, MatDialog, MatDialogRef } from '@angular/material';
-import { LootingModalComponent } from '../item/looting/looting-modal.component';
-import { GridObject } from './grid-object-classes/grid-object';
-import { Player } from '../character-classes/player';
+import { Subscription } from 'rxjs/Subscription';
 import { IAreaExits } from '../../game-config/interfaces';
 import defaults from '../../shared/defaults';
-import { IGridData } from './interfaces/igrid-data';
-import { Subscription } from 'rxjs/Subscription';
 import { GameSettingsService } from '../../shared/services/game-settings.service';
-import { GameStateService } from '../shared/services/game-state.service';
-import { DialogueService } from '../shared/services/dialogue.service';
-import { GridHelper } from '../shared/util/area/grid-helper';
+import { Enemy, NPC } from '../character-classes';
+import { Character } from '../character-classes/character';
+import { Player } from '../character-classes/player';
+import { LootingModalComponent } from '../item/looting/looting-modal.component';
 import { MessageModalComponent } from '../message/message-modal.component';
+import { CharacterState, CharacterType, Direction, ElementClass } from '../shared/enums';
+import { AreaConfigProviderService } from '../shared/services/area-config-provider.service';
+import { AreaStateService } from '../shared/services/area-state.service';
+import { BattleCalculatorService } from '../shared/services/battle-calculator.service';
+import { DialogueService } from '../shared/services/dialogue.service';
+import { GameStateService } from '../shared/services/game-state.service';
+import { PlayerStateService } from '../shared/services/player-state.service';
+import { AreaType } from './enums/area-type';
+import { GridObject } from './grid-object-classes/grid-object';
+import { IAreaElement } from './interfaces';
+import { IGridData } from './interfaces/igrid-data';
+import { ILevelData } from './interfaces/ilevel-data';
 
 @Component({
   selector: 'app-area',
   templateUrl: './area.component.html',
   styleUrls: ['./area.component.scss']
 })
-export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
+export class AreaComponent implements OnDestroy, AfterViewInit {
 
   private areaConfig: any;
   private areaExits: any;
@@ -60,15 +59,13 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
     this.openMessageModalSubscription = this.playerStateService.openMessageModal.subscribe((message: string) => {
       this.openMessageModal(message);
     });
-    // // Build the area
+
+    // Build the area
     this.prepareArea();
 
   }
-
-  ngOnInit() {
-  }
-
   ngAfterViewInit() {
+
     // Declare component loading complete
     setTimeout(() => {
       this.areaStateService.loadingPreviousArea = false;
@@ -105,8 +102,10 @@ export class AreaComponent implements OnInit, OnDestroy, AfterViewInit {
       this.modalRef.afterClosed().subscribe(returnData => {
 
         if (target.element) {
+
           // Do nothing
         } else if (target.groundItem && target.groundItem.isEmpty) {
+
           // Get rid of the bag
           target.groundItem = null;
         }

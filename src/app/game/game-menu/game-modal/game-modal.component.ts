@@ -1,7 +1,5 @@
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import defaults from '../../../shared/defaults';
-import { PersistentStateService } from '../../shared/services/persistent-state.service';
 import { Router } from '@angular/router';
 import { GameStateService } from '../../shared/services/game-state.service';
 
@@ -21,7 +19,6 @@ export class GameModalComponent implements OnInit, OnDestroy {
     this.data = data;
   }
 
-
   ngOnInit() {
     this.gameStateService.gamePaused = true;
   }
@@ -33,5 +30,4 @@ export class GameModalComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.gameStateService.gamePaused = false;
   }
-
 }

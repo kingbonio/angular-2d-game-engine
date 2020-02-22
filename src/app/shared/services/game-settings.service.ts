@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { IGameSettings } from '../../game/shared/interfaces';
 import { PersistentStateService } from '../../game/shared/services/persistent-state.service';
-
 import defaults from '../../shared/defaults';
-import keyReferences from '../../shared/util/key-references';
 import keyActions from '../../shared/util/key-actions';
-import { IUserAction } from '../interfaces';
+import keyReferences from '../../shared/util/key-references';
 import { KeyInputType } from '../enums';
+import { IUserAction } from '../interfaces';
+
 
 @Injectable({
   providedIn: 'root'

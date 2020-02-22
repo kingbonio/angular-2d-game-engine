@@ -1,25 +1,23 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { PlayerStateService } from './shared/services/player-state.service';
-import { DialogueService } from './shared/services/dialogue.service';
-import { UserInputService } from '../shared/services/user-input.service';
-import { fromEvent } from 'rxjs/observable/fromEvent';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
-import { AiService } from './shared/services/ai.service';
-import { EquipmentManagerService } from './item/services/equipment-manager.service';
-import { AreaStateService } from './shared/services/area-state.service';
-import defaults from '../shared/defaults';
 import * as areaConfigs from "../game-config/areas";
-import { GameStateService } from './shared/services/game-state.service';
-import { MatDialogConfig, MatDialog, MatDialogRef } from '@angular/material';
-import { GameModalComponent } from './game-menu/game-modal/game-modal.component';
+import defaults from '../shared/defaults';
+import { UserActionTypes, UserInteractionTypes } from '../shared/enums';
+import { IUserAction } from '../shared/interfaces';
 import { ApplicationStateService } from '../shared/services/application-state.service';
 import { GameSettingsService } from '../shared/services/game-settings.service';
-import { TimerService } from './shared/services/timer.service';
-import { PotionEffectType } from './item/enums/potion-effect-type';
+import { UserInputService } from '../shared/services/user-input.service';
 import { DeadModalComponent } from './dead-modal/dead-modal.component';
-import { IUserAction } from '../shared/interfaces';
+import { GameModalComponent } from './game-menu/game-modal/game-modal.component';
+import { PotionEffectType } from './item/enums/potion-effect-type';
+import { EquipmentManagerService } from './item/services/equipment-manager.service';
 import { Direction } from './shared/enums';
-import { UserInteractionTypes, UserActionTypes } from '../shared/enums';
+import { AiService } from './shared/services/ai.service';
+import { AreaStateService } from './shared/services/area-state.service';
+import { DialogueService } from './shared/services/dialogue.service';
+import { GameStateService } from './shared/services/game-state.service';
+import { PlayerStateService } from './shared/services/player-state.service';
 
 @Component({
   selector: 'app-game-root',
@@ -32,7 +30,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private areaReadySubscription: Subscription;
   private areaConfigs = areaConfigs;
   private deadModalRef: MatDialogRef<any>;
-  title = 'game';
+  public title = 'game';
   public loadingText = defaults.gameMenu.loadingText;
   public areaComponentAlive = true;
   public PotionEffectType = PotionEffectType;
@@ -50,7 +48,6 @@ export class GameComponent implements OnInit, OnDestroy {
     public gameStateService: GameStateService,
     public gameSettingsService: GameSettingsService,
     public applicationStateService: ApplicationStateService,
-    private timerService: TimerService,
     private dialog: MatDialog,
   ) {
     this.applicationStateService.gameOpen = true;
@@ -141,8 +138,8 @@ export class GameComponent implements OnInit, OnDestroy {
       return 0;
     }
     const healthBuff = (this.equipmentManagerService.activeBuff &&
-                        this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge) ?
-                        this.equipmentManagerService.activeBuff.properties.remainingEffect : 0;
+      this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge) ?
+      this.equipmentManagerService.activeBuff.properties.remainingEffect : 0;
 
     return this.playerStateService.health + healthBuff;
   }
@@ -184,12 +181,6 @@ export class GameComponent implements OnInit, OnDestroy {
     this.areaChangeSubscription.unsubscribe();
     this.areaReadySubscription.unsubscribe();
   }
-
-  // public onKeyDown($e) {
-  //   this.userInputService.keyDownEventHandler($e);
-  // }
-
-
 
   // TODO: Look for a way to check menu on site load
 }

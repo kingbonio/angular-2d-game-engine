@@ -1,26 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { InventoryManagerService } from '../services/inventory-manager.service';
-import { IInventoryItem } from '../interfaces';
+import { Component } from '@angular/core';
+import { PlayerStateService } from '../../shared/services/player-state.service';
 import { ItemClass } from '../enums';
 import { EquipmentManagerService } from '../services/equipment-manager.service';
-import { PlayerStateService } from '../../shared/services/player-state.service';
+import { InventoryManagerService } from '../services/inventory-manager.service';
 
 @Component({
   selector: 'app-inventory',
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.scss']
 })
-export class InventoryComponent implements OnInit {
+export class InventoryComponent {
 
   constructor(
     public inventoryManagerService: InventoryManagerService,
     public equipmentManagerService: EquipmentManagerService,
     public playerStateService: PlayerStateService,
   ) { }
-
-  ngOnInit() {
-  }
-
   public useItem(itemSlot: string) {
     if (this.inventoryManagerService.locations[itemSlot]) {
       switch (this.inventoryManagerService.locations[itemSlot].class) {
@@ -43,8 +38,4 @@ export class InventoryComponent implements OnInit {
       }
     }
   }
-
-
-
-
 }

@@ -1,8 +1,8 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
+import defaults from '../../../shared/defaults';
 import { IGameStateData } from '../interfaces';
 import { AreaStateService } from './area-state.service';
 import { TimerService } from './timer.service';
-import defaults from '../../../shared/defaults';
 
 @Injectable()
 export class GameStateService {

@@ -1,11 +1,11 @@
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from "@angular/material";
-import { InventoryManagerService } from '../services/inventory-manager.service';
-import { DialogueService } from '../../shared/services/dialogue.service';
 import defaults from '../../../shared/defaults';
-import { GameStateService } from '../../shared/services/game-state.service';
-import { LootBag } from '../../area/grid-object-classes/loot-bag';
 import { GridObject } from '../../area/grid-object-classes/grid-object';
+import { LootBag } from '../../area/grid-object-classes/loot-bag';
+import { DialogueService } from '../../shared/services/dialogue.service';
+import { GameStateService } from '../../shared/services/game-state.service';
+import { InventoryManagerService } from '../services/inventory-manager.service';
 
 @Component({
   selector: 'app-looting',
@@ -32,7 +32,7 @@ export class LootingModalComponent implements OnInit, OnDestroy {
     try {
       this.inventoryManagerService.addItemToInventory(this.targetGridData.inventoryLocations[itemSlot]);
 
-      // Only perform this is error not thrown
+      // Only perform this if error not thrown
       this.targetGridData.inventoryLocations[itemSlot] = null;
     } catch (err) {
       this.dialogueService.displayDialogueMessage({
@@ -46,5 +46,4 @@ export class LootingModalComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.gameStateService.gamePaused = false;
   }
-
 }

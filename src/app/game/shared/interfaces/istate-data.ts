@@ -1,4 +1,4 @@
-import { IAreaStateData, IPlayerStateData, IDialogueStateData, IInventoryStateData, IGameStateData } from ".";
+import { IAreaStateData, IDialogueStateData, IInventoryStateData, IPlayerStateData } from ".";
 import { IEquipmentStateData } from "./iequipment-state-data";
 
 export interface IStateData {

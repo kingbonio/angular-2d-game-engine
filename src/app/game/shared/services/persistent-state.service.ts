@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { AreaStateService } from './area-state.service';
-import { PlayerStateService } from './player-state.service';
-import { DialogueService } from './dialogue.service';
-import { InventoryManagerService } from '../../item/services/inventory-manager.service';
-import { IStateData, IAreaStateData, IPlayerStateData, IDialogueStateData, IInventoryStateData, IGameStateData, IGameSettings } from '../interfaces';
 import * as maps from "../../../game-config/areas/map";
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
+import { InventoryManagerService } from '../../item/services/inventory-manager.service';
+import { IAreaStateData, IDialogueStateData, IGameSettings, IInventoryStateData, IPlayerStateData, IStateData } from '../interfaces';
 import { IEquipmentStateData } from '../interfaces/iequipment-state-data';
+import { AreaStateService } from './area-state.service';
+import { DialogueService } from './dialogue.service';
+import { PlayerStateService } from './player-state.service';
 
 @Injectable()
 export class PersistentStateService {

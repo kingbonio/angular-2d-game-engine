@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IInventoryItem } from '../interfaces';
 
 @Component({
@@ -6,16 +6,12 @@ import { IInventoryItem } from '../interfaces';
   templateUrl: './item-grid.component.html',
   styleUrls: ['./item-grid.component.scss']
 })
-export class ItemGridComponent implements OnInit {
+export class ItemGridComponent {
   @Input() gridLocations: any;
   @Input() gridLocationKeys: any;
   @Output() clickItem = new EventEmitter<string>();
 
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
+  constructor() { }
 
   public itemSlotClicked(itemSlot: string): void {
     this.clickItem.emit(itemSlot);

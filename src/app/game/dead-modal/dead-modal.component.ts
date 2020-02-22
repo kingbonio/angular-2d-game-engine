@@ -5,15 +5,11 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './dead-modal.component.html',
   styleUrls: ['./dead-modal.component.scss']
 })
-export class DeadModalComponent implements OnInit {
+export class DeadModalComponent {
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
   public restartGame() {
     window.location.reload();
   }
-
 }

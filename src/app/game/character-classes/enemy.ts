@@ -1,9 +1,8 @@
-import { Character } from "./character";
-import { MonsterClass, CharacterType, Direction, ElementClass, CharacterState } from "../shared/enums";
 import { UserInteractionTypes } from "../../shared/enums";
-import { IArmour, IWeapons, IInventoryItem } from "../item/interfaces";
+import { IArmour, IInventoryItem, IWeapons } from "../item/interfaces";
+import { CharacterState, Direction, ElementClass, MonsterClass } from "../shared/enums";
 import { ILocation } from "../shared/interfaces";
-import defaults from "../../shared/defaults";
+import { Character } from "./character";
 
 export class Enemy extends Character {
       public id: string;

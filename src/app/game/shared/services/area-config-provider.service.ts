@@ -3,10 +3,10 @@ import * as areaConfigs from "../../../game-config/areas";
 import * as maps from "../../../game-config/areas/map";
 import * as borderAreaConfigs from "../../../game-config/border/areas";
 import * as borderMaps from "../../../game-config/border/areas/map";
-import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
-import { keyItems, weapons, armour, potions } from '../../../game-config/items';
-import { InventoryManagerService } from '../../item/services/inventory-manager.service';
+import { armour } from '../../../game-config/items';
 import { GameSettingsService } from '../../../shared/services/game-settings.service';
+import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
+import { InventoryManagerService } from '../../item/services/inventory-manager.service';
 
 @Injectable()
 export class AreaConfigProviderService implements OnInit {

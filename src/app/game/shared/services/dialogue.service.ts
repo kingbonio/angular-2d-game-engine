@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import defaults from '../../../shared/defaults';
-import { IDialogueStateData } from '../interfaces';
 import { ISpeech } from '../../dialogue/interfaces';
+import { IDialogueStateData } from '../interfaces';
 
 @Injectable()
 export class DialogueService {

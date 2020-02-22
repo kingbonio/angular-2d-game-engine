@@ -1,5 +1,5 @@
-import { IAreaExits } from "../interfaces";
 import { AreaExitStatus } from "../../game/area/enums";
+import { IAreaExits } from "../interfaces";
 
 export default {
       1: {

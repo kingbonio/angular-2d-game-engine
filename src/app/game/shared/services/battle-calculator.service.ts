@@ -1,13 +1,11 @@
-import defaults from '../../../shared/defaults';
 import { Injectable } from '@angular/core';
-import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
+import defaults from '../../../shared/defaults';
 import { Character } from '../../character-classes/character';
 import { WeaponType } from '../../item/enums';
-import { DialogueService } from './dialogue.service';
-import { IArmour, IWeapons, IInventoryItem } from '../../item/interfaces';
-import { Dice } from '../util/dice';
-import { PlayerStateService } from './player-state.service';
 import { PotionEffectType } from '../../item/enums/potion-effect-type';
+import { IArmour, IInventoryItem } from '../../item/interfaces';
+import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
+import { Dice } from '../util/dice';
 
 @Injectable()
 export class BattleCalculatorService {

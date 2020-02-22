@@ -1,4 +1,4 @@
-import { PlayerClass, CharacterType } from "../../shared/enums";
+import { CharacterType, PlayerClass } from "../../shared/enums";
 
 export interface IPlayer {
       type: CharacterType.player;
