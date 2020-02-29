@@ -11,3 +11,15 @@
             border: solid red 1px;
       }
 }
+
+.background-music-button {
+      position: fixed;
+      bottom: 0px;
+      left: 0px;
+      color: grey;
+      cursor: pointer;
+
+      &.on {
+            color: white;
+      }
+}

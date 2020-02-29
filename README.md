@@ -60,6 +60,6 @@ https://www.youtube.com/channel/UCmU68D0OK6fXo351hs3qqjQ
 
 v0.10.0a
 
-* Added movement animations to charactrs changing location
+* Added movement animations to characters changing location
 * Blocked movement for characters if they're currently in a movement animation
 * Resolved bug where you could tap on the input control and accidentally highlight the text
