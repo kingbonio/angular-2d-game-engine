@@ -8,6 +8,7 @@ export class Player extends Character {
       public imageFileName: string;
       public direction: Direction;
       public startingDirection: Direction;
+      public isMovingForwards: boolean;
 
       constructor(characterDetails: any) {
             // TODO: Resolve any
@@ -15,6 +16,7 @@ export class Player extends Character {
             this.name = characterDetails.name;
             this.class = characterDetails.class;
             this.imageFileName = characterDetails.imageFileName;
+            this.isMovingForwards = false;
       }
 
 }

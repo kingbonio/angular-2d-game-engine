@@ -50,7 +50,8 @@ export class PlayerStateService {
     this.direction = defaults.initialPlayerStats.direction;
   }
 
-  onInit() {
+  get playerGridLocation() {
+    return this.areaStateService.locations[this.locationY + this.locationX];
   }
 
   get level() {
@@ -71,7 +72,13 @@ export class PlayerStateService {
    */
   public move(direction: Direction, isOneHandedControls: boolean) {
 
-    // Two handed controls need direction as part of the move
+    // Break out of this action if moving action is currently underway
+    if (this.areaStateService.locations[this.locationY + this.locationX].element.isMovingForwards) {
+
+      return;
+    }
+
+    // One handed controls need direction as part of the move
     if (isOneHandedControls) {
       this.direction = direction;
     }
@@ -101,12 +108,16 @@ export class PlayerStateService {
         this.areaStateService.loadNewArea(this.areaStateService.locations[this.locationY + this.locationX].areaExit.destination);
         return;
       }
-
     }
 
     // Update area state
     if (newLocation && newLocation.locationX && newLocation.locationY && newLocation.isLocationFree) {
-      this.areaStateService.repositionCharacter(newLocation.locationY + newLocation.locationX, this.locationY + this.locationX);
+
+      // TODO This could be moved into a getter
+      const playerLocationDetails = this.areaStateService.splitLocationReference(this.locationY + this.locationX);
+
+      this.movement.moveCharacterWithAnimation(playerLocationDetails, newLocation);
+
       this.locationY = newLocation.locationY;
       this.locationX = newLocation.locationX;
 

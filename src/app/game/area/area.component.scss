@@ -18,7 +18,7 @@
       }
 
       .grid-box {
-            z-index: -1;
+            // z-index: -1;
             width: 80px;
             height: 80px;
             background-image: url("assets/images/floor-style/wooden-floor-small.png");
@@ -253,75 +253,60 @@
                         }
                   }
 
+                  @-moz-keyframes moving-forwards { 
+                        0% { -moz-transform: translateY(80px); } 
+                        100% { -moz-transform: translateY(0px); } 
+                  }
+                  @-webkit-keyframes moving-forwards {
+                        0% { -webkit-transform: translateY(80px); } 
+                        100% { -webkit-transform: translateY(0px); } 
+                  }
+                  @keyframes moving-forwards { 
+                        0% { -webkit-transform: translateY(80px);
+                              transform: translateY(80px); } 
+                        100% { -webkit-transform: translateY(0px);
+                              transform: translateY(0px); } 
+                  }
+
                   @-moz-keyframes swing { 
-                        100% { 
-                              -moz-transform: rotate(30deg) translate(30px, 0px) scale(0.5);
-                        } 
+                        100% { -moz-transform: rotate(30deg) translate(30px, 0px) scale(0.5); } 
                   }
                   @-webkit-keyframes swing {
-                        100% { 
-                              -webkit-transform: rotate(30deg) translate(30px, 0px) scale(0.5);
-                        } 
+                        100% { -webkit-transform: rotate(30deg) translate(30px, 0px) scale(0.5); } 
                   }
                   @keyframes swing { 
-                        100% { 
-                              -webkit-transform: rotate(30deg) translate(30px, 0px) scale(0.5);
-                              transform: rotate(30deg) translate(30px, 0px) scale(0.5);
-                        } 
+                        100% { -webkit-transform: rotate(30deg) translate(30px, 0px) scale(0.5);
+                              transform: rotate(30deg) translate(30px, 0px) scale(0.5); } 
                   }
 
                   @-moz-keyframes guard { 
-                        from {
-                              -moz-transform: rotate(-10deg) scaleX(0.1) scaleY(0.1);
-                        }
-                        to { 
-                              -moz-transform: rotate(0deg) scaleX(1) scaleY(1);
-                        } 
+                        from { -moz-transform: rotate(-10deg) scaleX(0.1) scaleY(0.1); }
+                        to { -moz-transform: rotate(0deg) scaleX(1) scaleY(1); } 
                   }
                   @-webkit-keyframes guard {
-                        from {
-                              -webkit-transform: rotate(-10deg) scaleX(0.1) scaleY(0.1);
-                        }
-                        to { 
-                              -webkit-transform: rotate(0deg) scaleX(1) scaleY(1);
-                        } 
+                        from { -webkit-transform: rotate(-10deg) scaleX(0.1) scaleY(0.1); }
+                        to { -webkit-transform: rotate(0deg) scaleX(1) scaleY(1); } 
                   }
                   @keyframes guard { 
-                        from {
-                              -webkit-transform: rotate(-10deg) scaleX(0.1) scaleY(0.1);
-                              transform: rotate(-10deg) scaleX(0.1) scaleY(0.1);
-                        }
-                        to { 
-                              -webkit-transform: rotate(0deg) scaleX(1) scaleY(1);
-                              transform: rotate(0deg) scaleX(1) scaleY(1);
-                        } 
+                        from { -webkit-transform: rotate(-10deg) scaleX(0.1) scaleY(0.1);
+                              transform: rotate(-10deg) scaleX(0.1) scaleY(0.1); }
+                        to { -webkit-transform: rotate(0deg) scaleX(1) scaleY(1);
+                              transform: rotate(0deg) scaleX(1) scaleY(1); } 
                   }
 
                   @-moz-keyframes receive-attack {
-                        from {
-                              -moz-transform: scale(1) rotate(180deg);
-                        }
-                        to { 
-                              -moz-transform: scale(0.3) translate(-70px, 0px) rotate(180deg);
-                        } 
+                        from { -moz-transform: scale(1) rotate(180deg); }
+                        to { -moz-transform: scale(0.3) translate(-70px, 0px) rotate(180deg); } 
                   }
                   @-webkit-keyframes receive-attack {
-                        from {
-                              -webkit-transform: scale(1) rotate(180deg);
-                        }
-                        to { 
-                              -webkit-transform: scale(0.3) translate(-70px, 0px) rotate(180deg);
-                        } 
+                        from { -webkit-transform: scale(1) rotate(180deg); }
+                        to { -webkit-transform: scale(0.3) translate(-70px, 0px) rotate(180deg); } 
                   }
                   @keyframes receive-attack {
-                        from {
-                              -webkit-transform: scale(1) rotate(180deg);
-                              transform: scale(1) rotate(180deg);
-                        }
-                        to { 
-                              -webkit-transform: scale(0.3) translate(-70px, 0px) rotate(180deg);
-                              transform: scale(0.3) translate(-70px, 0px) rotate(180deg);
-                        } 
+                        from { -webkit-transform: scale(1) rotate(180deg);
+                              transform: scale(1) rotate(180deg); }
+                        to { -webkit-transform: scale(0.3) translate(-70px, 0px) rotate(180deg);
+                              transform: scale(0.3) translate(-70px, 0px) rotate(180deg); } 
                   }
 
                   .swing-weapon, .receive-attack, .guard {
@@ -331,6 +316,14 @@
                         
                         background-repeat: no-repeat;
                         // background-size: 80px 80px;
+                  }
+
+                  .moving-forwards {
+                        z-index: 999999;
+                        animation-name: moving-forwards;
+                        
+                        // Must match the same duration as in defaults config
+                        animation-duration: 0.17s;
                   }
 
                   .swing-weapon {

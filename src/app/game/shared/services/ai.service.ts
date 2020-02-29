@@ -30,6 +30,7 @@ export class AiService {
     private gameStateService: GameStateService,
   ) {
     this.userInputService.playerMoved.subscribe(data => {
+      console.log("Enacted event listener");
       // TODO This may need a more specific flag
       // We don't want to perform AI actions if loading game
       if (!this.gameStateService.gamePaused &&
@@ -49,12 +50,16 @@ export class AiService {
         this.actionTriggerHandler(false);
       }
     });
-
-
   }
 
   // TODO Change this parameter
   public actionTriggerHandler(userInput: boolean) {
+
+    // if (userInput && this.playerStateService.playerGridLocation && this.playerStateService.playerGridLocation.element.isMovingForwards) {
+    //   return;
+    // }
+
+
     const characters: { character: Character, gridLocation: string }[] = this.areaStateService.getCharactersOnGrid();
     characters.forEach(({ character, gridLocation }) => {
 
@@ -96,7 +101,10 @@ export class AiService {
           // Do nothing
           break;
         case CharacterState.wandering:
-          this.movement.wander(character, gridLocation);
+          if (!this.areaStateService.locations[gridLocation].element.isMovingForwards) {
+            this.movement.wander(character, gridLocation);
+          }
+
           break;
         case CharacterState.walkingPath:
 
@@ -107,10 +115,13 @@ export class AiService {
             if (gridLocation !== character.startingTargetLocation) {
 
               // Ranmdoly move if target cannot be gotten to
-              this.movement.wander(character, gridLocation);
+              if (!this.areaStateService.locations[gridLocation].element.isMovingForwards) {
+                this.movement.wander(character, gridLocation);
+              }
             } else {
               character.direction = character.startingDirection;
             }
+
             // Maybe update state
             return;
           }
@@ -118,18 +129,23 @@ export class AiService {
           // If we're already there don't do anything
           if (gridLocation === character.startingTargetLocation) {
             character.currentState = CharacterState.still;
+
             return;
           }
 
-          this.movement.moveTowardsLocation(character, gridLocation, character.startingTargetLocation);
+          if (!this.areaStateService.locations[gridLocation].element.isMovingForwards) {
+            this.movement.moveTowardsLocation(character, gridLocation, character.startingTargetLocation);
+          }
 
           break;
         case CharacterState.patrolling:
-          const newLocation = this.movement.walkRoute(character, gridLocation);
+          if (!this.areaStateService.locations[gridLocation].element.isMovingForwards) {
+            const newLocation = this.movement.walkRoute(character, gridLocation);
 
-          if ((character.type === ElementClass.enemy || character.currentState === CharacterState.hunting) &&
-            this.isPlayerInSight(character, newLocation.locationY + newLocation.locationX)) {
-            this.startHunting(character);
+            if ((character.type === ElementClass.enemy || character.currentState === CharacterState.hunting) &&
+              this.isPlayerInSight(character, newLocation.locationY + newLocation.locationX)) {
+              this.startHunting(character);
+            }
           }
           break;
         case CharacterState.returningToPosition:
@@ -142,7 +158,9 @@ export class AiService {
             this.action(character, gridLocation);
 
           } else {
-            this.movement.moveTowardsLocation(character, gridLocation, character.startingLocation);
+            if (!this.areaStateService.locations[gridLocation].element.isMovingForwards) {
+              this.movement.moveTowardsLocation(character, gridLocation, character.startingLocation);
+            }
             // this.movement.returnToStartingPosition(character, gridLocation, character.startingLocation);
           }
           break;
@@ -222,8 +240,12 @@ export class AiService {
 
         // Do nothing
       } else {
-        character.attack();
-        this.playerStateService.receiveAttack(character);
+
+        // // We only want to attack if the player isn't already moving
+        // if (!this.areaStateService.locations[targetLocation].isMovingForwards) {
+          character.attack();
+          this.playerStateService.receiveAttack(character);
+        // }
       }
     } else {
 
@@ -232,10 +254,13 @@ export class AiService {
 
         // TODO This is awful
         targetLocation = targetLocation.locationY + targetLocation.locationX;
-
-        this.movement.moveTowardsLocation(character, gridLocation, targetLocation);
+        if (!this.areaStateService.locations[gridLocation].element.isMovingForwards) {
+          this.movement.moveTowardsLocation(character, gridLocation, targetLocation);
+        }
       } else {
-        this.movement.moveTowardsPlayer(character, gridLocation);
+        if (!this.areaStateService.locations[gridLocation].element.isMovingForwards) {
+          this.movement.moveTowardsPlayer(character, gridLocation);
+        }
       }
     }
   }

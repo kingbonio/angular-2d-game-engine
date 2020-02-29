@@ -17,6 +17,7 @@ export class NPC extends Character {
       public sleepResponse: string;
       public isAsleep: boolean;
       public isAngry: boolean;
+      public isMovingForwards: boolean;
       public isAttacking: boolean;
       public isGuarding: boolean;
       public isReceivingAttack: boolean;
@@ -51,6 +52,7 @@ export class NPC extends Character {
             this.imageFileName = characterDetails.imageFileName;
             this.isAsleep = characterDetails.asleep;
             this.isAngry = characterDetails.angry;
+            this.isMovingForwards = false;
             this.isAttacking = false;
             this.isGuarding = false;
             this.isReceivingAttack = false;

@@ -55,6 +55,7 @@ import { PathfindingComponent } from './shared/util/movement/pathfinding/pathfin
   ],
   providers: [
     AreaConfigProviderService,
+    AiService,
     PlayerStateService,
     DialogueService,
     BattleCalculatorService,
@@ -62,7 +63,6 @@ import { PathfindingComponent } from './shared/util/movement/pathfinding/pathfin
     PathfindingComponent,
     EquipmentManagerService,
     InventoryManagerService,
-    AiService,
     UserInputService,
     GameStateService,
     PersistentStateService,

@@ -19,6 +19,7 @@ export default {
         direction: Direction.N
     },
     animations: {
+        movementDurationMilliseconds: 170,
         attackDurationMilliseconds: 170,
         guardDurationMilliseconds: 170,
         receiveAttackDurationMilliseconds: 170,

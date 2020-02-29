@@ -5,6 +5,7 @@ import { PlayerStateService } from '../../game/shared/services/player-state.serv
 import { UserActionTypes, UserInteractionTypes } from '../enums';
 import { IUserAction } from '../interfaces';
 import { GameSettingsService } from './game-settings.service';
+import { AreaStateService } from '../../game/shared/services/area-state.service';
 
 
 @Injectable()
@@ -15,6 +16,7 @@ export class UserInputService {
 
   constructor(
     private playerStateService: PlayerStateService,
+    private areaStateService: AreaStateService,
     private gameSettingsService: GameSettingsService,
     private gameStateService: GameStateService,
   ) {
@@ -46,8 +48,10 @@ export class UserInputService {
       switch (characterAction.type) {
 
         case UserActionTypes.move:
-          this.playerStateService.move(characterAction.direction, this.gameSettingsService.oneHandedControls);
-          this.playerMoved.next("forceCharacterMove");
+          if (!this.areaStateService.locations[this.playerStateService.locationY + this.playerStateService.locationX].element.isMovingForwards) {
+            this.playerStateService.move(characterAction.direction, this.gameSettingsService.oneHandedControls);
+            this.playerMoved.next("forceCharacterMove");
+          }
 
           break;
 

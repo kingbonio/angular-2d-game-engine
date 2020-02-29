@@ -40,6 +40,8 @@ export class AreaStateService implements OnInit {
   }
 
   get playerLocation(): string {
+
+    // TODO Potentially worth rewriting
     for (const gridLocation in this.locations) {
       if (this.locations.hasOwnProperty(gridLocation) &&
         this.locations[gridLocation].element &&
@@ -124,13 +126,15 @@ export class AreaStateService implements OnInit {
   }
 
   public repositionCharacter(newLocation: string, currentLocation: string) {
-    // TODO: We need to store a reference to the player object here
+
     this.locations[newLocation].element = this.locations[currentLocation].element;
     this.locations[currentLocation].element = null;
+
   }
 
   public movePlayer(newLocation: string) {
     if (newLocation !== this.playerLocation) {
+
       this.repositionCharacter(newLocation, this.playerLocation);
     }
   }
