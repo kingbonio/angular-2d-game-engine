@@ -29,7 +29,8 @@
 
                   <div *ngIf="areaStateService.locations[key].element.type !== ElementClass.object"
                         class="character-type"
-                        [ngClass]="getCharacterType(areaStateService.locations[key].element)">
+                        [class]="getCharacterType(areaStateService.locations[key].element)"
+                        [ngClass]="{ 'moving-forwards': areaStateService.locations[key].element.isMovingForwards }">
 
                         <div class="overlay" [ngClass]="getDeadClass(areaStateService.locations[key].element)">
                               <span *ngIf="areaStateService.locations[key].element.currentState === CharacterState.hunting" class="character-state hunting">!</span>

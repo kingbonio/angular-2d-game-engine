@@ -14,6 +14,7 @@ export class Character {
       isAttacking: boolean;
       isGuarding: boolean;
       isReceivingAttack: boolean;
+      isMovingForwards: boolean;
       baseDamage: number;
       pauseCounter: number;
       maxPauseDuration: number;
@@ -72,8 +73,6 @@ export class Character {
             this.locationKeys = Object.keys;
       }
 
-
-
       get isPaused(): boolean {
             return (this.pauseCounter <= this.maxPauseDuration);
       }
@@ -106,11 +105,6 @@ export class Character {
 
       public guard() {
             this.isGuarding = true;
-
-            // // Allow the page to rerender before starting animation
-            // setTimeout(() => {
-            //       this.isGuarding = true;
-            // }, 0);
 
             // Clear the attack animation once it's played out
             setTimeout(() => {
@@ -145,6 +139,20 @@ export class Character {
             setTimeout(() => {
                   this.isReceivingAttack = false;
             }, defaults.animations.receiveAttackDurationMilliseconds);
+      }
+
+      /**
+       * Start and prepare a finishing callback for the character moving forwards
+       * @param { function } finishMovementCallback
+       */
+      public moveForwards(finishMovementCallback: any) {
+            this.isMovingForwards = true;
+
+            // Clear the attack animation once it's played out
+            setTimeout(() => {
+                  this.isMovingForwards = false;
+                  finishMovementCallback();
+            }, defaults.animations.movementDurationMilliseconds);
       }
 
 }

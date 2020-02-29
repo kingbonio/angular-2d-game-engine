@@ -6,6 +6,7 @@ import { AreaStateService } from '../../services/area-state.service';
 import { GridHelper } from '../area/grid-helper';
 import { Dice } from '../dice';
 import { PathfindingComponent } from './pathfinding/pathfinding.component';
+import { GameSettingsService } from '../../../../shared/services/game-settings.service';
 
 @Component({
   selector: 'app-movement',
@@ -15,7 +16,7 @@ export class MovementComponent {
 
   constructor(
     private areaStateService: AreaStateService,
-    private pathfinding: PathfindingComponent,
+    private pathfinding: PathfindingComponent
   ) { }
 
   /**
@@ -94,6 +95,12 @@ export class MovementComponent {
    */
   public wander(character: any, currentLocation: string): void {
 
+    // Break out of this action if moving action is currently underway
+    if (this.areaStateService.locations[currentLocation].element.isMovingForwards) {
+
+      return;
+    }
+
     const directionDiceRoll = Dice.roll1d4();
 
     let direction: Direction = GridHelper.getDirectionFromNumber(directionDiceRoll);
@@ -106,7 +113,8 @@ export class MovementComponent {
     if (targetLocationDetails && targetLocationDetails.isLocationFree) {
       const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
       this.areaStateService.locations[currentLocation].element.direction = direction;
-      this.areaStateService.repositionCharacter(targetLocation, currentLocation);
+
+      this.moveCharacterWithAnimation(currentLocationDetails, targetLocationDetails);
     } else {
       // Select a direction to move
       for (let i = 1; i < 4; i++) {
@@ -122,9 +130,9 @@ export class MovementComponent {
         targetLocationDetails = GridHelper.getNextLocation(currentLocationDetails.locationY, currentLocationDetails.locationX, direction, this.areaStateService.locations);
 
         if (targetLocationDetails && targetLocationDetails.isLocationFree) {
-          const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
           this.areaStateService.locations[currentLocation].element.direction = direction;
-          this.areaStateService.repositionCharacter(targetLocation, currentLocation);
+
+          this.moveCharacterWithAnimation(currentLocationDetails, targetLocationDetails);
 
           return;
         }
@@ -141,13 +149,24 @@ export class MovementComponent {
    * @returns the newLocation of the character
    */
   public walkRoute(character: Character, gridLocation: string): ILocationData {
+
+    // Break out of this action if moving action is currently underway
+    if (this.areaStateService.locations[gridLocation].element.isMovingForwards) {
+
+      return;
+    }
+
     if (character.directionsForPatrol.length) {
       const routeIndex = character.currentPositionInRoute;
       const splitLocation = this.areaStateService.splitLocationReference(gridLocation);
       const direction = character.directionsForPatrol[character.currentPositionInRoute];
       const newLocation = GridHelper.getNextLocation(splitLocation.locationY, splitLocation.locationX, direction, this.areaStateService.locations);
+
+
+      // Call the character's move method
       if (newLocation && newLocation.isLocationFree) {
-        this.areaStateService.repositionCharacter(newLocation.locationY + newLocation.locationX, gridLocation);
+
+        this.moveCharacterWithAnimation(splitLocation, newLocation);
 
         if (routeIndex >= (character.directionsForPatrol.length - 1)) {
           character.currentPositionInRoute = 0;
@@ -182,12 +201,18 @@ export class MovementComponent {
   }
 
   /**
-   * If direction is available move the chracter towards the player's location
+   * If direction is available move the character towards the player's location
    * @param character The character that will be moving
    * @param characterLocation The current location of the character in question
    * @param moveTowardsLocation Whether to more towards or away from target's location
    */
   public moveCharacterToLocation(character: Character, characterLocation: string, targetLocation: string, moveTowardsLocation = true) {
+
+    // Break out of this action if moving action is currently underway
+    if (this.areaStateService.locations[characterLocation].element.isMovingForwards) {
+
+      return;
+    }
 
     const splitNewLocation: ILocation = this.areaStateService.splitLocationReference(targetLocation);
     const splitCharacterLocation: ILocation = this.areaStateService.splitLocationReference(characterLocation);
@@ -200,8 +225,40 @@ export class MovementComponent {
     // If the target location is free, move into it
     if (targetLocationDetails && targetLocationDetails.isLocationFree) {
       const targetLocationCoords = targetLocationDetails.locationY + targetLocationDetails.locationX;
-      this.areaStateService.repositionCharacter(targetLocationCoords, characterLocation);
+
+      this.moveCharacterWithAnimation(splitCharacterLocation, targetLocationDetails);
     }
+  }
+
+  public moveCharacterWithAnimation(splitCharacterLocation: ILocation, targetLocationDetails: ILocation) {
+    this.beginCharacterMovementAnimation(splitCharacterLocation, targetLocationDetails);
+    this.areaStateService.repositionCharacter(targetLocationDetails.locationY + targetLocationDetails.locationX, splitCharacterLocation.locationY + splitCharacterLocation.locationX);
+  }
+
+  /**
+   * Start the movement of a character by duplicating character into target location,
+   * Set character to animate,
+   * Remove the character reference from the previous location
+   * @param {ILocation} currentLocationDetails
+   * @param {ILocation} targetLocationDetails
+   */
+  public beginCharacterMovementAnimation(currentLocationDetails: ILocation, targetLocationDetails: ILocation, additionalWork?: any) {
+    // // Start the movement process
+    // this.areaStateService.setAwaitingArrival(targetLocationDetails);
+    // this.areaStateService.startCharacterMovement(targetLocationDetails.locationY + targetLocationDetails.locationX, currentLocationDetails.locationY + currentLocationDetails.locationX);
+
+    // Call the character's move method
+    this.areaStateService.locations[currentLocationDetails.locationY + currentLocationDetails.locationX].element.moveForwards(() => {
+
+      // // Finish the movement process
+      // this.areaStateService.endCharacterMovement(currentLocationDetails.locationY + currentLocationDetails.locationX);
+      // this.areaStateService.removeAwaitingArrival(targetLocationDetails);
+
+      // Perform any extra work that needs to be enacted in the callback
+      if (additionalWork) {
+        additionalWork();
+      }
+    });
   }
 
   /**

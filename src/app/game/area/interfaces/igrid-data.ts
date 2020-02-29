@@ -8,4 +8,5 @@ export interface IGridData {
       element: IAreaElement | null;
       floorStyle: FloorStyle | null;
       groundItem: LootBag | null;
+      awaitingArrival: boolean | null;
 }
