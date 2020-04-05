@@ -3,7 +3,8 @@ import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Subscription } from 'rxjs/Subscription';
 import { GameSettingsService } from './shared/services/game-settings.service';
 import { UserInputService } from './shared/services/user-input.service';
-import { AudioService } from './shared/services/audio.service';
+import { SoundEffectService } from './shared/services/sound-effect.service';
+import { backgroundMusic } from './game-config/audio';
 
 @Component({
   selector: 'app-root',
@@ -17,11 +18,15 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private gameSettingsService: GameSettingsService,
     private userInputService: UserInputService,
-    public audioService: AudioService,
+    public audioService: SoundEffectService,
   ) { }
 
   ngOnInit() {
 
+    // Listen for keyboard input events
+    this.userInputSubscription = fromEvent(document, 'keydown').subscribe(($e: KeyboardEvent) => {
+      this.userInputService.keyDownEventHandler($e);
+    });
   }
 
   get backgroundMusicIsPlaying() {
@@ -44,21 +49,19 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public playBackgroundMusic() {
 
-    console.log("Starting audio");
-    const audioEngine = new Audio();
+    // console.log("Starting audio");
+    // const audioEngine = new Audio();
 
-    // Set background volume
-    audioEngine.volume = 0.3;
+    // // Set background volume
+    // audioEngine.volume = 0.3;
 
-    // Load audio engine into service
-    this.audioService.loadAudioEngine(audioEngine);
-    this.audioService.setFile("475737__magmi-soundtracks__suspenseful-strings-music-01.mp3");
-    this.audioService.playSound();
+    // // Load audio engine into service
+    // this.audioService.loadAudioEngine(audioEngine);
+    // this.audioService.setFile(backgroundMusic.gameMusic);
 
-    // Listen for keyboard input events
-    this.userInputSubscription = fromEvent(document, 'keydown').subscribe(($e: KeyboardEvent) => {
-      this.userInputService.keyDownEventHandler($e);
-    });
+    // // TODO Undo this commenting
+    // // this.audioService.playSound(backgroundMusic.gameMusic);
+
   }
 
   /**

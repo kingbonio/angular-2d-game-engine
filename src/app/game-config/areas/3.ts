@@ -69,6 +69,7 @@ export default {
                         isLocked: true,
                         itemReferenceNeeded: "64c87a80-4f1a-4dc3-b2c8-c47a9c393f61",
                         imageFileName: "door.png",
+                        soundEffect: "openWoodenDoor",
                   },
                   startingPositionX: 3,
                   startingPositionY: "b",
@@ -98,6 +99,7 @@ export default {
                         isLocked: true,
                         itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbf693c76",
                         imageFileName: "old-chest.png",
+                        soundEffect: "openChest",
                         loot: [
                               weapons.axe,
                               potions.smallHealthPotion,

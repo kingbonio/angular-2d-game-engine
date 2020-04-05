@@ -22,6 +22,7 @@ import { GridObject } from './grid-object-classes/grid-object';
 import { IAreaElement } from './interfaces';
 import { IGridData } from './interfaces/igrid-data';
 import { ILevelData } from './interfaces/ilevel-data';
+import { SoundEffectService } from '../../shared/services/sound-effect.service';
 
 @Component({
   selector: 'app-area',
@@ -49,6 +50,7 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
     public battleCalculatorService: BattleCalculatorService,
     public gameSettingsService: GameSettingsService,
     public gameStateService: GameStateService,
+    public soundEffectService: SoundEffectService,
     private dialog: MatDialog,
   ) {
 
@@ -165,6 +167,10 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
   }
 
   private prepareArea(): void {
+
+    // // Kill any currently playing sounds
+    // this.soundEffectService.stopSound();
+
     if (this.areaStateService.loadingExistingArea) {
       // get the config from the provider
       this.areaConfig = this.areaConfigProviderService.getAreaConfig(this.areaStateService.currentArea);
