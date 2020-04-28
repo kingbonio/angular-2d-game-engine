@@ -3,6 +3,9 @@
 # Todo
 todo.txt
 
+# Package lock
+package-lock.json
+
 #Backups
 /areas-0.1.0
 

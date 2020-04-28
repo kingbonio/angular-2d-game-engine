@@ -58,8 +58,7 @@ https://www.youtube.com/channel/UCmU68D0OK6fXo351hs3qqjQ
 
 # Change Log
 
-v0.10.0a
+v0.11.0a
 
-* Added movement animations to characters changing location
-* Blocked movement for characters if they're currently in a movement animation
-* Resolved bug where you could tap on the input control and accidentally highlight the text
+* Added sound effects to some actions
+* Updated package.json
