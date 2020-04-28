@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import defaults from '../defaults';
 import { SoundEffects } from '../enums';
 import { soundEffects } from "../../game-config/audio/sound-effects";
+import { backgroundMusic } from '../../game-config/audio';
 
 interface IAudioEngine {
   play: any;
@@ -9,24 +10,24 @@ interface IAudioEngine {
   src: string;
 }
 
-interface IAudioItem {
-  reference: string;
-  active: boolean;
-}
-
 @Injectable({
   providedIn: 'root'
 })
 export class SoundEffectService {
 
-  public audioEngine: IAudioEngine;
-  private playingAudio: any;
-  public currentlyPlaying = false;
+  private soundEffectInstances = {};
+  private musicEngine: IAudioEngine;
+  public _isPlayingMusic = false;
 
-  constructor() { }
-
-  public loadAudioEngine(audioEngine: IAudioEngine) {
-    this.audioEngine = audioEngine;
+  constructor() {
+    for (const soundEffectName in SoundEffects) {
+      if (SoundEffects.hasOwnProperty(soundEffectName)) {
+        this.soundEffectInstances[soundEffectName] = new Audio();
+        this.soundEffectInstances[soundEffectName].src = soundEffects[soundEffectName];
+        this.soundEffectInstances[soundEffectName].load();
+      }
+    }
+    this.musicEngine = new Audio();
   }
 
   /**
@@ -35,58 +36,36 @@ export class SoundEffectService {
    */
   public playSound(soundName: SoundEffects) {
 
-    // TODO this needs moving to injection
-    if (!this.audioEngine) {
-      this.audioEngine = new Audio();
-    }
 
-    this.audioEngine.src = soundEffects[soundName];
-    this.audioEngine.load();
-    // this.audioEngine.load(soundEffects[soundName]);
-
-    // this.audioEngine.play();
-
-    this.audioEngine.play()
+    this.soundEffectInstances[soundName].load();
+    this.soundEffectInstances[soundName].play()
       .then(() => {
 
       }).catch(() => {
 
-        // TODO This feels awful
-        console.log("The audio element threw an error");
+        // TODO Swallowing errors
       });
-
-
-
-
-    // // const soundSrc = defaults.soundEffectFiles[soundName];
-
-    // if (this.audioEngine && this.audioEngine.src) {
-    //   this.audioEngine.load();
-    //   this.audioEngine.play();
-    //   this.currentlyPlaying = true;
-    // } else {
-
-    //   // Do nothing
-    // }
-    // const itemReference = this.audioEngine.play();
-    // this.playingAudio[itemReference] = ;
   }
 
-  public stopSound() {
-    // TODO this needs moving to injection
-    if (!this.audioEngine) {
-      this.audioEngine = new Audio();
+  public playMusic(musicName: string) {
+    this.musicEngine.src = backgroundMusic.gameMusic;
+    this.musicEngine.load();
+    this.musicEngine.play()
+      .then(() => {
+
+      }).catch(() => {
+
+        // TODO Swallowing errors
+      });
+  }
+
+  public toggleMusic() {
+    if (this._isPlayingMusic) {
+      this.musicEngine.load();
+      this._isPlayingMusic = false;
+    } else {
+      this.musicEngine.play();
+      this._isPlayingMusic = true;
     }
-
-    this.audioEngine.load();
-    this.currentlyPlaying = false;
   }
-
-  public setFile(filename: string) {
-    this.audioEngine.src = "assets/audio/music/" + filename;
-  }
-
-  // public stopSound(): boolean {
-
-  // }
 }

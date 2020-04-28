@@ -253,6 +253,7 @@ export class PlayerStateService {
 
     // If there's no target and there are ground items
     if (!targetElement && targetLocation.groundItem) {
+      this.soundEffectService.playSound(SoundEffects.rustleBag);
       this.openLootingModal.emit(targetLocation);
 
       return;
@@ -320,6 +321,7 @@ export class PlayerStateService {
           const stealSuccess = this.attemptSteal(targetElement);
 
           if (stealSuccess) {
+            this.soundEffectService.playSound(SoundEffects.rustleBag);
             this.openLootingModal.emit(targetLocation);
           } else {
             this.dialogueService.displayDialogueMessage({

@@ -6,4 +6,5 @@ export const soundEffects = {
       openStoneDoor: "assets/audio/sounds/31769__slanesh__porte-pierre-2.mp3",
       openWoodenDoor: "assets/audio/sounds/431117__inspectorj__door-front-opening-a.mp3",
       openChest: "assets/audio/sounds/422975__dkiller2204__sfxwoodenobjectopen.mp3",
+      rustleBag: "assets/audio/sounds/429080__leonelmail__shirt-clothing-movement.mp3",
 };

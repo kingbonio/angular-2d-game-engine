@@ -27,41 +27,15 @@ export class AppComponent implements OnInit, OnDestroy {
     this.userInputSubscription = fromEvent(document, 'keydown').subscribe(($e: KeyboardEvent) => {
       this.userInputService.keyDownEventHandler($e);
     });
-  }
-
-  get backgroundMusicIsPlaying() {
-    return this.audioService.currentlyPlaying;
-  }
-
-  set backgroundMusicIsPlaying(newStatus: boolean) {
-    this.audioService.currentlyPlaying = newStatus;
+    // this.playBackgroundMusic();
   }
 
   public toggleBackgroundMusic() {
-    if (this.backgroundMusicIsPlaying) {
-      this.audioService.stopSound();
-    } else {
-      // TODO Not this
-      this.playBackgroundMusic();
-    }
-    this.backgroundMusicIsPlaying = !this.backgroundMusicIsPlaying;
+    this.audioService.toggleMusic();
   }
 
   public playBackgroundMusic() {
-
-    // console.log("Starting audio");
-    // const audioEngine = new Audio();
-
-    // // Set background volume
-    // audioEngine.volume = 0.3;
-
-    // // Load audio engine into service
-    // this.audioService.loadAudioEngine(audioEngine);
-    // this.audioService.setFile(backgroundMusic.gameMusic);
-
-    // // TODO Undo this commenting
-    // // this.audioService.playSound(backgroundMusic.gameMusic);
-
+    this.audioService.playMusic(backgroundMusic.gameMusic);
   }
 
   /**

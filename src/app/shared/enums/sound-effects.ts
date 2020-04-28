@@ -6,4 +6,5 @@ export enum SoundEffects {
       openStoneDoor = "openStoneDoor",
       openWoodenDoor = "openWoodenDoor",
       openChest = "openChest",
+      rustleBag = "rustleBag",
 }
