@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import defaults from '../../../shared/defaults';
-import { UserInteractionTypes } from '../../../shared/enums';
+import { UserInteractionTypes, SoundEffects } from '../../../shared/enums';
 import { AreaExitStatus } from '../../area/enums';
 import { IGridData } from '../../area/interfaces';
 import { Character } from '../../character-classes/character';
@@ -16,6 +16,7 @@ import { MovementComponent } from '../util/movement/movement.component';
 import { AreaStateService } from './area-state.service';
 import { BattleCalculatorService } from './battle-calculator.service';
 import { DialogueService } from './dialogue.service';
+import { SoundEffectService } from '../../../shared/services/sound-effect.service';
 
 @Injectable()
 export class PlayerStateService {
@@ -41,6 +42,7 @@ export class PlayerStateService {
     private battleCalculatorService: BattleCalculatorService,
     private equipmentManagerService: EquipmentManagerService,
     private inventoryManagerService: InventoryManagerService,
+    private soundEffectService: SoundEffectService,
     // private userInputService: UserInputService,
 
   ) {
@@ -116,6 +118,9 @@ export class PlayerStateService {
       // TODO This could be moved into a getter
       const playerLocationDetails = this.areaStateService.splitLocationReference(this.locationY + this.locationX);
 
+      // Play walking sound
+      this.soundEffectService.playSound(SoundEffects.walk);
+
       this.movement.moveCharacterWithAnimation(playerLocationDetails, newLocation);
 
       this.locationY = newLocation.locationY;
@@ -147,6 +152,8 @@ export class PlayerStateService {
     // Allow the player attack animation
     this.areaStateService.locations[this.areaStateService.playerLocation].element.attack();
 
+    // TODO Move this to where it's hitting the attacker
+
     // if (this.equipmentManagerService.getWeaponType(this.selectedWeaponSlot)) {
     const targetReference = GridHelper.getNextLocation(this.locationY, this.locationX, this.direction, this.areaStateService.locations);
     const targetLocation = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
@@ -159,6 +166,9 @@ export class PlayerStateService {
       if (damage) {
         // No need to assign this
         targetElement.respond(UserInteractionTypes.attack, GridHelper.getDirectionToFace(this.direction), damage);
+
+        // Play slashing sound
+        this.soundEffectService.playSound(SoundEffects.slash);
 
         // Allow the character to animate receiving an attack
         targetElement.receiveAttack();
@@ -183,12 +193,20 @@ export class PlayerStateService {
           });
         }
       } else {
+
+        // Play slashing sound
+        this.soundEffectService.playSound(SoundEffects.slashMiss);
+
         this.dialogueService.displayDialogueMessage({
           text: defaults.dialogue.attackFailure,
           character: defaults.dialogue.computerCharacterType,
           name: defaults.dialogue.computerName
         });
       }
+    } else {
+
+      // Play slashing sound
+      this.soundEffectService.playSound(SoundEffects.slashMiss);
     }
   }
 
@@ -212,6 +230,10 @@ export class PlayerStateService {
 
           // Open the door
           currentLocation.areaExit.status = AreaExitStatus.opening;
+
+          // Play stone door opening sound
+          this.soundEffectService.playSound(SoundEffects.openStoneDoor);
+
         } else {
           this.dialogueService.displayDialogueMessage({
             text: defaults.dialogue.areaExitKeyNotActive(currentLocation.areaExit.keyColourNeeded),
@@ -231,6 +253,7 @@ export class PlayerStateService {
 
     // If there's no target and there are ground items
     if (!targetElement && targetLocation.groundItem) {
+      this.soundEffectService.playSound(SoundEffects.rustleBag);
       this.openLootingModal.emit(targetLocation);
 
       return;
@@ -260,6 +283,11 @@ export class PlayerStateService {
               default:
                 // Do nothing...
                 break;
+            }
+
+            // Play the relevant sound effect
+            if (targetElement.soundEffect) {
+              this.soundEffectService.playSound(targetElement.soundEffect);
             }
 
             if (activeItem.destroyedOnUse) {
@@ -293,6 +321,7 @@ export class PlayerStateService {
           const stealSuccess = this.attemptSteal(targetElement);
 
           if (stealSuccess) {
+            this.soundEffectService.playSound(SoundEffects.rustleBag);
             this.openLootingModal.emit(targetLocation);
           } else {
             this.dialogueService.displayDialogueMessage({
@@ -375,6 +404,12 @@ export class PlayerStateService {
     let damage = this.battleCalculatorService.getDamageToPlayer(character, this.equipmentManagerService.armour, !!player.isGuarding, this.equipmentManagerService.activeBuff);
     if (damage) {
 
+      if (player.isGuarding) {
+
+        // Play the guard/strike sound
+        this.soundEffectService.playSound(SoundEffects.defendSlash);
+      }
+
       // Allow the player to animate receiving an attack
       player.receiveAttack();
 
@@ -404,6 +439,7 @@ export class PlayerStateService {
         name: defaults.dialogue.computerName
       });
     } else {
+
       this.dialogueService.displayDialogueMessage({
         text: defaults.dialogue.enemyFailsAttack(character.name),
         character: defaults.dialogue.computerCharacterType,

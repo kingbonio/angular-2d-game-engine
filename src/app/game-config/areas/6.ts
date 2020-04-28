@@ -499,6 +499,7 @@ export default {
                         isLocked: true,
                         itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbf693c76",
                         imageFileName: "old-chest.png",
+                        soundEffect: "openChest",
                         loot: [
                               potions.smallDamageBuff,
                         ]
@@ -518,6 +519,7 @@ export default {
                         isLocked: true,
                         itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbf693c76",
                         imageFileName: "old-chest.png",
+                        soundEffect: "openChest",
                         loot: [
                               potions.smallDamageBuff,
                         ]
@@ -538,6 +540,7 @@ export default {
                         lockedDialogue: "Kill the darkness to open the chest",
                         itemReferenceNeeded: "58e99098-ede4-4c2f-813d-40c77ab304d4",
                         imageFileName: "old-chest.png",
+                        soundEffect: "openChest",
                         loot: [
                               weapons.axe,
                               potions.smallHealthPotion,

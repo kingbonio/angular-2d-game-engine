@@ -1,10 +1,12 @@
 import { IInventoryItem } from "../../item/interfaces";
 import { Direction, ElementClass, ObjectType } from "../../shared/enums";
+import { SoundEffects } from "../../../shared/enums";
 
 export class GridObject {
       public type = ElementClass.object;
       public name: string;
       public imageFileName: string;
+      public soundEffect: SoundEffects;
       public canBeTraversed: boolean;
       public isInteractive: boolean;
       public isLocked: boolean;
@@ -50,6 +52,7 @@ export class GridObject {
 
             this.name = elementProperties.name;
             this.imageFileName = elementProperties.imageFileName;
+            this.soundEffect = elementProperties.soundEffect;
             this.canBeTraversed = elementProperties.canBeTraversed;
             this.isInteractive = elementProperties.isInteractive;
             this.direction = elementProperties.direction;
