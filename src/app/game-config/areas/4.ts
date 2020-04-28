@@ -330,6 +330,7 @@ export default {
                         isLocked: true,
                         itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbf693c76",
                         imageFileName: "old-chest.png",
+                        soundEffect: "openChest",
                         loot: [
                               potions.invisiblityPotion,
                               keyItems.redDoorKey

@@ -3,6 +3,8 @@ import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Subscription } from 'rxjs/Subscription';
 import { GameSettingsService } from './shared/services/game-settings.service';
 import { UserInputService } from './shared/services/user-input.service';
+import { SoundEffectService } from './shared/services/sound-effect.service';
+import { backgroundMusic } from './game-config/audio';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +18,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private gameSettingsService: GameSettingsService,
     private userInputService: UserInputService,
+    public audioService: SoundEffectService,
   ) { }
 
   ngOnInit() {
@@ -24,6 +27,15 @@ export class AppComponent implements OnInit, OnDestroy {
     this.userInputSubscription = fromEvent(document, 'keydown').subscribe(($e: KeyboardEvent) => {
       this.userInputService.keyDownEventHandler($e);
     });
+    // this.playBackgroundMusic();
+  }
+
+  public toggleBackgroundMusic() {
+    this.audioService.toggleMusic();
+  }
+
+  public playBackgroundMusic() {
+    this.audioService.playMusic(backgroundMusic.gameMusic);
   }
 
   /**
