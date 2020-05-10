@@ -57,7 +57,7 @@ export class AreaConfigProviderService implements OnInit {
     this.inventoryManagerService.addItemToInventory(armour.leatherChestPiece);
     // this.inventoryManagerService.addItemToInventory(armour.ironHelmet);
     // this.inventoryManagerService.addItemToInventory(keyItems.greenDoorKey);
-    this.inventoryManagerService.addItemToInventory(keyItems.fancyKey);
+    // this.inventoryManagerService.addItemToInventory(keyItems.fancyKey);
   }
 
   /**
