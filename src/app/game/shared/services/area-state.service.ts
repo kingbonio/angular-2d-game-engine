@@ -24,12 +24,8 @@ export class AreaStateService implements OnInit {
 
   constructor(
   ) {
-    // Set the state to be the first level before anything
-    this.currentArea = 1;
-    this.newArea = null;
-    // TODO Might be worth holding location x and y data on the object alongside the gridObject or null
-    this.locations = this.cloneLocations(locationDefaults);
-    this.locationKeys = Object.keys;
+    this.setDefaults();
+
     // TODO: Maybe we should have a generic area which has properties of
     // puzzle, enemy, design, potential items etc.
     this.areaChange = new BehaviorSubject(1);
@@ -197,6 +193,21 @@ export class AreaStateService implements OnInit {
 
     this.areaChange.next(savedState.currentLocation);
     this.areaReady.next(savedState.currentLocation);
+  }
+
+  /**
+   * Reset all local parameters to default
+   */
+  public setDefaults() {
+    this.currentArea = 1;
+    this.newArea = null;
+    this.locations = this.cloneLocations(locationDefaults);
+    this.locationKeys = Object.keys;
+    this.loadingPreviousArea = false;
+    this.loadingExistingArea = false;
+    this.loadingSavedGame = false;
+    this.previousPlayerLocation = null;
+    this.huntingList = [];
   }
 
   /**

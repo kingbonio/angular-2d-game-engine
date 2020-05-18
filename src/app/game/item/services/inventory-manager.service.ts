@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IInventoryItem, IInventoryStateData } from '../../shared/interfaces';
-import { DialogueService } from '../../shared/services/dialogue.service';
 import { IInventoryReferences } from '../inventory/interfaces';
+import { armour, potions, weapons, keyItems } from '../../../game-config/items';
 
 @Injectable()
 export class InventoryManagerService {
@@ -9,40 +9,24 @@ export class InventoryManagerService {
   public locations: IInventoryReferences;
 
   constructor(
-    private dialogueService: DialogueService,
   ) {
-    this.locations = {
-      a1: null,
-      a2: null,
-      a3: null,
-      a4: null,
-      a5: null,
-      b1: null,
-      b2: null,
-      b3: null,
-      b4: null,
-      b5: null,
-      c1: null,
-      c2: null,
-      c3: null,
-      c4: null,
-      c5: null,
-      d1: null,
-      d2: null,
-      d3: null,
-      d4: null,
-      d5: null,
-      e1: null,
-      e2: null,
-      e3: null,
-      e4: null,
-      e5: null,
-    };
-    this.locationKeys = Object.keys;
+    this.setDefaults();
+    // this.addItemToInventory(potions.smallArmourBuff);
+    // this.addItemToInventory(potions.smallHealthPotion);
+    // this.addItemToInventory(potions.smallHealthPotion);
+    // this.addItemToInventory(potions.smallHealthPotion);
+    // this.addItemToInventory(potions.invisiblityPotion);
+    // this.addItemToInventory(weapons.sword);
+    // this.addItemToInventory(potions.smallDamageBuff);
+    // this.addItemToInventory(potions.largeHealthBuff);
+    // this.addItemToInventory(weapons.sword);
+    // this.addItemToInventory(weapons.axe);
+    // this.addItemToInventory(armour.leatherChestPiece);
+    // this.addItemToInventory(armour.ironHelmet);
+    // this.addItemToInventory(keyItems.greenDoorKey);
+    // this.addItemToInventory(keyItems.fancyKey);
+    this.addItemToInventory(armour.leatherChestPiece);
   }
-
-
-  onInit() { }
 
   /**
    * Return the total weight of the contents of the inventory
@@ -127,6 +111,40 @@ export class InventoryManagerService {
     //   // TODO: build recipient of this and insert translation service
     //   // this.notificationsService("Item cannot be found in inventory");
     // }
+  }
+
+  /**
+   * Sets all service states to default
+   */
+  public setDefaults() {
+    this.locations = {
+      a1: null,
+      a2: null,
+      a3: null,
+      a4: null,
+      a5: null,
+      b1: null,
+      b2: null,
+      b3: null,
+      b4: null,
+      b5: null,
+      c1: null,
+      c2: null,
+      c3: null,
+      c4: null,
+      c5: null,
+      d1: null,
+      d2: null,
+      d3: null,
+      d4: null,
+      d5: null,
+      e1: null,
+      e2: null,
+      e3: null,
+      e4: null,
+      e5: null,
+    };
+    this.locationKeys = Object.keys;
   }
 
   /**

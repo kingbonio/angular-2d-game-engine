@@ -6,6 +6,8 @@ import { LootBag } from '../../area/grid-object-classes/loot-bag';
 import { DialogueService } from '../../shared/services/dialogue.service';
 import { GameStateService } from '../../shared/services/game-state.service';
 import { InventoryManagerService } from '../services/inventory-manager.service';
+import { SoundEffectService } from '../../../shared/services/sound-effect.service';
+import { SoundEffects } from '../../../shared/enums';
 
 @Component({
   selector: 'app-looting',
@@ -19,6 +21,7 @@ export class LootingModalComponent implements OnInit, OnDestroy {
     private inventoryManagerService: InventoryManagerService,
     private dialogueService: DialogueService,
     private gameStateService: GameStateService,
+    private soundEffectsService: SoundEffectService,
     @Inject(MAT_DIALOG_DATA) data
   ) {
     this.targetGridData = data;
@@ -34,6 +37,7 @@ export class LootingModalComponent implements OnInit, OnDestroy {
 
       // Only perform this if error not thrown
       this.targetGridData.inventoryLocations[itemSlot] = null;
+      this.soundEffectsService.playSound(SoundEffects.moveItem);
     } catch (err) {
       this.dialogueService.displayDialogueMessage({
         text: defaults.dialogue.inventoryFull,

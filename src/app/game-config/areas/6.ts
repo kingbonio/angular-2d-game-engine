@@ -5,6 +5,7 @@ import { armour, keyItems, potions, weapons } from "../items";
 
 export default {
       room: 6,
+      backgroundMusic: "bossMusic",
       areaLoadMessage: "Test area",
       areaElements: [
             {

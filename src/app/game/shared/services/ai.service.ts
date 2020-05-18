@@ -30,7 +30,6 @@ export class AiService {
     private gameStateService: GameStateService,
   ) {
     this.userInputService.playerMoved.subscribe(data => {
-      console.log("Enacted event listener");
       // TODO This may need a more specific flag
       // We don't want to perform AI actions if loading game
       if (!this.gameStateService.gamePaused &&

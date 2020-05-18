@@ -13,22 +13,23 @@ export class BackgroundMusicService {
     this._musicEngine = new Audio();
 
     // TODO Move this
-    this._musicEngine.src = backgroundMusic.gameMusic;
+    // this._musicEngine.src = backgroundMusic.gameMusic;
 
     // TODO Move this to game config
-    this._musicEngine.volume = 0.4;
+    this._musicEngine.volume = 0.2;
   }
 
-  public async startMusic() {
+  public startMusic() {
     if (this._musicEngine.src) {
-      await this._musicEngine.load();
-      await this._musicEngine.play();
+      this._musicEngine.load();
+      this._musicEngine.play();
     } else {
       // TODO maybe a default music
     }
   }
 
   public stopMusic() {
+    this._musicEngine.src = "";
     this._musicEngine.load();
   }
 
@@ -37,13 +38,14 @@ export class BackgroundMusicService {
   }
 
   public loadMusic(musicName: string) {
-    if (this._musicEngine.src !== backgroundMusic[musicName]) {
+    // TODO this check is not efficient
+    if (!this._musicEngine.src.includes(backgroundMusic[musicName])) {
       this._musicEngine.src = backgroundMusic[musicName];
-    }
-
-    if (this._musicEngine.src) {
       this.startMusic();
     }
+
+    // Continue playing the same music
+    return;
   }
 
   // TODO get rid of this

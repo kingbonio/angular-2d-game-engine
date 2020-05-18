@@ -5,10 +5,12 @@ import { IDialogueStateData } from '../interfaces';
 
 @Injectable()
 export class DialogueService {
-  messagesOnScreen: ISpeech[] = [];
-  pendingMessages: ISpeech[] = [];
+  public messagesOnScreen: ISpeech[];
+  public pendingMessages: ISpeech[];
 
-  constructor() { }
+  constructor() {
+    this.setDefaults();
+  }
 
   /**
    * Add the message to either pending or messages on screen and set timer to remove
@@ -52,6 +54,11 @@ export class DialogueService {
   //     }
   //   }, timerDuration);
   // }
+
+  public setDefaults() {
+    this.messagesOnScreen = [];
+    this.pendingMessages = [];
+  }
 
   /**
    * Return the dialogue state for storage

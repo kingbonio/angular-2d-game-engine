@@ -47,12 +47,12 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
     public areaStateService: AreaStateService,
     public dialogueService: DialogueService,
     public areaConfigProviderService: AreaConfigProviderService,
+    public soundEffectService: SoundEffectService,
+    public backgroundMusicService: BackgroundMusicService,
     public playerStateService: PlayerStateService,
     public battleCalculatorService: BattleCalculatorService,
     public gameSettingsService: GameSettingsService,
     public gameStateService: GameStateService,
-    public soundEffectService: SoundEffectService,
-    public backgroundMusicService: BackgroundMusicService,
     private dialog: MatDialog,
   ) {
 
@@ -349,6 +349,9 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
+
+
+
     this.openLootingModalSubscription.unsubscribe();
     this.openMessageModalSubscription.unsubscribe();
 

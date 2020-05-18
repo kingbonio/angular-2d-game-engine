@@ -10,28 +10,17 @@ import { InventoryManagerService } from './inventory-manager.service';
 
 @Injectable()
 export class EquipmentManagerService {
-  public armour: IArmour = {
-    head: null,
-    arms: null,
-    hands: null,
-    torso: null,
-    legs: null,
-    boots: null,
-  };
-  public weapons: IWeapons = {
-    primary: null,
-    secondary: null,
-    concealed: null,
-    shield: null,
-  };
+  public armour: IArmour;
+  public weapons: IWeapons;
   public activeItem: IInventoryItem;
-  public activeBuff: IInventoryItem | null = null;
-  public buffTimeRemaining = 0;
+  public activeBuff: IInventoryItem | null;
+  public buffTimeRemaining: number;
 
   constructor(
     private inventoryManagerService: InventoryManagerService,
     private timerService: TimerService,
   ) {
+    this.setDefaults();
     this.timerService.counter.subscribe(value => {
       if (this.buffTimeRemaining > 0) {
         this.buffTimeRemaining--;
@@ -146,6 +135,30 @@ export class EquipmentManagerService {
 
   public startBuffTimer(duration: number): void {
     this.buffTimeRemaining = duration;
+  }
+
+  /**
+   * Resets service's state to default
+   */
+  public setDefaults() {
+    this.armour = {
+      head: null,
+      arms: null,
+      hands: null,
+      torso: null,
+      legs: null,
+      boots: null,
+    };
+    this.weapons = {
+      primary: null,
+      secondary: null,
+      concealed: null,
+      shield: null,
+    };
+
+    this.activeItem = null;
+    this.activeBuff = null;
+    this.buffTimeRemaining = 0;
   }
 
   /**

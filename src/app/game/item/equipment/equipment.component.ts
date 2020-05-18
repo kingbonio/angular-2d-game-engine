@@ -4,6 +4,8 @@ import { DialogueService } from '../../shared/services/dialogue.service';
 import { IInventoryItem } from '../interfaces';
 import { EquipmentManagerService } from '../services/equipment-manager.service';
 import { InventoryManagerService } from '../services/inventory-manager.service';
+import { SoundEffects } from '../../../shared/enums';
+import { SoundEffectService } from '../../../shared/services/sound-effect.service';
 
 @Component({
   selector: 'app-equipment',
@@ -16,6 +18,7 @@ export class EquipmentComponent {
     public equipmentManagerService: EquipmentManagerService,
     public inventoryManagerService: InventoryManagerService,
     private dialogueService: DialogueService,
+    private soundEffectsService: SoundEffectService,
 
   ) { }
 
@@ -24,6 +27,7 @@ export class EquipmentComponent {
       try {
         this.inventoryManagerService.addItemToInventory(item);
         this.equipmentManagerService.removeArmour(item.armourSlot);
+        this.soundEffectsService.playSound(SoundEffects.moveItem);
       } catch (err) {
         this.dialogueService.displayDialogueMessage({
           text: defaults.dialogue.inventoryFull,
@@ -39,6 +43,7 @@ export class EquipmentComponent {
       try {
         this.inventoryManagerService.addItemToInventory(item);
         this.equipmentManagerService.removeWeapon(item.weaponSlot);
+        this.soundEffectsService.playSound(SoundEffects.moveItem);
       } catch (err) {
         this.dialogueService.displayDialogueMessage({
           text: defaults.dialogue.inventoryFull,
@@ -54,6 +59,7 @@ export class EquipmentComponent {
       try {
         this.inventoryManagerService.addItemToInventory(item);
         this.equipmentManagerService.removeActiveItem();
+        this.soundEffectsService.playSound(SoundEffects.moveItem);
       } catch (err) {
         this.dialogueService.displayDialogueMessage({
           text: defaults.dialogue.inventoryFull,
