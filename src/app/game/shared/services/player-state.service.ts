@@ -501,6 +501,18 @@ export class PlayerStateService {
   }
 
   /**
+   * Resets player, inventory and equipment states to default
+   */
+  public setPlayerDefaults() {
+    this.health = defaults.initialPlayerStats.health;
+    this.maxHealth = defaults.initialPlayerStats.maxHealth;
+    this.direction = defaults.initialPlayerStats.direction;
+
+    this.equipmentManagerService.setDefaults();
+    this.inventoryManagerService.setDefaults();
+  }
+
+  /**
    * Return the player state for storage
    * @returns the state data relevant to this service
    */

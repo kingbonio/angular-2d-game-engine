@@ -7,4 +7,5 @@ export const soundEffects = {
       openWoodenDoor: "assets/audio/sounds/431117__inspectorj__door-front-opening-a.mp3",
       openChest: "assets/audio/sounds/422975__dkiller2204__sfxwoodenobjectopen.mp3",
       rustleBag: "assets/audio/sounds/429080__leonelmail__shirt-clothing-movement.mp3",
+      moveItem: "assets/audio/sounds/429080__leonelmail__shirt-clothing-movement-2.mp3",
 };

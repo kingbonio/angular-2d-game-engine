@@ -18,6 +18,8 @@ import { AreaStateService } from './shared/services/area-state.service';
 import { DialogueService } from './shared/services/dialogue.service';
 import { GameStateService } from './shared/services/game-state.service';
 import { PlayerStateService } from './shared/services/player-state.service';
+import { Router, Event } from '@angular/router';
+import { BackgroundMusicService } from '../shared/services/background-music.service';
 
 @Component({
   selector: 'app-game-root',
@@ -48,7 +50,9 @@ export class GameComponent implements OnInit, OnDestroy {
     public gameStateService: GameStateService,
     public gameSettingsService: GameSettingsService,
     public applicationStateService: ApplicationStateService,
+    public backgroundMusicService: BackgroundMusicService,
     private dialog: MatDialog,
+    private router: Router,
   ) {
     this.applicationStateService.gameOpen = true;
   }
@@ -178,6 +182,14 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    // TODO This needs to happen if you leave the route
+    this.backgroundMusicService.stopMusic();
+
+    // TODO this needs extending cover all services
+    this.areaStateService.setDefaults();
+    this.playerStateService.setPlayerDefaults();
+    this.dialogueService.setDefaults();
+
     this.areaChangeSubscription.unsubscribe();
     this.areaReadySubscription.unsubscribe();
   }

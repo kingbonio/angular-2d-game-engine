@@ -23,6 +23,7 @@ import { IAreaElement } from './interfaces';
 import { IGridData } from './interfaces/igrid-data';
 import { ILevelData } from './interfaces/ilevel-data';
 import { SoundEffectService } from '../../shared/services/sound-effect.service';
+import { BackgroundMusicService } from '../../shared/services/background-music.service';
 
 @Component({
   selector: 'app-area',
@@ -46,11 +47,12 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
     public areaStateService: AreaStateService,
     public dialogueService: DialogueService,
     public areaConfigProviderService: AreaConfigProviderService,
+    public soundEffectService: SoundEffectService,
+    public backgroundMusicService: BackgroundMusicService,
     public playerStateService: PlayerStateService,
     public battleCalculatorService: BattleCalculatorService,
     public gameSettingsService: GameSettingsService,
     public gameStateService: GameStateService,
-    public soundEffectService: SoundEffectService,
     private dialog: MatDialog,
   ) {
 
@@ -65,7 +67,11 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
     // Build the area
     this.prepareArea();
 
+    // Play background music
+    // TODO Need to get a way of retaining the existing music playing if it's no different
+    this.backgroundMusicService.loadMusic(this.areaConfig.backgroundMusic);
   }
+
   ngAfterViewInit() {
 
     // Declare component loading complete
@@ -343,6 +349,9 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
+
+
+
     this.openLootingModalSubscription.unsubscribe();
     this.openMessageModalSubscription.unsubscribe();
 
