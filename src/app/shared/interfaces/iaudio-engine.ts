@@ -4,4 +4,5 @@ export interface IAudioEngine {
       pause: any;
       src: string;
       volume: number;
+      loop: boolean;
 }

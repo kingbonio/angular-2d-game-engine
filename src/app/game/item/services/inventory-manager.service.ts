@@ -11,21 +11,6 @@ export class InventoryManagerService {
   constructor(
   ) {
     this.setDefaults();
-    // this.addItemToInventory(potions.smallArmourBuff);
-    // this.addItemToInventory(potions.smallHealthPotion);
-    // this.addItemToInventory(potions.smallHealthPotion);
-    // this.addItemToInventory(potions.smallHealthPotion);
-    // this.addItemToInventory(potions.invisiblityPotion);
-    // this.addItemToInventory(weapons.sword);
-    // this.addItemToInventory(potions.smallDamageBuff);
-    // this.addItemToInventory(potions.largeHealthBuff);
-    // this.addItemToInventory(weapons.sword);
-    // this.addItemToInventory(weapons.axe);
-    // this.addItemToInventory(armour.leatherChestPiece);
-    // this.addItemToInventory(armour.ironHelmet);
-    // this.addItemToInventory(keyItems.greenDoorKey);
-    // this.addItemToInventory(keyItems.fancyKey);
-    this.addItemToInventory(armour.leatherChestPiece);
   }
 
   /**
@@ -145,6 +130,23 @@ export class InventoryManagerService {
       e5: null,
     };
     this.locationKeys = Object.keys;
+    this.addItemToInventory(armour.leatherChestPiece);
+
+    // this.addItemToInventory(potions.smallArmourBuff);
+    // this.addItemToInventory(potions.smallHealthPotion);
+    // this.addItemToInventory(potions.smallHealthPotion);
+    // this.addItemToInventory(potions.smallHealthPotion);
+    // this.addItemToInventory(potions.invisiblityPotion);
+    // this.addItemToInventory(weapons.sword);
+    // this.addItemToInventory(potions.smallDamageBuff);
+    // this.addItemToInventory(potions.largeHealthBuff);
+    // this.addItemToInventory(weapons.sword);
+    // this.addItemToInventory(weapons.axe);
+    // this.addItemToInventory(armour.leatherChestPiece);
+    // this.addItemToInventory(armour.ironHelmet);
+    // this.addItemToInventory(keyItems.greenDoorKey);
+    // this.addItemToInventory(keyItems.fancyKey);
+    // this.addItemToInventory(armour.leatherChestPiece);
   }
 
   /**
