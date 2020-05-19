@@ -69,7 +69,7 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
 
     // Play background music
     // TODO Need to get a way of retaining the existing music playing if it's no different
-    this.backgroundMusicService.loadMusic(this.areaConfig.backgroundMusic);
+    this.backgroundMusicService.startMusic(this.areaConfig.backgroundMusic);
   }
 
   ngAfterViewInit() {

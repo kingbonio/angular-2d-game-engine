@@ -126,7 +126,7 @@ export default {
                         directionsForPatrol: [
                         ],
                         maxHuntingDuration: 3,
-                        startingState: CharacterState.wandering,
+                        startingState: CharacterState.still,
                         speechResponse: "Stop bothering me, you fool!",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
                         lootParameters: {

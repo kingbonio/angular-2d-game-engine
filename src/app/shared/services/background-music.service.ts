@@ -1,61 +1,46 @@
 import { Injectable } from '@angular/core';
 import { backgroundMusic } from '../../game-config/audio';
 import { IAudioEngine } from '../interfaces';
+import { BackgroundMusic } from '../enums';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackgroundMusicService {
-  private _musicEngine: IAudioEngine;
-  public isPlayingMusic = false;
+  private backgroundMusicInstances = {};
+  private currentlyActiveMusic: BackgroundMusic;
 
   constructor() {
-    this._musicEngine = new Audio();
-
-    // TODO Move this
-    // this._musicEngine.src = backgroundMusic.gameMusic;
-
-    // TODO Move this to game config
-    this._musicEngine.volume = 0.2;
-  }
-
-  public startMusic() {
-    if (this._musicEngine.src) {
-      this._musicEngine.load();
-      this._musicEngine.play();
-    } else {
-      // TODO maybe a default music
+    for (const backgroundMusicName in BackgroundMusic) {
+      if (BackgroundMusic.hasOwnProperty(backgroundMusicName)) {
+        this.backgroundMusicInstances[backgroundMusicName] = new Audio() as IAudioEngine;
+        this.backgroundMusicInstances[backgroundMusicName].loop = true;
+        this.backgroundMusicInstances[backgroundMusicName].volume = 0.2;
+        this.backgroundMusicInstances[backgroundMusicName].src = backgroundMusic[backgroundMusicName];
+        this.backgroundMusicInstances[backgroundMusicName].load();
+      }
     }
   }
 
   public stopMusic() {
-    this._musicEngine.src = "";
-    this._musicEngine.load();
-  }
-
-  public pauseMusic() {
-    this._musicEngine.pause();
-  }
-
-  public loadMusic(musicName: string) {
-    // TODO this check is not efficient
-    if (!this._musicEngine.src.includes(backgroundMusic[musicName])) {
-      this._musicEngine.src = backgroundMusic[musicName];
-      this.startMusic();
+    for (const backgroundMusicInstance in this.backgroundMusicInstances) {
+      if (this.backgroundMusicInstances.hasOwnProperty(backgroundMusicInstance)) {
+        this.backgroundMusicInstances[backgroundMusicInstance].load();
+      }
     }
-
-    // Continue playing the same music
-    return;
   }
 
-  // TODO get rid of this
-  public toggleMusic() {
-    if (this.isPlayingMusic) {
-      this._musicEngine.load();
-      this.isPlayingMusic = false;
-    } else {
-      this._musicEngine.play();
-      this.isPlayingMusic = true;
+  public startMusic(musicName: BackgroundMusic) {
+    if (this.currentlyActiveMusic !== musicName) {
+      for (const backgroundMusicInstance in this.backgroundMusicInstances) {
+        if (this.backgroundMusicInstances.hasOwnProperty(backgroundMusicInstance)) {
+          this.backgroundMusicInstances[backgroundMusicInstance].load();
+          if (backgroundMusicInstance === musicName) {
+            this.backgroundMusicInstances[backgroundMusicInstance].play();
+            this.currentlyActiveMusic = musicName;
+          }
+        }
+      }
     }
   }
 }
