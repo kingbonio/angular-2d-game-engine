@@ -9,7 +9,6 @@ import { AreaComponent } from './area/area.component';
 import { DeadModalComponent } from './dead-modal/dead-modal.component';
 import { DialogueComponent } from './dialogue/dialogue.component';
 import { GameModalComponent } from './game-menu/game-modal/game-modal.component';
-import { GameRoutingModule } from './game-routing.module';
 import { GameComponent } from './game.component';
 import { EquipmentComponent } from './item/equipment/equipment.component';
 import { InventoryComponent } from './item/inventory/inventory.component';
@@ -36,7 +35,6 @@ import { PathfindingComponent } from './shared/util/movement/pathfinding/pathfin
     PersistentStorageModule,
     NoopAnimationsModule,
     MatDialogModule,
-    GameRoutingModule,
   ],
   declarations: [
     GameComponent,

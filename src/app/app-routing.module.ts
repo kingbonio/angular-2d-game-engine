@@ -3,12 +3,14 @@ import { RouterModule, Routes } from "@angular/router";
 import { GameSettingsComponent } from "./game-settings/game-settings.component";
 import { GameComponent } from "./game/game.component";
 import { MainMenuComponent } from "./main-menu/main-menu.component";
+import { GameGuard } from "./guards/game.guard";
 
 const appRoutes = [
       {
             path: 'game',
             pathMatch: "full",
             component: GameComponent,
+            canActivate: [GameGuard]
       },
       {
             path: 'settings',
@@ -30,8 +32,11 @@ const appRoutes = [
       imports: [
             RouterModule.forRoot(
                   appRoutes,
-                  { enableTracing: true }
+                  // { enableTracing: true }
             )
+      ],
+      providers: [
+            GameGuard,
       ],
       exports: [
             RouterModule
