@@ -58,7 +58,23 @@ https://www.youtube.com/channel/UCmU68D0OK6fXo351hs3qqjQ
 
 # Change Log
 
-v0.11.0a
+v0.12.1a
 
-* Added sound effects to some actions
-* Updated package.json
+* Added background music
+* Fixed routing so now defaults to main menu
+
+
+## Background Music credits
+
+* https://www.youtube.com/watch?v=ykye8Hw1TgA
+* https://freesound.org/people/Magmi.Soundtracks/sounds/475737/
+
+## Sound credits
+
+* https://freesound.org/people/dkiller2204/sounds/422975/
+* https://freesound.org/people/Slanesh/sounds/31769/
+* https://freesound.org/people/InspectorJ/sounds/431117/
+* https://freesound.org/people/LukeSharples/sounds/209085/
+* https://freesound.org/people/loudernoises/sounds/334169/
+* https://freesound.org/people/Abyssmal/sounds/35213/
+* https://freesound.org/people/rabban625/sounds/436465/
