@@ -2,7 +2,7 @@
   <div class="options-container">
     <div class="game-options">
       <div class="new-game">
-        <a routerLink="/game" class="link-button">Start new game</a>
+        <a (click)="goToPage('game')" class="link-button">Start new game</a>
       </div>
       <div class="load-game">
         <span class="link-button" (click)="toggleSaveGameSection()">Load saved game</span>

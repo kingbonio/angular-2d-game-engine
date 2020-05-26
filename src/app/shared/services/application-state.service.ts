@@ -7,6 +7,7 @@ export class ApplicationStateService {
 
   public gameOpen = false;
   public loadingFromOutsideGame = false;
+  public canAccessGame = false;
 
   constructor() { }
 }

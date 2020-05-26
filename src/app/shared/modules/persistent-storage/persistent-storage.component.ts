@@ -41,7 +41,8 @@ export class PersistentStorageComponent {
   public loadGame(saveSlot) {
     if (this.router.url !== "/game") {
       this.applicationStateService.loadingFromOutsideGame = true;
-      this.router.navigateByUrl("/game");
+      this.applicationStateService.canAccessGame = true;
+      this.router.navigate(["game"]);
     }
     this.persistentStateService.load(saveSlot);
   }
