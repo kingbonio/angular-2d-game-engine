@@ -154,6 +154,10 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
     return 'assets/images/elements/' + gridElement.imageFileName;
   }
 
+  public getFloorImageSource(imageName: string) {
+    return 'assets/images/floor-style/' + imageName;
+  }
+
   public getDirectionClass(gridElement: Character | GridObject) {
     // TODO this is proving strange, might want to come back to directions
     const isPlayer = (gridElement && gridElement.type === ElementClass.player);

@@ -1,26 +1,102 @@
-# Main
+# Description
 
-An engine written with prospects of RPG game story and characters. This will be forked into a game once the engine is finished.
+A game engine for creating room-based sneak/action games with puzzle elements
 
-# DEMO
+# Technical Demo
 
-You can play the game in its current "master" branch form here:
+You can play a technical demo of the game engine in its current "master" branch form here:
 
 https://kingbonio.github.io/angular-rpg-game-engine/
 
 
-# Running
+# Running Locally
 
 Clone the repo using `git clone https://github.com/kingbonio/angular-rpg-game-engine.git`
 
 Run `npm install` in the repo folder and then `ng serve`, this will launch the engine at the location `localhost:4200`.
 
 
-# Defaults
+# Setting Up Your Game
 
-Numerous default settings can be found in the src/app/shared/defaults/index.ts, setting starting parameters and multipliers
+## Setting The Game Config Defaults
 
-## Default Controls
+### Configuring Battle Damage Calculators
+
+
+### Adding Starting Items
+
+---
+
+## Setting The Background Music For Areas
+
+
+---
+
+## Setting The Sound Effects
+
+
+---
+
+## Creating A Room
+
+### Setting The Floor Pattern
+
+
+### Adding The Area Exits
+
+
+### Placing Character Start Location
+
+
+### Placing Enemies
+
+
+### Placing NPCs
+
+
+### Placing Walls
+
+
+### Placing Doors
+
+
+### Placing Chests
+
+
+### Linking Rooms
+
+
+### Setting Room Entrance Notices
+
+---
+
+## Creating Items
+
+In the folder game/game-config/items you will find 4 files, armour, key-item, potions, weapons.
+
+To add an armour item you will need to open the armour.ts file, and add a new object in to the `armour` object where the key is the name of the item (in camel-case).
+
+You will need to use the Enums (ItemClass and ArmourType) provided to determine what class and armour slot the armour will use.
+
+Ensure the `properties` property on the object for the item contains a `defense` property which will be a number (Used to determine the reduction in received attack damage)
+
+
+### Creating Keys For Doors And Chests
+
+
+---
+
+## Assets
+
+### Setting your images
+
+You will need to add your image files in to their relevant locations in the assets/images folder
+
+If you create an item or element in any of the map config which requires an image file, you must add this image file
+
+---
+
+# Default Controls
 
 ### Movement:
 
@@ -44,12 +120,12 @@ Numerous default settings can be found in the src/app/shared/defaults/index.ts, 
       Ctrl:  Defend
 
 
-# Persistence
+# Save Games
 
-The application uses local storage to persist game element states
+The application uses local storage to persist game element/room states
 
 
-# Current presentation
+# Current Presentation
 
 Please check out the following Youtube channel for the most recent additions to functionality:
 

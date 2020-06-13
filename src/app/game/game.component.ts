@@ -20,6 +20,7 @@ import { GameStateService } from './shared/services/game-state.service';
 import { PlayerStateService } from './shared/services/player-state.service';
 import { Router, Event } from '@angular/router';
 import { BackgroundMusicService } from '../shared/services/background-music.service';
+import { AssetLoaderService } from './shared/services/asset-loader.service';
 
 @Component({
   selector: 'app-game-root',
@@ -51,10 +52,12 @@ export class GameComponent implements OnInit, OnDestroy {
     public gameSettingsService: GameSettingsService,
     public applicationStateService: ApplicationStateService,
     public backgroundMusicService: BackgroundMusicService,
+    public assetLoaderService: AssetLoaderService,
     private dialog: MatDialog,
     private router: Router,
   ) {
     this.applicationStateService.gameOpen = true;
+    this.assetLoaderService.loadAssets();
   }
 
   ngOnInit(): void {
@@ -79,6 +82,8 @@ export class GameComponent implements OnInit, OnDestroy {
         localStorage.setItem(storageReference, "");
       }
     }
+
+    this.assetLoaderService.loadAssets();
   }
 
 

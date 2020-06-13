@@ -5,6 +5,7 @@ import { armour, keyItems, potions, weapons } from "../../items";
 
 export default {
       room: 13,
+      floorImageFileName: "wood.png",
       areaLoadMessage: "Room 13",
       areaElements: [
             {

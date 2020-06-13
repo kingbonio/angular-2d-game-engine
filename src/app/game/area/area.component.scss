@@ -21,7 +21,6 @@
             // z-index: -1;
             width: 80px;
             height: 80px;
-            background-image: url("assets/images/floor-style/wooden-floor-small.png");
             position: relative;
             
             .area-exit {
@@ -30,7 +29,7 @@
                   
                   &.northExit, &.eastExit, &.southExit, &.westExit {
                         border-color: red;
-                        background-image: url("assets/images/floor-style/wooden-floor-small.png");
+                        background-image: inherit;
                         position: absolute;
                         overflow: hidden;
                         // width: 100%;
@@ -156,7 +155,7 @@
                         height: 100%;
                         position: absolute;
                         border-color: red;
-                        background-image: url("assets/images/ground-item/loot-bag.png");
+                        background-image: url("assets/images/ground-effects/loot-bag.png");
                         z-index: 1;
                   }
             }

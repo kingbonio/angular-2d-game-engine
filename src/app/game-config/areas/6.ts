@@ -6,6 +6,7 @@ import { armour, keyItems, potions, weapons } from "../items";
 export default {
       room: 6,
       backgroundMusic: "bossMusic",
+      floorImageFileName: "pavement.png",
       areaLoadMessage: "Test area",
       areaElements: [
             {

@@ -71,7 +71,7 @@ export class EquipmentComponent {
   }
 
   public getImageSource(item: IInventoryItem) {
-    return 'assets/images/' + item.class + "/" + item.imageFileName;
+    return 'assets/images/items/' + item.class + "/" + item.imageFileName;
   }
 
 }
