@@ -6,13 +6,14 @@ import { armour, keyItems, weapons } from "../items";
 export default {
       room: 2,
       backgroundMusic: "gameMusic",
+      floorImageFileName: "wood.png",
       areaLoadMessage: "Sneak up behind and pickpocket the (much tougher) enemy using Interact (default 'E') and take the key, you'll need it later. If the enemy spots you or they realise what you're doing you will enter 'Battle Mode' and will need to run away until they give up the chase and return to their patrol route. If you kill the enemy, use Interact on their corpse to loot them. Once you have the key, walk through the north exit",
       areaElements: [
             {
                   type: ElementClass.player,
                   elementProperties: {
                         name: "Smelly Jeremy",
-                        imageFileName: "player1.jpg",
+                        imageFileName: "shadow-player.png",
                   },
                   startingPositionX: 4,
                   startingPositionY: "a",
@@ -74,7 +75,7 @@ direction: Direction.W,
                               armour.ironHelmet,
                               keyItems.rustyOldKey,
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-enemy.png",
                         startingLocation: "d3",
                   },
                   startingPositionY: "d",

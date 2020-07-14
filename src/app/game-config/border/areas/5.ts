@@ -5,13 +5,14 @@ import { armour, potions, weapons } from "../../items";
 
 export default {
       room: 5,
+      floorImageFileName: "wood.png",
       areaLoadMessage: "Room 5",
       areaElements: [
             {
                   type: ElementClass.player,
                   elementProperties: {
                         name: "Smelly Jeremy",
-                        imageFileName: "player1.jpg",
+                        imageFileName: "shadow-player.png",
                   },
                   startingPositionX: 4,
                   startingPositionY: "a",
@@ -63,7 +64,7 @@ export default {
                               potions.largeHealthBuff,
                               potions.smallDamageBuff,
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-enemy.png",
                         startingLocation: "e5",
                   },
                   startingPositionY: "e",

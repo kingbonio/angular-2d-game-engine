@@ -6,13 +6,14 @@ import { armour, keyItems, potions, weapons } from "../items";
 export default {
       room: 4,
       backgroundMusic: "gameMusic",
+      floorImageFileName: "wood.png",
       areaLoadMessage: "Open the chest with the same key you used for the previous chest and take the invisibility potion. When you click on the invisibility potion in your inventory you will have 10 seconds (Counter is in the top right) to move to the north exit past the enemies.",
       areaElements: [
             {
                   type: ElementClass.player,
                   elementProperties: {
                         name: "Smelly Jeremy",
-                        imageFileName: "player1.jpg",
+                        imageFileName: "shadow-player.png",
                   },
                   startingPositionX: 4,
                   startingPositionY: "a",
@@ -63,7 +64,7 @@ export default {
                         loot: [
                               potions.smallHealthPotion
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-enemy.png",
                         startingLocation: "f3",
                   },
                   startingPositionY: "f",
@@ -113,7 +114,7 @@ export default {
                         loot: [
                               potions.smallDamageBuff,
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-enemy.png",
                         startingLocation: "e3",
                   },
                   startingPositionY: "e",
@@ -163,7 +164,7 @@ export default {
                         loot: [
                               potions.smallHealthPotion,
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-enemy.png",
                         startingLocation: "f5",
                   },
                   startingPositionY: "f",
@@ -213,7 +214,7 @@ export default {
                         loot: [
                               weapons.axe,
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-enemy.png",
                         startingLocation: "e5",
                   },
                   startingPositionY: "e",
@@ -263,7 +264,7 @@ export default {
                         loot: [
                               weapons.sword,
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-enemy.png",
                         startingLocation: "g3",
                   },
                   startingPositionY: "g",
@@ -313,7 +314,7 @@ export default {
                         loot: [
                               potions.smallArmourBuff
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-enemy.png",
                         startingLocation: "g5",
                   },
                   startingPositionY: "g",

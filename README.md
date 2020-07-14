@@ -1,26 +1,24 @@
-# Main
+# Description
 
-An engine written with prospects of RPG game story and characters. This will be forked into a game once the engine is finished.
+A game engine for creating room-based sneak/action games with puzzle elements
 
-# DEMO
+# Technical Demo
 
-You can play the game in its current "master" branch form here:
+You can play a technical demo of the game engine in its current "master" branch form here:
 
 https://kingbonio.github.io/angular-rpg-game-engine/
 
 
-# Running
+# Running Locally
+
+**Running this respository locally requires [Angular CLI 8](https://angular.io/cli) to be installed on your machine**
 
 Clone the repo using `git clone https://github.com/kingbonio/angular-rpg-game-engine.git`
 
 Run `npm install` in the repo folder and then `ng serve`, this will launch the engine at the location `localhost:4200`.
 
 
-# Defaults
-
-Numerous default settings can be found in the src/app/shared/defaults/index.ts, setting starting parameters and multipliers
-
-## Default Controls
+# Default Controls
 
 ### Movement:
 
@@ -44,12 +42,12 @@ Numerous default settings can be found in the src/app/shared/defaults/index.ts, 
       Ctrl:  Defend
 
 
-# Persistence
+# Save Games
 
-The application uses local storage to persist game element states
+The application uses local storage to persist game element/room states
 
 
-# Current presentation
+# Current Presentation
 
 Please check out the following Youtube channel for the most recent additions to functionality:
 
@@ -78,3 +76,12 @@ v0.12.1a
 * https://freesound.org/people/loudernoises/sounds/334169/
 * https://freesound.org/people/Abyssmal/sounds/35213/
 * https://freesound.org/people/rabban625/sounds/436465/
+
+## Image credits
+
+* https://www.flaticon.com/free-icon/return_758665
+* https://www.flaticon.com/free-icon/angry-eye_98471
+* https://www.flaticon.com/free-icon/eye-closed_94674
+* https://www.flaticon.com/free-icon/eye_3077287
+* https://www.flaticon.com/free-icon/eye_2948075
+* https://www.flaticon.com/free-icon/witness_2210317

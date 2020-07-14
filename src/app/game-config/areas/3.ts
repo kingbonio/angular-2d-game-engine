@@ -6,13 +6,14 @@ import { keyItems, potions, weapons } from "../items";
 export default {
       room: 3,
       backgroundMusic: "gameMusic",
+      floorImageFileName: "wood.png",
       areaLoadMessage: "Your first non-player character, they will wander freely and will not attack you unless they catch you pickpocketing, you can either attempt a pickpocket or kill the character (He will fight back) to obtain his key. Once you have the key, click on it in your inventory (bottom right) to set it as your active item and use Interact on the wooden door in the bottom left of the area, switch to your other key to open the chest",
       areaElements: [
             {
                   type: ElementClass.player,
                   elementProperties: {
                         name: "Smelly Jeremy",
-                        imageFileName: "player1.jpg",
+                        imageFileName: "shadow-player.png",
                   },
                   startingPositionX: 4,
                   startingPositionY: "a",
@@ -153,7 +154,7 @@ export default {
                               keyItems.fancyKey,
                               potions.smallHealthPotion,
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-npc.png",
                         startingLocation: "f2",
                   },
                   startingPositionX: 2,

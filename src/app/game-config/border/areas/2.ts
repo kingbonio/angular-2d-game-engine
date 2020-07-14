@@ -4,13 +4,14 @@ import { keyItems, potions, weapons } from "../../items";
 
 export default {
       room: 2,
+      floorImageFileName: "wood.png",
       areaLoadMessage: "Room 2",
       areaElements: [
             {
                   type: ElementClass.player,
                   elementProperties: {
                         name: "Smelly Jeremy",
-                        imageFileName: "player1.jpg",
+                        imageFileName: "shadow-player.png",
                   },
                   startingPositionX: 4,
                   startingPositionY: "a",

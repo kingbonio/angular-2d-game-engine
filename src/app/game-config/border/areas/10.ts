@@ -5,13 +5,14 @@ import { armour, potions, weapons } from "../../items";
 
 export default {
       room: 10,
+      floorImageFileName: "wood.png",
       areaLoadMessage: "Room 10",
       areaElements: [
             {
                   type: ElementClass.player,
                   elementProperties: {
                         name: "Smelly Jeremy",
-                        imageFileName: "player1.jpg",
+                        imageFileName: "shadow-player.png",
                   },
                   startingPositionX: 4,
                   startingPositionY: "a",
@@ -61,7 +62,7 @@ export default {
                         } as IWeapons,
                         loot: [
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-enemy.png",
                         startingLocation: "f3",
                   },
                   startingPositionY: "f",
@@ -110,7 +111,7 @@ export default {
                         } as IWeapons,
                         loot: [
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-enemy.png",
                         startingLocation: "e3",
                   },
                   startingPositionY: "e",
@@ -159,7 +160,7 @@ export default {
                         } as IWeapons,
                         loot: [
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-enemy.png",
                         startingLocation: "f5",
                   },
                   startingPositionY: "f",
@@ -208,7 +209,7 @@ export default {
                         } as IWeapons,
                         loot: [
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-enemy.png",
                         startingLocation: "e5",
                   },
                   startingPositionY: "e",
@@ -257,7 +258,7 @@ export default {
                         } as IWeapons,
                         loot: [
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-enemy.png",
                         startingLocation: "g3",
                   },
                   startingPositionY: "g",
@@ -306,63 +307,12 @@ export default {
                         } as IWeapons,
                         loot: [
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-enemy.png",
                         startingLocation: "g5",
                   },
                   startingPositionY: "g",
                   startingPositionX: 5,
             },
-            // {
-            //       type: ElementClass.enemy,
-            //       elementProperties: {
-            //             id: "36d3f958-42d3-4197-bf00-de6119bf4e9a",
-            //             asleep: false,
-            //             angry: false,
-            //             level: 1,
-            //             maxHp: 30,
-            //             lowHealthThreshold: 6,
-            //             maxPauseDuration: 2,
-            //             name: "Gary The Dick",
-            //             class: MonsterClass.Human,
-            //             startingDirection: Direction.W,
-            // direction: Direction.W,
-            //             patrolArea: true,
-            //             directionsForPatrol: [
-            //             ],
-            //             maxHuntingDuration: 3,
-            //             startingState: CharacterState.wandering,
-            //             speechResponse: "I'm gonna kill you",
-            //             sleepResponse: "Zzzzzzzzzzzzzzzz",
-            //             lootParameters: {
-            //                   level: 6,
-            //                   allowWeapon: true,
-            //                   allowPotion: false,
-            //                   allowKey: false,
-            //             },
-            //             armour: {
-            //                   head: armour.leatherHelmet,
-            //                   arms: null,
-            //                   hands: null,
-            //                   torso: null,
-            //                   legs: null,
-            //                   boots: armour.leatherBoots,
-            //             },
-            //             weapons: {
-            //                   primary: weapons.basicKnife,
-            //                   secondary: null,
-            //                   concealed: null,
-            //                   shield: null,
-            //             } as IWeapons,
-            //             loot: [
-            //                   armour.ironHelmet,
-            //                   keyItems.rustyOldKey,
-            //             ],
-            //             imageFileName: "",
-            //             startingLocation: "b7",
-            //       },
-            //       startingPositionX: 7,
-            //       startingPositionY: "b",
-            // },
             {
                   type: ElementClass.object,
                   elementProperties: {

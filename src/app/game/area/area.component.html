@@ -1,5 +1,6 @@
 <div class="grid-container" [ngClass]="{ 'show-room-shadow': gameSettingsService.showRoomShadow, 'battle-mode': gameStateService.battleMode }">
-      <div *ngFor="let key of areaStateService.locationKeys(areaStateService.locations)" class="grid-box">
+      <div *ngFor="let key of areaStateService.locationKeys(areaStateService.locations)" class="grid-box"
+            [ngStyle]="{ 'background-image': 'url(' + getFloorImageSource(areaConfig.floorImageFileName) + ')'}">
             <!-- <span style="position: absolute; color: white; z-index: 9999999"> {{ key }} </span> -->
             <!-- <div *ngIf="element">Has element</div> -->
 
@@ -21,43 +22,40 @@
             <div class="grid-item" *ngIf="areaStateService.locations[key].element"
                   [ngClass]="getDirectionClass(areaStateService.locations[key].element)">
 
-                  <div *ngIf="areaStateService.locations[key].element.type === ElementClass.object"
-                        class="object">
-                        <img [src]="getGridElementImageSource(areaStateService.locations[key].element)"
-                              title="{{areaStateService.locations[key].element.name}}" />
-                  </div>
-
-                  <div *ngIf="areaStateService.locations[key].element.type !== ElementClass.object"
-                        class="character-type"
-                        [class]="getCharacterType(areaStateService.locations[key].element)"
+                  <div class="animation-layer"
                         [ngClass]="{ 'moving-forwards': areaStateService.locations[key].element.isMovingForwards }">
-
-                        <div class="overlay" [ngClass]="getDeadClass(areaStateService.locations[key].element)">
-                              <span *ngIf="areaStateService.locations[key].element.currentState === CharacterState.hunting" class="character-state hunting">!</span>
-                              <span *ngIf="areaStateService.locations[key].element.currentState === CharacterState.returningToPosition" class="character-state return-to-position">?</span>
-                              <span *ngIf="areaStateService.locations[key].element.currentState === CharacterState.wandering" class="character-state wandering">:)</span>
-                              <span *ngIf="areaStateService.locations[key].element.currentState === CharacterState.asleep" class="character-state asleep">zzZZ</span>
-                              <span *ngIf="areaStateService.locations[key].element.currentState === CharacterState.patrolling" class="character-state patrolling">...</span>
+                        <div class="element">
+                              <div *ngIf="areaStateService.locations[key].element.type === ElementClass.object"
+                                    class="object">
+                                    <img [src]="getGridElementImageSource(areaStateService.locations[key].element)"
+                                          title="{{areaStateService.locations[key].element.name}}" />
+                              </div>
+            
+                              <div *ngIf="areaStateService.locations[key].element.type !== ElementClass.object"
+                                    class="character-type"
+                                    [ngStyle]="{ 'background-image': 'url(' + getGridElementImageSource(areaStateService.locations[key].element) + ')'}">
+            
+            
+            
+                                    <div *ngIf="areaStateService.locations[key].element.isAttacking" class="swing-weapon">
+                                          <!-- Is swinging their weapon -->
+                                    </div>
+                                    <div *ngIf="areaStateService.locations[key].element.isGuarding" class="guard">
+                                          <!-- Is guarding from attacks -->
+                                    </div>
+                                    <div *ngIf="areaStateService.locations[key].element.isReceivingAttack" class="receive-attack">
+                                          <!-- Is receiving an attack -->
+                                    </div>
+                              </div>
                         </div>
-
-                        <div *ngIf="areaStateService.locations[key].element.isAttacking" class="swing-weapon">
-                              <!-- Is swinging their weapon -->
-                        </div>
-                        <!-- {{ areaStateService.locations[key].element.isGuarding }} -->
-                        <div *ngIf="areaStateService.locations[key].element.isGuarding" class="guard">
-                              <!-- Is guarding from attacks -->
-                        </div>
-                        <div *ngIf="areaStateService.locations[key].element.isReceivingAttack" class="receive-attack">
-                              <!-- Is receiving an attack -->
+                        <div *ngIf="areaStateService.locations[key].element && areaStateService.locations[key].element.type !== ElementClass.object"
+                              class="overlay {{ getDirectionClass(areaStateService.locations[key].element) }}"
+                              [ngClass]="getDeadClass(areaStateService.locations[key].element)">
+                              <span class="character-state" [ngClass]="CharacterState[areaStateService.locations[key].element.currentState]">
+                              </span>
                         </div>
                   </div>
-<!-- 
-                  <div *ngIf="(areaStateService.locations[key].element.type === ElementClass.enemy || areaStateService.locations[key].element.type === ElementClass.npc) && 
-                              (areaStateService.locations[key].element.currentState !== CharacterState.asleep && areaStateService.locations[key].element.currentState !== CharacterState.dead)"
-                        [ngClass]="getDirectionClass(areaStateService.locations[key].element)"
-                        class="view-area">
-                        Hello
-                  </div> -->
             </div>
+
       </div>
 </div>
