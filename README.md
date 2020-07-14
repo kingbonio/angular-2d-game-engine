@@ -18,129 +18,6 @@ Clone the repo using `git clone https://github.com/kingbonio/angular-rpg-game-en
 Run `npm install` in the repo folder and then `ng serve`, this will launch the engine at the location `localhost:4200`.
 
 
-# Setting Up Your Game
-
-## Setting The Game Config Defaults
-
-### Configuring Battle Damage Calculators
-
-
-### Adding Starting Items
-
----
-
-## Setting The Background Music For Areas
-
-
----
-
-## Setting The Sound Effects
-
-
----
-
-## Creating A Room
-
-### Setting The Floor Pattern
-
-
-### Adding The Area Exits
-
-
-### Placing Character Start Location
-
-
-### Placing Enemies
-
-
-### Placing NPCs
-
-
-### Placing Walls
-
-
-### Placing Internal Doors
-
-
-### Placing Chests
-
-
-### Linking Rooms
-
-
-### Setting Room Entrance Notices
-
----
-
-## Creating Items
-
-In the folder game/game-config/items you will find 4 files, armour, key-item, potions, weapons.
-
-To add an armour item you will need to open the armour.ts file, and add a new object in to the `armour` object where the key is the name of the item (in camel-case).
-
-You will need to use the Enums (ItemClass and ArmourType) provided to determine what class and armour slot the armour will use.
-
-Ensure the `properties` property on the object for the item contains a `defense` property which will be a number (Used to determine the reduction in received attack damage)
-
-
-### Creating Keys For Doors And Chests
-
-
----
-
-## Assets
-
-### Setting your images
-
-You will need to add your image files in to their relevant locations in the assets/images folder
-
-If you create an item or element in any of the map config which requires an image file, you must add this image file
-
-### Setting the animation images
-
-The animations are SVGs and I recommend replacing the existing images with svgs if you wish to use your own.
-
-If you wish to switch the images for a file format other than svg, then the dimensions should be 80x80.
-
-You have three animations which require an image:
-
-* Guard           
-* Receive Attack
-* Slash
-
-### Image dimensions
-
-All items:
-
-30x30
-
-All characters:
-
-80x80
-
-All elements:
-
-80x80
-
-Save icon:
-
-80x80
-
-Ground effects:
-
-80x80
-
-Floor styles:
-
-80x80
-
-Animations:
-
-80x80
-
-
----
-
 # Default Controls
 
 ### Movement:
@@ -199,3 +76,12 @@ v0.12.1a
 * https://freesound.org/people/loudernoises/sounds/334169/
 * https://freesound.org/people/Abyssmal/sounds/35213/
 * https://freesound.org/people/rabban625/sounds/436465/
+
+## Image credits
+
+* https://www.flaticon.com/free-icon/return_758665
+* https://www.flaticon.com/free-icon/angry-eye_98471
+* https://www.flaticon.com/free-icon/eye-closed_94674
+* https://www.flaticon.com/free-icon/eye_3077287
+* https://www.flaticon.com/free-icon/eye_2948075
+* https://www.flaticon.com/free-icon/witness_2210317
