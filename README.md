@@ -56,10 +56,10 @@ https://www.youtube.com/channel/UCmU68D0OK6fXo351hs3qqjQ
 
 # Change Log
 
-v0.12.1a
+v0.13.0a
 
-* Added background music
-* Fixed routing so now defaults to main menu
+* Moved blood and other images into files in assets
+* Updated the character state icon to the bottom right with new images from files in assets
 
 
 ## Background Music credits
