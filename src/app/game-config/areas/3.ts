@@ -13,7 +13,7 @@ export default {
                   type: ElementClass.player,
                   elementProperties: {
                         name: "Smelly Jeremy",
-                        imageFileName: "player1.jpg",
+                        imageFileName: "shadow-player.png",
                   },
                   startingPositionX: 4,
                   startingPositionY: "a",
@@ -154,7 +154,7 @@ export default {
                               keyItems.fancyKey,
                               potions.smallHealthPotion,
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-npc.png",
                         startingLocation: "f2",
                   },
                   startingPositionX: 2,

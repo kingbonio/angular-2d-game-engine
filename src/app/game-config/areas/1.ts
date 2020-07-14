@@ -13,7 +13,7 @@ export default {
                   type: ElementClass.player,
                   elementProperties: {
                         name: "Smelly Jeremy",
-                        imageFileName: "player1.jpg",
+                        imageFileName: "shadow-player.png",
                   },
                   startingPositionX: 4,
                   startingPositionY: "a",
@@ -76,7 +76,7 @@ export default {
                         loot: [
                               keyItems.greenDoorKey
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-enemy.png",
                         startingLocation: "d7",
                   },
                   startingPositionY: "d",

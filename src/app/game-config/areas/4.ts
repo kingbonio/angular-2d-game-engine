@@ -13,7 +13,7 @@ export default {
                   type: ElementClass.player,
                   elementProperties: {
                         name: "Smelly Jeremy",
-                        imageFileName: "player1.jpg",
+                        imageFileName: "shadow-player.png",
                   },
                   startingPositionX: 4,
                   startingPositionY: "a",
@@ -64,7 +64,7 @@ export default {
                         loot: [
                               potions.smallHealthPotion
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-enemy.png",
                         startingLocation: "f3",
                   },
                   startingPositionY: "f",
@@ -114,7 +114,7 @@ export default {
                         loot: [
                               potions.smallDamageBuff,
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-enemy.png",
                         startingLocation: "e3",
                   },
                   startingPositionY: "e",
@@ -164,7 +164,7 @@ export default {
                         loot: [
                               potions.smallHealthPotion,
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-enemy.png",
                         startingLocation: "f5",
                   },
                   startingPositionY: "f",
@@ -214,7 +214,7 @@ export default {
                         loot: [
                               weapons.axe,
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-enemy.png",
                         startingLocation: "e5",
                   },
                   startingPositionY: "e",
@@ -264,7 +264,7 @@ export default {
                         loot: [
                               weapons.sword,
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-enemy.png",
                         startingLocation: "g3",
                   },
                   startingPositionY: "g",
@@ -314,7 +314,7 @@ export default {
                         loot: [
                               potions.smallArmourBuff
                         ],
-                        imageFileName: "",
+                        imageFileName: "shadow-enemy.png",
                         startingLocation: "g5",
                   },
                   startingPositionY: "g",

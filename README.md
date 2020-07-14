@@ -11,6 +11,8 @@ https://kingbonio.github.io/angular-rpg-game-engine/
 
 # Running Locally
 
+**Running this respository locally requires [Angular CLI 8](https://angular.io/cli) to be installed on your machine**
+
 Clone the repo using `git clone https://github.com/kingbonio/angular-rpg-game-engine.git`
 
 Run `npm install` in the repo folder and then `ng serve`, this will launch the engine at the location `localhost:4200`.
@@ -57,7 +59,7 @@ Run `npm install` in the repo folder and then `ng serve`, this will launch the e
 ### Placing Walls
 
 
-### Placing Doors
+### Placing Internal Doors
 
 
 ### Placing Chests
@@ -93,6 +95,49 @@ Ensure the `properties` property on the object for the item contains a `defense`
 You will need to add your image files in to their relevant locations in the assets/images folder
 
 If you create an item or element in any of the map config which requires an image file, you must add this image file
+
+### Setting the animation images
+
+The animations are SVGs and I recommend replacing the existing images with svgs if you wish to use your own.
+
+If you wish to switch the images for a file format other than svg, then the dimensions should be 80x80.
+
+You have three animations which require an image:
+
+* Guard           
+* Receive Attack
+* Slash
+
+### Image dimensions
+
+All items:
+
+30x30
+
+All characters:
+
+80x80
+
+All elements:
+
+80x80
+
+Save icon:
+
+80x80
+
+Ground effects:
+
+80x80
+
+Floor styles:
+
+80x80
+
+Animations:
+
+80x80
+
 
 ---
 

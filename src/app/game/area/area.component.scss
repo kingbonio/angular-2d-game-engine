@@ -140,11 +140,10 @@
             
             .floor-style {
                   &.blood {
-                        height: 80px;
-                        width: 80px;
                         position: absolute;
-                        border-radius: 50%;
-                        background-color: rgba(255, 0, 0, 0.6);
+                        width: 100%;
+                        height: 100%;
+                        background-image: url("assets/images/ground-effects/blood.png");
                         z-index: 0;
                   }
             }
@@ -181,210 +180,188 @@
                   &.direction-w {
                         transform: rotate(270deg);
                   }
-
-                  // TODO Move this into imageFileName property
-                  .player {
-                        background-image: url("assets/images/elements/shadow-player.png");
-                  }
-                  .enemy {
-                        background-image: url("assets/images/elements/shadow-enemy.png");
-                  }
-                  .npc {
-                        background-image: url("assets/images/elements/shadow-npc.png");
-                  }
-                  .dead {
-                        height: 80px;
-                        width: 80px;
-                        border-radius: 50%;
-                        display: inline-block;
-                        background-color: rgba(255, 0, 0, 0.6);
-                  }
-
-                  // &.direction-n {
-                  //       border-top: solid red 2px;
-                  // }
-                  // &.direction-e {
-                  //       border-right: solid red 2px;
-                  // }
-                  // &.direction-s {
-                  //       border-bottom: solid red 2px;
-                  // }
-                  // &.direction-w {
-                  //       border-left: solid red 2px;
-                  // }
-                  .character-type {
-                        width: 80px;
-                        height: 80px;
-                        
-                        .character {
-                              width: 80px;
-                              height: 80px;
-                        }
-
-                        .overlay {
-
-                              .character-state {
-                                    position: absolute;
-                                    top: 50%; right: 50%;
-                                    transform: translate(50%,-50%);
-                                    font-size: 34px;
-                              }
-
-                              .hunting {
-                                    color: red;
-                              }
-
-                              .patrolling {
-                                    color: yellow;
-                              }
-
-                              .return-to-position {
-                                    color: orange;
-                              }
-
-                              .asleep {
-                                    color: white;
-                              }
-
-                              .wandering {
-                                    color: blue;
-                              }
-                        }
-                  }
-
-                  @-moz-keyframes moving-forwards { 
-                        0% { -moz-transform: translateY(80px); } 
-                        100% { -moz-transform: translateY(0px); } 
-                  }
-                  @-webkit-keyframes moving-forwards {
-                        0% { -webkit-transform: translateY(80px); } 
-                        100% { -webkit-transform: translateY(0px); } 
-                  }
-                  @keyframes moving-forwards { 
-                        0% { -webkit-transform: translateY(80px);
-                              transform: translateY(80px); } 
-                        100% { -webkit-transform: translateY(0px);
-                              transform: translateY(0px); } 
-                  }
-
-                  @-moz-keyframes swing { 
-                        100% { -moz-transform: rotate(30deg) translate(30px, 0px) scale(0.5); } 
-                  }
-                  @-webkit-keyframes swing {
-                        100% { -webkit-transform: rotate(30deg) translate(30px, 0px) scale(0.5); } 
-                  }
-                  @keyframes swing { 
-                        100% { -webkit-transform: rotate(30deg) translate(30px, 0px) scale(0.5);
-                              transform: rotate(30deg) translate(30px, 0px) scale(0.5); } 
-                  }
-
-                  @-moz-keyframes guard { 
-                        from { -moz-transform: rotate(-10deg) scaleX(0.1) scaleY(0.1); }
-                        to { -moz-transform: rotate(0deg) scaleX(1) scaleY(1); } 
-                  }
-                  @-webkit-keyframes guard {
-                        from { -webkit-transform: rotate(-10deg) scaleX(0.1) scaleY(0.1); }
-                        to { -webkit-transform: rotate(0deg) scaleX(1) scaleY(1); } 
-                  }
-                  @keyframes guard { 
-                        from { -webkit-transform: rotate(-10deg) scaleX(0.1) scaleY(0.1);
-                              transform: rotate(-10deg) scaleX(0.1) scaleY(0.1); }
-                        to { -webkit-transform: rotate(0deg) scaleX(1) scaleY(1);
-                              transform: rotate(0deg) scaleX(1) scaleY(1); } 
-                  }
-
-                  @-moz-keyframes receive-attack {
-                        from { -moz-transform: scale(1) rotate(180deg); }
-                        to { -moz-transform: scale(0.3) translate(-70px, 0px) rotate(180deg); } 
-                  }
-                  @-webkit-keyframes receive-attack {
-                        from { -webkit-transform: scale(1) rotate(180deg); }
-                        to { -webkit-transform: scale(0.3) translate(-70px, 0px) rotate(180deg); } 
-                  }
-                  @keyframes receive-attack {
-                        from { -webkit-transform: scale(1) rotate(180deg);
-                              transform: scale(1) rotate(180deg); }
-                        to { -webkit-transform: scale(0.3) translate(-70px, 0px) rotate(180deg);
-                              transform: scale(0.3) translate(-70px, 0px) rotate(180deg); } 
-                  }
-
-                  .swing-weapon, .receive-attack, .guard {
+                  
+                  .animation-layer {
+                        position: absolute;
                         width: 100%;
                         height: 100%;
-                        position: absolute;
                         
-                        background-repeat: no-repeat;
-                        // background-size: 80px 80px;
-                  }
-
-                  .moving-forwards {
-                        z-index: 999999;
-                        animation-name: moving-forwards;
+                        &.moving-forwards {
+                              z-index: 999999;
+                              animation-name: moving-forwards;
+                              
+                              // Must match the same duration as in defaults config
+                              animation-duration: 0.17s;
+                        }
                         
-                        // Must match the same duration as in defaults config
-                        animation-duration: 0.17s;
-                  }
-
-                  .swing-weapon {
-                        background-image: url("assets/images/animations/slash.svg");
-                        // width: 100%;
-                        // height: 100%;
-                        // position: absolute;
-                        animation-name: swing;
-
+                        @-moz-keyframes moving-forwards { 
+                              0% { -moz-transform: translateY(80px); } 
+                              100% { -moz-transform: translateY(0px); } 
+                        }
+                        @-webkit-keyframes moving-forwards {
+                              0% { -webkit-transform: translateY(80px); } 
+                              100% { -webkit-transform: translateY(0px); } 
+                        }
+                        @keyframes moving-forwards { 
+                              0% { -webkit-transform: translateY(80px);
+                                    transform: translateY(80px); } 
+                              100% { -webkit-transform: translateY(0px);
+                                    transform: translateY(0px); } 
+                        }
                         
-                        // Must match the same duration as in defaults config
-                        animation-duration: 0.17s;
-                        // background-repeat: no-repeat;
-                        // background-position: right 0px top 0px;
-                        background-position: right 0px top 0px;
-                        background-size: 80px 80px;
-                  }
+                        .element {
+                              position: absolute;
+                              
+                              .character-type {
+                                    width: 80px;
+                                    height: 80px;
+                                    
+                                    .character {
+                                          width: 80px;
+                                          height: 80px;
+                                    }
+      
+                                    @-moz-keyframes swing { 
+                                          100% { -moz-transform: rotate(30deg) translate(30px, 0px) scale(0.5); } 
+                                    }
+                                    @-webkit-keyframes swing {
+                                          100% { -webkit-transform: rotate(30deg) translate(30px, 0px) scale(0.5); } 
+                                    }
+                                    @keyframes swing { 
+                                          100% { -webkit-transform: rotate(30deg) translate(30px, 0px) scale(0.5);
+                                                transform: rotate(30deg) translate(30px, 0px) scale(0.5); } 
+                                    }
                   
-                  .guard {
-                        background-image: url("assets/images/animations/guard.svg");
-                        // // width: 100%;
-                        // // height: 100%;
-                        // // position: absolute;
-                        animation-name: guard;
-                        
-                        // // Must match the same duration as in defaults config
-                        animation-duration: 0.17s;
-                        // background-repeat: no-repeat;
-                        // background-position: right 0px top 0px;
-                        background-position: right 0px top 0px;
-                        background-size: 80px 80px;
-                  }
+                                    @-moz-keyframes guard { 
+                                          from { -moz-transform: rotate(-10deg) scaleX(0.1) scaleY(0.1); }
+                                          to { -moz-transform: rotate(0deg) scaleX(1) scaleY(1); } 
+                                    }
+                                    @-webkit-keyframes guard {
+                                          from { -webkit-transform: rotate(-10deg) scaleX(0.1) scaleY(0.1); }
+                                          to { -webkit-transform: rotate(0deg) scaleX(1) scaleY(1); } 
+                                    }
+                                    @keyframes guard { 
+                                          from { -webkit-transform: rotate(-10deg) scaleX(0.1) scaleY(0.1);
+                                                transform: rotate(-10deg) scaleX(0.1) scaleY(0.1); }
+                                          to { -webkit-transform: rotate(0deg) scaleX(1) scaleY(1);
+                                                transform: rotate(0deg) scaleX(1) scaleY(1); } 
+                                    }
                   
-                  .receive-attack {
-                        background-image: url("assets/images/animations/receive-attack.svg");
-                        // width: 100%;
-                        // height: 100%;
-                        // position: absolute;
-
-                        // transform: rotate(225deg);
-                        // transform-origin: 50% 25%;
-
-                        animation-name: receive-attack;
+                                    @-moz-keyframes receive-attack {
+                                          from { -moz-transform: scale(1) rotate(180deg); }
+                                          to { -moz-transform: scale(0.3) translate(-70px, 0px) rotate(180deg); } 
+                                    }
+                                    @-webkit-keyframes receive-attack {
+                                          from { -webkit-transform: scale(1) rotate(180deg); }
+                                          to { -webkit-transform: scale(0.3) translate(-70px, 0px) rotate(180deg); } 
+                                    }
+                                    @keyframes receive-attack {
+                                          from { -webkit-transform: scale(1) rotate(180deg);
+                                                transform: scale(1) rotate(180deg); }
+                                          to { -webkit-transform: scale(0.3) translate(-70px, 0px) rotate(180deg);
+                                                transform: scale(0.3) translate(-70px, 0px) rotate(180deg); } 
+                                    }
+                  
+                                    .swing-weapon, .receive-attack, .guard {
+                                          width: 100%;
+                                          height: 100%;
+                                          position: absolute;
+                                          background-repeat: no-repeat;
+                                    }
+                  
+                                    
+                                    .swing-weapon {
+                                          background-image: url("assets/images/animations/slash.svg");
+                                          animation-name: swing;
+                                          
+                                          // Must match the same duration as in defaults config
+                                          animation-duration: 0.17s;
+                                          background-position: right 0px top 0px;
+                                          background-size: 80px 80px;
+                                    }
+                                    
+                                    .guard {
+                                          background-image: url("assets/images/animations/guard.svg");
+                                          animation-name: guard;
+                                          
+                                          // // Must match the same duration as in defaults config
+                                          animation-duration: 0.17s;
+                                          background-position: right 0px top 0px;
+                                          background-size: 80px 80px;
+                                    }
+                                    
+                                    .receive-attack {
+                                          background-image: url("assets/images/animations/receive-attack.svg");
+                                          animation-name: receive-attack;
+                                          
+                                          // Must match the same duration as in defaults config
+                                          animation-duration: 0.17s;
+                                          background-position: right 0px top -10px;
+                                          background-size: 160px 160px;
+                                    }
+                              }
+                        }
                         
-                        // Must match the same duration as in defaults config
-                        animation-duration: 0.17s;
-                        // background-repeat: no-repeat;
-                        background-position: right 0px top -10px;
-                        // background-position: right 0px top 0px;
-                        background-size: 160px 160px;
+                        .overlay {
+                              position: absolute;
+                              width: 100%;
+                              height: 100%;
+                              
+                              &.direction-n {
+                                    transform: rotate(0deg);
+                              }
+                              
+                              &.direction-e {
+                                    transform: rotate(-90deg);
+                              }
+                              
+                              &.direction-s {
+                                    transform: rotate(-180deg);
+                              }
+                              
+                              &.direction-w {
+                                    transform: rotate(-270deg);
+                              }
+                              
+                              .character-state {
+                                    position: absolute;
+                                    width: 20px;
+                                    height: 20px;
+                                    bottom: 3px;
+                                    right: 3px;
+      
+                                    &.hunting {
+                                          color: red;
+                                          background: url("assets/images/character-states/hunting.svg") no-repeat center;
+                                          background-size: 20px 20px;
+                                    }
+                                    
+                                    &.patrolling {
+                                          color: yellow;
+                                          background: url("assets/images/character-states/patrolling.svg") no-repeat center;
+                                          background-size: 20px 20px;
+                                    }
+                                    
+                                    &.returningToPosition {
+                                          color: orange;
+                                          background: url("assets/images/character-states/returning.svg") no-repeat center;
+                                          background-size: 20px 20px;
+                                    }
+                                    
+                                    &.asleep {
+                                          color: white;
+                                          background: url("assets/images/character-states/asleep.svg") no-repeat center;
+                                          background-size: 20px 20px;
+                                    }
+                                    
+                                    &.wandering {
+                                          color: blue;
+                                          background: url("assets/images/character-states/wandering.svg") no-repeat center;
+                                          background-size: 20px 20px;
+                                    }
+                              }
+                        }
                   }
-
-                  // .view-area {
-                  //       border: solid white 1px;
-                  //       background-color: red;
-                  //       width: 125%;
-                  //       height: 125%;
-                  //       transform: rotate(45deg);
-                  //       position: absolute;
-                  //       top: -125%;
-                  //       left: -12.5%;
-                  // }
             }
       }
 }
