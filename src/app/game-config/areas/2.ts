@@ -1,6 +1,6 @@
 import { IAreaElement } from "../../game/area/interfaces";
 import { IWeapons } from "../../game/item/interfaces";
-import { CharacterState, Direction, ElementClass, MonsterClass } from "../../game/shared/enums";
+import { CharacterState, Direction, ElementClass } from "../../game/shared/enums";
 import { armour, keyItems, weapons } from "../items";
 
 export default {
@@ -29,11 +29,10 @@ export default {
                         level: 1,
                         maxHp: 50,
                         lowHealthThreshold: 6,
-                        maxPauseDuration: 1,
+                        attackPauseDuration: 1,
                         name: "Gary The Dick",
-                        class: MonsterClass.Human,
                         startingDirection: Direction.W,
-direction: Direction.W,
+                        direction: Direction.W,
                         patrolArea: true,
                         directionsForPatrol: [
                               Direction.W,

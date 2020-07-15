@@ -5,7 +5,6 @@ export * from '../../../shared/enums/menu-setting-types';
 export * from '../../item/enums/item-class';
 export * from './element-class';
 export * from '../../item/enums/armour-type';
-export * from './monster-class';
 export * from './player-class';
 export * from './object-type';
 export * from './floor-style';

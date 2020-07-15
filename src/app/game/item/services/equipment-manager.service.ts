@@ -150,10 +150,7 @@ export class EquipmentManagerService {
       boots: null,
     };
     this.weapons = {
-      primary: null,
-      secondary: null,
-      concealed: null,
-      shield: null,
+      primary: null
     };
 
     this.activeItem = null;

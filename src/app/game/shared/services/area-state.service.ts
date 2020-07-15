@@ -61,6 +61,7 @@ export class AreaStateService implements OnInit {
   public addCharacterToHuntingList(character: Character): void {
 
     if (this.huntingList.indexOf(character.id) === -1) {
+
       // Add the character to the hunting list
       this.huntingList.push(character.id);
     }

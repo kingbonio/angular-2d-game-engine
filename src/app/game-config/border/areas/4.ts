@@ -1,6 +1,6 @@
 import { IAreaElement } from "../../../game/area/interfaces";
 import { IWeapons } from "../../../game/item/interfaces";
-import { CharacterState, Direction, ElementClass, MonsterClass, ObjectType } from "../../../game/shared/enums";
+import { CharacterState, Direction, ElementClass, ObjectType } from "../../../game/shared/enums";
 import { armour, keyItems, potions, weapons } from "../../items";
 
 export default {
@@ -28,9 +28,9 @@ export default {
                         level: 1,
                         maxHp: 30,
                         lowHealthThreshold: 6,
-                        maxPauseDuration: 1,
+                        attackPauseDuration: 1,
                         name: "Gary The Dick",
-                        class: MonsterClass.Human,
+                        
                         startingDirection: Direction.E,
                         direction: Direction.E,
                         patrolArea: true,
@@ -78,9 +78,9 @@ export default {
                         level: 1,
                         maxHp: 30,
                         lowHealthThreshold: 6,
-                        maxPauseDuration: 1,
+                        attackPauseDuration: 1,
                         name: "Gary The Dick",
-                        class: MonsterClass.Human,
+                        
                         startingDirection: Direction.E,
                         direction: Direction.E,
                         patrolArea: true,
@@ -128,9 +128,9 @@ export default {
                         level: 1,
                         maxHp: 30,
                         lowHealthThreshold: 6,
-                        maxPauseDuration: 1,
+                        attackPauseDuration: 1,
                         name: "Gary The Dick",
-                        class: MonsterClass.Human,
+                        
                         startingDirection: Direction.W,
                         direction: Direction.W,
                         patrolArea: true,
@@ -178,9 +178,9 @@ export default {
                         level: 1,
                         maxHp: 30,
                         lowHealthThreshold: 6,
-                        maxPauseDuration: 1,
+                        attackPauseDuration: 1,
                         name: "Gary The Dick",
-                        class: MonsterClass.Human,
+                        
                         startingDirection: Direction.W,
                         direction: Direction.W,
                         patrolArea: true,
@@ -228,9 +228,9 @@ export default {
                         level: 1,
                         maxHp: 30,
                         lowHealthThreshold: 6,
-                        maxPauseDuration: 1,
+                        attackPauseDuration: 1,
                         name: "Gary The Dick",
-                        class: MonsterClass.Human,
+                        
                         startingDirection: Direction.E,
                         direction: Direction.E,
                         patrolArea: true,
@@ -278,9 +278,9 @@ export default {
                         level: 1,
                         maxHp: 30,
                         lowHealthThreshold: 6,
-                        maxPauseDuration: 1,
+                        attackPauseDuration: 1,
                         name: "Gary The Dick",
-                        class: MonsterClass.Human,
+                        
                         startingDirection: Direction.W,
                         direction: Direction.W,
                         patrolArea: true,

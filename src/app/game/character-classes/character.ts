@@ -8,39 +8,34 @@ export class Character {
       name: string;
       currentHp: number;
       maxHp: number;
-      xp: number;
-      isAsleep: boolean;
-      isAngry: boolean;
       isAttacking: boolean;
       isGuarding: boolean;
       isReceivingAttack: boolean;
       isMovingForwards: boolean;
       baseDamage: number;
       pauseCounter: number;
-      maxPauseDuration: number;
+      attackPauseDuration: number;
       type: ElementClass;
       direction: Direction;
       startingDirection: Direction;
       startingLocation: string;
-      patrolArea: boolean;
       directionsForPatrol: Direction[];
       startingTargetLocation: string;
       currentPositionInRoute: number;
       currentHuntingDuration: number;
       maxHuntingDuration: number;
-      currentPathToDestination: any[]; // TODO PriorityQueue
+      currentPathToDestination: any[];
       pathfindingDestination: ILocation;
       currentState: CharacterState;
       startingState: CharacterState;
       armour?: IArmour;
       weapons?: IWeapons;
       loot: IInventoryItem[];
-      level: number;
       imageFileName: string;
 
       inventoryLocations: any;
       locationKeys: any;
-      this: any;
+      this: any; // TODO Is this even a thing?
 
       constructor() {
             this.inventoryLocations = {
@@ -74,7 +69,7 @@ export class Character {
       }
 
       get isPaused(): boolean {
-            return (this.pauseCounter <= this.maxPauseDuration);
+            return (this.pauseCounter <= this.attackPauseDuration);
       }
 
       /**

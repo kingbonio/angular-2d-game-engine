@@ -1,14 +1,10 @@
 import { ILocation } from "selenium-webdriver";
-import { CharacterType, Direction, MonsterClass } from "../../shared/enums";
-import { ILootParameters } from "../../shared/interfaces";
+import { CharacterType, Direction } from "../../shared/enums";
 
 export interface IEnemy {
       type: CharacterType.enemy;
-      asleep: boolean;
-      level: number;
+      elementProperties: any;
       name: string;
-      class: MonsterClass;
-      lootParameters: ILootParameters;
       startingLocation: string;
       currentDirection: Direction;
       currentLocation?: ILocation;

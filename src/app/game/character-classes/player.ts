@@ -13,8 +13,6 @@ export class Player extends Character {
       constructor(characterDetails: any) {
             // TODO: Resolve any
             super();
-            this.name = characterDetails.name;
-            this.class = characterDetails.class;
             this.imageFileName = characterDetails.imageFileName;
             this.isMovingForwards = false;
       }

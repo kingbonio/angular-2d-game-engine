@@ -119,7 +119,7 @@ export default {
                         level: 1,
                         maxHp: 20,
                         lowHealthThreshold: 15,
-                        maxPauseDuration: 2,
+                        attackPauseDuration: 2,
                         name: "David",
                         startingDirection: Direction.E,
                         direction: Direction.E,
