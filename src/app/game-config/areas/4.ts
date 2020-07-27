@@ -2,6 +2,7 @@ import { IAreaElement } from "../../game/area/interfaces";
 import { IWeapons } from "../../game/item/interfaces";
 import { CharacterState, Direction, ElementClass, ObjectType } from "../../game/shared/enums";
 import { armour, keyItems, potions, weapons } from "../items";
+import { player } from "../characters";
 
 export default {
       room: 4,
@@ -9,44 +10,22 @@ export default {
       floorImageFileName: "wood.png",
       areaLoadMessage: "Open the chest with the same key you used for the previous chest and take the invisibility potion. When you click on the invisibility potion in your inventory you will have 10 seconds (Counter is in the top right) to move to the north exit past the enemies.",
       areaElements: [
-            {
-                  type: ElementClass.player,
-                  elementProperties: {
-                        name: "Smelly Jeremy",
-                        imageFileName: "shadow-player.png",
-                  },
-                  startingPositionX: 4,
-                  startingPositionY: "a",
-                  startingDirection: Direction.N,
-                  direction: Direction.N,
-            },
+            player,
             {
                   type: ElementClass.enemy,
                   elementProperties: {
-                        id: "28be7086-bafe-49f5-9e3c-ec3ca90e45a6",
-                        asleep: true,
-                        angry: false,
-                        level: 1,
+                        id: "739bdb36-7cd6-4e69-a176-2ae62f1ed7b0",
                         maxHp: 30,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Gary The Dick",
-                        
                         startingDirection: Direction.E,
-                        direction: Direction.E,
-                        patrolArea: true,
                         directionsForPatrol: [
                         ],
                         maxHuntingDuration: 3,
                         startingState: CharacterState.still,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
-                        lootParameters: {
-                              level: 6,
-                              allowWeapon: true,
-                              allowPotion: false,
-                              allowKey: false,
-                        },
                         armour: {
                               head: armour.leatherHelmet,
                               arms: null,
@@ -57,9 +36,6 @@ export default {
                         },
                         weapons: {
                               primary: weapons.basicKnife,
-                              secondary: null,
-                              concealed: null,
-                              shield: null,
                         } as IWeapons,
                         loot: [
                               potions.smallHealthPotion
@@ -73,30 +49,18 @@ export default {
             {
                   type: ElementClass.enemy,
                   elementProperties: {
-                        id: "28be7086-bafe-49f5-9e3c-ec3ca90e45a6",
-                        asleep: true,
-                        angry: false,
-                        level: 1,
+                        id: "b3d7d7b2-c672-48d6-82bd-f28e3863158b",
                         maxHp: 30,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Gary The Dick",
-                        
                         startingDirection: Direction.E,
-                        direction: Direction.E,
-                        patrolArea: true,
                         directionsForPatrol: [
                         ],
                         maxHuntingDuration: 3,
                         startingState: CharacterState.still,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
-                        lootParameters: {
-                              level: 6,
-                              allowWeapon: true,
-                              allowPotion: false,
-                              allowKey: false,
-                        },
                         armour: {
                               head: armour.leatherHelmet,
                               arms: null,
@@ -107,9 +71,6 @@ export default {
                         },
                         weapons: {
                               primary: weapons.basicKnife,
-                              secondary: null,
-                              concealed: null,
-                              shield: null,
                         } as IWeapons,
                         loot: [
                               potions.smallDamageBuff,
@@ -123,17 +84,12 @@ export default {
             {
                   type: ElementClass.enemy,
                   elementProperties: {
-                        id: "28be7086-bafe-49f5-9e3c-ec3ca90e45a6",
-                        asleep: true,
-                        angry: false,
-                        level: 1,
+                        id: "6fa3d2d4-b6d9-4dca-8c29-9778164152e7",
                         maxHp: 30,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Gary The Dick",
-                        
                         startingDirection: Direction.W,
-                        direction: Direction.W,
                         patrolArea: true,
                         directionsForPatrol: [
                         ],
@@ -141,12 +97,6 @@ export default {
                         startingState: CharacterState.still,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
-                        lootParameters: {
-                              level: 6,
-                              allowWeapon: true,
-                              allowPotion: false,
-                              allowKey: false,
-                        },
                         armour: {
                               head: armour.leatherHelmet,
                               arms: null,
@@ -157,9 +107,6 @@ export default {
                         },
                         weapons: {
                               primary: weapons.basicKnife,
-                              secondary: null,
-                              concealed: null,
-                              shield: null,
                         } as IWeapons,
                         loot: [
                               potions.smallHealthPotion,
@@ -173,30 +120,18 @@ export default {
             {
                   type: ElementClass.enemy,
                   elementProperties: {
-                        id: "28be7086-bafe-49f5-9e3c-ec3ca90e45a6",
-                        asleep: true,
-                        angry: false,
-                        level: 1,
+                        id: "89edf110-6545-43bf-82d6-ef3193b9ea4f",
                         maxHp: 30,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Gary The Dick",
-                        
                         startingDirection: Direction.W,
-                        direction: Direction.W,
-                        patrolArea: true,
                         directionsForPatrol: [
                         ],
                         maxHuntingDuration: 3,
                         startingState: CharacterState.still,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
-                        lootParameters: {
-                              level: 6,
-                              allowWeapon: true,
-                              allowPotion: false,
-                              allowKey: false,
-                        },
                         armour: {
                               head: armour.leatherHelmet,
                               arms: null,
@@ -207,9 +142,6 @@ export default {
                         },
                         weapons: {
                               primary: weapons.basicKnife,
-                              secondary: null,
-                              concealed: null,
-                              shield: null,
                         } as IWeapons,
                         loot: [
                               weapons.axe,
@@ -223,30 +155,18 @@ export default {
             {
                   type: ElementClass.enemy,
                   elementProperties: {
-                        id: "28be7086-bafe-49f5-9e3c-ec3ca90e45a6",
-                        asleep: true,
-                        angry: false,
-                        level: 1,
+                        id: "bac53a6c-ea18-41e6-a4db-d62bd055aeb0",
                         maxHp: 30,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Gary The Dick",
-                        
                         startingDirection: Direction.E,
-                        direction: Direction.E,
-                        patrolArea: true,
                         directionsForPatrol: [
                         ],
                         maxHuntingDuration: 3,
                         startingState: CharacterState.still,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
-                        lootParameters: {
-                              level: 6,
-                              allowWeapon: true,
-                              allowPotion: false,
-                              allowKey: false,
-                        },
                         armour: {
                               head: armour.leatherHelmet,
                               arms: null,
@@ -257,9 +177,6 @@ export default {
                         },
                         weapons: {
                               primary: weapons.basicKnife,
-                              secondary: null,
-                              concealed: null,
-                              shield: null,
                         } as IWeapons,
                         loot: [
                               weapons.sword,
@@ -273,30 +190,18 @@ export default {
             {
                   type: ElementClass.enemy,
                   elementProperties: {
-                        id: "28be7086-bafe-49f5-9e3c-ec3ca90e45a6",
-                        asleep: true,
-                        angry: false,
-                        level: 1,
+                        id: "22adab29-22f8-4cf7-b996-bf98282a144f",
                         maxHp: 30,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Gary The Dick",
-                        
                         startingDirection: Direction.W,
-                        direction: Direction.W,
-                        patrolArea: true,
                         directionsForPatrol: [
                         ],
                         maxHuntingDuration: 3,
                         startingState: CharacterState.still,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
-                        lootParameters: {
-                              level: 6,
-                              allowWeapon: true,
-                              allowPotion: false,
-                              allowKey: false,
-                        },
                         armour: {
                               head: armour.leatherHelmet,
                               arms: null,
@@ -307,9 +212,6 @@ export default {
                         },
                         weapons: {
                               primary: weapons.basicKnife,
-                              secondary: null,
-                              concealed: null,
-                              shield: null,
                         } as IWeapons,
                         loot: [
                               potions.smallArmourBuff
@@ -326,8 +228,6 @@ export default {
                         name: "Old chest",
                         objectType: ObjectType.lootObject,
                         startingDirection: Direction.E,
-                        direction: Direction.E,
-                        canBeTraversed: false,
                         isInteractive: true,
                         isLocked: true,
                         itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbf693c76",
@@ -341,9 +241,5 @@ export default {
                   startingPositionX: 3,
                   startingPositionY: "a",
             },
-      ] as IAreaElement[],
-      areaCompleteRequirements: {
-            item: false,
-            monster: true
-      }
+      ] as IAreaElement[]
 };

@@ -55,7 +55,7 @@ export class GridObject {
             this.soundEffect = elementProperties.soundEffect;
             this.canBeTraversed = elementProperties.canBeTraversed;
             this.isInteractive = elementProperties.isInteractive;
-            this.direction = elementProperties.direction;
+            this.direction = elementProperties.startingDirection;
             this.startingDirection = elementProperties.startingDirection;
             this.isLocked = elementProperties.isLocked;
             this.lockedDialogue = elementProperties.lockedDialogue;

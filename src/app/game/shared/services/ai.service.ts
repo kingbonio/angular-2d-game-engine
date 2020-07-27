@@ -79,7 +79,8 @@ export class AiService {
 
       // Either an enemy or an angry npc
       if ((character.type === ElementClass.enemy || character.currentState === CharacterState.hunting) &&
-        this.isPlayerInSight(character, gridLocation)) {
+           character.currentState !== CharacterState.afraid &&
+           this.isPlayerInSight(character, gridLocation)) {
         this.startHunting(character);
       }
 
@@ -165,6 +166,8 @@ export class AiService {
           break;
         case CharacterState.hunting:
           if (character.currentHuntingDuration >= character.maxHuntingDuration) {
+
+            character.currentState = CharacterState.returningToPosition;
             this.stopHunting(character);
 
             this.action(character, gridLocation);
@@ -175,9 +178,12 @@ export class AiService {
 
           break;
         case CharacterState.afraid:
-          // Character is low health and needs to escape
-          // TODO Figure out a better way of doing this
-          // this.movement.moveWithRespectToPlayer(character, gridLocation, false);
+          this.stopHunting(character);
+
+          const splitGridLocation = this.areaStateService.splitLocationReference(gridLocation);
+          const splitplayerLocation = this.areaStateService.splitLocationReference(this.areaStateService.playerLocation);
+
+          this.movement.moveAwayFromLocation(character, splitGridLocation, splitplayerLocation);
           break;
         default:
           // Do nothing
@@ -196,7 +202,6 @@ export class AiService {
   }
 
   private stopHunting(character: Character) {
-    character.currentState = CharacterState.returningToPosition;
     character.currentHuntingDuration = 0;
 
     this.areaStateService.removeCharacterFromHuntingList(character);
@@ -231,7 +236,7 @@ export class AiService {
     // Head towards player and attack if next to player, otherwise move towards the player
     if (this.areaStateService.isCharacterNextToPlayer(gridLocation)) {
       const characterLocation = this.areaStateService.splitLocationReference(gridLocation);
-      const directionToPlayer = this.movement.getDirectionWithRespectToPlayer(targetLocation, characterLocation, true);
+      const directionToPlayer = this.movement.getDirectionWithRespectToLocation(targetLocation, characterLocation, true);
 
       character.direction = directionToPlayer;
 

@@ -179,6 +179,12 @@ export class PlayerStateService {
           name: defaults.dialogue.computerName
         });
 
+        if (targetElement.isLowHealth()) {
+
+          // Set the character to run away
+          targetElement.currentState = CharacterState.afraid;
+        }
+
         if (targetElement.isDead()) {
 
           this.areaStateService.removeCharacterFromHuntingList(targetElement);

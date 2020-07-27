@@ -1,6 +1,6 @@
 import { IAreaElement } from "../../game/area/interfaces";
 import { IWeapons } from "../../game/item/interfaces";
-import { CharacterState, Direction, ElementClass } from "../../game/shared/enums";
+import { CharacterState, Direction, ElementClass, ObjectType } from "../../game/shared/enums";
 import { armour, keyItems, weapons } from "../items";
 import { player } from "../characters";
 
@@ -14,13 +14,12 @@ export default {
             {
                   type: ElementClass.enemy,
                   elementProperties: {
-                        id: "28be7086-bafe-49f5-9e3c-ec3ca90e45a6",
+                        id: "cbdd6e52-dc3e-4059-b9b6-e231fdd775a1",
                         maxHp: 30,
-                        lowHealthThreshold: 6,
+                        lowHealthThreshold: 18,
                         attackPauseDuration: 1,
                         name: "Gary The Dick",
                         startingDirection: Direction.W,
-                        direction: Direction.W,
                         directionsForPatrol: [
                               Direction.W,
                               Direction.W,
@@ -58,6 +57,22 @@ export default {
                   },
                   startingPositionY: "d",
                   startingPositionX: 7,
+            },
+            {
+                  type: ElementClass.object,
+                  elementProperties: {
+                        name: "Door",
+                        objectType: ObjectType.door,
+                        startingDirection: Direction.N,
+                        direction: Direction.N,
+                        isInteractive: true,
+                        isLocked: false,
+                        itemReferenceNeeded: "",
+                        imageFileName: "door.png",
+                        soundEffect: "openWoodenDoor",
+                  },
+                  startingPositionX: 3,
+                  startingPositionY: "b",
             },
       ] as IAreaElement[]
 };

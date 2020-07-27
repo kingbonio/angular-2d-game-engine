@@ -56,10 +56,10 @@ https://www.youtube.com/channel/UCmU68D0OK6fXo351hs3qqjQ
 
 # Change Log
 
-v0.13.0a
+v0.14.0a
 
-* Moved blood and other images into files in assets
-* Updated the character state icon to the bottom right with new images from files in assets
+* Tidied config files so easier to implement characters/grid objects
+* Added the "running away" character state in cases of low health
 
 
 ## Background Music credits

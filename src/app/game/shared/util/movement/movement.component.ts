@@ -218,7 +218,7 @@ export class MovementComponent {
     const splitCharacterLocation: ILocation = this.areaStateService.splitLocationReference(characterLocation);
 
     // Get and apply the direction to face
-    const furthestDirectionToPlayer = this.getDirectionWithRespectToPlayer(splitNewLocation, splitCharacterLocation, moveTowardsLocation);
+    const furthestDirectionToPlayer = this.getDirectionWithRespectToLocation(splitNewLocation, splitCharacterLocation, moveTowardsLocation);
     this.areaStateService.locations[characterLocation].element.direction = furthestDirectionToPlayer;
     const targetLocationDetails = GridHelper.getNextLocation(splitCharacterLocation.locationY, splitCharacterLocation.locationX, furthestDirectionToPlayer, this.areaStateService.locations);
 
@@ -320,33 +320,51 @@ export class MovementComponent {
   }
 
   /**
-   * Returns the best direction towards or away from the player's location
-   * @param playerLocation The current location of the player
-   * @param characterLocation The current location of the character to move
-   * @param towardsPlayer Whether to more towards or away from player's location
+   * Returns the best direction towards or away from the a new location
+   * @param newLocation The location we're referencing the direction frpm
+   * @param currentLocation The current location of the character to move
+   * @param towardsLocation Whether to more towards or away from new location
    */
-  public getDirectionWithRespectToPlayer(playerLocation: ILocation, characterLocation: ILocation, towardsPlayer: boolean): Direction {
-    const distanceData = this.areaStateService.getDistanceBetweenLocations(playerLocation, characterLocation);
+  public getDirectionWithRespectToLocation(newLocation: ILocation, currentLocation: ILocation, towardsLocation: boolean): Direction {
+    const distanceData = this.areaStateService.getDistanceBetweenLocations(newLocation, currentLocation);
 
     // Calculate which direction is furthest
     if (Math.abs(distanceData.yDistance) >= Math.abs(distanceData.xDistance)) {
       // Move vertically
       if (distanceData.yDistance >= 0) {
 
-        return towardsPlayer ? Direction.S : Direction.N;
+        return towardsLocation ? Direction.S : Direction.N;
       } else {
 
-        return towardsPlayer ? Direction.N : Direction.S;
+        return towardsLocation ? Direction.N : Direction.S;
       }
     } else {
       // Move horizontally
       if (distanceData.xDistance >= 0) {
 
-        return towardsPlayer ? Direction.E : Direction.W;
+        return towardsLocation ? Direction.E : Direction.W;
       } else {
 
-        return towardsPlayer ? Direction.W : Direction.E;
+        return towardsLocation ? Direction.W : Direction.E;
       }
     }
+  }
+
+  /**
+   * Moves a character away from a selected location
+   * @param locationToAvoid The location with which we move away from
+   */
+  public moveAwayFromLocation(character: Character, characterLocation: ILocation, locationToAvoid: ILocation) {
+    const directionToNewLocation = this.getDirectionWithRespectToLocation(locationToAvoid, characterLocation, false);
+
+    character.direction = directionToNewLocation;
+
+    const newLocation = GridHelper.getNextLocation(characterLocation.locationY, characterLocation.locationX, directionToNewLocation, this.areaStateService.locations);
+
+    if (newLocation.isLocationFree) {
+      this.moveCharacterWithAnimation(characterLocation, newLocation);
+    }
+
+    return;
   }
 }

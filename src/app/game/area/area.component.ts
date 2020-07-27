@@ -166,10 +166,6 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
 
     const classes = isMovingForwards ? direction + " moving-forwards" : direction;
 
-    if (element.type === ElementClass.enemy) {
-      console.log(classes);
-    }
-
     return classes;
   }
 

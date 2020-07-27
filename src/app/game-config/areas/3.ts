@@ -2,6 +2,7 @@ import { IAreaElement } from "../../game/area/interfaces";
 import { IWeapons } from "../../game/item/interfaces";
 import { CharacterState, Direction, ElementClass, ObjectType } from "../../game/shared/enums";
 import { keyItems, potions, weapons } from "../items";
+import { player } from "../characters";
 
 export default {
       room: 3,
@@ -9,24 +10,12 @@ export default {
       floorImageFileName: "wood.png",
       areaLoadMessage: "Your first non-player character, they will wander freely and will not attack you unless they catch you pickpocketing, you can either attempt a pickpocket or kill the character (He will fight back) to obtain his key. Once you have the key, click on it in your inventory (bottom right) to set it as your active item and use Interact on the wooden door in the bottom left of the area, switch to your other key to open the chest",
       areaElements: [
-            {
-                  type: ElementClass.player,
-                  elementProperties: {
-                        name: "Smelly Jeremy",
-                        imageFileName: "shadow-player.png",
-                  },
-                  startingPositionX: 4,
-                  startingPositionY: "a",
-                  startingDirection: Direction.N,
-                  direction: Direction.N,
-            },
+            player,
             {
                   type: ElementClass.object,
                   elementProperties: {
                         name: "Straight Wall",
                         startingDirection: Direction.E,
-                        direction: Direction.E,
-                        canBeTraversed: false,
                         isInteractive: false,
                         imageFileName: "wall-straight.png",
                   },
@@ -38,8 +27,6 @@ export default {
                   elementProperties: {
                         name: "Straight Wall",
                         startingDirection: Direction.E,
-                        direction: Direction.E,
-                        canBeTraversed: false,
                         isInteractive: false,
                         imageFileName: "wall-straight.png",
                   },
@@ -51,8 +38,6 @@ export default {
                   elementProperties: {
                         name: "Corner Wall",
                         startingDirection: Direction.E,
-                        direction: Direction.E,
-                        canBeTraversed: false,
                         isInteractive: false,
                         imageFileName: "wall-corner.png",
                   },
@@ -65,8 +50,6 @@ export default {
                         name: "Door",
                         objectType: ObjectType.door,
                         startingDirection: Direction.N,
-                        direction: Direction.N,
-                        canBeTraversed: false,
                         isInteractive: true,
                         isLocked: true,
                         itemReferenceNeeded: "64c87a80-4f1a-4dc3-b2c8-c47a9c393f61",
@@ -82,7 +65,6 @@ export default {
                         name: "Straight Wall",
                         startingDirection: Direction.S,
                         direction: Direction.S,
-                        canBeTraversed: false,
                         isInteractive: false,
                         imageFileName: "wall-straight.png",
                   },
@@ -95,8 +77,6 @@ export default {
                         name: "Old chest",
                         objectType: ObjectType.lootObject,
                         startingDirection: Direction.N,
-                        direction: Direction.N,
-                        canBeTraversed: false,
                         isInteractive: true,
                         isLocked: true,
                         itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbf693c76",
@@ -114,28 +94,17 @@ export default {
                   type: ElementClass.npc,
                   elementProperties: {
                         id: "424745e4-3bfc-452c-8ff6-78c04251a294",
-                        asleep: false,
-                        angry: false,
-                        level: 1,
                         maxHp: 20,
                         lowHealthThreshold: 15,
                         attackPauseDuration: 2,
                         name: "David",
                         startingDirection: Direction.E,
-                        direction: Direction.E,
-                        patrolArea: false,
                         directionsForPatrol: [
                         ],
                         maxHuntingDuration: 3,
                         startingState: CharacterState.still,
                         speechResponse: "Stop bothering me, you fool!",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
-                        lootParameters: {
-                              level: 6,
-                              allowWeapon: true,
-                              allowPotion: false,
-                              allowKey: false,
-                        },
                         armour: {
                               head: null,
                               arms: null,
@@ -146,9 +115,6 @@ export default {
                         },
                         weapons: {
                               primary: weapons.basicKnife,
-                              secondary: null,
-                              concealed: null,
-                              shield: null,
                         } as IWeapons,
                         loot: [
                               keyItems.fancyKey,
@@ -160,9 +126,5 @@ export default {
                   startingPositionX: 2,
                   startingPositionY: "f",
             },
-      ] as IAreaElement[],
-      areaCompleteRequirements: {
-            item: false,
-            monster: true
-      }
+      ] as IAreaElement[]
 };

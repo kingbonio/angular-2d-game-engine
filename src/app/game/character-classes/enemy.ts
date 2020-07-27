@@ -56,7 +56,7 @@ export class Enemy extends Character {
             this.baseDamage = characterDetails.baseDamage;
             this.pauseCounter = characterDetails.pauseCounter || 0;
             this.attackPauseDuration = characterDetails.attackPauseDuration;
-            this.direction = characterDetails.direction;
+            this.direction = characterDetails.startingDirection;
             this.startingDirection = characterDetails.startingDirection;
             this.startingLocation = characterDetails.startingLocation;
             this.directionsForPatrol = characterDetails.directionsForPatrol;
@@ -95,11 +95,17 @@ export class Enemy extends Character {
                         } else {
                               return this.sleepResponse;
                         }
-                        // TODO Do we even use this any more?
+                  // TODO Do we even use this any more?
                   case UserInteractionTypes.attack:
-                        this.currentState = CharacterState.hunting;
                         this.direction = directionToFace;
                         this.currentHp -= damage;
+
+                        if (!this.isLowHealth()) {
+                              this.currentState = CharacterState.hunting;
+                        } else {
+                              this.currentState = CharacterState.afraid;
+                        }
+
                         return;
             }
       }

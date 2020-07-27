@@ -42,7 +42,6 @@ export class NPC extends Character {
             super();
             this.id = characterDetails.id;
             this.name = characterDetails.name;
-            // TODO Need to figure out how to use this in the css
             this.imageFileName = characterDetails.imageFileName;
             this.isMovingForwards = false;
             this.isAttacking = false;
@@ -52,7 +51,7 @@ export class NPC extends Character {
             this.pauseCounter = characterDetails.pauseCounter || 0;
             this.attackPauseDuration = characterDetails.attackPauseDuration;
             this.speechResponse = characterDetails.speechResponse;
-            this.direction = characterDetails.direction;
+            this.direction = characterDetails.startingDirection;
             this.startingDirection = characterDetails.startingDirection;
             this.startingLocation = characterDetails.startingLocation;
             this.directionsForPatrol = characterDetails.directionsForPatrol;
@@ -91,17 +90,23 @@ export class NPC extends Character {
                         } else {
                               return this.sleepResponse;
                         }
-                        // TODO Do we even use this here any more?
+                  // TODO Do we even use this here any more?
                   case UserInteractionTypes.attack:
-                        this.currentState = CharacterState.hunting;
                         this.direction = directionToFace;
                         this.currentHp -= damage;
+
+                        if (!this.isLowHealth()) {
+                              this.currentState = CharacterState.hunting;
+                        } else {
+                              this.currentState = CharacterState.afraid;
+                        }
+
                         return;
             }
       }
 
       public isLowHealth() {
-            return this.currentHp < this.lowHealthThreshold;
+            return (this.currentHp < this.lowHealthThreshold && !this.isDead);
       }
 
       public isDead(): boolean {

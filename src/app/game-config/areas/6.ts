@@ -2,6 +2,7 @@ import { IAreaElement } from "../../game/area/interfaces";
 import { IWeapons } from "../../game/item/interfaces";
 import { CharacterState, Direction, ElementClass, ObjectType } from "../../game/shared/enums";
 import { armour, keyItems, potions, weapons } from "../items";
+import { player } from "../characters";
 
 export default {
       room: 6,
@@ -9,32 +10,16 @@ export default {
       floorImageFileName: "pavement.png",
       areaLoadMessage: "Test area",
       areaElements: [
-            {
-                  type: ElementClass.player,
-                  elementProperties: {
-                        name: "Smelly Jeremy",
-                        imageFileName: "shadow-player.png",
-                  },
-                  startingPositionX: 4,
-                  startingPositionY: "a",
-                  startingDirection: Direction.N,
-                  direction: Direction.N,
-            },
+            player,
             {
                   type: ElementClass.npc,
                   elementProperties: {
-                        id: "28be7086-bafe-49f5-9e3c-ec3ca90e45a6",
-                        asleep: true,
-                        angry: false,
-                        level: 1,
+                        id: "9b385219-a8df-47f9-b7ce-000d1bb18a9d",
                         maxHp: 50,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Test",
-                        
                         startingDirection: Direction.S,
-                        direction: Direction.S,
-                        patrolArea: true,
                         directionsForPatrol: [
                         ],
                         startingTargetLocation: "c7",
@@ -42,12 +27,6 @@ export default {
                         startingState: CharacterState.walkingPath,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
-                        lootParameters: {
-                              level: 6,
-                              allowWeapon: true,
-                              allowPotion: false,
-                              allowKey: false,
-                        },
                         armour: {
                               head: armour.leatherHelmet,
                               arms: null,
@@ -58,9 +37,6 @@ export default {
                         },
                         weapons: {
                               primary: weapons.axe,
-                              secondary: null,
-                              concealed: null,
-                              shield: null,
                         } as IWeapons,
                         loot: [
                               potions.largeHealthBuff,
@@ -75,18 +51,12 @@ export default {
             {
                   type: ElementClass.npc,
                   elementProperties: {
-                        id: "28be7086-bafe-49f5-9e3c-ec3ca90e45a6",
-                        asleep: true,
-                        angry: false,
-                        level: 1,
+                        id: "92b039ed-f3a0-4c9a-803a-44d9bca0252c",
                         maxHp: 50,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Test",
-                        
                         startingDirection: Direction.S,
-                        direction: Direction.S,
-                        patrolArea: true,
                         directionsForPatrol: [
                         ],
                         startingTargetLocation: "c6",
@@ -94,12 +64,6 @@ export default {
                         startingState: CharacterState.walkingPath,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
-                        lootParameters: {
-                              level: 6,
-                              allowWeapon: true,
-                              allowPotion: false,
-                              allowKey: false,
-                        },
                         armour: {
                               head: armour.leatherHelmet,
                               arms: null,
@@ -110,9 +74,6 @@ export default {
                         },
                         weapons: {
                               primary: weapons.axe,
-                              secondary: null,
-                              concealed: null,
-                              shield: null,
                         } as IWeapons,
                         loot: [
                               potions.largeHealthBuff,
@@ -127,18 +88,12 @@ export default {
             {
                   type: ElementClass.npc,
                   elementProperties: {
-                        id: "28be7086-bafe-49f5-9e3c-ec3ca90e45a6",
-                        asleep: true,
-                        angry: false,
-                        level: 1,
+                        id: "c67a81c0-ae3b-4f6f-8c60-b8f5df5d44f9",
                         maxHp: 50,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Test",
-                        
                         startingDirection: Direction.S,
-                        direction: Direction.S,
-                        patrolArea: true,
                         directionsForPatrol: [
                         ],
                         startingTargetLocation: "c4",
@@ -146,12 +101,6 @@ export default {
                         startingState: CharacterState.walkingPath,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
-                        lootParameters: {
-                              level: 6,
-                              allowWeapon: true,
-                              allowPotion: false,
-                              allowKey: false,
-                        },
                         armour: {
                               head: armour.leatherHelmet,
                               arms: null,
@@ -162,9 +111,6 @@ export default {
                         },
                         weapons: {
                               primary: weapons.axe,
-                              secondary: null,
-                              concealed: null,
-                              shield: null,
                         } as IWeapons,
                         loot: [
                               potions.largeHealthBuff,
@@ -179,18 +125,12 @@ export default {
             {
                   type: ElementClass.npc,
                   elementProperties: {
-                        id: "28be7086-bafe-49f5-9e3c-ec3ca90e45a6",
-                        asleep: true,
-                        angry: false,
-                        level: 1,
+                        id: "ab302ef2-573d-45b1-93ad-e5c929b2e891",
                         maxHp: 50,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Test",
-                        
                         startingDirection: Direction.S,
-                        direction: Direction.S,
-                        patrolArea: true,
                         directionsForPatrol: [
                         ],
                         startingTargetLocation: "c2",
@@ -198,12 +138,6 @@ export default {
                         startingState: CharacterState.walkingPath,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
-                        lootParameters: {
-                              level: 6,
-                              allowWeapon: true,
-                              allowPotion: false,
-                              allowKey: false,
-                        },
                         armour: {
                               head: armour.leatherHelmet,
                               arms: null,
@@ -214,9 +148,6 @@ export default {
                         },
                         weapons: {
                               primary: weapons.axe,
-                              secondary: null,
-                              concealed: null,
-                              shield: null,
                         } as IWeapons,
                         loot: [
                               potions.largeHealthBuff,
@@ -231,18 +162,12 @@ export default {
             {
                   type: ElementClass.npc,
                   elementProperties: {
-                        id: "28be7086-bafe-49f5-9e3c-ec3ca90e45a6",
-                        asleep: true,
-                        angry: false,
-                        level: 1,
+                        id: "daf46483-58a5-4154-91c5-fc569e5f6a6b",
                         maxHp: 50,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Test",
-                        
                         startingDirection: Direction.S,
-                        direction: Direction.S,
-                        patrolArea: true,
                         directionsForPatrol: [
                         ],
                         startingTargetLocation: "c1",
@@ -250,12 +175,6 @@ export default {
                         startingState: CharacterState.walkingPath,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
-                        lootParameters: {
-                              level: 6,
-                              allowWeapon: true,
-                              allowPotion: false,
-                              allowKey: false,
-                        },
                         armour: {
                               head: armour.leatherHelmet,
                               arms: null,
@@ -266,9 +185,6 @@ export default {
                         },
                         weapons: {
                               primary: weapons.axe,
-                              secondary: null,
-                              concealed: null,
-                              shield: null,
                         } as IWeapons,
                         loot: [
                               potions.largeHealthBuff,
@@ -283,18 +199,12 @@ export default {
             {
                   type: ElementClass.enemy,
                   elementProperties: {
-                        id: "28be7086-bafe-49f5-9e3c-ec3ca90e45a6",
-                        asleep: true,
-                        angry: false,
-                        level: 1,
+                        id: "53831a37-395e-47f6-88ed-bc6be994c0c6",
                         maxHp: 50,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Test",
-                        
                         startingDirection: Direction.S,
-                        direction: Direction.S,
-                        patrolArea: true,
                         directionsForPatrol: [
                         ],
                         startingTargetLocation: "g7",
@@ -302,12 +212,6 @@ export default {
                         startingState: CharacterState.walkingPath,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
-                        lootParameters: {
-                              level: 6,
-                              allowWeapon: true,
-                              allowPotion: false,
-                              allowKey: false,
-                        },
                         armour: {
                               head: armour.leatherHelmet,
                               arms: null,
@@ -318,9 +222,6 @@ export default {
                         },
                         weapons: {
                               primary: weapons.axe,
-                              secondary: null,
-                              concealed: null,
-                              shield: null,
                         } as IWeapons,
                         loot: [
                               potions.largeHealthBuff,
@@ -335,18 +236,12 @@ export default {
             {
                   type: ElementClass.enemy,
                   elementProperties: {
-                        id: "28be7086-bafe-49f5-9e3c-ec3ca90e45a6",
-                        asleep: true,
-                        angry: false,
-                        level: 1,
+                        id: "5ac92002-3033-4adb-9832-3a520ea02f5f",
                         maxHp: 50,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Test",
-                        
                         startingDirection: Direction.S,
-                        direction: Direction.S,
-                        patrolArea: true,
                         directionsForPatrol: [
                         ],
                         startingTargetLocation: "g5",
@@ -354,12 +249,6 @@ export default {
                         startingState: CharacterState.walkingPath,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
-                        lootParameters: {
-                              level: 6,
-                              allowWeapon: true,
-                              allowPotion: false,
-                              allowKey: false,
-                        },
                         armour: {
                               head: armour.leatherHelmet,
                               arms: null,
@@ -370,9 +259,6 @@ export default {
                         },
                         weapons: {
                               primary: weapons.axe,
-                              secondary: null,
-                              concealed: null,
-                              shield: null,
                         } as IWeapons,
                         loot: [
                               potions.largeHealthBuff,
@@ -388,18 +274,12 @@ export default {
             {
                   type: ElementClass.enemy,
                   elementProperties: {
-                        id: "28be7086-bafe-49f5-9e3c-ec3ca90e45a6",
-                        asleep: true,
-                        angry: false,
-                        level: 1,
+                        id: "2b475c48-65a6-4d5e-8908-ddd2593457f5",
                         maxHp: 50,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Test",
-                        
                         startingDirection: Direction.S,
-                        direction: Direction.S,
-                        patrolArea: true,
                         directionsForPatrol: [
                         ],
                         startingTargetLocation: "g3",
@@ -407,12 +287,6 @@ export default {
                         startingState: CharacterState.walkingPath,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
-                        lootParameters: {
-                              level: 6,
-                              allowWeapon: true,
-                              allowPotion: false,
-                              allowKey: false,
-                        },
                         armour: {
                               head: armour.leatherHelmet,
                               arms: null,
@@ -423,9 +297,6 @@ export default {
                         },
                         weapons: {
                               primary: weapons.axe,
-                              secondary: null,
-                              concealed: null,
-                              shield: null,
                         } as IWeapons,
                         loot: [
                               potions.largeHealthBuff,
@@ -440,18 +311,12 @@ export default {
             {
                   type: ElementClass.enemy,
                   elementProperties: {
-                        id: "28be7086-bafe-49f5-9e3c-ec3ca90e45a6",
-                        asleep: true,
-                        angry: false,
-                        level: 1,
+                        id: "595f3d40-37df-4531-b4b3-35bf2ede1f2f",
                         maxHp: 50,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Test",
-                        
                         startingDirection: Direction.S,
-                        direction: Direction.S,
-                        patrolArea: true,
                         directionsForPatrol: [
                         ],
                         startingTargetLocation: "g1",
@@ -459,12 +324,6 @@ export default {
                         startingState: CharacterState.walkingPath,
                         speechResponse: "I'm gonna kill you",
                         sleepResponse: "Zzzzzzzzzzzzzzzz",
-                        lootParameters: {
-                              level: 6,
-                              allowWeapon: true,
-                              allowPotion: false,
-                              allowKey: false,
-                        },
                         armour: {
                               head: armour.leatherHelmet,
                               arms: null,
@@ -475,9 +334,6 @@ export default {
                         },
                         weapons: {
                               primary: weapons.axe,
-                              secondary: null,
-                              concealed: null,
-                              shield: null,
                         } as IWeapons,
                         loot: [
                               potions.largeHealthBuff,
@@ -495,8 +351,6 @@ export default {
                         name: "Old chest",
                         objectType: ObjectType.lootObject,
                         startingDirection: Direction.E,
-                        direction: Direction.E,
-                        canBeTraversed: false,
                         isInteractive: true,
                         isLocked: true,
                         itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbf693c76",
@@ -515,8 +369,6 @@ export default {
                         name: "Old chest",
                         objectType: ObjectType.lootObject,
                         startingDirection: Direction.E,
-                        direction: Direction.E,
-                        canBeTraversed: false,
                         isInteractive: true,
                         isLocked: true,
                         itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbf693c76",
@@ -535,8 +387,6 @@ export default {
                         name: "Old chest",
                         objectType: ObjectType.lootObject,
                         startingDirection: Direction.E,
-                        direction: Direction.E,
-                        canBeTraversed: false,
                         isInteractive: true,
                         isLocked: true,
                         lockedDialogue: "Kill the darkness to open the chest",
@@ -546,14 +396,13 @@ export default {
                         loot: [
                               weapons.axe,
                               potions.smallHealthPotion,
+                              potions.smallHealthPotion,
+                              potions.smallDamageBuff,
+                              potions.invisiblityPotion,
                         ]
                   },
                   startingPositionY: "b",
                   startingPositionX: 5,
             },
-      ] as IAreaElement[],
-      areaCompleteRequirements: {
-            item: false,
-            monster: true
-      }
+      ] as IAreaElement[]
 };

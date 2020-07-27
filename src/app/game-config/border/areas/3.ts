@@ -49,8 +49,8 @@ export default {
                   type: ElementClass.object,
                   elementProperties: {
                         name: "Corner Wall",
-                        startingDirection: Direction.E,
-                        direction: Direction.E,
+                        startingDirection: Direction.N,
+                        direction: Direction.N,
                         canBeTraversed: false,
                         isInteractive: false,
                         imageFileName: "wall-corner.png",
