@@ -46,7 +46,7 @@ export const weapons = {
             value: 100,
             imageFileName: "sword.png",
             properties: {
-                  damage: 10,
+                  damage: 6,
             },
       },
       axe: {
@@ -62,7 +62,7 @@ export const weapons = {
             value: 100,
             imageFileName: "axe.png",
             properties: {
-                  damage: 9,
+                  damage: 5,
             },
       },
 };

@@ -85,3 +85,4 @@ v0.14.0a
 * https://www.flaticon.com/free-icon/eye_3077287
 * https://www.flaticon.com/free-icon/eye_2948075
 * https://www.flaticon.com/free-icon/witness_2210317
+* https://www.flaticon.com/free-icon/running-shoe_926188

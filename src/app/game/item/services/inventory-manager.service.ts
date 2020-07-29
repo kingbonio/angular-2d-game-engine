@@ -26,10 +26,6 @@ export class InventoryManagerService {
     return contentsWeight;
   }
 
-  // get capacity(): number {
-  //   return this.playerStateService.strength * defaults.playerMultipliers.inventoryCapacityMultiplier;
-  // }
-
   /**
    * Adds an inventory item to the inventory is there is space,
    * otherwise notifies the player of the failure

@@ -30,8 +30,12 @@ export class BattleCalculatorService {
     // TODO this may become redundant
     const equippedWeapon = this.equipmentManagerService.getWeaponType(weaponTypeUsed);
 
-    // Pass by value here
-    let totalDamage = equippedWeapon ? equippedWeapon.properties.damage : defaults.playerBaseStats.baseDamage;
+    // We'll be allowing primary only for the time being
+    let totalDamage = defaults.playerBaseStats.baseDamage;
+
+    if (equippedWeapon) {
+      totalDamage += equippedWeapon.properties.damage;
+    }
 
     if (activeBuff && activeBuff.properties.effectType === PotionEffectType.damage) {
       totalDamage += activeBuff.properties.effectAmount;
@@ -48,7 +52,13 @@ export class BattleCalculatorService {
    * @param activeBuff Magical effects to attack or defence
    */
   public getDamageToPlayer(character: Character, armour: IArmour, isGuarding = false, activeBuff?: IInventoryItem | null): number {
-    const characterDamage = character.weapons ? character.weapons.primary.properties.damage : character.baseDamage;
+
+    let characterDamage = character.baseDamage;
+
+    // We'll be allowing primary only for the time being
+    if (character.weapons && character.weapons.primary) {
+      characterDamage += character.weapons.primary.properties.damage;
+    }
 
     if (activeBuff && activeBuff.properties.effectType === PotionEffectType.armour) {
       return this.calculateDamage(armour, characterDamage, isGuarding, activeBuff);
@@ -60,7 +70,7 @@ export class BattleCalculatorService {
   }
 
   /**
-   * 
+   * Calculates damage based on weapon damage and armour
    * @param targetArmour The set of items use to reduce the damage
    * @param weaponDamage base amount of damage done by the weapon
    * @param isGuarding whether or not to consider reducing damage
@@ -73,7 +83,6 @@ export class BattleCalculatorService {
       for (const item in targetArmour) {
         if (targetArmour.hasOwnProperty(item) && targetArmour[item]) {
           totalArmourValue += targetArmour[item].properties.defense;
-
         }
       }
 
@@ -96,7 +105,7 @@ export class BattleCalculatorService {
 
     // Reduce the final amount if the target is guarding
     if (isGuarding) {
-       damageTaken = Math.floor(damageTaken * defaults.battleMultipliers.guardDivider);
+      damageTaken = Math.floor(damageTaken * defaults.battleMultipliers.guardDivider);
     }
 
     return damageTaken;

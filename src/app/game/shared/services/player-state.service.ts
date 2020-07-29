@@ -25,7 +25,6 @@ export class PlayerStateService {
 
   public health: number;
   public maxHealth: number;
-  private exp: number = defaults.initialPlayerStats.exp;
   public locationX: number;
   public locationY: string;
   public direction: Direction = Direction.N;
@@ -54,18 +53,6 @@ export class PlayerStateService {
 
   get playerGridLocation() {
     return this.areaStateService.locations[this.locationY + this.locationX];
-  }
-
-  get level() {
-    return Math.ceil(defaults.playerMultipliers.levelCalculation(this.exp));
-  }
-
-  get levelMultiplier(): number {
-    return this.level * defaults.playerMultipliers.levelStatMultiplier;
-  }
-
-  public itemTooHighLevel(item: IInventoryItem): boolean {
-    return item.level > this.level;
   }
 
   /**
@@ -526,7 +513,6 @@ export class PlayerStateService {
     return {
       health: this.health,
       maxHealth: this.maxHealth,
-      exp: this.exp,
       locationX: this.locationX,
       locationY: this.locationY,
       direction: this.direction,

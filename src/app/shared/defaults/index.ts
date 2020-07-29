@@ -8,13 +8,6 @@ export default {
     initialPlayerStats: {
         health: 20,
         maxHealth: 50,
-        strength: 10,
-        dexterity: 10,
-        magicka: 10,
-        exp: 1,
-        imageLocation: 'assets/images/player-image.jpg',
-        locationX: 2,
-        locationY: 'B',
         startingDirection: Direction.N,
         direction: Direction.N
     },
@@ -25,12 +18,6 @@ export default {
         receiveAttackDurationMilliseconds: 170,
     },
     playerMultipliers: {
-        inventoryStorageMultiplier: 30,
-        inventoryCapacityMultiplier: 30,
-        levelCalculation: (exp) => {
-            return exp / 3000;
-        },
-        levelStatMultiplier: 1.2,
         stealSuccessRequirement: 5,
     },
     battleMultipliers: {
@@ -44,9 +31,6 @@ export default {
         baseArmour: 5,
         minimumAttackRoll: 3,
     },
-    initialAreaSettings: {
-        type: 'start'
-    },
     dialogue: {
         textOnScreenTimeMultiplier: 200,
         minimumOnScreenTime: 4000,
@@ -57,7 +41,7 @@ export default {
         computerCharacterType: "computer",
         areaTipsName: "area tips",
         areaTipsType: "area-tips",
-        maximumMessagesOnScreen: 2,
+        maximumMessagesOnScreen: 3,
         areaExitLocked: "The door is locked",
         alreadyAtFullHealth: "You are already at full health",
         areaExitKeyNotActive: (keyColour) => {
@@ -83,26 +67,13 @@ export default {
         inventoryFull: "Your inventory is full",
         noWeaponEquipped: "You have no weapon equipped to attack with",
         stealAttemptFail: "You failed to steal from the target and you have angered them",
-        stealEnemyTooHighLevel: "The character is too strong to pickpocket, you have angered them",
     },
     enemyConfig: {
+        // Not currently in use
         viewDistance: 1,
     },
     gameMenu: {
         loadingText: "Loading Area...",
-        menuOpenAtLoad: true,
-        pages: [
-            {
-                title: "main",
-                settings: [
-                    {
-                        name: "Example Option",
-                        description: "Allows you to pick a setting for game play",
-                        type: "checkbox"
-                    }
-                ]
-            }
-        ],
         saveSlots: {
             1: null,
             2: null,
@@ -115,17 +86,17 @@ export default {
         oneHandedControls: true,
     },
     gameConfig: {
+        // TODO Does this mean lines or messages?
         dialogueLines: 8,
     },
+    // DO NOT CHANGE THE FOLLOWING
     areaExitDestinations: {
-        // TODO This is not ideal
         northExit: "h4",
         eastExit: "d8",
         southExit: "`4",
         westExit: "d0",
     },
     areaExitLocations: {
-        // TODO This is not ideal
         northExit: "g4",
         eastExit: "d7",
         southExit: "a4",
@@ -137,21 +108,6 @@ export default {
         lowerXBoundary: "0",
         upperXBoundary: "8",
     },
-    // defaultKeyMap: {
-    //     // https://keycode.info
-    //     87: { type: "move", direction: "n" },
-    //     68: { type: "move", direction: "e" },
-    //     83: { type: "move", direction: "s" },
-    //     65: { type: "move", direction: "w" },
-    //     38: { type: "direction", direction: "n" },
-    //     39: { type: "direction", direction: "e" },
-    //     40: { type: "direction", direction: "s" },
-    //     37: { type: "direction", direction: "w" },
-    //     32: { type: "interaction", interaction: "attack" },
-    //     17: { type: "interaction", interaction: "guard" },
-    //     69: { type: "interaction", interaction: "interact" },
-    //     81: { type: "interaction", interaction: "speak" },
-    // },
     defaultKeyMap: {
         moveNorth: 87,
         moveEast: 68,
