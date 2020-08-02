@@ -145,5 +145,4 @@ export class PersistentStateService {
     this.inventoryManagerService.applyState(this.state.inventory as IInventoryStateData);
     this.equipmentManagerService.applyState(this.state.equipment as IEquipmentStateData);
   }
-
 }

@@ -4,6 +4,7 @@ import { SoundEffects } from '../enums';
 import { soundEffects } from "../../game-config/audio/sound-effects";
 import { backgroundMusic } from '../../game-config/audio';
 import { IAudioEngine } from '../interfaces';
+import { GameSettingsService } from './game-settings.service';
 
 
 @Injectable({
@@ -13,10 +14,13 @@ export class SoundEffectService {
 
   private soundEffectInstances = {};
 
-  constructor() {
+  constructor(
+    private gameSettingsService: GameSettingsService,
+    ) {
     for (const soundEffectName in SoundEffects) {
       if (SoundEffects.hasOwnProperty(soundEffectName)) {
         this.soundEffectInstances[soundEffectName] = new Audio() as IAudioEngine;
+        this.soundEffectInstances[soundEffectName].volume = this.gameSettingsService.musicVolume;
         this.soundEffectInstances[soundEffectName].src = soundEffects[soundEffectName];
         this.soundEffectInstances[soundEffectName].load();
       }

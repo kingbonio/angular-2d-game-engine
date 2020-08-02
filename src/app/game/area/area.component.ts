@@ -337,19 +337,6 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
     }
   }
 
-  /**
-   * Allows the area component to collect data from the level received by the router
-   * @returns The details about the level
-   */
-  public getCurrentLevelData(): ILevelData {
-    // TODO: Dummy return data for now
-    return {
-      name: "test level",
-      width: 6,
-      height: 6,
-      type: AreaType.puzzle
-    } as ILevelData;
-  }
 
   public locationExit(location: string, gridObject: IGridData): string {
     for (const locationReference in defaults.areaExitLocations) {

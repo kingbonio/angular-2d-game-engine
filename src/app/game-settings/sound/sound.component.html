@@ -1,0 +1,38 @@
+<div class="gameplay">
+      <div class="settings-section">
+            <div class="sound-title">Sound Settings</div>
+            <div class="sound-settings">
+                  <table class="key-bindings-table">                  
+                        <tr>
+                              <td>
+                                    Music Volume
+                              </td>
+                              <td>
+                                    <mat-slider class="example-margin" [max]="music.max" [min]="music.min" [step]="music.step" [(ngModel)]="gameSettingsService.musicVolume">
+                                    </mat-slider>
+                              </td>
+                              <td>
+                                    {{getVolumePercentage("musicVolume")}}%
+                              </td>
+                        </tr>
+                        <tr>
+                              <td>
+                                    Sound Effects Volume
+                              </td>
+                              <td>
+                                    <mat-slider class="example-margin" [max]="soundEffect.max" [min]="soundEffect.min" [step]="soundEffect.step" [(ngModel)]="gameSettingsService.soundEffectVolume">
+                                    </mat-slider>
+                              </td>
+                              <td>
+                                    {{getVolumePercentage("soundEffectVolume")}}%
+                              </td>
+                        </tr>
+                  </table>                  
+            </div>
+      </div>
+      <div class="footer-section">
+            <div class="save-settings">
+                  <button (click)="saveSettings()">Save settings</button>
+            </div>
+      </div>
+</div>

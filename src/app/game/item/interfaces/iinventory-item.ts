@@ -10,14 +10,7 @@ export interface IInventoryItem {
       destroyedOnUse?: boolean;
       armourSlot: ArmourType | null;
       weaponSlot: WeaponType | null;
-      usable: boolean;
       itemReference?: string;
-      level?: number;
-      weight?: number;
-      inventoryHeight?: number;
-      inventoryWidth?: number;
-      value: number;
       imageFileName?: string;
-      // TODO: May be a better way of assigning class-based properties
       properties: IItemProperties;
 }

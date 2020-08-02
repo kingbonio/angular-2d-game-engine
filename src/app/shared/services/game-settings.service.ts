@@ -19,6 +19,8 @@ export class GameSettingsService {
   public keyMap = defaults.defaultKeyMap;
   public border = false;
   public keysMapped = {};
+  public musicVolume = 0.5;
+  public soundEffectVolume = 0.5;
 
   constructor(
     public persistentStateService: PersistentStateService,
@@ -94,6 +96,8 @@ export class GameSettingsService {
       keyMap: this.keyMap,
       keysMapped: this.keysMapped,
       border: this.border,
+      musicVolume: this.musicVolume,
+      soundEffectVolume: this.soundEffectVolume,
     };
   }
 

@@ -8,14 +8,7 @@ export const keyItems = {
             class: ItemClass.keyItem,
             armourSlot: null,
             weaponSlot: null,
-            usable: true,
-            level: 1,
-            weight: 1,
-            inventoryHeight: 1,
-            inventoryWidth: 1,
-            value: 10,
             imageFileName: "rusty-old-key.png",
-            // TODO: May be a better way of assigning class-based properties
             properties: {
                   keyItem: true,
             }
@@ -26,14 +19,7 @@ export const keyItems = {
             class: ItemClass.keyItem,
             armourSlot: null,
             weaponSlot: null,
-            usable: true,
-            level: 1,
-            weight: 1,
-            inventoryHeight: 1,
-            inventoryWidth: 1,
-            value: 10,
             imageFileName: "fancy-key.png",
-            // TODO: May be a better way of assigning class-based properties
             properties: {
                   keyItem: true,
             }
@@ -44,14 +30,7 @@ export const keyItems = {
             class: ItemClass.keyItem,
             armourSlot: null,
             weaponSlot: null,
-            usable: true,
-            level: 1,
-            weight: 1,
-            inventoryHeight: 1,
-            inventoryWidth: 1,
-            value: 10,
             imageFileName: "green-door-key.png",
-            // TODO: May be a better way of assigning class-based properties
             properties: {
                   keyItem: true,
             }
@@ -62,14 +41,7 @@ export const keyItems = {
             class: ItemClass.keyItem,
             armourSlot: null,
             weaponSlot: null,
-            usable: true,
-            level: 1,
-            weight: 1,
-            inventoryHeight: 1,
-            inventoryWidth: 1,
-            value: 10,
             imageFileName: "red-door-key.png",
-            // TODO: May be a better way of assigning class-based properties
             properties: {
                   keyItem: true,
             }
@@ -81,14 +53,7 @@ export const keyItems = {
             destroyedOnUse: true,
             armourSlot: null,
             weaponSlot: null,
-            usable: true,
-            level: 1,
-            weight: 1,
-            inventoryHeight: 1,
-            inventoryWidth: 1,
-            value: 10,
             imageFileName: "light-bulb.png",
-            // TODO: May be a better way of assigning class-based properties
             properties: {
                   keyItem: true,
             }

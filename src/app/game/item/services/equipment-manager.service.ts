@@ -47,7 +47,7 @@ export class EquipmentManagerService {
 
   get getWeaponDamage() {
     let totalDamage = this.weapons.primary ? this.weapons.primary.properties.damage : defaults.playerBaseStats.baseDamage;
-    if (this.activeBuff && this.activeBuff.properties.effectType === PotionEffectType.damage) {
+    if (this.activeBuff && this.activeBuff.properties.effectType === PotionEffectType.damageOvercharge) {
       totalDamage += this.activeBuff.properties.effectAmount;
     }
     return totalDamage;

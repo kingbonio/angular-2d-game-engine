@@ -2,6 +2,6 @@ export enum PotionEffectType {
       healing,
       healthOvercharge,
       armour,
-      damage,
+      damageOvercharge,
       invisibility,
 }

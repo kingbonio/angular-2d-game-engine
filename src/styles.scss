@@ -1,3 +1,18 @@
+@import '~@angular/material/theming';
+
+// always include only once per project
+@include mat-core();
+
+// import our custom theme
+@import './core-mat-theme.scss';
+
+// specify theme class eg: <body class="my-theme"> ... </body>
+.my-theme {
+  
+  // use our theme with angular-material-theme mixin
+  @include angular-material-theme($grey-app-theme);
+}
+
 /* You can add global styles to this file, and also import other style files */
 body {
       position: absolute;

@@ -1,0 +1,34 @@
+.gameplay {
+      
+      position: relative;
+      width: 710px;
+      height: 657px;
+      padding: 20px;
+      color: white;
+      font-family: arial;
+      text-align: left;
+      
+      .settings-section {
+
+            .gameplay-title {
+                  margin: 10px 0px;
+                  padding: 5px;
+                  font-weight: 500;
+            }
+      }
+
+      .footer-section {
+
+            position: absolute;
+            bottom: 20px;
+
+            .save-settings {
+                  display: inline-block;
+                  padding: 0px 15px 0px 0px;
+            }
+            
+            .restore-defaults {
+                  display: inline-block;
+            }
+      }
+}

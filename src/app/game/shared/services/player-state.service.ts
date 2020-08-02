@@ -42,8 +42,6 @@ export class PlayerStateService {
     private equipmentManagerService: EquipmentManagerService,
     private inventoryManagerService: InventoryManagerService,
     private soundEffectService: SoundEffectService,
-    // private userInputService: UserInputService,
-
   ) {
     // Pull defaults from defaults file and assign initial values
     this.health = defaults.initialPlayerStats.health;

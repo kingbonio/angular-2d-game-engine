@@ -1,0 +1,18 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$grey-app-primary: mat-palette($mat-grey, A200);
+$grey-app-accent:  mat-palette($mat-grey, A200, A100, A400);
+$grey-app-warn:    mat-palette($mat-grey, A200);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as `color` or `typography`.
+$grey-app-theme: mat-light-theme($grey-app-primary, $grey-app-accent, $grey-app-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($grey-app-theme);

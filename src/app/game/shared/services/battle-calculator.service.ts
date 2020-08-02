@@ -37,7 +37,7 @@ export class BattleCalculatorService {
       totalDamage += equippedWeapon.properties.damage;
     }
 
-    if (activeBuff && activeBuff.properties.effectType === PotionEffectType.damage) {
+    if (activeBuff && activeBuff.properties.effectType === PotionEffectType.damageOvercharge) {
       totalDamage += activeBuff.properties.effectAmount;
     }
 
