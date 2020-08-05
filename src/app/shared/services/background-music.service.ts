@@ -12,13 +12,11 @@ export class BackgroundMusicService {
   private currentlyActiveMusic: BackgroundMusic;
 
   constructor(
-    private gameSettingsService: GameSettingsService
     ) {
     for (const backgroundMusicName in BackgroundMusic) {
       if (BackgroundMusic.hasOwnProperty(backgroundMusicName)) {
         this.backgroundMusicInstances[backgroundMusicName] = new Audio() as IAudioEngine;
         this.backgroundMusicInstances[backgroundMusicName].loop = true;
-        this.backgroundMusicInstances[backgroundMusicName].volume = this.gameSettingsService.musicVolume;
         this.backgroundMusicInstances[backgroundMusicName].src = backgroundMusic[backgroundMusicName];
         this.backgroundMusicInstances[backgroundMusicName].load();
       }
@@ -43,6 +41,14 @@ export class BackgroundMusicService {
             this.currentlyActiveMusic = musicName;
           }
         }
+      }
+    }
+  }
+
+  public setVolume(newVolume: number) {
+    for (const backgroundMusicInstance in this.backgroundMusicInstances) {
+      if (this.backgroundMusicInstances.hasOwnProperty(backgroundMusicInstance)) {
+        this.backgroundMusicInstances[backgroundMusicInstance].volume = newVolume;
       }
     }
   }

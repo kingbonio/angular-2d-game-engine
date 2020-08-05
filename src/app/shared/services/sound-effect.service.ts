@@ -15,14 +15,20 @@ export class SoundEffectService {
   private soundEffectInstances = {};
 
   constructor(
-    private gameSettingsService: GameSettingsService,
     ) {
     for (const soundEffectName in SoundEffects) {
       if (SoundEffects.hasOwnProperty(soundEffectName)) {
         this.soundEffectInstances[soundEffectName] = new Audio() as IAudioEngine;
-        this.soundEffectInstances[soundEffectName].volume = this.gameSettingsService.musicVolume;
         this.soundEffectInstances[soundEffectName].src = soundEffects[soundEffectName];
         this.soundEffectInstances[soundEffectName].load();
+      }
+    }
+  }
+
+  public setVolume(newVolume: number) {
+    for (const soundEffectInstance in this.soundEffectInstances) {
+      if (this.soundEffectInstances.hasOwnProperty(soundEffectInstance)) {
+        this.soundEffectInstances[soundEffectInstance].volume = newVolume;
       }
     }
   }

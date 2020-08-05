@@ -71,7 +71,7 @@ export class GameControlsComponent {
   }
 
   public saveSettings() {
-    this.gameSettingsService.saveGameSettings();
+    this.gameSettingsService.saveGameSettings({});
   }
 
   public resetToDefaults() {

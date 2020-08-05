@@ -20,18 +20,27 @@ export class SoundComponent implements OnInit {
     step: 0.1,
   };
 
+  public soundEffectVolume: number;
+  public musicVolume: number;
+
   constructor(
     public gameSettingsService: GameSettingsService,
-  ) { }
+  ) {
+    this.soundEffectVolume = this.gameSettingsService.soundEffectVolume;
+    this.musicVolume = this.gameSettingsService.musicVolume;
+  }
 
   ngOnInit() {
   }
 
   public getVolumePercentage(soundSource: string): number {
-    return Number(this.gameSettingsService[soundSource]) * 100;
+    return Number(this[soundSource]) * 100;
   }
 
   public saveSettings() {
-    this.gameSettingsService.saveGameSettings();
+    this.gameSettingsService.saveGameSettings({
+      soundEffectVolume: this.soundEffectVolume,
+      musicVolume: this.musicVolume,
+    });
   }
 }

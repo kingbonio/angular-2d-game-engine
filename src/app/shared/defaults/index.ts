@@ -68,6 +68,10 @@ export default {
         noWeaponEquipped: "You have no weapon equipped to attack with",
         stealAttemptFail: "You failed to steal from the target and you have angered them",
     },
+    volumes: {
+        music: 0.5,
+        soundEffect: 0.5,
+    },
     enemyConfig: {
         // Not currently in use
         viewDistance: 1,

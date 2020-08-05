@@ -13,7 +13,7 @@ export class GameplayComponent {
   ) { }
 
   public saveSettings() {
-    this.gameSettingsService.saveGameSettings();
+    this.gameSettingsService.saveGameSettings({});
   }
 
   public resetToDefaults() {

@@ -10,7 +10,7 @@ export class GameGuard implements CanActivate {
   constructor(
     public applicationStateService: ApplicationStateService,
     public router: Router
-    ) {
+  ) {
   }
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (this.applicationStateService.canAccessGame) {
@@ -19,6 +19,7 @@ export class GameGuard implements CanActivate {
     }
 
     this.router.navigate(['/']);
+
     return false;
   }
 }

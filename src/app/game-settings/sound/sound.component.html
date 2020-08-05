@@ -8,7 +8,7 @@
                                     Music Volume
                               </td>
                               <td>
-                                    <mat-slider class="example-margin" [max]="music.max" [min]="music.min" [step]="music.step" [(ngModel)]="gameSettingsService.musicVolume">
+                                    <mat-slider [max]="music.max" [min]="music.min" [step]="music.step" [(ngModel)]="musicVolume">
                                     </mat-slider>
                               </td>
                               <td>
@@ -20,7 +20,7 @@
                                     Sound Effects Volume
                               </td>
                               <td>
-                                    <mat-slider class="example-margin" [max]="soundEffect.max" [min]="soundEffect.min" [step]="soundEffect.step" [(ngModel)]="gameSettingsService.soundEffectVolume">
+                                    <mat-slider [max]="soundEffect.max" [min]="soundEffect.min" [step]="soundEffect.step" [(ngModel)]="soundEffectVolume">
                                     </mat-slider>
                               </td>
                               <td>

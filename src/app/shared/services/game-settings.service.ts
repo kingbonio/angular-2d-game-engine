@@ -6,6 +6,8 @@ import keyActions from '../../shared/util/key-actions';
 import keyReferences from '../../shared/util/key-references';
 import { KeyInputType } from '../enums';
 import { IUserAction } from '../interfaces';
+import { SoundEffectService } from './sound-effect.service';
+import { BackgroundMusicService } from './background-music.service';
 
 
 @Injectable({
@@ -19,17 +21,30 @@ export class GameSettingsService {
   public keyMap = defaults.defaultKeyMap;
   public border = false;
   public keysMapped = {};
-  public musicVolume = 0.5;
-  public soundEffectVolume = 0.5;
+  public musicVolume = defaults.volumes.music;
+  public soundEffectVolume = defaults.volumes.soundEffect;
 
   constructor(
     public persistentStateService: PersistentStateService,
-    ) {
+    private soundEffectService: SoundEffectService,
+    private backgroundMusicService: BackgroundMusicService,
+  ) {
     const persistentGameSettings: IGameSettings = this.persistentStateService.getGameSettings();
+
     if (persistentGameSettings) {
       this.applyAllSettings(persistentGameSettings);
     } else {
       this.setToDefaults();
+    }
+
+    // Push volume settings to background music setting
+    if (persistentGameSettings.musicVolume) {
+      this.backgroundMusicService.setVolume(persistentGameSettings.musicVolume);
+    }
+
+    // Push volume settings to sound effect setting
+    if (persistentGameSettings.soundEffectVolume) {
+      this.soundEffectService.setVolume(persistentGameSettings.soundEffectVolume);
     }
   }
 
@@ -67,7 +82,17 @@ export class GameSettingsService {
     return keyActions[characterAction];
   }
 
-  public saveGameSettings() {
+  public saveGameSettings(newSettings: any) {
+    for (const newSetting in newSettings) {
+      if (newSettings.hasOwnProperty(newSetting)) {
+        this[newSetting] = newSettings[newSetting];
+      }
+    }
+
+    this.saveToStorage();
+  }
+
+  private saveToStorage() {
     const allSettings = this.gatherAllSettings();
     this.persistentStateService.saveGameSettings(allSettings);
   }
