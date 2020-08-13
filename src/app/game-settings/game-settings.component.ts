@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { GameStateService } from '../game/shared/services/game-state.service';
 import { GameSettingsService } from '../shared/services/game-settings.service';
 import { UserInputService } from '../shared/services/user-input.service';
+import { BackgroundMusicService } from '../shared/services/background-music.service';
 
 @Component({
   selector: 'app-game-settings',
@@ -14,5 +15,6 @@ export class GameSettingsComponent {
     public gameSettingsService: GameSettingsService,
     public userInputService: UserInputService,
     public gameStateService: GameStateService,
+    public backgroundMusicService: BackgroundMusicService,
   ) { }
 }

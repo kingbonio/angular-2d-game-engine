@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GameSettingsService } from '../../shared/services/game-settings.service';
+import defaults from '../../shared/defaults';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sound',
@@ -25,6 +27,7 @@ export class SoundComponent implements OnInit {
 
   constructor(
     public gameSettingsService: GameSettingsService,
+    public router: Router
   ) {
     this.soundEffectVolume = this.gameSettingsService.soundEffectVolume;
     this.musicVolume = this.gameSettingsService.musicVolume;
@@ -42,5 +45,16 @@ export class SoundComponent implements OnInit {
       soundEffectVolume: this.soundEffectVolume,
       musicVolume: this.musicVolume,
     });
+  }
+
+  // Apply defaults to this component
+  public setDefaults() {
+    this.soundEffectVolume = defaults.volumes.soundEffect;
+    this.musicVolume = defaults.volumes.music;
+  }
+
+  // Navigate to main menu
+  public loadMainMenu() {
+    this.router.navigate(['/']);
   }
 }

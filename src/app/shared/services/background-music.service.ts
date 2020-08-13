@@ -29,6 +29,7 @@ export class BackgroundMusicService {
         this.backgroundMusicInstances[backgroundMusicInstance].load();
       }
     }
+    this.currentlyActiveMusic = null;
   }
 
   public startMusic(musicName: BackgroundMusic) {

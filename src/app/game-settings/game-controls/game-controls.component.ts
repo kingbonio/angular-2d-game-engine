@@ -6,6 +6,8 @@ import { KeyInputType } from '../../shared/enums';
 import { GameSettingsService } from '../../shared/services/game-settings.service';
 import { UserInputService } from '../../shared/services/user-input.service';
 import keyFullNames from '../../shared/util/key-full-names';
+import keyReferences from '../../shared/util/key-references';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-game-controls',
@@ -17,22 +19,28 @@ export class GameControlsComponent {
   public userSetKeySubscription: Subscription;
   public keyNames: string[];
   public keyFullNames: any;
+  public oneHandedControls = defaults.gameSettings.oneHandedControls;
+  public keyMap = defaults.defaultKeyMap;
+  public keysMapped = {};
 
 
   constructor(
     public gameSettingsService: GameSettingsService,
     public userInputService: UserInputService,
     public gameStateService: GameStateService,
+    public router: Router
   ) {
     this.keyNames = Object.keys(defaults.defaultKeyMap);
     this.keyFullNames = keyFullNames;
+
+    this.pullCurrentSettings();
 
     this.userInputService.userSetKey.subscribe((key: number) => {
       if (
         this.gameStateService.awaitingKeyboardSetting &&
         key !== 0 &&
         key !== 27 &&
-        !this.gameSettingsService.keysMapped[key]
+        !this.keysMapped[key]
       ) {
         // TODO Need to block any that are already selected
         this.userSetKeyHandler(key);
@@ -42,8 +50,34 @@ export class GameControlsComponent {
     });
   }
 
+  /**
+   * Sets the new key and clears the previous action the key was set to
+   * @param key key entered for new binding
+   * @param action Reference for the action
+   */
+  public updateKeyBinding(key: number, action: KeyInputType) {
+    const previousKey = this.keyMap[action];
+    this.keyMap[action] = key;
+    this.keysMapped[key] = action;
+    this.keysMapped[previousKey] = null;
+  }
+
+  public getKeyName(key) {
+    return keyReferences[key];
+  }
+
+  /**
+   * Returns the name of the key for each action
+   * @param keyInputType the action we want to get the key name for
+   * @returns The name of the key
+   */
+  public getSelectedKeyName(keyInputType: KeyInputType): string {
+    return this.getKeyName(this.keyMap[keyInputType]);
+  }
+
+
   private userSetKeyHandler(key: number) {
-    this.gameSettingsService.updateKeyBinding(key, this.keyActionSelected);
+    this.updateKeyBinding(key, this.keyActionSelected);
     this.gameStateService.awaitingKeyboardSetting = false;
     this.keyActionSelected = null;
   }
@@ -61,7 +95,7 @@ export class GameControlsComponent {
 
     // TODO This could be tidier
     const isHidden = (
-      this.gameSettingsService.oneHandedControls &&
+      this.oneHandedControls &&
       (keyName === "directionNorth" ||
        keyName === "directionEast" ||
        keyName === "directionSouth" ||
@@ -70,11 +104,33 @@ export class GameControlsComponent {
     return isHidden;
   }
 
-  public saveSettings() {
-    this.gameSettingsService.saveGameSettings({});
+  public pullCurrentSettings() {
+    this.keyMap = this.gameSettingsService.keyMap;
+    this.keysMapped = this.gameSettingsService.keysMapped;
   }
 
-  public resetToDefaults() {
-    this.gameSettingsService.setToDefaults();
+  public saveSettings() {
+    this.gameSettingsService.saveGameSettings({
+      keyMap: this.keyMap,
+      keysMapped: this.keysMapped,
+    });
+  }
+
+  // Apply defaults to this component
+  public setDefaults() {
+    this.keyMap = defaults.defaultKeyMap;
+
+    // Set up the quick-access key references
+    this.keysMapped = {};
+    for (const inputReference in this.keyMap) {
+      if (this.keyMap.hasOwnProperty(inputReference)) {
+        this.keysMapped[this.keyMap[inputReference]] = inputReference;
+      }
+    }
+  }
+
+  // Navigate to main menu
+  public loadMainMenu() {
+    this.router.navigate(['/']);
   }
 }

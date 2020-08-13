@@ -1,8 +1,8 @@
 <div class="gameplay">
-      <div class="settings-section">
+      <div class="gameplay-section">
             <div class="gameplay-title">Gameplay Settings</div>
             <div class="gameplay-settings">
-                  <input type="checkbox" [(ngModel)]="gameSettingsService.showRoomShadow">Show room shadow
+                  <input type="checkbox" [(ngModel)]="showControls">Show Controls
             </div>
       </div>
       <div class="footer-section">
@@ -10,7 +10,10 @@
                   <button (click)="saveSettings()">Save settings</button>
             </div>
             <div class="restore-defaults">
-                  <button (click)="resetToDefaults()">Restore defaults</button>
+                  <button (click)="setDefaults()">Restore defaults</button>
+            </div>
+            <div class="main-menu">
+                  <button (click)="loadMainMenu()">Back To Main Menu</button>
             </div>
       </div>
 </div>

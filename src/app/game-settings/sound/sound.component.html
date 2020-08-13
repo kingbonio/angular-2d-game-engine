@@ -2,7 +2,7 @@
       <div class="settings-section">
             <div class="sound-title">Sound Settings</div>
             <div class="sound-settings">
-                  <table class="key-bindings-table">                  
+                  <table class="sound-table">                  
                         <tr>
                               <td>
                                     Music Volume
@@ -33,6 +33,12 @@
       <div class="footer-section">
             <div class="save-settings">
                   <button (click)="saveSettings()">Save settings</button>
+            </div>
+            <div class="restore-defaults">
+                  <button (click)="setDefaults()">Restore defaults</button>
+            </div>
+            <div class="main-menu">
+                  <button (click)="loadMainMenu()">Back To Main Menu</button>
             </div>
       </div>
 </div>

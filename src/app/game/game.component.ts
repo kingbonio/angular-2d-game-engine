@@ -58,6 +58,7 @@ export class GameComponent implements OnInit, OnDestroy {
   ) {
     this.applicationStateService.gameOpen = true;
     this.assetLoaderService.loadAssets();
+
   }
 
   ngOnInit(): void {

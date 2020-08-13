@@ -2,12 +2,10 @@ import { Injectable } from '@angular/core';
 import { IGameSettings } from '../../game/shared/interfaces';
 import { PersistentStateService } from '../../game/shared/services/persistent-state.service';
 import defaults from '../../shared/defaults';
-import keyActions from '../../shared/util/key-actions';
-import keyReferences from '../../shared/util/key-references';
-import { KeyInputType } from '../enums';
-import { IUserAction } from '../interfaces';
 import { SoundEffectService } from './sound-effect.service';
 import { BackgroundMusicService } from './background-music.service';
+import { IUserAction } from '../interfaces';
+import keyActions from '../../shared/util/key-actions';
 
 
 @Injectable({
@@ -17,10 +15,11 @@ export class GameSettingsService {
 
   public allowInGameMenu = defaults.gameSettings.allowInGameMenu;
   public showRoomShadow = defaults.gameSettings.showRoomShadow;
+  public showControls = defaults.gameSettings.showControls;
   public oneHandedControls = defaults.gameSettings.oneHandedControls;
   public keyMap = defaults.defaultKeyMap;
-  public border = false;
   public keysMapped = {};
+  public border = false;
   public musicVolume = defaults.volumes.music;
   public soundEffectVolume = defaults.volumes.soundEffect;
 
@@ -49,31 +48,6 @@ export class GameSettingsService {
   }
 
   /**
-   * Sets the new key and clears the previous action the key was set to
-   * @param key key entered for new binding
-   * @param action Reference for the action
-   */
-  public updateKeyBinding(key: number, action: KeyInputType) {
-    const previousKey = this.keyMap[action];
-    this.keyMap[action] = key;
-    this.keysMapped[key] = action;
-    this.keysMapped[previousKey] = null;
-  }
-
-  public getKeyName(key) {
-    return keyReferences[key];
-  }
-
-  /**
-   * Returns the name of the key for each action
-   * @param keyInputType the action we want to get the key name for
-   * @returns The name of the key
-   */
-  public getSelectedKeyName(keyInputType: KeyInputType): string {
-    return this.getKeyName(this.keyMap[keyInputType]);
-  }
-
-  /**
    * Returns the action object which can be used to determine outcome for key entry
    * @param inputKey The key reference to get the action for
    */
@@ -89,6 +63,16 @@ export class GameSettingsService {
       }
     }
 
+    // Push volume settings to background music setting
+    if (newSettings.musicVolume) {
+      this.backgroundMusicService.setVolume(newSettings.musicVolume);
+    }
+
+    // Push volume settings to sound effect setting
+    if (newSettings.soundEffectVolume) {
+      this.soundEffectService.setVolume(newSettings.soundEffectVolume);
+    }
+
     this.saveToStorage();
   }
 
@@ -99,6 +83,7 @@ export class GameSettingsService {
 
   public setToDefaults() {
     this.keyMap = defaults.defaultKeyMap;
+
     // Set up the quick-access key references
     this.keysMapped = {};
     for (const inputReference in this.keyMap) {
@@ -116,6 +101,7 @@ export class GameSettingsService {
   public gatherAllSettings(): IGameSettings {
     return {
       showRoomShadow: this.showRoomShadow,
+      showControls: this.showControls,
       allowInGameMenu: this.allowInGameMenu,
       oneHandedControls: this.oneHandedControls,
       keyMap: this.keyMap,

@@ -18,7 +18,7 @@
                               <span class="key-name" [textContent]="keyFullNames[keyName] + ': '"></span>
                         </td>
                         <td *ngIf="!isHiddenControl(keyName)">
-                              <span class="selected-key">{{ gameSettingsService.getSelectedKeyName(keyName) }}</span>
+                              <span class="selected-key">{{ getSelectedKeyName(keyName) }}</span>
                         </td>
                         <td *ngIf="!isHiddenControl(keyName)">
                               <button class="key-input-button" (click)="setAwaitingKey(keyName)">Select key</button>
@@ -32,7 +32,7 @@
       </div>
       <div class="additional-settings">
             <div class="two-handed-controls">
-                  <input type="checkbox" [(ngModel)]="gameSettingsService.oneHandedControls">One-handed controls
+                  <input type="checkbox" [(ngModel)]="oneHandedControls">One-handed controls
             </div>
       </div>
       
@@ -41,7 +41,10 @@
                   <button (click)="saveSettings()">Save settings</button>
             </div>
             <div class="restore-defaults">
-                  <button (click)="resetToDefaults()">Restore defaults</button>
+                  <button (click)="setDefaults()">Restore defaults</button>
+            </div>
+            <div class="main-menu">
+                  <button (click)="loadMainMenu()">Back To Main Menu</button>
             </div>
       </div>
 </div>

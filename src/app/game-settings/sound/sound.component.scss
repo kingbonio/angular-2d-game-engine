@@ -9,11 +9,17 @@
       text-align: left;
       
       .settings-section {
+            margin-left: 20px;
 
-            .gameplay-title {
+            .sound-title {
                   margin: 10px 0px;
-                  padding: 5px;
-                  font-weight: 500;
+                  padding: 10px 0px;
+                  font-weight: 600;
+            }
+
+            .sound-settings {
+                  border-collapse: collapse;
+                  border-spacing: 0px;
             }
       }
 
@@ -29,6 +35,12 @@
             
             .restore-defaults {
                   display: inline-block;
+                  padding: 0px 15px 0px 0px;
+            }
+            
+            .main-menu {
+                  display: inline-block;
+                  padding: 0px 15px 0px 0px;
             }
       }
 }

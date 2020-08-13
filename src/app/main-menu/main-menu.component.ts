@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { PersistentStateService } from '../game/shared/services/persistent-state.service';
 import { ApplicationStateService } from '../shared/services/application-state.service';
 import { Router } from '@angular/router';
+import { BackgroundMusicService } from '../shared/services/background-music.service';
 
 @Component({
   selector: 'app-main-menu',
@@ -12,10 +13,13 @@ export class MainMenuComponent {
   public showSaveGames = false;
 
   constructor(
-    private persistentStateService: PersistentStateService,
     private applicationStateService: ApplicationStateService,
+    public backgroundMusicService: BackgroundMusicService,
     private router: Router
-    ) {
+  ) {
+
+    // Kill the music if we're loading the settings
+    this.backgroundMusicService.stopMusic();
     this.applicationStateService.gameOpen = false;
   }
 
