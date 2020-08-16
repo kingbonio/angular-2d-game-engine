@@ -1,7 +1,6 @@
-<div class="outer-container">
+<div [ngClass]="{'show-controls': gameSettingsService.showControls }" class="outer-container">
 
-      <div class="direction-controls">
-      <!-- <div *ngIf="gameSettingsService.oneHandedControls" class="direction-controls"> -->
+      <div *ngIf="gameSettingsService.showControls" class="direction-controls">
             
             <div class="direction-buttons">
                   <div class="north" (click)="buttonPress({ type: UserActionTypes.move, direction: Direction.N })"></div>
@@ -59,8 +58,7 @@
             </div>
       </div>
 
-      <div class="interaction-controls">
-            <!-- <div *ngIf="gameSettingsService.oneHandedControls" class="direction-controls"> -->
+      <div *ngIf="gameSettingsService.showControls" class="interaction-controls">
 
             <div class="interaction-buttons">
                   <div class="top" (click)="buttonPress({ type: UserActionTypes.interaction, interaction: UserInteractionTypes.speak })">
@@ -77,10 +75,4 @@
                   </div>
             </div>
       </div>
-      <!-- <div *ngIf="assetLoaderService.assetsLoaded" class="hidden-assets">
-            <div *ngFor="let imageLocation of assetLoaderService.assets" class="assets">
-                  {{ imageLocation }}
-                  <img src="imageLocation" />
-            </div>
-      </div> -->
 </div>

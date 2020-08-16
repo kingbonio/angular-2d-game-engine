@@ -1,8 +1,12 @@
 .outer-container {
     position: relative;
-    width: 1174px;
+    width: 762px;
     float: none;
     margin: auto;
+    
+    &.show-controls {
+        width: 1174px;
+    }
 
     .direction-controls {
         width: 200px;
