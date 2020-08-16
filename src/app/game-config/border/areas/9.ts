@@ -115,6 +115,7 @@ export default {
                         angry: false,
                         level: 1,
                         maxHp: 20,
+                        baseDamage: 2,
                         lowHealthThreshold: 15,
                         attackPauseDuration: 2,
                         name: "David",

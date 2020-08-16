@@ -101,6 +101,11 @@
                 height: 560px;
                 border: solid grey 10px;
                 border-style: inset;
+
+                &.battle-mode {
+                    border: solid red 10px;
+                    border-style: inset;
+                }
             }
         }
         

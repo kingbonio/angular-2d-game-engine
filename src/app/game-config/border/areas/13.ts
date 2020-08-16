@@ -27,6 +27,7 @@ export default {
                         angry: false,
                         level: 1,
                         maxHp: 30,
+                        baseDamage: 2,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Gary The Dick",

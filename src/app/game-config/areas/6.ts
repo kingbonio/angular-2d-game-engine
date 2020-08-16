@@ -16,6 +16,7 @@ export default {
                   elementProperties: {
                         id: "9b385219-a8df-47f9-b7ce-000d1bb18a9d",
                         maxHp: 50,
+                        baseDamage: 2,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Test",
@@ -53,6 +54,7 @@ export default {
                   elementProperties: {
                         id: "92b039ed-f3a0-4c9a-803a-44d9bca0252c",
                         maxHp: 50,
+                        baseDamage: 2,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Test",
@@ -90,6 +92,7 @@ export default {
                   elementProperties: {
                         id: "c67a81c0-ae3b-4f6f-8c60-b8f5df5d44f9",
                         maxHp: 50,
+                        baseDamage: 2,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Test",
@@ -127,6 +130,7 @@ export default {
                   elementProperties: {
                         id: "ab302ef2-573d-45b1-93ad-e5c929b2e891",
                         maxHp: 50,
+                        baseDamage: 2,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Test",
@@ -164,6 +168,7 @@ export default {
                   elementProperties: {
                         id: "daf46483-58a5-4154-91c5-fc569e5f6a6b",
                         maxHp: 50,
+                        baseDamage: 2,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Test",
@@ -201,6 +206,7 @@ export default {
                   elementProperties: {
                         id: "53831a37-395e-47f6-88ed-bc6be994c0c6",
                         maxHp: 50,
+                        baseDamage: 2,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Test",
@@ -238,6 +244,7 @@ export default {
                   elementProperties: {
                         id: "5ac92002-3033-4adb-9832-3a520ea02f5f",
                         maxHp: 50,
+                        baseDamage: 2,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Test",
@@ -276,6 +283,7 @@ export default {
                   elementProperties: {
                         id: "2b475c48-65a6-4d5e-8908-ddd2593457f5",
                         maxHp: 50,
+                        baseDamage: 2,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Test",
@@ -313,6 +321,7 @@ export default {
                   elementProperties: {
                         id: "595f3d40-37df-4531-b4b3-35bf2ede1f2f",
                         maxHp: 50,
+                        baseDamage: 2,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Test",

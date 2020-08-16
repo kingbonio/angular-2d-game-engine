@@ -20,7 +20,7 @@
                               {{ loadingText }}
                         </div>
                   </div>
-                  <app-area *ngIf="isAreaComponentAlive() && applicationStateService.gameOpen"></app-area>
+                  <app-area *ngIf="isAreaComponentAlive() && applicationStateService.gameOpen" [ngClass]="{ 'battle-mode': gameStateService.battleMode }"></app-area>
             </div>
             <div class="dialogue-area">
                   <app-dialogue class="dialogue-box"></app-dialogue>
@@ -46,11 +46,6 @@
                         <div class="status-effects">
 
                         </div>
-                  </div>
-                  <div *ngIf="gameStateService.battleMode" class="battle-mode">
-                        Battle mode
-                        (Turn based)
-                        Escape or fight
                   </div>
                   <div class="menu-button">
                         <div *ngIf="gameSettingsService.allowInGameMenu" (click)="openGameMenu()" class="menu-icon">Menu</div>

@@ -16,6 +16,7 @@ export default {
                   elementProperties: {
                         id: "739bdb36-7cd6-4e69-a176-2ae62f1ed7b0",
                         maxHp: 30,
+                        baseDamage: 2,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Gary The Dick",
@@ -51,6 +52,7 @@ export default {
                   elementProperties: {
                         id: "b3d7d7b2-c672-48d6-82bd-f28e3863158b",
                         maxHp: 30,
+                        baseDamage: 2,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Gary The Dick",
@@ -86,6 +88,7 @@ export default {
                   elementProperties: {
                         id: "6fa3d2d4-b6d9-4dca-8c29-9778164152e7",
                         maxHp: 30,
+                        baseDamage: 2,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Gary The Dick",
@@ -122,6 +125,7 @@ export default {
                   elementProperties: {
                         id: "89edf110-6545-43bf-82d6-ef3193b9ea4f",
                         maxHp: 30,
+                        baseDamage: 2,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Gary The Dick",
@@ -157,6 +161,7 @@ export default {
                   elementProperties: {
                         id: "bac53a6c-ea18-41e6-a4db-d62bd055aeb0",
                         maxHp: 30,
+                        baseDamage: 2,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Gary The Dick",
@@ -192,6 +197,7 @@ export default {
                   elementProperties: {
                         id: "22adab29-22f8-4cf7-b996-bf98282a144f",
                         maxHp: 30,
+                        baseDamage: 2,
                         lowHealthThreshold: 6,
                         attackPauseDuration: 1,
                         name: "Gary The Dick",

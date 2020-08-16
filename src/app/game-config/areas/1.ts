@@ -16,6 +16,7 @@ export default {
                   elementProperties: {
                         id: "cbdd6e52-dc3e-4059-b9b6-e231fdd775a1",
                         maxHp: 30,
+                        baseDamage: 2,
                         lowHealthThreshold: 18,
                         attackPauseDuration: 1,
                         name: "Gary The Dick",

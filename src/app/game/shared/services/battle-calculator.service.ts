@@ -61,11 +61,15 @@ export class BattleCalculatorService {
     }
 
     if (activeBuff && activeBuff.properties.effectType === PotionEffectType.armour) {
-      return this.calculateDamage(armour, characterDamage, isGuarding, activeBuff);
+      const calculatedDamage = this.calculateDamage(armour, characterDamage, isGuarding, activeBuff);
+
+      return calculatedDamage;
     } else {
 
       // TODO assumed always using primary
-      return this.calculateDamage(armour, characterDamage, isGuarding);
+      const calculatedDamage = this.calculateDamage(armour, characterDamage, isGuarding);
+
+      return calculatedDamage;
     }
   }
 
