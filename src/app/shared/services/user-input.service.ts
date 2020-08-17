@@ -6,6 +6,7 @@ import { UserActionTypes, UserInteractionTypes } from '../enums';
 import { IUserAction } from '../interfaces';
 import { GameSettingsService } from './game-settings.service';
 import { AreaStateService } from '../../game/shared/services/area-state.service';
+import { ApplicationStateService } from './application-state.service';
 
 
 @Injectable()
@@ -19,6 +20,7 @@ export class UserInputService {
     private areaStateService: AreaStateService,
     private gameSettingsService: GameSettingsService,
     private gameStateService: GameStateService,
+    private applicationStateService: ApplicationStateService,
   ) {
     this.playerMoved = new BehaviorSubject("forceCharacterMove");
     this.userSetKey = new BehaviorSubject(0);
@@ -27,19 +29,19 @@ export class UserInputService {
   public keyDownEventHandler($e: KeyboardEvent) {
     if (this.gameStateService.awaitingKeyboardSetting) {
       this.userSetKey.next($e.keyCode);
-    } else {
-      if (!this.gameStateService.gamePaused && !this.gameStateService.inputPaused) {
+    }
 
-        if (this.gameSettingsService.oneHandedControls) {
+    if (this.applicationStateService.gameOpen && !this.gameStateService.gamePaused && !this.gameStateService.inputPaused) {
 
-          // First pause input for x seconds
-          this.gameStateService.pauseInput();
-        }
+      if (this.gameSettingsService.oneHandedControls) {
 
-        const characterAction: IUserAction = this.gameSettingsService.getCharacterActionType($e.keyCode);
-
-        this.invokeAction(characterAction);
+        // First pause input for x seconds
+        this.gameStateService.pauseInput();
       }
+
+      const characterAction: IUserAction = this.gameSettingsService.getCharacterActionType($e.keyCode);
+
+      this.invokeAction(characterAction);
     }
   }
 
