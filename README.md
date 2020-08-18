@@ -60,6 +60,11 @@ v0.14.0a
 
 * Tidied config files so easier to implement characters/grid objects
 * Added the "running away" character state in cases of low health
+* Added volume controls to settings
+* Tidied the settings menu and included the option to hide handheld controls
+* Moved battle indicator to area border
+* Updated area exits to be custom images
+
 
 
 ## Background Music credits
@@ -86,3 +91,4 @@ v0.14.0a
 * https://www.flaticon.com/free-icon/eye_2948075
 * https://www.flaticon.com/free-icon/witness_2210317
 * https://www.flaticon.com/free-icon/running-shoe_926188
+* http://www.photoshoptextures.com/
