@@ -17,13 +17,11 @@ import { BattleCalculatorService } from '../shared/services/battle-calculator.se
 import { DialogueService } from '../shared/services/dialogue.service';
 import { GameStateService } from '../shared/services/game-state.service';
 import { PlayerStateService } from '../shared/services/player-state.service';
-import { AreaType } from './enums/area-type';
 import { GridObject } from './grid-object-classes/grid-object';
-import { IAreaElement } from './interfaces';
+import { IAreaElement, IGridReferences } from './interfaces';
 import { IGridData } from './interfaces/igrid-data';
-import { ILevelData } from './interfaces/ilevel-data';
-import { SoundEffectService } from '../../shared/services/sound-effect.service';
 import { BackgroundMusicService } from '../../shared/services/background-music.service';
+import { GridHelper } from '../shared/util/area/grid-helper';
 
 @Component({
   selector: 'app-area',
@@ -43,11 +41,9 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
   public openMessageModalSubscription: Subscription;
 
   constructor(
-    private route: ActivatedRoute,
     public areaStateService: AreaStateService,
     public dialogueService: DialogueService,
     public areaConfigProviderService: AreaConfigProviderService,
-    public soundEffectService: SoundEffectService,
     public backgroundMusicService: BackgroundMusicService,
     public playerStateService: PlayerStateService,
     public battleCalculatorService: BattleCalculatorService,
@@ -75,7 +71,7 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
 
     // Declare component loading complete
     setTimeout(() => {
-      this.areaStateService.loadingPreviousArea = false;
+      this.areaStateService.loadingArea = false;
     }, 0);
   }
 
@@ -186,31 +182,46 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
     return gridCharacter.type;
   }
 
+  /**
+   * Gathers area data and applies to this component and to Area State Service
+   */
   private prepareArea(): void {
 
     // // Kill any currently playing sounds
     // this.soundEffectService.stopSound();
 
     if (this.areaStateService.loadingExistingArea) {
-      // get the config from the provider
-      this.areaConfig = this.areaConfigProviderService.getAreaConfig(this.areaStateService.currentArea);
-      this.areaExits = this.areaConfigProviderService.getAreaExits(this.areaStateService.currentArea);
-      this.addExitsToGrid(this.areaExits);
 
-      // TODO Do nothing as area state service should be updating
+      // Get the existing room config
+      const newLocations: IGridReferences = this.areaStateService.getAreaState(this.areaStateService.currentArea);
+      this.areaConfig = this.areaConfigProviderService.getAreaConfig(this.areaStateService.currentArea);
+
+      // Set the locations to area state service
+      this.areaStateService.locations = newLocations;
+
+      if (!newLocations) {
+
+        // Build fresh from config
+        this.areaExits = this.areaConfigProviderService.getAreaExits(this.areaStateService.currentArea);
+
+        GridHelper.addExitsToGrid(this.areaExits, this.areaStateService.locations);
+      }
       this.rebuildArea();
+
     } else {
       // get the config from the provider
       this.areaConfig = this.areaConfigProviderService.getAreaConfig(this.areaStateService.currentArea);
       this.areaExits = this.areaConfigProviderService.getAreaExits(this.areaStateService.currentArea);
-      this.addExitsToGrid(this.areaExits);
+
+      // Pass by locations by reference
+      GridHelper.addExitsToGrid(this.areaExits, this.areaStateService.locations);
 
       // Set the player location
       // TODO This won't work, needs moving into the loop with a check on player
       this.playerStateService.locationY = this.areaConfig.areaElements[0].startingPositionY;
       this.playerStateService.locationX = this.areaConfig.areaElements[0].startingPositionX;
       // Set the monsters
-      this.addElementsToGrid(this.areaConfig.areaElements);
+      GridHelper.addElementsToGrid(this.areaConfig.areaElements, this.areaStateService.locations);
 
       if (this.areaConfig.areaLoadMessage) {
         this.dialogueService.displayDialogueMessage({
@@ -222,39 +233,13 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
     }
 
     // If player is entering a new area we want to update the location to be opposite the way they came in
-    if (this.areaStateService.loadingPreviousArea) {
+    if (this.areaStateService.loadingArea) {
       this.updatePlayerLocation();
     }
+
     this.areaStateService.loadingExistingArea = false;
   }
 
-  private addElementsToGrid(elements: IAreaElement[]): void {
-    elements.forEach(element => {
-      // Check element's preferred grid reference and attempt to add it there
-      const gridReference = element.startingPositionY + element.startingPositionX;
-      if (!this.areaStateService.locations[gridReference].element) {
-        // We want to create instances of each character in the config
-        switch (element.type) {
-          case ElementClass.enemy:
-            this.areaStateService.locations[gridReference].element = new Enemy(element.elementProperties);
-            break;
-          case ElementClass.player:
-            this.areaStateService.locations[gridReference].element = new Player(element.elementProperties);
-            break;
-          case ElementClass.npc:
-            this.areaStateService.locations[gridReference].element = new NPC(element.elementProperties);
-            break;
-          case ElementClass.object:
-            this.areaStateService.locations[gridReference].element = new GridObject(element.elementProperties);
-            break;
-          default:
-            this.areaStateService.locations[gridReference].element = element;
-        }
-      } else {
-        // TODO: Move them to another position, up to x amount (need to block overcrowding)
-      }
-    });
-  }
 
   // TODO this seems like it's possibly unnecessary, look for a better way of doing this
   private rebuildArea(): void {
@@ -319,22 +304,6 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
     this.playerStateService.locationX = splitNewLocation.locationX;
   }
 
-  private addExitsToGrid(areaExits: IAreaExits) {
-    if (areaExits.north) {
-
-      // TODO HERE:
-      this.areaStateService.locations[defaults.areaExitLocations.northExit].areaExit = areaExits.north;
-    }
-    if (areaExits.east) {
-      this.areaStateService.locations[defaults.areaExitLocations.eastExit].areaExit = areaExits.east;
-    }
-    if (areaExits.south) {
-      this.areaStateService.locations[defaults.areaExitLocations.southExit].areaExit = areaExits.south;
-    }
-    if (areaExits.west) {
-      this.areaStateService.locations[defaults.areaExitLocations.westExit].areaExit = areaExits.west;
-    }
-  }
 
 
   public locationExit(location: string, gridObject: IGridData): string {

@@ -5,7 +5,6 @@ export interface IGameSettings {
       oneHandedControls: boolean;
       keyMap: any;
       keysMapped: any;
-      border: boolean;
       musicVolume: number;
       soundEffectVolume: number;
 }

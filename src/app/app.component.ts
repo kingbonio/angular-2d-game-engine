@@ -30,20 +30,6 @@ export class AppComponent implements OnInit, OnDestroy {
     // this.playBackgroundMusic();
   }
 
-  /**
-   * Adds or removes border
-   */
-  public toggleBorder() {
-    this.gameSettingsService.border = !this.gameSettingsService.border;
-  }
-
-  /**
-   * Gets whether border is set or not
-   */
-  public getBorderState() {
-    return this.gameSettingsService.border ? "on" : "off";
-  }
-
   ngOnDestroy() {
 
     // Remove the listener for key events

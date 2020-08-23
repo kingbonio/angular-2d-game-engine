@@ -159,11 +159,11 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   public isLoadingArea() {
-    return this.areaStateService.loadingPreviousArea;
+    return this.areaStateService.loadingArea;
   }
 
   public isLoadingScreen() {
-    return this.areaStateService.loadingPreviousArea ? "show" : "hide";
+    return this.areaStateService.loadingArea ? "show" : "hide";
   }
 
   public openGameMenu() {

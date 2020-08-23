@@ -2,16 +2,24 @@ import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { IAreaElement, IGridReferences } from '../../area/interfaces';
 import { Character } from '../../character-classes/character';
-import { ElementClass } from '../enums';
+import { ElementClass, Direction } from '../enums';
 import { IAreaStateData, ILocation } from '../interfaces';
 import locationDefaults from '../models/locations';
+import { AreaConfigProviderService } from './area-config-provider.service';
+import { PersistentStateService } from './persistent-state.service';
+import defaults from '../../../shared/defaults';
+import { GridHelper } from '../util/area/grid-helper';
+import { AreaExitStatus } from '../../area/enums';
+import { Enemy, NPC } from '../../character-classes';
+import { Player } from '../../character-classes/player';
+import { GridObject } from '../../area/grid-object-classes/grid-object';
 
 @Injectable()
 export class AreaStateService implements OnInit {
   // Stores the location ID
   public currentArea: number;
   public newArea: number;
-  public loadingPreviousArea = false;
+  public loadingArea = false;
   public loadingExistingArea = false;
   public loadingSavedGame = false;
   public locationKeys: any;
@@ -23,6 +31,7 @@ export class AreaStateService implements OnInit {
   public areaReady: BehaviorSubject<number>;
 
   constructor(
+    private areaConfigProviderService: AreaConfigProviderService,
   ) {
     this.setDefaults();
 
@@ -163,9 +172,9 @@ export class AreaStateService implements OnInit {
    * @param newAreaReference The target are to pull data for
    */
   public loadNewArea(newAreaReference: number) {
-    this.loadingPreviousArea = true;
+    this.loadingArea = true;
     // Back up current state
-    this.saveAreaState(this.currentArea);
+    this.saveCurrentAreaState(this.currentArea);
     // Save the new area reference
     this.newArea = newAreaReference;
 
@@ -197,6 +206,36 @@ export class AreaStateService implements OnInit {
   }
 
   /**
+   * Changes the "same" door to be opened from the new area
+   */
+  public openSameAreaExitInNextArea(destination: number, exitDirection: Direction) {
+
+    // Attempt to get the existing area state data
+    let nextAreaLocations = this.getAreaState(destination);
+
+    // If we don't have existing data, create new data
+    if (!nextAreaLocations) {
+      const nextAreaData = this.areaConfigProviderService.getAreaConfig(destination);
+      const nextAreaExits = this.areaConfigProviderService.getAreaExits(destination);
+
+      // Create a fresh locations object
+      nextAreaLocations = this.cloneLocations(locationDefaults);
+
+      // Add all the elements and exits to the new locations
+      GridHelper.addElementsToGrid(nextAreaData.areaElements, nextAreaLocations);
+      GridHelper.addExitsToGrid(nextAreaExits, nextAreaLocations);
+    }
+
+    const locationOfAreaExit = defaults.areaExitLocations[GridHelper.getLongDirectionName(exitDirection)];
+
+    if (nextAreaLocations[locationOfAreaExit].areaExit) {
+      nextAreaLocations[locationOfAreaExit].areaExit.status = AreaExitStatus.open;
+    }
+
+    this.saveAreaState(destination, nextAreaLocations);
+  }
+
+  /**
    * Reset all local parameters to default
    */
   public setDefaults() {
@@ -204,7 +243,7 @@ export class AreaStateService implements OnInit {
     this.newArea = null;
     this.locations = this.cloneLocations(locationDefaults);
     this.locationKeys = Object.keys;
-    this.loadingPreviousArea = false;
+    this.loadingArea = false;
     this.loadingExistingArea = false;
     this.loadingSavedGame = false;
     this.previousPlayerLocation = null;
@@ -215,15 +254,24 @@ export class AreaStateService implements OnInit {
    * Save the area state to storage
    * @param newAreaReference the area number
    */
-  public saveAreaState(newAreaReference: number) {
+  public saveCurrentAreaState(newAreaReference: number) {
     localStorage.setItem(newAreaReference.toString(), JSON.stringify(this.locations));
+  }
+
+  /**
+   * Save an inactive area state
+   * @param newAreaReference the area number
+   * @param newAreaLocations
+   */
+  public saveAreaState(newAreaReference: number, newAreaLocations: any) {
+    localStorage.setItem(newAreaReference.toString(), JSON.stringify(newAreaLocations));
   }
 
   /**
    * Get the area from storage
    * @param newAreaReference the area number
    */
-  public getAreaState(newAreaReference: number): any | null {
+  public getAreaState(newAreaReference: number): IGridReferences | null {
     const stateJson = localStorage.getItem(newAreaReference.toString());
     if (stateJson && stateJson.length && stateJson !== "{}") {
       return JSON.parse(stateJson);
@@ -245,7 +293,7 @@ export class AreaStateService implements OnInit {
     return {
       currentLocation: this.currentArea,
       newLocation: this.newArea,
-      loadingArea: this.loadingPreviousArea,
+      loadingArea: this.loadingArea,
       loadingExistingArea: this.loadingExistingArea,
       locationKeys: this.locationKeys,
       locations: this.locations,

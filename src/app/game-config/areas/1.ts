@@ -59,21 +59,5 @@ export default {
                   startingPositionY: "d",
                   startingPositionX: 7,
             },
-            {
-                  type: ElementClass.object,
-                  elementProperties: {
-                        name: "Door",
-                        objectType: ObjectType.door,
-                        startingDirection: Direction.N,
-                        direction: Direction.N,
-                        isInteractive: true,
-                        isLocked: false,
-                        itemReferenceNeeded: "",
-                        imageFileName: "door.png",
-                        soundEffect: "openWoodenDoor",
-                  },
-                  startingPositionX: 3,
-                  startingPositionY: "b",
-            },
       ] as IAreaElement[]
 };

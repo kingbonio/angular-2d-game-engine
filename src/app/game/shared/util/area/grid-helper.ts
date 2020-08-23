@@ -2,13 +2,66 @@ import defaults from "../../../../shared/defaults";
 import { Direction, FloorStyle, ElementClass, ObjectType } from "../../enums";
 import { Character } from "../../../character-classes/character";
 import { ILocationData, ILocation } from "../../interfaces";
-import { IGridReferences } from "../../../area/interfaces";
+import { IGridReferences, IAreaElement } from "../../../area/interfaces";
 import { IGridData } from "./../../../area/interfaces";
 import { LootBag } from "../../../area/grid-object-classes/loot-bag";
+import { IAreaExits } from "../../../../game-config/interfaces";
+import { Enemy, NPC } from "../../../character-classes";
+import { Player } from "../../../character-classes/player";
+import { GridObject } from "../../../area/grid-object-classes/grid-object";
 
 export class GridHelper {
 
       constructor() { }
+
+
+      public static addExitsToGrid(areaExits: IAreaExits, locations: IGridReferences) {
+            if (areaExits.north) {
+                  locations[defaults.areaExitLocations.northExit].areaExit = areaExits.north;
+            }
+            if (areaExits.east) {
+                  locations[defaults.areaExitLocations.eastExit].areaExit = areaExits.east;
+            }
+            if (areaExits.south) {
+                  locations[defaults.areaExitLocations.southExit].areaExit = areaExits.south;
+            }
+            if (areaExits.west) {
+                  locations[defaults.areaExitLocations.westExit].areaExit = areaExits.west;
+            }
+      }
+
+      /**
+       * Updates the locations object with the elements passed in
+       * @param elements array of area elements to be added
+       * @param locations the pass-by-reference object of locations
+       */
+      public static addElementsToGrid(elements: IAreaElement[], locations: IGridReferences): void {
+            elements.forEach(element => {
+                  // Check element's preferred grid reference and attempt to add it there
+                  const gridReference = element.startingPositionY + element.startingPositionX;
+                  if (!locations[gridReference].element) {
+                        // We want to create instances of each character in the config
+                        switch (element.type) {
+                              case ElementClass.enemy:
+                                    locations[gridReference].element = new Enemy(element.elementProperties);
+                                    break;
+                              case ElementClass.player:
+                                    locations[gridReference].element = new Player(element.elementProperties);
+                                    break;
+                              case ElementClass.npc:
+                                    locations[gridReference].element = new NPC(element.elementProperties);
+                                    break;
+                              case ElementClass.object:
+                                    locations[gridReference].element = new GridObject(element.elementProperties);
+                                    break;
+                              default:
+                                    locations[gridReference].element = element;
+                        }
+                  } else {
+                        // TODO: Move them to another position, up to x amount (need to block overcrowding)
+                  }
+            });
+      }
 
       public static isTargetLocationOutOfBounds(targetLocation: string): boolean {
             if (targetLocation.indexOf(defaults.areaOuterBoundaries.lowerYBoundary) === -1 &&
@@ -145,6 +198,20 @@ export class GridHelper {
             }
       }
 
+      public static getLongDirectionName(direction: Direction): string {
+            switch (direction) {
+                  case Direction.N:
+                        return "northExit";
+                  case Direction.E:
+                        return "eastExit";
+                  case Direction.S:
+                        return "southExit";
+                  case Direction.W:
+                        return "westExit";
+                  default:
+                        return null;
+            }
+      }
 
       public static getDirectionToFace(direction: Direction) {
             switch (direction) {

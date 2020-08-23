@@ -222,7 +222,14 @@ export class PlayerStateService {
           // Open the door
           currentLocation.areaExit.status = AreaExitStatus.opening;
 
-          // Play stone door opening sound
+          // Get next area information
+          const destination = currentLocation.areaExit.destination;
+          const areaExitToOpen: Direction = GridHelper.getOppositeDirection(currentLocation.areaExit.direction);
+
+          // Set opposite side of the door to open
+          this.areaStateService.openSameAreaExitInNextArea(destination, areaExitToOpen);
+
+          // Play door opening sound
           this.soundEffectService.playSound(SoundEffects.openStoneDoor);
 
         } else {

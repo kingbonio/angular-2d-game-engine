@@ -64,6 +64,7 @@ v0.14.0a
 * Tidied the settings menu and included the option to hide handheld controls
 * Moved battle indicator to area border
 * Updated area exits to be custom images
+* Improved area exits to open opposite side when opened
 
 
 

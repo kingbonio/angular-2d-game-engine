@@ -33,7 +33,7 @@ export class AiService {
       // TODO This may need a more specific flag
       // We don't want to perform AI actions if loading game
       if (!this.gameStateService.gamePaused &&
-        !this.areaStateService.loadingPreviousArea &&
+        !this.areaStateService.loadingArea &&
         !this.areaStateService.loadingSavedGame) {
         this.actionTriggerHandler(true);
       }
@@ -44,7 +44,7 @@ export class AiService {
       // We don't want to perform AI actions if loading game
       if (!this.gameStateService.battleMode &&
         !this.gameStateService.gamePaused &&
-        !this.areaStateService.loadingPreviousArea &&
+        !this.areaStateService.loadingArea &&
         !this.areaStateService.loadingSavedGame) {
         this.actionTriggerHandler(false);
       }

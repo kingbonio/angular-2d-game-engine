@@ -19,7 +19,6 @@ export class GameSettingsService {
   public oneHandedControls = defaults.gameSettings.oneHandedControls;
   public keyMap = defaults.defaultKeyMap;
   public keysMapped = {};
-  public border = false;
   public musicVolume = defaults.volumes.music;
   public soundEffectVolume = defaults.volumes.soundEffect;
 
@@ -106,7 +105,6 @@ export class GameSettingsService {
       oneHandedControls: this.oneHandedControls,
       keyMap: this.keyMap,
       keysMapped: this.keysMapped,
-      border: this.border,
       musicVolume: this.musicVolume,
       soundEffectVolume: this.soundEffectVolume,
     };
