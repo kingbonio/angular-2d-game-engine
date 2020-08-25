@@ -95,8 +95,7 @@ export class GameComponent implements OnInit, OnDestroy {
       modalConfig.disableClose = false;
       modalConfig.autoFocus = true; // Maybe not necessary
       modalConfig.hasBackdrop = true;
-      modalConfig.width = '450px';
-      modalConfig.height = '300px';
+      modalConfig.width = '250px';
       // TODO here
       modalConfig.data = "hello";
       modalConfig.panelClass = "menu-modal";

@@ -88,8 +88,7 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
       modalConfig.disableClose = false;
       modalConfig.autoFocus = true; // Maybe not necessary
       modalConfig.hasBackdrop = true;
-      modalConfig.width = '450px';
-      modalConfig.height = '300px';
+      modalConfig.width = '250px';
       modalConfig.panelClass = "looting-modal";
 
       // TODO This probably isn't the best way of doing this
