@@ -38,7 +38,7 @@ export class Enemy extends Character {
       public startingState: CharacterState;
       public armour: IArmour;
       public weapons: IWeapons;
-      public loot: IInventoryItem[];
+      public loot: IInventoryItem[] = [];
       public level: number;
 
       constructor(characterDetails: any) {
@@ -73,7 +73,11 @@ export class Enemy extends Character {
             // TODO this could be more efficient
             this.loot = characterDetails.loot;
             this.imageFileName = characterDetails.imageFileName;
-            if (this.loot) {
+
+            // Overwrite existing inventoryLocations if provided
+            if (characterDetails.inventoryLocations) {
+                  this.inventoryLocations = characterDetails.inventoryLocations;
+            } else if (this.loot.length) {
                   characterDetails.loot.forEach((item: IInventoryItem) => {
                         for (const slot in this.inventoryLocations) {
                               if (this.inventoryLocations.hasOwnProperty(slot) && !this.inventoryLocations[slot]) {

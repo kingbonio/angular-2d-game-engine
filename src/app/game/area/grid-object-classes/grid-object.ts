@@ -1,6 +1,7 @@
 import { IInventoryItem } from "../../item/interfaces";
 import { Direction, ElementClass, ObjectType } from "../../shared/enums";
 import { SoundEffects } from "../../../shared/enums";
+import inventoryLocationsDefaults from "../../shared/models/inventoryLocations";
 
 export class GridObject {
       public type = ElementClass.object;
@@ -14,40 +15,14 @@ export class GridObject {
       public itemReferenceNeeded: string;
       public direction: Direction;
       public startingDirection: Direction;
-      public loot: IInventoryItem[];
+      public loot: IInventoryItem[] = [];
       public objectType: ObjectType;
 
       public inventoryLocations: any;
       public locationKeys: any;
 
       constructor(elementProperties: any) {
-            this.inventoryLocations = elementProperties.inventoryLocations || {
-                  a1: null,
-                  a2: null,
-                  a3: null,
-                  a4: null,
-                  a5: null,
-                  b1: null,
-                  b2: null,
-                  b3: null,
-                  b4: null,
-                  b5: null,
-                  c1: null,
-                  c2: null,
-                  c3: null,
-                  c4: null,
-                  c5: null,
-                  d1: null,
-                  d2: null,
-                  d3: null,
-                  d4: null,
-                  d5: null,
-                  e1: null,
-                  e2: null,
-                  e3: null,
-                  e4: null,
-                  e5: null,
-            };
+            this.inventoryLocations = elementProperties.inventoryLocations || this.cloneInventoryLocations(inventoryLocationsDefaults);
             this.locationKeys = Object.keys;
 
             this.name = elementProperties.name;
@@ -62,7 +37,11 @@ export class GridObject {
             this.itemReferenceNeeded = elementProperties.itemReferenceNeeded;
             this.loot = elementProperties.loot;
             this.objectType = elementProperties.objectType;
-            if (this.loot) {
+
+            // Overwrite existing inventoryLocations if provided
+            if (elementProperties.inventoryLocations) {
+                  this.inventoryLocations = elementProperties.inventoryLocations;
+            } else if (this.loot.length) {
                   elementProperties.loot.forEach((item: IInventoryItem) => {
                         for (const slot in this.inventoryLocations) {
                               if (this.inventoryLocations.hasOwnProperty(slot) && !this.inventoryLocations[slot]) {
@@ -82,5 +61,9 @@ export class GridObject {
             } else {
                   this.isLocked = false;
             }
+      }
+
+      public cloneInventoryLocations(sourceInventoryLocations) {
+            return JSON.parse(JSON.stringify(sourceInventoryLocations));
       }
 }

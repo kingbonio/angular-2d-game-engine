@@ -4,18 +4,15 @@ import { IAreaElement, IGridReferences } from '../../area/interfaces';
 import { Character } from '../../character-classes/character';
 import { ElementClass, Direction } from '../enums';
 import { IAreaStateData, ILocation } from '../interfaces';
-import locationDefaults from '../models/locations';
+import locationsDefaults from '../models/locations';
 import { AreaConfigProviderService } from './area-config-provider.service';
-import { PersistentStateService } from './persistent-state.service';
 import defaults from '../../../shared/defaults';
 import { GridHelper } from '../util/area/grid-helper';
 import { AreaExitStatus } from '../../area/enums';
-import { Enemy, NPC } from '../../character-classes';
-import { Player } from '../../character-classes/player';
-import { GridObject } from '../../area/grid-object-classes/grid-object';
 
 @Injectable()
 export class AreaStateService implements OnInit {
+
   // Stores the location ID
   public currentArea: number;
   public newArea: number;
@@ -35,8 +32,6 @@ export class AreaStateService implements OnInit {
   ) {
     this.setDefaults();
 
-    // TODO: Maybe we should have a generic area which has properties of
-    // puzzle, enemy, design, potential items etc.
     this.areaChange = new BehaviorSubject(1);
     this.areaReady = new BehaviorSubject(1);
   }
@@ -187,7 +182,7 @@ export class AreaStateService implements OnInit {
       this.locations = targetAreaData;
     } else {
       // Reset the locations to blank
-      this.locations = this.cloneLocations(locationDefaults);
+      this.locations = this.cloneLocations(locationsDefaults);
     }
 
     // TODO this isn't ideal really, look for the other subject type
@@ -219,7 +214,7 @@ export class AreaStateService implements OnInit {
       const nextAreaExits = this.areaConfigProviderService.getAreaExits(destination);
 
       // Create a fresh locations object
-      nextAreaLocations = this.cloneLocations(locationDefaults);
+      nextAreaLocations = this.cloneLocations(locationsDefaults);
 
       // Add all the elements and exits to the new locations
       GridHelper.addElementsToGrid(nextAreaData.areaElements, nextAreaLocations);
@@ -241,7 +236,7 @@ export class AreaStateService implements OnInit {
   public setDefaults() {
     this.currentArea = 1;
     this.newArea = null;
-    this.locations = this.cloneLocations(locationDefaults);
+    this.locations = this.cloneLocations(locationsDefaults);
     this.locationKeys = Object.keys;
     this.loadingArea = false;
     this.loadingExistingArea = false;

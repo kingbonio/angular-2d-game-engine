@@ -35,7 +35,7 @@ export class NPC extends Character {
       public startingState: CharacterState;
       public armour: IArmour;
       public weapons: IWeapons;
-      public loot: IInventoryItem[];
+      public loot: IInventoryItem[] = [];
 
       constructor(characterDetails: any) {
             // TODO: Resolve any
@@ -67,7 +67,11 @@ export class NPC extends Character {
             this.weapons = characterDetails.weapons;
             this.loot = characterDetails.loot;
             this.imageFileName = characterDetails.imageFileName;
-            if (this.loot) {
+
+            // Overwrite existing inventoryLocations if provided
+            if (characterDetails.inventoryLocations) {
+                  this.inventoryLocations = characterDetails.inventoryLocations;
+            } else if (this.loot.length) {
                   characterDetails.loot.forEach((item: IInventoryItem) => {
                         for (const slot in this.inventoryLocations) {
                               if (this.inventoryLocations.hasOwnProperty(slot) && !this.inventoryLocations[slot]) {

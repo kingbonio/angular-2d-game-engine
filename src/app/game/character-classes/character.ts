@@ -2,6 +2,7 @@ import defaults from "../../shared/defaults";
 import { IArmour, IInventoryItem, IWeapons } from "../item/interfaces";
 import { CharacterState, Direction, ElementClass } from "../shared/enums";
 import { ILocation } from "../shared/interfaces";
+import inventoryLocationsDefaults from "../shared/models/inventoryLocations";
 
 export class Character {
       id: string;
@@ -38,33 +39,7 @@ export class Character {
       this: any; // TODO Is this even a thing?
 
       constructor() {
-            this.inventoryLocations = {
-                  a1: null,
-                  a2: null,
-                  a3: null,
-                  a4: null,
-                  a5: null,
-                  b1: null,
-                  b2: null,
-                  b3: null,
-                  b4: null,
-                  b5: null,
-                  c1: null,
-                  c2: null,
-                  c3: null,
-                  c4: null,
-                  c5: null,
-                  d1: null,
-                  d2: null,
-                  d3: null,
-                  d4: null,
-                  d5: null,
-                  e1: null,
-                  e2: null,
-                  e3: null,
-                  e4: null,
-                  e5: null,
-            };
+            this.inventoryLocations = this.cloneInventoryLocations(inventoryLocationsDefaults);
             this.locationKeys = Object.keys;
       }
 
@@ -148,6 +123,10 @@ export class Character {
                   this.isMovingForwards = false;
                   finishMovementCallback();
             }, defaults.animations.movementDurationMilliseconds);
+      }
+
+      public cloneInventoryLocations(sourceInventoryLocations) {
+            return JSON.parse(JSON.stringify(sourceInventoryLocations));
       }
 
 }

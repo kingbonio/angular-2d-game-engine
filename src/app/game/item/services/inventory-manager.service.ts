@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { IInventoryItem, IInventoryStateData } from '../../shared/interfaces';
 import { IInventoryReferences } from '../inventory/interfaces';
-import { armour, potions, weapons, keyItems } from '../../../game-config/items';
+import { armour } from '../../../game-config/items';
+import inventoryLocationsDefaults from '../../shared/models/inventoryLocations';
 
 @Injectable()
 export class InventoryManagerService {
@@ -49,100 +50,17 @@ export class InventoryManagerService {
     return null;
   }
 
-  // Get next available inventory slot
-
-  // Return reference or null
-
-  // If not null allow adding
-
-  /**
-   * Searches for items in the inventory matching a given name
-   * @param itemName the terms to search for
-   * @returns array of items found matching search terms
-   */
-  public searchForItems(itemName: string): IInventoryItem[] {
-    // return this.contents.filter(item => item.name === itemName);
-    // TODO remove this
-    return [];
-  }
-
-  /**
-   * Returns the index of the first item in the inventory contents or null, if none found
-   * @param itemName the terms to search for
-   * @returns index of first item found or null if none found
-   */
-  public getIndexOfItem(itemName: string): number | null {
-    // for (let i = 0; i < this.contents.length; ++i) {
-    //   if (this.contents[i].name === itemName) {
-    //     return i;
-    //   }
-    // }
-    return null;
-  }
-
-  /**
-   * Removes the first instance of an item matching the itemName from the inventory contents
-   * @param itemName the terms to search for
-   */
-  public removeItem(itemName: string): void {
-    // const indexOfItem = this.getIndexOfItem(itemName);
-    // if (indexOfItem) {
-    //   this.contents.splice(indexOfItem, 1);
-    // } else {
-    //   // TODO: build recipient of this and insert translation service
-    //   // this.notificationsService("Item cannot be found in inventory");
-    // }
-  }
-
   /**
    * Sets all service states to default
    */
   public setDefaults() {
-    this.locations = {
-      a1: null,
-      a2: null,
-      a3: null,
-      a4: null,
-      a5: null,
-      b1: null,
-      b2: null,
-      b3: null,
-      b4: null,
-      b5: null,
-      c1: null,
-      c2: null,
-      c3: null,
-      c4: null,
-      c5: null,
-      d1: null,
-      d2: null,
-      d3: null,
-      d4: null,
-      d5: null,
-      e1: null,
-      e2: null,
-      e3: null,
-      e4: null,
-      e5: null,
-    };
+    this.locations = this.cloneInventoryLocations(inventoryLocationsDefaults);
     this.locationKeys = Object.keys;
     this.addItemToInventory(armour.leatherChestPiece);
+  }
 
-    // this.addItemToInventory(potions.smallArmourBuff);
-    // this.addItemToInventory(potions.smallHealthPotion);
-    // this.addItemToInventory(potions.smallHealthPotion);
-    // this.addItemToInventory(potions.smallHealthPotion);
-    // this.addItemToInventory(potions.invisiblityPotion);
-    // this.addItemToInventory(weapons.sword);
-    // this.addItemToInventory(potions.smallDamageBuff);
-    // this.addItemToInventory(potions.largeHealthBuff);
-    // this.addItemToInventory(weapons.sword);
-    // this.addItemToInventory(weapons.axe);
-    // this.addItemToInventory(armour.leatherChestPiece);
-    // this.addItemToInventory(armour.ironHelmet);
-    // this.addItemToInventory(keyItems.greenDoorKey);
-    // this.addItemToInventory(keyItems.fancyKey);
-    // this.addItemToInventory(armour.leatherChestPiece);
+  public cloneInventoryLocations(sourceInventoryLocations) {
+    return JSON.parse(JSON.stringify(sourceInventoryLocations));
   }
 
   /**
