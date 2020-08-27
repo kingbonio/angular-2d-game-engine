@@ -10,7 +10,7 @@ import { Character } from '../character-classes/character';
 import { Player } from '../character-classes/player';
 import { LootingModalComponent } from '../item/looting/looting-modal.component';
 import { MessageModalComponent } from '../message/message-modal.component';
-import { CharacterState, CharacterType, Direction, ElementClass } from '../shared/enums';
+import { CharacterState, CharacterType, Direction, ElementClass, ObjectType } from '../shared/enums';
 import { AreaConfigProviderService } from '../shared/services/area-config-provider.service';
 import { AreaStateService } from '../shared/services/area-state.service';
 import { BattleCalculatorService } from '../shared/services/battle-calculator.service';
@@ -22,6 +22,7 @@ import { IAreaElement, IGridReferences } from './interfaces';
 import { IGridData } from './interfaces/igrid-data';
 import { BackgroundMusicService } from '../../shared/services/background-music.service';
 import { GridHelper } from '../shared/util/area/grid-helper';
+import { LootBag } from './grid-object-classes/loot-bag';
 
 @Component({
   selector: 'app-area',
@@ -243,30 +244,39 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
   // TODO this seems like it's possibly unnecessary, look for a better way of doing this
   private rebuildArea(): void {
     for (const location in this.areaStateService.locations) {
-      if (this.areaStateService.locations.hasOwnProperty(location) && this.areaStateService.locations[location].element) {
+      if (this.areaStateService.locations.hasOwnProperty(location)) {
+        if (this.areaStateService.locations[location].element) {
         // We want to create instances of each character in the config
-        switch (this.areaStateService.locations[location].element.type) {
-          case ElementClass.enemy:
-            this.areaStateService.locations[location].element = new Enemy(this.areaStateService.locations[location].element);
-            // TODO Maybe this would be better suited somewhere more abstracted from core code
-            if (this.areaStateService.locations[location].element.currentState === CharacterState.hunting && !this.areaStateService.locations[location].element.isDead()) {
-              this.areaStateService.locations[location].element.currentState = CharacterState.returningToPosition;
-            }
-            break;
-          case ElementClass.player:
-            this.areaStateService.locations[location].element = new Player(this.areaStateService.locations[location].element);
-            break;
-          case ElementClass.npc:
-            this.areaStateService.locations[location].element = new NPC(this.areaStateService.locations[location].element);
-            if (this.areaStateService.locations[location].element.currentState === CharacterState.hunting && !this.areaStateService.locations[location].element.isDead()) {
-              this.areaStateService.locations[location].element.currentState = CharacterState.returningToPosition;
-            }
-            break;
-          case ElementClass.object:
-            this.areaStateService.locations[location].element = new GridObject(this.areaStateService.locations[location].element);
-            break;
-          default:
-          // Do nothing
+          switch (this.areaStateService.locations[location].element.type) {
+            case ElementClass.enemy:
+              this.areaStateService.locations[location].element = new Enemy(this.areaStateService.locations[location].element);
+              // TODO Maybe this would be better suited somewhere more abstracted from core code
+              if (this.areaStateService.locations[location].element.currentState === CharacterState.hunting && !this.areaStateService.locations[location].element.isDead()) {
+                this.areaStateService.locations[location].element.currentState = CharacterState.returningToPosition;
+              }
+              break;
+            case ElementClass.player:
+              this.areaStateService.locations[location].element = new Player(this.areaStateService.locations[location].element);
+              break;
+            case ElementClass.npc:
+              this.areaStateService.locations[location].element = new NPC(this.areaStateService.locations[location].element);
+              if (this.areaStateService.locations[location].element.currentState === CharacterState.hunting && !this.areaStateService.locations[location].element.isDead()) {
+                this.areaStateService.locations[location].element.currentState = CharacterState.returningToPosition;
+              }
+              break;
+            case ElementClass.object:
+              this.areaStateService.locations[location].element = new GridObject(this.areaStateService.locations[location].element);
+              break;
+            default:
+            // Do nothing
+          }
+        }
+
+        if (this.areaStateService.locations[location].groundItem) {
+          switch (this.areaStateService.locations[location].groundItem.objectType) {
+            case ObjectType.lootBag:
+              this.areaStateService.locations[location].groundItem = new LootBag(null, this.areaStateService.locations[location].groundItem.inventoryLocations);
+          }
         }
       }
     }

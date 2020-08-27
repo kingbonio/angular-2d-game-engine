@@ -71,7 +71,7 @@ export class NPC extends Character {
             // Overwrite existing inventoryLocations if provided
             if (characterDetails.inventoryLocations) {
                   this.inventoryLocations = characterDetails.inventoryLocations;
-            } else if (this.loot.length) {
+            } else if (this.loot && this.loot.length) {
                   characterDetails.loot.forEach((item: IInventoryItem) => {
                         for (const slot in this.inventoryLocations) {
                               if (this.inventoryLocations.hasOwnProperty(slot) && !this.inventoryLocations[slot]) {

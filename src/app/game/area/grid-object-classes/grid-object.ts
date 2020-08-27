@@ -41,7 +41,7 @@ export class GridObject {
             // Overwrite existing inventoryLocations if provided
             if (elementProperties.inventoryLocations) {
                   this.inventoryLocations = elementProperties.inventoryLocations;
-            } else if (this.loot.length) {
+            } else if (this.loot && this.loot.length) {
                   elementProperties.loot.forEach((item: IInventoryItem) => {
                         for (const slot in this.inventoryLocations) {
                               if (this.inventoryLocations.hasOwnProperty(slot) && !this.inventoryLocations[slot]) {

@@ -1,5 +1,6 @@
 import { ObjectType } from "../../shared/enums";
 import inventoryLocationsDefaults from "../../shared/models/inventoryLocations";
+import { IInventoryReferences } from "../../item/inventory/interfaces";
 
 export class LootBag {
 
@@ -9,11 +10,16 @@ export class LootBag {
       public inventoryLocations: any;
       public locationKeys: any;
 
-      constructor(loot: any) {
+      constructor(loot: any, inventoryLocations?: IInventoryReferences) {
             this.inventoryLocations = this.cloneInventoryLocations(inventoryLocationsDefaults);
             this.locationKeys = Object.keys;
 
-            this.addLoot(loot);
+            if (loot) {
+                  this.addLoot(loot);
+            }
+            if (inventoryLocations) {
+                  this.inventoryLocations = inventoryLocations;
+            }
       }
 
       /**
