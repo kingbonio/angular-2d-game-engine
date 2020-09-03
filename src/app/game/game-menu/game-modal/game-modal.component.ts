@@ -8,7 +8,7 @@ import { GameStateService } from '../../shared/services/game-state.service';
   templateUrl: './game-modal.component.html',
   styleUrls: ['./game-modal.component.scss']
 })
-export class GameModalComponent implements OnInit, OnDestroy {
+export class GameModalComponent implements OnDestroy {
   public data;
 
   constructor(
@@ -17,9 +17,6 @@ export class GameModalComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) data
   ) {
     this.data = data;
-  }
-
-  ngOnInit() {
     this.gameStateService.gamePaused = true;
   }
 

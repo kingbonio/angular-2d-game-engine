@@ -14,7 +14,7 @@ import { SoundEffects } from '../../../shared/enums';
   templateUrl: './looting-modal.component.html',
   styleUrls: ['./looting-modal.component.scss']
 })
-export class LootingModalComponent implements OnInit, OnDestroy {
+export class LootingModalComponent implements OnDestroy {
   public targetGridData: GridObject | LootBag;
 
   constructor(
@@ -25,9 +25,6 @@ export class LootingModalComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) data
   ) {
     this.targetGridData = data;
-  }
-
-  ngOnInit() {
     this.gameStateService.gamePaused = true;
   }
 

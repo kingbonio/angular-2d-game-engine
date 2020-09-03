@@ -137,19 +137,19 @@
             .menu-button {
                 width: 60px;
                 height: 60px;
-                background-color: white;
                 position: absolute;
                 bottom: 10px;
                 right: 10px;
-                cursor: pointer;
-                
-                .menu-icon {
-                    text-align: center;
-                    color: #000;
-                    // TODO Bad juju
-                    line-height: 3.7;
-                    border: solid #121010 2px;
-                }
+                text-align: center;
+                line-height: 3.7;
+            }
+
+            .paused {
+                width: 60px;
+                height: 27px;
+                position: absolute;
+                bottom: 0px;
+                right: 80px;
             }
         }
         

@@ -66,9 +66,12 @@ app-game-settings {
       margin: auto;
 }
 
-.looting-modal {
+button, .menu-button {
+      background-color: #333232;
+      border-radius: 5px;
+      border: solid white 1px;
+      margin: 3px;
+      color: white;
+      font-weight: 500;
+      cursor: pointer;
 }
-
-.menu-modal {
-}
-

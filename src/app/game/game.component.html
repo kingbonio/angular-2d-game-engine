@@ -47,6 +47,9 @@
 
                         </div>
                   </div>
+                  <div *ngIf="gameStateService.gamePaused" class="paused">
+                        Paused
+                  </div>
                   <div class="menu-button">
                         <div *ngIf="gameSettingsService.allowInGameMenu" (click)="openGameMenu()" class="menu-icon">Menu</div>
                   </div>
