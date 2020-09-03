@@ -194,7 +194,7 @@ export class AreaStateService implements OnInit {
   }
 
   public loadFromSaveGame(savedState: IAreaStateData) {
-    this.loadingExistingArea = true;
+    this.loadingSavedGame = true;
 
     this.areaChange.next(savedState.currentLocation);
     this.areaReady.next(savedState.currentLocation);

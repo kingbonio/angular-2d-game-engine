@@ -187,25 +187,25 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
    */
   private prepareArea(): void {
 
-    // // Kill any currently playing sounds
-    // this.soundEffectService.stopSound();
+    if (this.areaStateService.loadingSavedGame || this.areaStateService.loadingExistingArea) {
 
-    if (this.areaStateService.loadingExistingArea) {
+      if (this.areaStateService.loadingExistingArea) {
+        // Get the existing room config
+        const newLocations: IGridReferences = this.areaStateService.getAreaState(this.areaStateService.currentArea);
 
-      // Get the existing room config
-      const newLocations: IGridReferences = this.areaStateService.getAreaState(this.areaStateService.currentArea);
-      this.areaConfig = this.areaConfigProviderService.getAreaConfig(this.areaStateService.currentArea);
+        // Set the locations to area state service
+        this.areaStateService.locations = newLocations;
 
-      // Set the locations to area state service
-      this.areaStateService.locations = newLocations;
+        if (!newLocations) {
 
-      if (!newLocations) {
+          // Build fresh from config
+          this.areaExits = this.areaConfigProviderService.getAreaExits(this.areaStateService.currentArea);
 
-        // Build fresh from config
-        this.areaExits = this.areaConfigProviderService.getAreaExits(this.areaStateService.currentArea);
-
-        GridHelper.addExitsToGrid(this.areaExits, this.areaStateService.locations);
+          GridHelper.addExitsToGrid(this.areaExits, this.areaStateService.locations);
+        }
       }
+
+      this.areaConfig = this.areaConfigProviderService.getAreaConfig(this.areaStateService.currentArea);
       this.rebuildArea();
 
     } else {
@@ -238,6 +238,7 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
     }
 
     this.areaStateService.loadingExistingArea = false;
+    this.areaStateService.loadingSavedGame = false;
   }
 
 
@@ -246,7 +247,7 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
     for (const location in this.areaStateService.locations) {
       if (this.areaStateService.locations.hasOwnProperty(location)) {
         if (this.areaStateService.locations[location].element) {
-        // We want to create instances of each character in the config
+          // We want to create instances of each character in the config
           switch (this.areaStateService.locations[location].element.type) {
             case ElementClass.enemy:
               this.areaStateService.locations[location].element = new Enemy(this.areaStateService.locations[location].element);

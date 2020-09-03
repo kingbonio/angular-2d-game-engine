@@ -95,7 +95,7 @@ export class GameComponent implements OnInit, OnDestroy {
       modalConfig.disableClose = false;
       modalConfig.autoFocus = true; // Maybe not necessary
       modalConfig.hasBackdrop = true;
-      modalConfig.width = '250px';
+      modalConfig.width = '450px';
       // TODO here
       modalConfig.data = "hello";
       modalConfig.panelClass = "menu-modal";
@@ -175,11 +175,9 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   private createAreaComponent() {
+
     // Update the area state service with the new location before reload
     setTimeout(() => {
-
-      // Reset the area loading flag
-      this.areaStateService.loadingSavedGame = false;
 
       this.areaComponentAlive = true;
 
