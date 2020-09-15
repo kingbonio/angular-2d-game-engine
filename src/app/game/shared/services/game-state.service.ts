@@ -34,7 +34,7 @@ export class GameStateService {
 
     this.timerService.startTimer(defaults.userInputPauseTime)
     .then((res) => {
-      this.inputPaused = false;
+    this.inputPaused = false;
     });
   }
 
@@ -44,8 +44,8 @@ export class GameStateService {
    */
   gatherState(): IGameStateData {
     return {
-      gamePaused: this.gamePaused,
-      battleMode: this.battleMode,
+    gamePaused: this.gamePaused,
+    battleMode: this.battleMode,
     };
   }
 
@@ -55,9 +55,9 @@ export class GameStateService {
    */
   public applyState(newState: IGameStateData): void {
     for (const stateSetting in newState) {
-      if (newState.hasOwnProperty(stateSetting)) {
-        this[stateSetting] = newState[stateSetting];
-      }
+    if (newState.hasOwnProperty(stateSetting)) {
+      this[stateSetting] = newState[stateSetting];
+    }
     }
   }
 

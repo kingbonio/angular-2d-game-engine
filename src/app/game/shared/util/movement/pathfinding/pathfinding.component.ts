@@ -40,67 +40,67 @@ export class PathfindingComponent {
     frontierLoop:
     while (_frontierQueue.size > 0) {
 
-      // We want to give up trying if we've scanned the whole map and can't get to the target location
-      if (_frontierQueue.size === 0) {
-        break;
-      }
+    // We want to give up trying if we've scanned the whole map and can't get to the target location
+    if (_frontierQueue.size === 0) {
+      break;
+    }
 
-      // Get the next location from the priority queue
-      const current = this._getFromQueue(_frontierQueue);
+    // Get the next location from the priority queue
+    const current = this._getFromQueue(_frontierQueue);
 
-      // We have found a path to the destination
-      if (current.locationY + current.locationX === targetLocation.locationY + targetLocation.locationX) {
-        break;
-      }
+    // We have found a path to the destination
+    if (current.locationY + current.locationX === targetLocation.locationY + targetLocation.locationX) {
+      break;
+    }
 
-      // Cycle over the current location's neighbours
-      neighbourLoop:
-      for (const direction in Direction) {
-        if (Direction.hasOwnProperty(direction)) {
+    // Cycle over the current location's neighbours
+    neighbourLoop:
+    for (const direction in Direction) {
+      if (Direction.hasOwnProperty(direction)) {
 
-          // Get the next locations
-          const nextLocation = GridHelper.getNextLocation(current.locationY, current.locationX, Direction[direction] as Direction, locationSet);
+        // Get the next locations
+        const nextLocation = GridHelper.getNextLocation(current.locationY, current.locationX, Direction[direction] as Direction, locationSet);
 
-          const nextLocationCoords = nextLocation.locationY + nextLocation.locationX;
+        const nextLocationCoords = nextLocation.locationY + nextLocation.locationX;
 
-          // Break out if we've found the target
-          if (nextLocationCoords === targetLocation.locationY + targetLocation.locationX) {
+        // Break out if we've found the target
+        if (nextLocationCoords === targetLocation.locationY + targetLocation.locationX) {
 
-            // We now want to know which direction we came from to trace back
-            cameFrom[nextLocationCoords] = current.locationY + current.locationX;
+        // We now want to know which direction we came from to trace back
+        cameFrom[nextLocationCoords] = current.locationY + current.locationX;
 
-            break frontierLoop;
-          } else {
+        break frontierLoop;
+        } else {
 
-            // Ignore any locations which are impassable
-            if (!nextLocation.isLocationFree) {
-              continue;
-            }
+        // Ignore any locations which are impassable
+        if (!nextLocation.isLocationFree) {
+          continue;
+        }
 
-            // For now we want to set the grid location weighting to 1
-            const newCost = costSoFar[current.locationY + current.locationX] + 1;
+        // For now we want to set the grid location weighting to 1
+        const newCost = costSoFar[current.locationY + current.locationX] + 1;
 
-            // We want to only check locations which are new or have a lower travel cost
-            if (typeof costSoFar[nextLocationCoords] === "undefined" || newCost < costSoFar[nextLocationCoords]) {
+        // We want to only check locations which are new or have a lower travel cost
+        if (typeof costSoFar[nextLocationCoords] === "undefined" || newCost < costSoFar[nextLocationCoords]) {
 
-              costSoFar[nextLocationCoords] = newCost;
+          costSoFar[nextLocationCoords] = newCost;
 
-              // Add the item into the priority queue with priority based on A*
-              const priority = (newCost + this._heuristic(startLocation, nextLocation));
+          // Add the item into the priority queue with priority based on A*
+          const priority = (newCost + this._heuristic(startLocation, nextLocation));
 
-              // We want to check this area soon, so add it to the queue
-              this._placeInQueue(_frontierQueue, {
-                locationY: nextLocation.locationY,
-                locationX: nextLocation.locationX,
-                priority
-              });
+          // We want to check this area soon, so add it to the queue
+          this._placeInQueue(_frontierQueue, {
+            locationY: nextLocation.locationY,
+            locationX: nextLocation.locationX,
+            priority
+          });
 
-              // We now want to know which direction we came from to trace back
-              cameFrom[nextLocationCoords] = current.locationY + current.locationX;
-            }
-          }
+          // We now want to know which direction we came from to trace back
+          cameFrom[nextLocationCoords] = current.locationY + current.locationX;
+        }
         }
       }
+    }
     }
 
     return this._getPathBackwards(cameFrom, startLocation, targetLocation);
@@ -116,10 +116,10 @@ export class PathfindingComponent {
     // We only want to proceed if we managed to get to the target
     if (cameFrom[targetLocation.locationY + targetLocation.locationX]) {
 
-      while (pathCurrent !== startLocation.locationY + startLocation.locationX) {
-        pathBackwards.unshift(pathCurrent);
-        pathCurrent = cameFrom[pathCurrent];
-      }
+    while (pathCurrent !== startLocation.locationY + startLocation.locationX) {
+      pathBackwards.unshift(pathCurrent);
+      pathCurrent = cameFrom[pathCurrent];
+    }
     }
 
     return pathBackwards;
@@ -127,13 +127,13 @@ export class PathfindingComponent {
 
   private _heuristic(a: ILocation, b: ILocation): number {
     const heuristicA = {
-      x: a.locationX,
-      y: GridHelper.getNumberFromYCoordinate(a.locationY)
+    x: a.locationX,
+    y: GridHelper.getNumberFromYCoordinate(a.locationY)
     };
 
     const heuristicB = {
-      x: b.locationX,
-      y: GridHelper.getNumberFromYCoordinate(b.locationY)
+    x: b.locationX,
+    y: GridHelper.getNumberFromYCoordinate(b.locationY)
     };
 
     return (heuristicA.x - heuristicB.x) + (heuristicA.y - heuristicB.y);

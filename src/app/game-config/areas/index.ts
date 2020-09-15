@@ -6,10 +6,10 @@ import * as area5 from "./5";
 import * as area6 from "./6";
 
 export {
-      area1,
-      area2,
-      area3,
-      area4,
-      area5,
-      area6,
+    area1,
+    area2,
+    area3,
+    area4,
+    area5,
+    area6,
 };

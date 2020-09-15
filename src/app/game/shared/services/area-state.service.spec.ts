@@ -5,7 +5,7 @@ import { AreaStateService } from './area-state.service';
 describe('AreaStateService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AreaStateService]
+    providers: [AreaStateService]
     });
   });
 

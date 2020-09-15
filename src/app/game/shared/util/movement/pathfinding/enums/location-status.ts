@@ -1,6 +1,6 @@
 export enum LocaitonStatus {
-      valid,
-      invalid,
-      blocked,
-      goal
+    valid,
+    invalid,
+    blocked,
+    goal
 }

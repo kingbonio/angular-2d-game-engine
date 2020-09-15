@@ -1,18 +1,18 @@
 <div class="main-menu">
   <div class="options-container">
     <div class="game-options">
-      <div class="new-game">
-        <a (click)="goToPage('game')" class="link-button">Start new game</a>
-      </div>
-      <div class="load-game">
-        <span class="link-button" (click)="toggleSaveGameSection()">Load saved game</span>
-        <div *ngIf="showSaveGames">
-          <app-persistent-storage></app-persistent-storage>
-        </div>
+    <div class="new-game">
+      <a (click)="goToPage('game')" class="link-button">Start new game</a>
+    </div>
+    <div class="load-game">
+      <span class="link-button" (click)="toggleSaveGameSection()">Load saved game</span>
+      <div *ngIf="showSaveGames">
+        <app-persistent-storage></app-persistent-storage>
       </div>
     </div>
+    </div>
     <div class="game-settings">
-      <a routerLink="/settings" class="link-button">Game settings</a>
+    <a routerLink="/settings" class="link-button">Game settings</a>
     </div>
   </div>
 </div>

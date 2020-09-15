@@ -28,9 +28,9 @@ export class PersistentStorageComponent {
     const saveIconSrc = this.persistentStateService.getsaveIconSrcFromStorage(saveSlot);
 
     if (saveIconSrc) {
-      return 'assets/images/save-icons/' + saveIconSrc;
+    return 'assets/images/save-icons/' + saveIconSrc;
     } else {
-      return "default-save-icon.png";
+    return "default-save-icon.png";
     }
   }
 
@@ -40,9 +40,9 @@ export class PersistentStorageComponent {
 
   public loadGame(saveSlot) {
     if (this.router.url !== "/game") {
-      this.applicationStateService.loadingFromOutsideGame = true;
-      this.applicationStateService.canAccessGame = true;
-      this.router.navigate(["game"]);
+    this.applicationStateService.loadingFromOutsideGame = true;
+    this.applicationStateService.canAccessGame = true;
+    this.router.navigate(["game"]);
     }
     this.persistentStateService.load(saveSlot);
   }

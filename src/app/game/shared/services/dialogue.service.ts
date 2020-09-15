@@ -18,18 +18,18 @@ export class DialogueService {
    */
   public displayDialogueMessage(message: ISpeech) {
     if (message) {
-      // if (this.messagesOnScreen.length >= defaults.dialogue.maximumMessagesOnScreen) {
-      // this.pendingMessages.push(message);
-      // } else {
-      const date = new Date();
-      message.time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    // if (this.messagesOnScreen.length >= defaults.dialogue.maximumMessagesOnScreen) {
+    // this.pendingMessages.push(message);
+    // } else {
+    const date = new Date();
+    message.time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 
-      if (this.messagesOnScreen.length >= defaults.gameConfig.dialogueLines) {
-        this.messagesOnScreen.pop();
-      }
-      this.messagesOnScreen.unshift(message);
-      // }
-      // this.setTimer(message);
+    if (this.messagesOnScreen.length >= defaults.gameConfig.dialogueLines) {
+      this.messagesOnScreen.pop();
+    }
+    this.messagesOnScreen.unshift(message);
+    // }
+    // this.setTimer(message);
     }
   }
 
@@ -45,12 +45,12 @@ export class DialogueService {
   //   setTimeout(() => {
   //     // Remove the oldest message on screen and pull in any pending messages
   //     if (this.messagesOnScreen.length > 0) {
-  //       this.messagesOnScreen.splice(0, 1);
-  //       if (this.pendingMessages.length) {
-  //         const nextMessage: ISpeech = this.pendingMessages[0];
-  //         this.pendingMessages.splice(0, 1);
-  //         this.displayDialogueMessage(nextMessage);
-  //       }
+  //     this.messagesOnScreen.splice(0, 1);
+  //     if (this.pendingMessages.length) {
+  //       const nextMessage: ISpeech = this.pendingMessages[0];
+  //       this.pendingMessages.splice(0, 1);
+  //       this.displayDialogueMessage(nextMessage);
+  //     }
   //     }
   //   }, timerDuration);
   // }
@@ -66,8 +66,8 @@ export class DialogueService {
    */
   public gatherState(): IDialogueStateData {
     return {
-      messagesOnScreen: this.messagesOnScreen,
-      // pendingMessages: this.pendingMessages,
+    messagesOnScreen: this.messagesOnScreen,
+    // pendingMessages: this.pendingMessages,
     };
   }
 
@@ -77,9 +77,9 @@ export class DialogueService {
    */
   public applyState(newState: IDialogueStateData): void {
     for (const stateSetting in newState) {
-      if (newState.hasOwnProperty(stateSetting)) {
-        this[stateSetting] = newState[stateSetting];
-      }
+    if (newState.hasOwnProperty(stateSetting)) {
+      this[stateSetting] = newState[stateSetting];
+    }
     }
   }
 }

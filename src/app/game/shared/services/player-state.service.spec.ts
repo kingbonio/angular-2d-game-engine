@@ -5,7 +5,7 @@ import { PlayerStateService } from './player-state.service';
 describe('PlayerStateService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [PlayerStateService]
+    providers: [PlayerStateService]
     });
   });
 

@@ -36,17 +36,17 @@ export class GameControlsComponent {
     this.pullCurrentSettings();
 
     this.userInputService.userSetKey.subscribe((key: number) => {
-      if (
-        this.gameStateService.awaitingKeyboardSetting &&
-        key !== 0 &&
-        key !== 27 &&
-        !this.keysMapped[key]
-      ) {
-        // TODO Need to block any that are already selected
-        this.userSetKeyHandler(key);
-      } else if (this.gameStateService.awaitingKeyboardSetting && key === 27) {
-        this.unsetAwaitingKey();
-      }
+    if (
+      this.gameStateService.awaitingKeyboardSetting &&
+      key !== 0 &&
+      key !== 27 &&
+      !this.keysMapped[key]
+    ) {
+      // TODO Need to block any that are already selected
+      this.userSetKeyHandler(key);
+    } else if (this.gameStateService.awaitingKeyboardSetting && key === 27) {
+      this.unsetAwaitingKey();
+    }
     });
   }
 
@@ -95,11 +95,11 @@ export class GameControlsComponent {
 
     // TODO This could be tidier
     const isHidden = (
-      this.oneHandedControls &&
-      (keyName === "directionNorth" ||
-       keyName === "directionEast" ||
-       keyName === "directionSouth" ||
-       keyName === "directionWest")
+    this.oneHandedControls &&
+    (keyName === "directionNorth" ||
+     keyName === "directionEast" ||
+     keyName === "directionSouth" ||
+     keyName === "directionWest")
     );
     return isHidden;
   }
@@ -111,8 +111,8 @@ export class GameControlsComponent {
 
   public saveSettings() {
     this.gameSettingsService.saveGameSettings({
-      keyMap: this.keyMap,
-      keysMapped: this.keysMapped,
+    keyMap: this.keyMap,
+    keysMapped: this.keysMapped,
     });
   }
 
@@ -123,9 +123,9 @@ export class GameControlsComponent {
     // Set up the quick-access key references
     this.keysMapped = {};
     for (const inputReference in this.keyMap) {
-      if (this.keyMap.hasOwnProperty(inputReference)) {
-        this.keysMapped[this.keyMap[inputReference]] = inputReference;
-      }
+    if (this.keyMap.hasOwnProperty(inputReference)) {
+      this.keysMapped[this.keyMap[inputReference]] = inputReference;
+    }
     }
   }
 

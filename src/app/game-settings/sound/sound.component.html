@@ -1,44 +1,44 @@
 <div class="gameplay">
-      <div class="settings-section">
-            <div class="sound-title">Sound Settings</div>
-            <div class="sound-settings">
-                  <table class="sound-table">                  
-                        <tr>
-                              <td>
-                                    Music Volume
-                              </td>
-                              <td>
-                                    <mat-slider [max]="music.max" [min]="music.min" [step]="music.step" [(ngModel)]="musicVolume">
-                                    </mat-slider>
-                              </td>
-                              <td>
-                                    {{getVolumePercentage("musicVolume")}}%
-                              </td>
-                        </tr>
-                        <tr>
-                              <td>
-                                    Sound Effects Volume
-                              </td>
-                              <td>
-                                    <mat-slider [max]="soundEffect.max" [min]="soundEffect.min" [step]="soundEffect.step" [(ngModel)]="soundEffectVolume">
-                                    </mat-slider>
-                              </td>
-                              <td>
-                                    {{getVolumePercentage("soundEffectVolume")}}%
-                              </td>
-                        </tr>
-                  </table>                  
-            </div>
-      </div>
-      <div class="footer-section">
-            <div class="main-menu">
-                  <button (click)="loadMainMenu()">Back To Main Menu</button>
-            </div>
-            <div class="save-settings">
-                  <button (click)="saveSettings()">Apply settings</button>
-            </div>
-            <div class="restore-defaults">
-                  <button (click)="setDefaults()">Restore defaults</button>
-            </div>
-      </div>
+    <div class="settings-section">
+        <div class="sound-title">Sound Settings</div>
+        <div class="sound-settings">
+            <table class="sound-table">            
+                <tr>
+                    <td>
+                        Music Volume
+                    </td>
+                    <td>
+                        <mat-slider [max]="music.max" [min]="music.min" [step]="music.step" [(ngModel)]="musicVolume">
+                        </mat-slider>
+                    </td>
+                    <td>
+                        {{getVolumePercentage("musicVolume")}}%
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Sound Effects Volume
+                    </td>
+                    <td>
+                        <mat-slider [max]="soundEffect.max" [min]="soundEffect.min" [step]="soundEffect.step" [(ngModel)]="soundEffectVolume">
+                        </mat-slider>
+                    </td>
+                    <td>
+                        {{getVolumePercentage("soundEffectVolume")}}%
+                    </td>
+                </tr>
+            </table>            
+        </div>
+    </div>
+    <div class="footer-section">
+        <div class="main-menu">
+            <button (click)="loadMainMenu()">Back To Main Menu</button>
+        </div>
+        <div class="save-settings">
+            <button (click)="saveSettings()">Apply settings</button>
+        </div>
+        <div class="restore-defaults">
+            <button (click)="setDefaults()">Restore defaults</button>
+        </div>
+    </div>
 </div>

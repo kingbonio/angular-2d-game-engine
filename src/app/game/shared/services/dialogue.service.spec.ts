@@ -5,7 +5,7 @@ import { DialogueService } from './dialogue.service';
 describe('DialogueService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [DialogueService]
+    providers: [DialogueService]
     });
   });
 

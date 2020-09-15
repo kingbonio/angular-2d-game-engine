@@ -2,14 +2,14 @@
   <div class="save-control" *ngFor="let saveSlot of objectKeys(saveSlots)">
     <div class="save-title">Save Slot {{ saveSlot }}</div>
     <div class="image-container">
-      <!-- <img [src]="getSaveIconImageSource(saveSlot)" alt="Save Icon" class="save-icon"> -->
-      <div class="save-icon player"></div>
+    <!-- <img [src]="getSaveIconImageSource(saveSlot)" alt="Save Icon" class="save-icon"> -->
+    <div class="save-icon player"></div>
     </div>
     <div class="button-container">
-      <button *ngIf="applicationStateService.gameOpen" class="save-game" (click)="saveGame(saveSlot)">Save</button>
-      <button *ngIf="saveSlotDoesntExist(saveSlot)" class="load-game" (click)="loadGame(saveSlot)">Load</button>
-      <button *ngIf="saveSlotDoesntExist(saveSlot)" class="delete-game" (click)="deleteGame(saveSlot)">Delete</button>
-      <div *ngIf="!saveSlotDoesntExist(saveSlot) && !applicationStateService.gameOpen" class="no-save">No Save</div>
+    <button *ngIf="applicationStateService.gameOpen" class="save-game" (click)="saveGame(saveSlot)">Save</button>
+    <button *ngIf="saveSlotDoesntExist(saveSlot)" class="load-game" (click)="loadGame(saveSlot)">Load</button>
+    <button *ngIf="saveSlotDoesntExist(saveSlot)" class="delete-game" (click)="deleteGame(saveSlot)">Delete</button>
+    <div *ngIf="!saveSlotDoesntExist(saveSlot) && !applicationStateService.gameOpen" class="no-save">No Save</div>
     </div>
   </div>
 </div>

@@ -5,7 +5,7 @@ import { BattleCalculatorService } from './battle-calculator.service';
 describe('BattleCalculatorService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [BattleCalculatorService]
+    providers: [BattleCalculatorService]
     });
   });
 

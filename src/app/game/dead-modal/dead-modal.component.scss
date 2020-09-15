@@ -1,19 +1,18 @@
 .dead-container {
-      font-family: arial;
-      font-weight: 700;
-      
-      .notice-container {
-            display: flex;
-            justify-content: center;
-            color: #b72424;
-            font-size: 30px;
-      }
+    font-family: arial;
+    font-weight: 700;
+    
+    .notice-container {
+        display: flex;
+        justify-content: center;
+        color: #b72424;
+        font-size: 30px;
+    }
 
-      .button-container {
-            display: flex;
-            justify-content: center;
-            margin: 20px;
-            color: inherit;
-      }
-
+    .button-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px;
+        color: inherit;
+    }
 }

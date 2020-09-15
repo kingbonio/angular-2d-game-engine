@@ -5,7 +5,7 @@ import { AreaConfigProviderService } from './area-config-provider.service';
 describe('AreaConfigProviderService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AreaConfigProviderService]
+    providers: [AreaConfigProviderService]
     });
   });
 

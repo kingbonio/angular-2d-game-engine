@@ -1,5 +1,5 @@
 export enum PotionType {
-      healing,
-      damage,
-      buff,
+    healing,
+    damage,
+    buff,
 }

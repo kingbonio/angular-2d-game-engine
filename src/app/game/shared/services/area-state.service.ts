@@ -43,12 +43,12 @@ export class AreaStateService implements OnInit {
 
     // TODO Potentially worth rewriting
     for (const gridLocation in this.locations) {
-      if (this.locations.hasOwnProperty(gridLocation) &&
-        this.locations[gridLocation].element &&
-        this.locations[gridLocation].element.type &&
-        (this.locations[gridLocation].element.type === ElementClass.player)) {
-        return gridLocation;
-      }
+    if (this.locations.hasOwnProperty(gridLocation) &&
+      this.locations[gridLocation].element &&
+      this.locations[gridLocation].element.type &&
+      (this.locations[gridLocation].element.type === ElementClass.player)) {
+      return gridLocation;
+    }
     }
   }
 
@@ -57,8 +57,8 @@ export class AreaStateService implements OnInit {
     const index = this.huntingList.indexOf(character.id);
 
     if (index !== -1) {
-      // Remove the item from the hunting list
-      this.huntingList.splice(index, 1);
+    // Remove the item from the hunting list
+    this.huntingList.splice(index, 1);
     }
   }
 
@@ -66,8 +66,8 @@ export class AreaStateService implements OnInit {
 
     if (this.huntingList.indexOf(character.id) === -1) {
 
-      // Add the character to the hunting list
-      this.huntingList.push(character.id);
+    // Add the character to the hunting list
+    this.huntingList.push(character.id);
     }
   }
 
@@ -78,19 +78,19 @@ export class AreaStateService implements OnInit {
   public getCharactersOnGrid(): { character: Character, gridLocation: string }[] {
     const characterData = [];
     for (const gridLocation in this.locations) {
-      if (this.locations.hasOwnProperty(gridLocation) &&
-        this.locations[gridLocation].element &&
-        this.locations[gridLocation].element.type &&
-        (this.locations[gridLocation].element.type === ElementClass.enemy || this.locations[gridLocation].element.type === ElementClass.npc) &&
-        !this.locations[gridLocation].element.isDead()) {
-        const gridElement = this.locations[gridLocation].element;
-        if (gridElement.type && (gridElement.type === ElementClass.enemy || gridElement.type === ElementClass.npc)) {
-          characterData.push({
-            character: gridElement,
-            gridLocation
-          });
-        }
+    if (this.locations.hasOwnProperty(gridLocation) &&
+      this.locations[gridLocation].element &&
+      this.locations[gridLocation].element.type &&
+      (this.locations[gridLocation].element.type === ElementClass.enemy || this.locations[gridLocation].element.type === ElementClass.npc) &&
+      !this.locations[gridLocation].element.isDead()) {
+      const gridElement = this.locations[gridLocation].element;
+      if (gridElement.type && (gridElement.type === ElementClass.enemy || gridElement.type === ElementClass.npc)) {
+        characterData.push({
+        character: gridElement,
+        gridLocation
+        });
       }
+    }
     }
     return characterData;
   }
@@ -101,9 +101,9 @@ export class AreaStateService implements OnInit {
     const distanceFromPlayerCoordinates = this.getDistanceBetweenLocations(playerCoordinates, characterCoordinates);
     // Positive differences should be 0 and 1
     if (Math.abs(distanceFromPlayerCoordinates.xDistance) + Math.abs(distanceFromPlayerCoordinates.yDistance) === 1) {
-      return true;
+    return true;
     } else {
-      return false;
+    return false;
     }
   }
 
@@ -136,7 +136,7 @@ export class AreaStateService implements OnInit {
   public movePlayer(newLocation: string) {
     if (newLocation !== this.playerLocation) {
 
-      this.repositionCharacter(newLocation, this.playerLocation);
+    this.repositionCharacter(newLocation, this.playerLocation);
     }
   }
 
@@ -146,8 +146,8 @@ export class AreaStateService implements OnInit {
 
   public splitLocationReference(gridLocation: string): ILocation {
     return {
-      locationY: gridLocation[0],
-      locationX: Number(gridLocation[1]),
+    locationY: gridLocation[0],
+    locationX: Number(gridLocation[1]),
     };
   }
 
@@ -177,12 +177,12 @@ export class AreaStateService implements OnInit {
 
     const targetAreaData = this.getAreaState(newAreaReference);
     if (targetAreaData) {
-      this.loadingExistingArea = true;
-      // Reset the locations to be the stored data
-      this.locations = targetAreaData;
+    this.loadingExistingArea = true;
+    // Reset the locations to be the stored data
+    this.locations = targetAreaData;
     } else {
-      // Reset the locations to blank
-      this.locations = this.cloneLocations(locationsDefaults);
+    // Reset the locations to blank
+    this.locations = this.cloneLocations(locationsDefaults);
     }
 
     // TODO this isn't ideal really, look for the other subject type
@@ -210,21 +210,21 @@ export class AreaStateService implements OnInit {
 
     // If we don't have existing data, create new data
     if (!nextAreaLocations) {
-      const nextAreaData = this.areaConfigProviderService.getAreaConfig(destination);
-      const nextAreaExits = this.areaConfigProviderService.getAreaExits(destination);
+    const nextAreaData = this.areaConfigProviderService.getAreaConfig(destination);
+    const nextAreaExits = this.areaConfigProviderService.getAreaExits(destination);
 
-      // Create a fresh locations object
-      nextAreaLocations = this.cloneLocations(locationsDefaults);
+    // Create a fresh locations object
+    nextAreaLocations = this.cloneLocations(locationsDefaults);
 
-      // Add all the elements and exits to the new locations
-      GridHelper.addElementsToGrid(nextAreaData.areaElements, nextAreaLocations);
-      GridHelper.addExitsToGrid(nextAreaExits, nextAreaLocations);
+    // Add all the elements and exits to the new locations
+    GridHelper.addElementsToGrid(nextAreaData.areaElements, nextAreaLocations);
+    GridHelper.addExitsToGrid(nextAreaExits, nextAreaLocations);
     }
 
     const locationOfAreaExit = defaults.areaExitLocations[GridHelper.getLongDirectionName(exitDirection)];
 
     if (nextAreaLocations[locationOfAreaExit].areaExit) {
-      nextAreaLocations[locationOfAreaExit].areaExit.status = AreaExitStatus.open;
+    nextAreaLocations[locationOfAreaExit].areaExit.status = AreaExitStatus.open;
     }
 
     this.saveAreaState(destination, nextAreaLocations);
@@ -269,9 +269,9 @@ export class AreaStateService implements OnInit {
   public getAreaState(newAreaReference: number): IGridReferences | null {
     const stateJson = localStorage.getItem(newAreaReference.toString());
     if (stateJson && stateJson.length && stateJson !== "{}") {
-      return JSON.parse(stateJson);
+    return JSON.parse(stateJson);
     } else {
-      return null;
+    return null;
     }
   }
 
@@ -286,13 +286,13 @@ export class AreaStateService implements OnInit {
    */
   public gatherState(): IAreaStateData {
     return {
-      currentLocation: this.currentArea,
-      newLocation: this.newArea,
-      loadingArea: this.loadingArea,
-      loadingExistingArea: this.loadingExistingArea,
-      locationKeys: this.locationKeys,
-      locations: this.locations,
-      previousPlayerLocation: this.previousPlayerLocation,
+    currentLocation: this.currentArea,
+    newLocation: this.newArea,
+    loadingArea: this.loadingArea,
+    loadingExistingArea: this.loadingExistingArea,
+    locationKeys: this.locationKeys,
+    locations: this.locations,
+    previousPlayerLocation: this.previousPlayerLocation,
     };
   }
 
@@ -302,9 +302,9 @@ export class AreaStateService implements OnInit {
    */
   public applyState(newState: IAreaStateData): void {
     for (const stateSetting in newState) {
-      if (newState.hasOwnProperty(stateSetting)) {
-        this[stateSetting] = newState[stateSetting];
-      }
+    if (newState.hasOwnProperty(stateSetting)) {
+      this[stateSetting] = newState[stateSetting];
+    }
     }
   }
 }

@@ -34,11 +34,11 @@ export class BattleCalculatorService {
     let totalDamage = defaults.playerBaseStats.baseDamage;
 
     if (equippedWeapon) {
-      totalDamage += equippedWeapon.properties.damage;
+    totalDamage += equippedWeapon.properties.damage;
     }
 
     if (activeBuff && activeBuff.properties.effectType === PotionEffectType.damageOvercharge) {
-      totalDamage += activeBuff.properties.effectAmount;
+    totalDamage += activeBuff.properties.effectAmount;
     }
 
     return this.calculateDamage(target.armour, totalDamage, target.isGuarding);
@@ -57,19 +57,19 @@ export class BattleCalculatorService {
 
     // We'll be allowing primary only for the time being
     if (character.weapons && character.weapons.primary) {
-      characterDamage += character.weapons.primary.properties.damage;
+    characterDamage += character.weapons.primary.properties.damage;
     }
 
     if (activeBuff && activeBuff.properties.effectType === PotionEffectType.armour) {
-      const calculatedDamage = this.calculateDamage(armour, characterDamage, isGuarding, activeBuff);
+    const calculatedDamage = this.calculateDamage(armour, characterDamage, isGuarding, activeBuff);
 
-      return calculatedDamage;
+    return calculatedDamage;
     } else {
 
-      // TODO assumed always using primary
-      const calculatedDamage = this.calculateDamage(armour, characterDamage, isGuarding);
+    // TODO assumed always using primary
+    const calculatedDamage = this.calculateDamage(armour, characterDamage, isGuarding);
 
-      return calculatedDamage;
+    return calculatedDamage;
     }
   }
 
@@ -84,21 +84,21 @@ export class BattleCalculatorService {
     let totalArmourValue = defaults.enemyProperties.baseArmour;
 
     if (targetArmour) {
-      for (const item in targetArmour) {
-        if (targetArmour.hasOwnProperty(item) && targetArmour[item]) {
-          totalArmourValue += targetArmour[item].properties.defense;
-        }
+    for (const item in targetArmour) {
+      if (targetArmour.hasOwnProperty(item) && targetArmour[item]) {
+        totalArmourValue += targetArmour[item].properties.defense;
       }
+    }
 
-      if (activeBuff && activeBuff.properties.effectType === PotionEffectType.armour) {
-        totalArmourValue += activeBuff.properties.effectAmount;
-      }
+    if (activeBuff && activeBuff.properties.effectType === PotionEffectType.armour) {
+      totalArmourValue += activeBuff.properties.effectAmount;
+    }
     }
 
     const diceRoll = Dice.roll1d20();
 
     if (diceRoll <= defaults.enemyProperties.minimumAttackRoll) {
-      return 0;
+    return 0;
     }
 
     const damageTotal = Math.ceil(weaponDamage * (diceRoll / 20));
@@ -109,7 +109,7 @@ export class BattleCalculatorService {
 
     // Reduce the final amount if the target is guarding
     if (isGuarding) {
-      damageTaken = Math.floor(damageTaken * defaults.battleMultipliers.guardDivider);
+    damageTaken = Math.floor(damageTaken * defaults.battleMultipliers.guardDivider);
     }
 
     return damageTaken;

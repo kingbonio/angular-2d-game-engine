@@ -10,8 +10,8 @@ export class AreaConfigProviderService implements OnInit {
 
   constructor(
     ) {
-        this.areas = areaConfigs;
-        this.map = maps.default;
+      this.areas = areaConfigs;
+      this.map = maps.default;
   }
 
   ngOnInit() {

@@ -3,9 +3,9 @@ import { GameComponent } from './game.component';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        GameComponent
-      ],
+    declarations: [
+      GameComponent
+    ],
     }).compileComponents();
   }));
   it('should create the app', async(() => {

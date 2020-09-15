@@ -5,7 +5,7 @@ import { PersistentStateService } from './persistent-state.service';
 describe('PersistentStateService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [PersistentStateService]
+    providers: [PersistentStateService]
     });
   });
 

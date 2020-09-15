@@ -30,19 +30,19 @@ export class GameSettingsService {
     const persistentGameSettings: IGameSettings = this.persistentStateService.getGameSettings();
 
     if (persistentGameSettings) {
-      this.applyAllSettings(persistentGameSettings);
+    this.applyAllSettings(persistentGameSettings);
     } else {
-      this.setToDefaults();
+    this.setToDefaults();
     }
 
     // Push volume settings to background music setting
     if (persistentGameSettings.musicVolume) {
-      this.backgroundMusicService.setVolume(persistentGameSettings.musicVolume);
+    this.backgroundMusicService.setVolume(persistentGameSettings.musicVolume);
     }
 
     // Push volume settings to sound effect setting
     if (persistentGameSettings.soundEffectVolume) {
-      this.soundEffectService.setVolume(persistentGameSettings.soundEffectVolume);
+    this.soundEffectService.setVolume(persistentGameSettings.soundEffectVolume);
     }
   }
 
@@ -57,19 +57,19 @@ export class GameSettingsService {
 
   public saveGameSettings(newSettings: any) {
     for (const newSetting in newSettings) {
-      if (newSettings.hasOwnProperty(newSetting)) {
-        this[newSetting] = newSettings[newSetting];
-      }
+    if (newSettings.hasOwnProperty(newSetting)) {
+      this[newSetting] = newSettings[newSetting];
+    }
     }
 
     // Push volume settings to background music setting
     if (newSettings.musicVolume) {
-      this.backgroundMusicService.setVolume(newSettings.musicVolume);
+    this.backgroundMusicService.setVolume(newSettings.musicVolume);
     }
 
     // Push volume settings to sound effect setting
     if (newSettings.soundEffectVolume) {
-      this.soundEffectService.setVolume(newSettings.soundEffectVolume);
+    this.soundEffectService.setVolume(newSettings.soundEffectVolume);
     }
 
     this.saveToStorage();
@@ -86,9 +86,9 @@ export class GameSettingsService {
     // Set up the quick-access key references
     this.keysMapped = {};
     for (const inputReference in this.keyMap) {
-      if (this.keyMap.hasOwnProperty(inputReference)) {
-        this.keysMapped[this.keyMap[inputReference]] = inputReference;
-      }
+    if (this.keyMap.hasOwnProperty(inputReference)) {
+      this.keysMapped[this.keyMap[inputReference]] = inputReference;
+    }
     }
   }
 
@@ -99,14 +99,14 @@ export class GameSettingsService {
  */
   public gatherAllSettings(): IGameSettings {
     return {
-      showRoomShadow: this.showRoomShadow,
-      showControls: this.showControls,
-      allowInGameMenu: this.allowInGameMenu,
-      oneHandedControls: this.oneHandedControls,
-      keyMap: this.keyMap,
-      keysMapped: this.keysMapped,
-      musicVolume: this.musicVolume,
-      soundEffectVolume: this.soundEffectVolume,
+    showRoomShadow: this.showRoomShadow,
+    showControls: this.showControls,
+    allowInGameMenu: this.allowInGameMenu,
+    oneHandedControls: this.oneHandedControls,
+    keyMap: this.keyMap,
+    keysMapped: this.keysMapped,
+    musicVolume: this.musicVolume,
+    soundEffectVolume: this.soundEffectVolume,
     };
   }
 
@@ -116,9 +116,9 @@ export class GameSettingsService {
    */
   public applyAllSettings(settings: IGameSettings): void {
     for (const setting in settings) {
-      if (settings.hasOwnProperty(setting)) {
-        this[setting] = settings[setting];
-      }
+    if (settings.hasOwnProperty(setting)) {
+      this[setting] = settings[setting];
+    }
     }
   }
 }

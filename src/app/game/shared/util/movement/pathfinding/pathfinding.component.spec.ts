@@ -8,7 +8,7 @@ describe('PathfindingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ Pathfinding ]
+    declarations: [ Pathfinding ]
     })
     .compileComponents();
   }));

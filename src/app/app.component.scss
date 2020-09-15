@@ -1,36 +1,36 @@
 
 .border-selection {
-      width: 1px;
-      height: 1px;
-      position: fixed;
-      bottom: 0px;
-      right: 0px;
-      cursor: pointer;
+    width: 1px;
+    height: 1px;
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    cursor: pointer;
 
-      &.on {
-            border: solid red 1px;
-      }
+    &.on {
+        border: solid red 1px;
+    }
 }
 
 .background-music-button {
-      position: fixed;
-      bottom: 0px;
-      left: 0px;
-      height: 48px;
-      width: 48px;
-      color: grey;
-      cursor: pointer;
-      
-      
-      .audio-icon {
-            height: 48px;
-            width: 48px;
-            background: url("assets/images/icons/speaker.svg") no-repeat center;
-            background-size: 48px 48px;
-            fill: red;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    height: 48px;
+    width: 48px;
+    color: grey;
+    cursor: pointer;
+    
+    
+    .audio-icon {
+        height: 48px;
+        width: 48px;
+        background: url("assets/images/icons/speaker.svg") no-repeat center;
+        background-size: 48px 48px;
+        fill: red;
 
-            &.on {
-                  fill: white;
-            }
-      }
+        &.on {
+            fill: white;
+        }
+    }
 }

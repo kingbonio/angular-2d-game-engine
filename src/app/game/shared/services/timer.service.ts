@@ -17,7 +17,7 @@ export class TimerService {
     this.counter = new BehaviorSubject(0);
     this.startCounter();
     this.timerSubscriber = this.timer.subscribe(value => {
-      this.counter.next(value);
+    this.counter.next(value);
     });
   }
 
@@ -27,9 +27,9 @@ export class TimerService {
 
   public startTimer(timeToCount: number): Promise<any> {
     return new Promise((res, rej) => {
-      return setTimeout(() => {
-        res("inputUnpaused");
-      }, timeToCount);
+    return setTimeout(() => {
+      res("inputUnpaused");
+    }, timeToCount);
     });
   }
 

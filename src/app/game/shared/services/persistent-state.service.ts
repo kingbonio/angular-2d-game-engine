@@ -56,9 +56,9 @@ export class PersistentStateService {
   public getGameSettings(): IGameSettings | null {
     const gameSettings = localStorage.getItem("game-settings");
     if (gameSettings && gameSettings.length) {
-      return JSON.parse(gameSettings);
+    return JSON.parse(gameSettings);
     } else {
-      return null;
+    return null;
     }
   }
 
@@ -71,13 +71,13 @@ export class PersistentStateService {
    */
   private collectStates(): void {
     this.state = {
-      area: this.areaStateService.gatherState(),
-      otherAreas: this.gatherAreasFromStorage(),
-      player: this.playerStateService.gatherState(),
-      dialogue: this.dialogueStateService.gatherState(),
-      inventory: this.inventoryManagerService.gatherState(),
-      equipment: this.equipmentManagerService.gatherState(),
-      saveIconSrc: this.getSaveIconSrcFromGame(),
+    area: this.areaStateService.gatherState(),
+    otherAreas: this.gatherAreasFromStorage(),
+    player: this.playerStateService.gatherState(),
+    dialogue: this.dialogueStateService.gatherState(),
+    inventory: this.inventoryManagerService.gatherState(),
+    equipment: this.equipmentManagerService.gatherState(),
+    saveIconSrc: this.getSaveIconSrcFromGame(),
     };
   }
 
@@ -115,10 +115,10 @@ export class PersistentStateService {
   private gatherAreasFromStorage() {
     const areaStates = {};
     for (const areaId in this.areaIds) {
-      if (this.areaIds.hasOwnProperty(areaId) && Number(this.areaIds[areaId]) !== this.areaStateService.currentArea) {
-        const areaFromStorage = localStorage.getItem(this.areaIds[areaId]) || "{}";
-        areaStates[this.areaIds[areaId]] = JSON.parse(areaFromStorage);
-      }
+    if (this.areaIds.hasOwnProperty(areaId) && Number(this.areaIds[areaId]) !== this.areaStateService.currentArea) {
+      const areaFromStorage = localStorage.getItem(this.areaIds[areaId]) || "{}";
+      areaStates[this.areaIds[areaId]] = JSON.parse(areaFromStorage);
+    }
     }
     return areaStates;
   }
@@ -128,9 +128,9 @@ export class PersistentStateService {
    */
   private applyAreasToStorage() {
     for (const areaId in this.state.otherAreas) {
-      if (this.areaIds.includes(areaId) && Number(areaId) !== this.state.area.currentLocation) {
-        localStorage.setItem(areaId, JSON.stringify(this.state.otherAreas[areaId]));
-      }
+    if (this.areaIds.includes(areaId) && Number(areaId) !== this.state.area.currentLocation) {
+      localStorage.setItem(areaId, JSON.stringify(this.state.otherAreas[areaId]));
+    }
     }
   }
 

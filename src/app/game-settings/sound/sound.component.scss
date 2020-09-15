@@ -1,46 +1,46 @@
 .gameplay {
-      
-      position: relative;
-      width: 710px;
-      height: 657px;
-      padding: 20px;
-      color: white;
-      font-family: arial;
-      text-align: left;
-      
-      .settings-section {
-            margin-left: 20px;
+    
+    position: relative;
+    width: 710px;
+    height: 657px;
+    padding: 20px;
+    color: white;
+    font-family: arial;
+    text-align: left;
+    
+    .settings-section {
+        margin-left: 20px;
 
-            .sound-title {
-                  margin: 10px 0px;
-                  padding: 10px 0px;
-                  font-weight: 600;
-            }
+        .sound-title {
+            margin: 10px 0px;
+            padding: 10px 0px;
+            font-weight: 600;
+        }
 
-            .sound-settings {
-                  border-collapse: collapse;
-                  border-spacing: 0px;
-            }
-      }
+        .sound-settings {
+            border-collapse: collapse;
+            border-spacing: 0px;
+        }
+    }
 
-      .footer-section {
+    .footer-section {
 
-            position: absolute;
-            bottom: 20px;
+        position: absolute;
+        bottom: 20px;
 
-            .save-settings {
-                  display: inline-block;
-                  padding: 0px 15px 0px 0px;
-            }
-            
-            .restore-defaults {
-                  display: inline-block;
-                  padding: 0px 15px 0px 0px;
-            }
-            
-            .main-menu {
-                  display: inline-block;
-                  padding: 0px 15px 0px 0px;
-            }
-      }
+        .save-settings {
+            display: inline-block;
+            padding: 0px 15px 0px 0px;
+        }
+        
+        .restore-defaults {
+            display: inline-block;
+            padding: 0px 15px 0px 0px;
+        }
+        
+        .main-menu {
+            display: inline-block;
+            padding: 0px 15px 0px 0px;
+        }
+    }
 }

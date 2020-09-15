@@ -2,11 +2,11 @@ import { IAreaStateData, IDialogueStateData, IInventoryStateData, IPlayerStateDa
 import { IEquipmentStateData } from "./iequipment-state-data";
 
 export interface IStateData {
-      area: IAreaStateData;
-      otherAreas: any;
-      player: IPlayerStateData;
-      dialogue: IDialogueStateData;
-      inventory: IInventoryStateData;
-      equipment: IEquipmentStateData;
-      saveIconSrc: string;
+    area: IAreaStateData;
+    otherAreas: any;
+    player: IPlayerStateData;
+    dialogue: IDialogueStateData;
+    inventory: IInventoryStateData;
+    equipment: IEquipmentStateData;
+    saveIconSrc: string;
 }

@@ -5,7 +5,7 @@ import { UserInputService } from './user-input.service';
 describe('User.InputService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [UserInputService]
+    providers: [UserInputService]
     });
   });
 

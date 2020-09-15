@@ -5,8 +5,8 @@
     "baseUrl": "./",
     "module": "commonjs",
     "types": [
-      "jasmine",
-      "node"
+    "jasmine",
+    "node"
     ]
   },
   "files": [

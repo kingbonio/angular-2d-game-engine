@@ -25,7 +25,7 @@ export class MainMenuComponent {
 
   public goToPage(page: string) {
     if (page === "game") {
-      this.applicationStateService.canAccessGame = true;
+    this.applicationStateService.canAccessGame = true;
     }
     this.router.navigate([page]);
   }

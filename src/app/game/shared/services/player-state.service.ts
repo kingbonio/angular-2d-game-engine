@@ -62,12 +62,12 @@ export class PlayerStateService {
     // Break out of this action if moving action is currently underway
     if (this.areaStateService.locations[this.locationY + this.locationX].element.isMovingForwards) {
 
-      return;
+    return;
     }
 
     // One handed controls need direction as part of the move
     if (isOneHandedControls) {
-      this.direction = direction;
+    this.direction = direction;
     }
 
     // TODO Might be worth getting location of player from area state service
@@ -76,50 +76,50 @@ export class PlayerStateService {
     // TODO Might be worth moving this somewhere more apprpriate, maybe listener in movement component
     if (newLocation.isTargetAreaExit) {
 
-      // If it's closed don't allow through
-      if (this.areaStateService.locations[this.locationY + this.locationX].areaExit.status === AreaExitStatus.closed) {
+    // If it's closed don't allow through
+    if (this.areaStateService.locations[this.locationY + this.locationX].areaExit.status === AreaExitStatus.closed) {
 
-        return;
-      }
-      // If it's locked, don't allow access
-      if (this.areaStateService.locations[this.locationY + this.locationX].areaExit.status === AreaExitStatus.locked) {
-        this.dialogueService.displayDialogueMessage({
-          text: defaults.dialogue.areaExitLocked,
-          character: defaults.dialogue.computerCharacterType,
-          name: defaults.dialogue.computerName
-        });
-        return;
-      } else {
-        // Emit event that new location access attempted, pass areaExit
-        this.areaStateService.locations[this.locationY + this.locationX].areaExit.status = AreaExitStatus.open;
-        this.areaStateService.loadNewArea(this.areaStateService.locations[this.locationY + this.locationX].areaExit.destination);
-        return;
-      }
+      return;
+    }
+    // If it's locked, don't allow access
+    if (this.areaStateService.locations[this.locationY + this.locationX].areaExit.status === AreaExitStatus.locked) {
+      this.dialogueService.displayDialogueMessage({
+        text: defaults.dialogue.areaExitLocked,
+        character: defaults.dialogue.computerCharacterType,
+        name: defaults.dialogue.computerName
+      });
+      return;
+    } else {
+      // Emit event that new location access attempted, pass areaExit
+      this.areaStateService.locations[this.locationY + this.locationX].areaExit.status = AreaExitStatus.open;
+      this.areaStateService.loadNewArea(this.areaStateService.locations[this.locationY + this.locationX].areaExit.destination);
+      return;
+    }
     }
 
     // Update area state
     if (newLocation && newLocation.locationX && newLocation.locationY && newLocation.isLocationFree) {
 
-      // TODO This could be moved into a getter
-      const playerLocationDetails = this.areaStateService.splitLocationReference(this.locationY + this.locationX);
+    // TODO This could be moved into a getter
+    const playerLocationDetails = this.areaStateService.splitLocationReference(this.locationY + this.locationX);
 
-      // Play walking sound
-      this.soundEffectService.playSound(SoundEffects.walk);
+    // Play walking sound
+    this.soundEffectService.playSound(SoundEffects.walk);
 
-      this.movement.moveCharacterWithAnimation(playerLocationDetails, newLocation);
+    this.movement.moveCharacterWithAnimation(playerLocationDetails, newLocation);
 
-      this.locationY = newLocation.locationY;
-      this.locationX = newLocation.locationX;
+    this.locationY = newLocation.locationY;
+    this.locationX = newLocation.locationX;
 
     } else {
-      // TODO: Possibly inform user you cannot move here
-      // this.dialogueService.displaySpeech(
-      //   {
-      //     text: defaults.dialogue.nullElementResponse,
-      //     character: defaults.dialogue.computerCharacterType,
-      //     name: defaults.dialogue.computerName
-      //   }
-      // );
+    // TODO: Possibly inform user you cannot move here
+    // this.dialogueService.displaySpeech(
+    //   {
+    //     text: defaults.dialogue.nullElementResponse,
+    //     character: defaults.dialogue.computerCharacterType,
+    //     name: defaults.dialogue.computerName
+    //   }
+    // );
     }
     // this.direction = direction;
 
@@ -144,60 +144,60 @@ export class PlayerStateService {
     const targetLocation = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
 
     if (targetLocation && targetLocation.element && (targetLocation.element.type === ElementClass.enemy || targetLocation.element.type === ElementClass.npc)) {
-      const targetElement = targetLocation.element;
+    const targetElement = targetLocation.element;
 
-      const damage = this.battleCalculatorService.getDamageToEnemy(targetElement, this.selectedWeaponSlot, targetElement.isGuarding, this.equipmentManagerService.activeBuff);
+    const damage = this.battleCalculatorService.getDamageToEnemy(targetElement, this.selectedWeaponSlot, targetElement.isGuarding, this.equipmentManagerService.activeBuff);
 
-      if (damage) {
-        // No need to assign this
-        targetElement.respond(UserInteractionTypes.attack, GridHelper.getDirectionToFace(this.direction), damage);
+    if (damage) {
+      // No need to assign this
+      targetElement.respond(UserInteractionTypes.attack, GridHelper.getDirectionToFace(this.direction), damage);
 
-        // Play slashing sound
-        this.soundEffectService.playSound(SoundEffects.slash);
+      // Play slashing sound
+      this.soundEffectService.playSound(SoundEffects.slash);
 
-        // Allow the character to animate receiving an attack
-        targetElement.receiveAttack();
+      // Allow the character to animate receiving an attack
+      targetElement.receiveAttack();
 
-        this.dialogueService.displayDialogueMessage({
-          text: defaults.dialogue.attackSuccess(damage),
-          character: defaults.dialogue.computerCharacterType,
-          name: defaults.dialogue.computerName
-        });
+      this.dialogueService.displayDialogueMessage({
+        text: defaults.dialogue.attackSuccess(damage),
+        character: defaults.dialogue.computerCharacterType,
+        name: defaults.dialogue.computerName
+      });
 
-        if (targetElement.isLowHealth()) {
+      if (targetElement.isLowHealth()) {
 
-          // Set the character to run away
-          targetElement.currentState = CharacterState.afraid;
-        }
+        // Set the character to run away
+        targetElement.currentState = CharacterState.afraid;
+      }
 
-        if (targetElement.isDead()) {
+      if (targetElement.isDead()) {
 
-          this.areaStateService.removeCharacterFromHuntingList(targetElement);
+        this.areaStateService.removeCharacterFromHuntingList(targetElement);
 
-          // Remove element and leave trace of the character on the grid
-          GridHelper.decomposeCharacter(targetElement, targetReference.locationY + targetReference.locationX, this.areaStateService.locations);
-
-          this.dialogueService.displayDialogueMessage({
-            text: defaults.dialogue.targetDead + targetElement.name,
-            character: defaults.dialogue.computerCharacterType,
-            name: defaults.dialogue.computerName
-          });
-        }
-      } else {
-
-        // Play slashing sound
-        this.soundEffectService.playSound(SoundEffects.slashMiss);
+        // Remove element and leave trace of the character on the grid
+        GridHelper.decomposeCharacter(targetElement, targetReference.locationY + targetReference.locationX, this.areaStateService.locations);
 
         this.dialogueService.displayDialogueMessage({
-          text: defaults.dialogue.attackFailure,
-          character: defaults.dialogue.computerCharacterType,
-          name: defaults.dialogue.computerName
+        text: defaults.dialogue.targetDead + targetElement.name,
+        character: defaults.dialogue.computerCharacterType,
+        name: defaults.dialogue.computerName
         });
       }
     } else {
 
       // Play slashing sound
       this.soundEffectService.playSound(SoundEffects.slashMiss);
+
+      this.dialogueService.displayDialogueMessage({
+        text: defaults.dialogue.attackFailure,
+        character: defaults.dialogue.computerCharacterType,
+        name: defaults.dialogue.computerName
+      });
+    }
+    } else {
+
+    // Play slashing sound
+    this.soundEffectService.playSound(SoundEffects.slashMiss);
     }
   }
 
@@ -211,38 +211,38 @@ export class PlayerStateService {
 
     if (GridHelper.isTargetLocationOutOfBounds(targetReference.locationY + targetReference.locationX)) {
 
-      // If target is an area exit:
-      if (targetReference.isTargetAreaExit) {
-        if ((currentLocation.areaExit.status === AreaExitStatus.closed) ||
-          (currentLocation.areaExit.status === AreaExitStatus.locked &&
-            activeItem &&
-            activeItem.itemReference &&
-            currentLocation.areaExit.itemReferenceNeeded === activeItem.itemReference)) {
+    // If target is an area exit:
+    if (targetReference.isTargetAreaExit) {
+      if ((currentLocation.areaExit.status === AreaExitStatus.closed) ||
+        (currentLocation.areaExit.status === AreaExitStatus.locked &&
+        activeItem &&
+        activeItem.itemReference &&
+        currentLocation.areaExit.itemReferenceNeeded === activeItem.itemReference)) {
 
-          // Open the door
-          currentLocation.areaExit.status = AreaExitStatus.opening;
+        // Open the door
+        currentLocation.areaExit.status = AreaExitStatus.opening;
 
-          // Get next area information
-          const destination = currentLocation.areaExit.destination;
-          const areaExitToOpen: Direction = GridHelper.getOppositeDirection(currentLocation.areaExit.direction);
+        // Get next area information
+        const destination = currentLocation.areaExit.destination;
+        const areaExitToOpen: Direction = GridHelper.getOppositeDirection(currentLocation.areaExit.direction);
 
-          // Set opposite side of the door to open
-          this.areaStateService.openSameAreaExitInNextArea(destination, areaExitToOpen);
+        // Set opposite side of the door to open
+        this.areaStateService.openSameAreaExitInNextArea(destination, areaExitToOpen);
 
-          // Play door opening sound
-          this.soundEffectService.playSound(SoundEffects.openStoneDoor);
+        // Play door opening sound
+        this.soundEffectService.playSound(SoundEffects.openStoneDoor);
 
-        } else {
-          this.dialogueService.displayDialogueMessage({
-            text: defaults.dialogue.areaExitKeyNotActive(currentLocation.areaExit.keyColourNeeded),
-            character: defaults.dialogue.computerCharacterType,
-            name: defaults.dialogue.computerName
-          });
+      } else {
+        this.dialogueService.displayDialogueMessage({
+        text: defaults.dialogue.areaExitKeyNotActive(currentLocation.areaExit.keyColourNeeded),
+        character: defaults.dialogue.computerCharacterType,
+        name: defaults.dialogue.computerName
+        });
 
-        }
       }
+    }
 
-      return;
+    return;
     }
 
     // Otherwise it's an actual location
@@ -251,90 +251,90 @@ export class PlayerStateService {
 
     // If there's no target and there are ground items
     if (!targetElement && targetLocation.groundItem) {
-      this.soundEffectService.playSound(SoundEffects.rustleBag);
-      this.openLootingModal.emit(targetLocation);
+    this.soundEffectService.playSound(SoundEffects.rustleBag);
+    this.openLootingModal.emit(targetLocation);
 
-      return;
+    return;
     }
 
     if (targetElement) {
-      if (targetElement.type === ElementClass.object) {
+    if (targetElement.type === ElementClass.object) {
 
-        // Target is an inanimate object
-        if (targetElement.itemReferenceNeeded && targetElement.isLocked) {
+      // Target is an inanimate object
+      if (targetElement.itemReferenceNeeded && targetElement.isLocked) {
 
-          if (activeItem && activeItem.itemReference === targetElement.itemReferenceNeeded) {
+        if (activeItem && activeItem.itemReference === targetElement.itemReferenceNeeded) {
 
-            // React to loot objects or doors differently
-            switch (targetElement.objectType) {
-              case ObjectType.lootObject:
+        // React to loot objects or doors differently
+        switch (targetElement.objectType) {
+          case ObjectType.lootObject:
 
-                // Open the item modal
-                this.openLootingModal.emit(targetLocation);
-                targetElement.unlock(activeItem);
-
-                break;
-              case ObjectType.door:
-                this.areaStateService.removeElementFromArea(targetElement, targetReference.locationY + targetReference.locationX);
-
-                break;
-              default:
-                // Do nothing...
-                break;
-            }
-
-            // Play the relevant sound effect
-            if (targetElement.soundEffect) {
-              this.soundEffectService.playSound(targetElement.soundEffect);
-            }
-
-            if (activeItem.destroyedOnUse) {
-              this.equipmentManagerService.destroyActiveItem();
-
-              this.dialogueService.displayDialogueMessage({
-                text: defaults.dialogue.keyItemDestroyed,
-                character: defaults.dialogue.computerCharacterType,
-                name: defaults.dialogue.computerName
-              });
-            }
-          } else if (targetElement.lockedDialogue) {
-
-            // Open message modal
-            this.openMessageModal.emit(targetElement.lockedDialogue);
-          } else {
-            this.dialogueService.displayDialogueMessage({
-              text: defaults.dialogue.keyItemNotActive,
-              character: defaults.dialogue.computerCharacterType,
-              name: defaults.dialogue.computerName
-            });
-          }
-
-        } else if (targetElement.loot && (!targetElement.itemReferenceNeeded || !targetElement.locked)) {
-          this.openLootingModal.emit(targetLocation);
-        }
-      } else {
-
-        // Otherwise target is a character
-        if (!GridHelper.isTargetFacingSource(targetElement, this.direction)) {
-          const stealSuccess = this.attemptSteal(targetElement);
-
-          if (stealSuccess) {
-            this.soundEffectService.playSound(SoundEffects.rustleBag);
+            // Open the item modal
             this.openLootingModal.emit(targetLocation);
-          } else {
-            this.dialogueService.displayDialogueMessage({
-              text: defaults.dialogue.stealAttemptFail,
-              character: defaults.dialogue.computerCharacterType,
-              name: defaults.dialogue.computerName
-            });
+            targetElement.unlock(activeItem);
 
-            // Set the character to hunting player
-            targetElement.currentState = CharacterState.hunting;
-          }
+            break;
+          case ObjectType.door:
+            this.areaStateService.removeElementFromArea(targetElement, targetReference.locationY + targetReference.locationX);
+
+            break;
+          default:
+            // Do nothing...
+            break;
+        }
+
+        // Play the relevant sound effect
+        if (targetElement.soundEffect) {
+          this.soundEffectService.playSound(targetElement.soundEffect);
+        }
+
+        if (activeItem.destroyedOnUse) {
+          this.equipmentManagerService.destroyActiveItem();
+
+          this.dialogueService.displayDialogueMessage({
+            text: defaults.dialogue.keyItemDestroyed,
+            character: defaults.dialogue.computerCharacterType,
+            name: defaults.dialogue.computerName
+          });
+        }
+        } else if (targetElement.lockedDialogue) {
+
+        // Open message modal
+        this.openMessageModal.emit(targetElement.lockedDialogue);
+        } else {
+        this.dialogueService.displayDialogueMessage({
+          text: defaults.dialogue.keyItemNotActive,
+          character: defaults.dialogue.computerCharacterType,
+          name: defaults.dialogue.computerName
+        });
+        }
+
+      } else if (targetElement.loot && (!targetElement.itemReferenceNeeded || !targetElement.locked)) {
+        this.openLootingModal.emit(targetLocation);
+      }
+    } else {
+
+      // Otherwise target is a character
+      if (!GridHelper.isTargetFacingSource(targetElement, this.direction)) {
+        const stealSuccess = this.attemptSteal(targetElement);
+
+        if (stealSuccess) {
+        this.soundEffectService.playSound(SoundEffects.rustleBag);
+        this.openLootingModal.emit(targetLocation);
+        } else {
+        this.dialogueService.displayDialogueMessage({
+          text: defaults.dialogue.stealAttemptFail,
+          character: defaults.dialogue.computerCharacterType,
+          name: defaults.dialogue.computerName
+        });
+
+        // Set the character to hunting player
+        targetElement.currentState = CharacterState.hunting;
         }
       }
+    }
 
-      return;
+    return;
     }
   }
 
@@ -354,34 +354,34 @@ export class PlayerStateService {
     const nextGridLocation = GridHelper.getNextLocation(this.locationY, this.locationX, this.direction, this.areaStateService.locations);
     // TODO rename this
     if (nextGridLocation && !GridHelper.isTargetLocationOutOfBounds(nextGridLocation.locationY + nextGridLocation.locationX)) {
-      const target = this.areaStateService.locations[nextGridLocation.locationY + nextGridLocation.locationX].element;
+    const target = this.areaStateService.locations[nextGridLocation.locationY + nextGridLocation.locationX].element;
 
-      if (target && target.isDead()) {
-        this.dialogueService.displayDialogueMessage({
-          text: defaults.dialogue.nullElementResponse,
-          character: defaults.dialogue.computerCharacterType,
-          name: defaults.dialogue.computerName
-        });
-        return;
-      }
+    if (target && target.isDead()) {
+      this.dialogueService.displayDialogueMessage({
+        text: defaults.dialogue.nullElementResponse,
+        character: defaults.dialogue.computerCharacterType,
+        name: defaults.dialogue.computerName
+      });
+      return;
+    }
 
-      if (!target) {
-        this.dialogueService.displayDialogueMessage(
-          {
-            text: defaults.dialogue.nullElementResponse,
-            character: defaults.dialogue.computerCharacterType,
-            name: defaults.dialogue.computerName
-          }
-        );
-      } else {
-        this.dialogueService.displayDialogueMessage(
-          {
-            text: target.respond(UserInteractionTypes.speak, GridHelper.getDirectionToFace(this.direction)),
-            character: target.type,
-            name: target.name
-          }
-        );
-      }
+    if (!target) {
+      this.dialogueService.displayDialogueMessage(
+        {
+        text: defaults.dialogue.nullElementResponse,
+        character: defaults.dialogue.computerCharacterType,
+        name: defaults.dialogue.computerName
+        }
+      );
+    } else {
+      this.dialogueService.displayDialogueMessage(
+        {
+        text: target.respond(UserInteractionTypes.speak, GridHelper.getDirectionToFace(this.direction)),
+        character: target.type,
+        name: target.name
+        }
+      );
+    }
     }
   }
 
@@ -389,7 +389,7 @@ export class PlayerStateService {
     // TODO Work this out properly
     const diceRoll = Dice.roll1d20();
     if (diceRoll > defaults.playerMultipliers.stealSuccessRequirement) {
-      return true;
+    return true;
     }
     return false;
     // const successChanceMultiplier = target.isAsleep ? defaults.playerMultipliers.
@@ -402,99 +402,99 @@ export class PlayerStateService {
     let damage = this.battleCalculatorService.getDamageToPlayer(character, this.equipmentManagerService.armour, !!player.isGuarding, this.equipmentManagerService.activeBuff);
     if (damage) {
 
-      if (player.isGuarding) {
+    if (player.isGuarding) {
 
-        // Play the guard/strike sound
-        this.soundEffectService.playSound(SoundEffects.defendSlash);
-      }
+      // Play the guard/strike sound
+      this.soundEffectService.playSound(SoundEffects.defendSlash);
+    }
 
-      // Allow the player to animate receiving an attack
-      player.receiveAttack();
+    // Allow the player to animate receiving an attack
+    player.receiveAttack();
 
-      if (this.equipmentManagerService.activeBuff &&
-        this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge &&
-        damage <= this.equipmentManagerService.activeBuff.properties.remainingEffect) {
+    if (this.equipmentManagerService.activeBuff &&
+      this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge &&
+      damage <= this.equipmentManagerService.activeBuff.properties.remainingEffect) {
 
-        // Take any damage off the health buff first
-        this.equipmentManagerService.activeBuff.properties.remainingEffect -= damage;
-      } else {
-
-        if (this.equipmentManagerService.activeBuff &&
-          this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge) {
-
-          // Reduce the damage by what remains after health buff used
-          damage = damage - this.equipmentManagerService.activeBuff.properties.remainingEffect;
-          this.equipmentManagerService.activeBuff.properties.remainingEffect = 0;
-        }
-
-        // Reduce health by remaining damage
-        this.health -= damage;
-      }
-
-      this.dialogueService.displayDialogueMessage({
-        text: defaults.dialogue.enemyAttacks(damage, character.name),
-        character: defaults.dialogue.computerCharacterType,
-        name: defaults.dialogue.computerName
-      });
+      // Take any damage off the health buff first
+      this.equipmentManagerService.activeBuff.properties.remainingEffect -= damage;
     } else {
 
-      this.dialogueService.displayDialogueMessage({
-        text: defaults.dialogue.enemyFailsAttack(character.name),
-        character: defaults.dialogue.computerCharacterType,
-        name: defaults.dialogue.computerName
-      });
+      if (this.equipmentManagerService.activeBuff &&
+        this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge) {
+
+        // Reduce the damage by what remains after health buff used
+        damage = damage - this.equipmentManagerService.activeBuff.properties.remainingEffect;
+        this.equipmentManagerService.activeBuff.properties.remainingEffect = 0;
+      }
+
+      // Reduce health by remaining damage
+      this.health -= damage;
+    }
+
+    this.dialogueService.displayDialogueMessage({
+      text: defaults.dialogue.enemyAttacks(damage, character.name),
+      character: defaults.dialogue.computerCharacterType,
+      name: defaults.dialogue.computerName
+    });
+    } else {
+
+    this.dialogueService.displayDialogueMessage({
+      text: defaults.dialogue.enemyFailsAttack(character.name),
+      character: defaults.dialogue.computerCharacterType,
+      name: defaults.dialogue.computerName
+    });
     }
     if (this.health <= 0) {
-      // YOU ARE DEAD!
+    // YOU ARE DEAD!
     }
   }
 
   public useConsumable(item: IInventoryItem, itemSlot: any) {
     if (item.class === ItemClass.potion) {
-      switch (item.type) {
-        case PotionType.healing:
-          if ((this.maxHealth - this.health) > 0) {
+    switch (item.type) {
+      case PotionType.healing:
+        if ((this.maxHealth - this.health) > 0) {
 
-            // We only want to add additional health remaining
-            if (item.properties.effectAmount > (this.maxHealth - this.health)) {
-              this.health += (this.maxHealth - this.health);
-            } else {
-              this.health += item.properties.effectAmount;
-            }
+        // We only want to add additional health remaining
+        if (item.properties.effectAmount > (this.maxHealth - this.health)) {
+          this.health += (this.maxHealth - this.health);
+        } else {
+          this.health += item.properties.effectAmount;
+        }
 
-            this.dialogueService.displayDialogueMessage({
-              text: defaults.dialogue.consumedHealthPotion(item.name, item.properties.effectAmount),
-              character: defaults.dialogue.computerCharacterType,
-              name: defaults.dialogue.computerName
-            });
+        this.dialogueService.displayDialogueMessage({
+          text: defaults.dialogue.consumedHealthPotion(item.name, item.properties.effectAmount),
+          character: defaults.dialogue.computerCharacterType,
+          name: defaults.dialogue.computerName
+        });
 
-            this.inventoryManagerService.locations[itemSlot] = null;
-          } else {
-            this.dialogueService.displayDialogueMessage({
-              text: defaults.dialogue.alreadyAtFullHealth,
-              character: defaults.dialogue.computerCharacterType,
-              name: defaults.dialogue.computerName
-            });
-          }
-          break;
-        case PotionType.buff:
-          this.equipmentManagerService.activeBuff = item;
-          this.equipmentManagerService.startBuffTimer(item.properties.effectDuration);
+        this.inventoryManagerService.locations[itemSlot] = null;
+        } else {
+        this.dialogueService.displayDialogueMessage({
+          text: defaults.dialogue.alreadyAtFullHealth,
+          character: defaults.dialogue.computerCharacterType,
+          name: defaults.dialogue.computerName
+        });
+        }
+        break;
+      case PotionType.buff:
+        this.equipmentManagerService.activeBuff = item;
+        this.equipmentManagerService.startBuffTimer(item.properties.effectDuration);
 
-          this.dialogueService.displayDialogueMessage({
-            text: defaults.dialogue.consumedBuffPotion(item.name, item.properties.effectDuration),
-            character: defaults.dialogue.computerCharacterType,
-            name: defaults.dialogue.computerName
-          });
+        this.dialogueService.displayDialogueMessage({
+        text: defaults.dialogue.consumedBuffPotion(item.name, item.properties.effectDuration),
+        character: defaults.dialogue.computerCharacterType,
+        name: defaults.dialogue.computerName
+        });
 
-          // Set the target if became invisible while being hunted
-          if (item.properties.effectType === PotionEffectType.invisibility) {
-            this.lastKnownLocation = this.locationY + this.locationX;
-          }
+        // Set the target if became invisible while being hunted
+        if (item.properties.effectType === PotionEffectType.invisibility) {
+        this.lastKnownLocation = this.locationY + this.locationX;
+        }
 
-          this.inventoryManagerService.locations[itemSlot] = null;
-          break;
-      }
+        this.inventoryManagerService.locations[itemSlot] = null;
+        break;
+    }
     }
   }
 
@@ -516,12 +516,12 @@ export class PlayerStateService {
    */
   public gatherState(): IPlayerStateData {
     return {
-      health: this.health,
-      maxHealth: this.maxHealth,
-      locationX: this.locationX,
-      locationY: this.locationY,
-      direction: this.direction,
-      selectedWeaponSlot: this.selectedWeaponSlot,
+    health: this.health,
+    maxHealth: this.maxHealth,
+    locationX: this.locationX,
+    locationY: this.locationY,
+    direction: this.direction,
+    selectedWeaponSlot: this.selectedWeaponSlot,
     };
   }
 
@@ -531,9 +531,9 @@ export class PlayerStateService {
    */
   public applyState(newState: IPlayerStateData): void {
     for (const stateSetting in newState) {
-      if (newState.hasOwnProperty(stateSetting)) {
-        this[stateSetting] = newState[stateSetting];
-      }
+    if (newState.hasOwnProperty(stateSetting)) {
+      this[stateSetting] = newState[stateSetting];
+    }
     }
   }
 }

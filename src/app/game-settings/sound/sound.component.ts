@@ -42,8 +42,8 @@ export class SoundComponent implements OnInit {
 
   public saveSettings() {
     this.gameSettingsService.saveGameSettings({
-      soundEffectVolume: this.soundEffectVolume,
-      musicVolume: this.musicVolume,
+    soundEffectVolume: this.soundEffectVolume,
+    musicVolume: this.musicVolume,
     });
   }
 

@@ -1,28 +1,28 @@
 .settings-container {
-      height: 747px;
-      width: 750px;
-      margin: auto;
-      background-image: linear-gradient(to bottom right, #737373, #121010);
-      border: solid rgb(209, 205, 198) 2px;
-      
-      .header-links {
-      
-            height: 50px;
-            padding-left: 20px;
-      
-            .link {
-                  display: inline-block;
-                  text-align: left;
-                  margin: 15px 15px 0px 0px;
-                  font-family: arial;
-                  font-weight: 700;
-                  text-decoration: none;
-                  color: white;
-                  cursor: pointer;
+    height: 747px;
+    width: 750px;
+    margin: auto;
+    background-image: linear-gradient(to bottom right, #737373, #121010);
+    border: solid rgb(209, 205, 198) 2px;
+    
+    .header-links {
+    
+        height: 50px;
+        padding-left: 20px;
+    
+        .link {
+            display: inline-block;
+            text-align: left;
+            margin: 15px 15px 0px 0px;
+            font-family: arial;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+            cursor: pointer;
 
-                  &.back {
-                        color: #c7c7c7;
-                  }
+            &.back {
+                color: #c7c7c7;
             }
-      }
+        }
+    }
 }

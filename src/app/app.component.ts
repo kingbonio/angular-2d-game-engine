@@ -25,7 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     // Listen for keyboard input events
     this.userInputSubscription = fromEvent(document, 'keydown').subscribe(($e: KeyboardEvent) => {
-      this.userInputService.keyDownEventHandler($e);
+    this.userInputService.keyDownEventHandler($e);
     });
     // this.playBackgroundMusic();
   }

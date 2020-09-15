@@ -20,13 +20,13 @@ export class AssetLoaderService {
   public loadAssets() {
     // Load assets
     for (const area in areas) {
-      if (this.areas.hasOwnProperty(area)) {
-        this.areas[area].default.areaElements.forEach(element => {
-          if (element.elementProperties && element.elementProperties.imageFileName) {
-            this.assets.push(element.elementProperties.imageFileName);
-          }
-        });
-      }
+    if (this.areas.hasOwnProperty(area)) {
+      this.areas[area].default.areaElements.forEach(element => {
+        if (element.elementProperties && element.elementProperties.imageFileName) {
+        this.assets.push(element.elementProperties.imageFileName);
+        }
+      });
+    }
     }
 
     this.assetsLoaded = true;

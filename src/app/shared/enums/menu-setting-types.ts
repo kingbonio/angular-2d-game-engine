@@ -1,5 +1,5 @@
 export enum MenuSettingTypes {
-      checkbox,
-      dropdown,
-      textfield
+    checkbox,
+    dropdown,
+    textfield
 }

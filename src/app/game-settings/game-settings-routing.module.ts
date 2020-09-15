@@ -6,42 +6,42 @@ import { GameplayComponent } from "./gameplay/gameplay.component";
 import { SoundComponent } from "./sound/sound.component";
 
 const gameSettingsRoutes = [
-      {
-            path: 'settings',
-            component: GameSettingsComponent,
-            children: [
-                  {
-                        path: 'gameplay',
-                        pathMatch: "full",
-                        component: GameplayComponent,
-                  },
-                  {
-                        path: 'sound',
-                        pathMatch: "full",
-                        component: SoundComponent,
-                  },
-                  {
-                        path: 'controls',
-                        pathMatch: "full",
-                        component: GameControlsComponent
-                  },
-                  {
-                        path: '**',
-                        redirectTo: 'gameplay'
-                  }
-            ]
-      },
+    {
+        path: 'settings',
+        component: GameSettingsComponent,
+        children: [
+            {
+                path: 'gameplay',
+                pathMatch: "full",
+                component: GameplayComponent,
+            },
+            {
+                path: 'sound',
+                pathMatch: "full",
+                component: SoundComponent,
+            },
+            {
+                path: 'controls',
+                pathMatch: "full",
+                component: GameControlsComponent
+            },
+            {
+                path: '**',
+                redirectTo: 'gameplay'
+            }
+        ]
+    },
 
 ] as Routes;
 
 @NgModule({
-      imports: [
-            RouterModule.forChild(
-                  gameSettingsRoutes,
-            )
-      ],
-      exports: [
-            RouterModule
-      ]
+    imports: [
+        RouterModule.forChild(
+            gameSettingsRoutes,
+        )
+    ],
+    exports: [
+        RouterModule
+    ]
 })
 export class GameSettingsRoutingModule { }

@@ -22,24 +22,24 @@ Run `npm install` in the repo folder and then `ng serve`, this will launch the e
 
 ### Movement:
 
-      W: Move north
-      D: Move east
-      S: Move south
-      A: Move west
+    W: Move north
+    D: Move east
+    S: Move south
+    A: Move west
 
 ### Direction:
 
-      W: Face north
-      D: Face east
-      S: Face south
-      A: Face west
+    W: Face north
+    D: Face east
+    S: Face south
+    A: Face west
 
 ### Interaction:
 
-      Q:     Speak
-      E:     Interact
-      Space: Attack
-      Ctrl:  Defend
+    Q:     Speak
+    E:     Interact
+    Space: Attack
+    Ctrl:  Defend
 
 
 # Save Games

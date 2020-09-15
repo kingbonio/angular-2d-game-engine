@@ -6,40 +6,40 @@ import { MainMenuComponent } from "./main-menu/main-menu.component";
 import { GameGuard } from "./guards/game.guard";
 
 const appRoutes = [
-      {
-            path: 'game',
-            pathMatch: "full",
-            component: GameComponent,
-            canActivate: [GameGuard]
-      },
-      {
-            path: 'settings',
-            pathMatch: "full",
-            component: GameSettingsComponent
-      },
-      {
-            path: '',
-            pathMatch: "full",
-            component: MainMenuComponent
-      },
-      {
-            path: '**',
-            redirectTo: ''
-      }
+    {
+        path: 'game',
+        pathMatch: "full",
+        component: GameComponent,
+        canActivate: [GameGuard]
+    },
+    {
+        path: 'settings',
+        pathMatch: "full",
+        component: GameSettingsComponent
+    },
+    {
+        path: '',
+        pathMatch: "full",
+        component: MainMenuComponent
+    },
+    {
+        path: '**',
+        redirectTo: ''
+    }
 ] as Routes;
 
 @NgModule({
-      imports: [
-            RouterModule.forRoot(
-                  appRoutes,
-                  // { enableTracing: true }
-            )
-      ],
-      providers: [
-            GameGuard,
-      ],
-      exports: [
-            RouterModule
-      ]
+    imports: [
+        RouterModule.forRoot(
+            appRoutes,
+            // { enableTracing: true }
+        )
+    ],
+    providers: [
+        GameGuard,
+    ],
+    exports: [
+        RouterModule
+    ]
 })
 export class AppRoutingModule { }

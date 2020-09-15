@@ -8,7 +8,7 @@ describe('PersistentStorageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PersistentStorageComponent ]
+    declarations: [ PersistentStorageComponent ]
     })
     .compileComponents();
   }));

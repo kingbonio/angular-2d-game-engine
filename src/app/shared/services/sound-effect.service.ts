@@ -17,19 +17,19 @@ export class SoundEffectService {
   constructor(
     ) {
     for (const soundEffectName in SoundEffects) {
-      if (SoundEffects.hasOwnProperty(soundEffectName)) {
-        this.soundEffectInstances[soundEffectName] = new Audio() as IAudioEngine;
-        this.soundEffectInstances[soundEffectName].src = soundEffects[soundEffectName];
-        this.soundEffectInstances[soundEffectName].load();
-      }
+    if (SoundEffects.hasOwnProperty(soundEffectName)) {
+      this.soundEffectInstances[soundEffectName] = new Audio() as IAudioEngine;
+      this.soundEffectInstances[soundEffectName].src = soundEffects[soundEffectName];
+      this.soundEffectInstances[soundEffectName].load();
+    }
     }
   }
 
   public setVolume(newVolume: number) {
     for (const soundEffectInstance in this.soundEffectInstances) {
-      if (this.soundEffectInstances.hasOwnProperty(soundEffectInstance)) {
-        this.soundEffectInstances[soundEffectInstance].volume = newVolume;
-      }
+    if (this.soundEffectInstances.hasOwnProperty(soundEffectInstance)) {
+      this.soundEffectInstances[soundEffectInstance].volume = newVolume;
+    }
     }
   }
 
@@ -42,11 +42,11 @@ export class SoundEffectService {
 
     this.soundEffectInstances[soundName].load();
     this.soundEffectInstances[soundName].play()
-      .then(() => {
+    .then(() => {
 
-      }).catch(() => {
+    }).catch(() => {
 
-        // TODO Swallowing errors
-      });
+      // TODO Swallowing errors
+    });
   }
 }

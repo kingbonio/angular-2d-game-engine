@@ -21,7 +21,7 @@ export class GameplayComponent {
 
   public saveSettings() {
     this.gameSettingsService.saveGameSettings({
-      showControls: this.showControls,
+    showControls: this.showControls,
     });
   }
 

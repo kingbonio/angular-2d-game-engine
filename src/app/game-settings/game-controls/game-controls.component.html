@@ -1,50 +1,50 @@
 <div class="game-controls">
-      <div class="input-section">
-            <div class="controls-title">Key Bindings</div>
-            <table class="key-bindings-table">
-                  <th>
-                        Action
-                  </th>
-                  <th>
-                        Bound key
-                  </th>
-                  <th>
-                        
-                  </th>
-                  
-                  <tr *ngFor="let keyName of keyNames" class="action-selection">
+    <div class="input-section">
+        <div class="controls-title">Key Bindings</div>
+        <table class="key-bindings-table">
+            <th>
+                Action
+            </th>
+            <th>
+                Bound key
+            </th>
+            <th>
+                
+            </th>
+            
+            <tr *ngFor="let keyName of keyNames" class="action-selection">
 
-                        <td *ngIf="!isHiddenControl(keyName)">
-                              <span class="key-name" [textContent]="keyFullNames[keyName] + ': '"></span>
-                        </td>
-                        <td *ngIf="!isHiddenControl(keyName)">
-                              <span class="selected-key">{{ getSelectedKeyName(keyName) }}</span>
-                        </td>
-                        <td *ngIf="!isHiddenControl(keyName)">
-                              <button class="key-input-button" (click)="setAwaitingKey(keyName)">Select key</button>
-                        </td>
-                  </tr>
-            </table>
-            <div *ngIf="gameStateService.awaitingKeyboardSetting" class="key-selection-text">
-                  <div class="enter-key-note">Please enter a key to set it to the action</div>
-                  <div class="cancel-note">Press Escape to cancel</div>
-            </div>
-      </div>
-      <div class="additional-settings">
-            <div class="two-handed-controls">
-                  <input type="checkbox" [(ngModel)]="oneHandedControls">One-handed controls
-            </div>
-      </div>
-      
-      <div class="footer-section">
-            <div class="main-menu">
-                  <button (click)="loadMainMenu()">Back To Main Menu</button>
-            </div>
-            <div class="save-settings">
-                  <button (click)="saveSettings()">Apply settings</button>
-            </div>
-            <div class="restore-defaults">
-                  <button (click)="setDefaults()">Restore defaults</button>
-            </div>
-      </div>
+                <td *ngIf="!isHiddenControl(keyName)">
+                    <span class="key-name" [textContent]="keyFullNames[keyName] + ': '"></span>
+                </td>
+                <td *ngIf="!isHiddenControl(keyName)">
+                    <span class="selected-key">{{ getSelectedKeyName(keyName) }}</span>
+                </td>
+                <td *ngIf="!isHiddenControl(keyName)">
+                    <button class="key-input-button" (click)="setAwaitingKey(keyName)">Select key</button>
+                </td>
+            </tr>
+        </table>
+        <div *ngIf="gameStateService.awaitingKeyboardSetting" class="key-selection-text">
+            <div class="enter-key-note">Please enter a key to set it to the action</div>
+            <div class="cancel-note">Press Escape to cancel</div>
+        </div>
+    </div>
+    <div class="additional-settings">
+        <div class="two-handed-controls">
+            <input type="checkbox" [(ngModel)]="oneHandedControls">One-handed controls
+        </div>
+    </div>
+    
+    <div class="footer-section">
+        <div class="main-menu">
+            <button (click)="loadMainMenu()">Back To Main Menu</button>
+        </div>
+        <div class="save-settings">
+            <button (click)="saveSettings()">Apply settings</button>
+        </div>
+        <div class="restore-defaults">
+            <button (click)="setDefaults()">Restore defaults</button>
+        </div>
+    </div>
 </div>

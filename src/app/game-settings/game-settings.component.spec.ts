@@ -8,7 +8,7 @@ describe('GameSettingsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GameSettingsComponent ]
+    declarations: [ GameSettingsComponent ]
     })
     .compileComponents();
   }));

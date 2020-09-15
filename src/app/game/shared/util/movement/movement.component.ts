@@ -33,56 +33,56 @@ export class MovementComponent {
     let location: string;
     switch (direction) {
 
-      case Direction.N:
-        // Get first location
-        location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
-        gridReferences.push(location);
-        // Get second location
-        location = GridHelper.nextYReference(splitLocation.locationY) + splitLocation.locationX;
-        gridReferences.push(location);
-        // Get third location
-        location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
-        gridReferences.push(location);
-        break;
+    case Direction.N:
+      // Get first location
+      location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
+      gridReferences.push(location);
+      // Get second location
+      location = GridHelper.nextYReference(splitLocation.locationY) + splitLocation.locationX;
+      gridReferences.push(location);
+      // Get third location
+      location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
+      gridReferences.push(location);
+      break;
 
-      case Direction.E:
-        // Get first location
-        location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
-        gridReferences.push(location);
-        // Get second location
-        location = splitLocation.locationY + GridHelper.nextXReference(splitLocation.locationX);
-        gridReferences.push(location);
-        // Get third location
-        location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
-        gridReferences.push(location);
-        break;
+    case Direction.E:
+      // Get first location
+      location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
+      gridReferences.push(location);
+      // Get second location
+      location = splitLocation.locationY + GridHelper.nextXReference(splitLocation.locationX);
+      gridReferences.push(location);
+      // Get third location
+      location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
+      gridReferences.push(location);
+      break;
 
-      case Direction.S:
-        // Get first location
-        location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
-        gridReferences.push(location);
-        // Get second location
-        location = GridHelper.previousYReference(splitLocation.locationY) + splitLocation.locationX;
-        gridReferences.push(location);
-        // Get third location
-        location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
-        gridReferences.push(location);
-        break;
+    case Direction.S:
+      // Get first location
+      location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
+      gridReferences.push(location);
+      // Get second location
+      location = GridHelper.previousYReference(splitLocation.locationY) + splitLocation.locationX;
+      gridReferences.push(location);
+      // Get third location
+      location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
+      gridReferences.push(location);
+      break;
 
-      case Direction.W:
-        // Get first location
-        location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
-        gridReferences.push(location);
-        // Get second location
-        location = splitLocation.locationY + GridHelper.previousXReference(splitLocation.locationX);
-        gridReferences.push(location);
-        // Get third location
-        location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
-        gridReferences.push(location);
-        break;
+    case Direction.W:
+      // Get first location
+      location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
+      gridReferences.push(location);
+      // Get second location
+      location = splitLocation.locationY + GridHelper.previousXReference(splitLocation.locationX);
+      gridReferences.push(location);
+      // Get third location
+      location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
+      gridReferences.push(location);
+      break;
 
-      default:
-      // Do nothing
+    default:
+    // Do nothing
     }
 
     return gridReferences;
@@ -98,7 +98,7 @@ export class MovementComponent {
     // Break out of this action if moving action is currently underway
     if (this.areaStateService.locations[currentLocation].element.isMovingForwards) {
 
-      return;
+    return;
     }
 
     const directionDiceRoll = Dice.roll1d4();
@@ -111,32 +111,32 @@ export class MovementComponent {
     let targetLocationDetails = GridHelper.getNextLocation(currentLocationDetails.locationY, currentLocationDetails.locationX, direction, this.areaStateService.locations);
 
     if (targetLocationDetails && targetLocationDetails.isLocationFree) {
-      const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
-      this.areaStateService.locations[currentLocation].element.direction = direction;
+    const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
+    this.areaStateService.locations[currentLocation].element.direction = direction;
 
-      this.moveCharacterWithAnimation(currentLocationDetails, targetLocationDetails);
+    this.moveCharacterWithAnimation(currentLocationDetails, targetLocationDetails);
     } else {
-      // Select a direction to move
-      for (let i = 1; i < 4; i++) {
+    // Select a direction to move
+    for (let i = 1; i < 4; i++) {
 
-        if (i === directionDiceRoll) {
-          continue;
-        }
-
-        direction = GridHelper.getDirectionFromNumber(i);
-
-        currentLocationDetails = this.areaStateService.splitLocationReference(currentLocation);
-
-        targetLocationDetails = GridHelper.getNextLocation(currentLocationDetails.locationY, currentLocationDetails.locationX, direction, this.areaStateService.locations);
-
-        if (targetLocationDetails && targetLocationDetails.isLocationFree) {
-          this.areaStateService.locations[currentLocation].element.direction = direction;
-
-          this.moveCharacterWithAnimation(currentLocationDetails, targetLocationDetails);
-
-          return;
-        }
+      if (i === directionDiceRoll) {
+        continue;
       }
+
+      direction = GridHelper.getDirectionFromNumber(i);
+
+      currentLocationDetails = this.areaStateService.splitLocationReference(currentLocation);
+
+      targetLocationDetails = GridHelper.getNextLocation(currentLocationDetails.locationY, currentLocationDetails.locationX, direction, this.areaStateService.locations);
+
+      if (targetLocationDetails && targetLocationDetails.isLocationFree) {
+        this.areaStateService.locations[currentLocation].element.direction = direction;
+
+        this.moveCharacterWithAnimation(currentLocationDetails, targetLocationDetails);
+
+        return;
+      }
+    }
     }
 
     // Do nothing
@@ -153,43 +153,43 @@ export class MovementComponent {
     // Break out of this action if moving action is currently underway
     if (this.areaStateService.locations[gridLocation].element.isMovingForwards) {
 
-      return;
+    return;
     }
 
     if (character.directionsForPatrol.length) {
-      const routeIndex = character.currentPositionInRoute;
-      const splitLocation = this.areaStateService.splitLocationReference(gridLocation);
-      const direction = character.directionsForPatrol[character.currentPositionInRoute];
-      const newLocation = GridHelper.getNextLocation(splitLocation.locationY, splitLocation.locationX, direction, this.areaStateService.locations);
+    const routeIndex = character.currentPositionInRoute;
+    const splitLocation = this.areaStateService.splitLocationReference(gridLocation);
+    const direction = character.directionsForPatrol[character.currentPositionInRoute];
+    const newLocation = GridHelper.getNextLocation(splitLocation.locationY, splitLocation.locationX, direction, this.areaStateService.locations);
 
 
-      // Call the character's move method
-      if (newLocation && newLocation.isLocationFree) {
+    // Call the character's move method
+    if (newLocation && newLocation.isLocationFree) {
 
-        this.moveCharacterWithAnimation(splitLocation, newLocation);
+      this.moveCharacterWithAnimation(splitLocation, newLocation);
 
-        if (routeIndex >= (character.directionsForPatrol.length - 1)) {
-          character.currentPositionInRoute = 0;
-        } else {
-          character.currentPositionInRoute++;
-        }
-
-        // Cycle back around if we're at the end of the route
-        const previousDirection = character.currentPositionInRoute === 0 ?
-          character.directionsForPatrol[character.directionsForPatrol.length - 1] :
-          character.directionsForPatrol[character.currentPositionInRoute - 1];
-
-        character.direction = previousDirection;
+      if (routeIndex >= (character.directionsForPatrol.length - 1)) {
+        character.currentPositionInRoute = 0;
       } else {
-        character.direction = character.directionsForPatrol[character.currentPositionInRoute];
+        character.currentPositionInRoute++;
       }
 
-      // Character has moved to new location, return the new location data
-      return newLocation;
+      // Cycle back around if we're at the end of the route
+      const previousDirection = character.currentPositionInRoute === 0 ?
+        character.directionsForPatrol[character.directionsForPatrol.length - 1] :
+        character.directionsForPatrol[character.currentPositionInRoute - 1];
+
+      character.direction = previousDirection;
+    } else {
+      character.direction = character.directionsForPatrol[character.currentPositionInRoute];
+    }
+
+    // Character has moved to new location, return the new location data
+    return newLocation;
 
     } else {
 
-      return;
+    return;
     }
   }
 
@@ -211,7 +211,7 @@ export class MovementComponent {
     // Break out of this action if moving action is currently underway
     if (this.areaStateService.locations[characterLocation].element.isMovingForwards) {
 
-      return;
+    return;
     }
 
     const splitNewLocation: ILocation = this.areaStateService.splitLocationReference(targetLocation);
@@ -224,9 +224,9 @@ export class MovementComponent {
 
     // If the target location is free, move into it
     if (targetLocationDetails && targetLocationDetails.isLocationFree) {
-      const targetLocationCoords = targetLocationDetails.locationY + targetLocationDetails.locationX;
+    const targetLocationCoords = targetLocationDetails.locationY + targetLocationDetails.locationX;
 
-      this.moveCharacterWithAnimation(splitCharacterLocation, targetLocationDetails);
+    this.moveCharacterWithAnimation(splitCharacterLocation, targetLocationDetails);
     }
   }
 
@@ -250,14 +250,14 @@ export class MovementComponent {
     // Call the character's move method
     this.areaStateService.locations[currentLocationDetails.locationY + currentLocationDetails.locationX].element.moveForwards(() => {
 
-      // // Finish the movement process
-      // this.areaStateService.endCharacterMovement(currentLocationDetails.locationY + currentLocationDetails.locationX);
-      // this.areaStateService.removeAwaitingArrival(targetLocationDetails);
+    // // Finish the movement process
+    // this.areaStateService.endCharacterMovement(currentLocationDetails.locationY + currentLocationDetails.locationX);
+    // this.areaStateService.removeAwaitingArrival(targetLocationDetails);
 
-      // Perform any extra work that needs to be enacted in the callback
-      if (additionalWork) {
-        additionalWork();
-      }
+    // Perform any extra work that needs to be enacted in the callback
+    if (additionalWork) {
+      additionalWork();
+    }
     });
   }
 
@@ -271,7 +271,7 @@ export class MovementComponent {
 
     // If we can't get there there's no point in trying
     if (!this.areaStateService.isLocationFree(targetLocation)) {
-      return;
+    return;
     }
 
     const splitCurrentLocation = this.areaStateService.splitLocationReference(characterLocation);
@@ -282,9 +282,9 @@ export class MovementComponent {
 
     if (!character.currentPathToDestination || !character.currentPathToDestination.length) {
 
-      // Ranmdoly move if target cannot be gotten to
-      this.wander(character, characterLocation);
-      return;
+    // Ranmdoly move if target cannot be gotten to
+    this.wander(character, characterLocation);
+    return;
     }
 
     // Get the next target location
@@ -310,7 +310,7 @@ export class MovementComponent {
 
     if (!character.currentPathToDestination || !character.currentPathToDestination.length) {
 
-      return;
+    return;
     }
 
     // Get the next target location
@@ -330,23 +330,23 @@ export class MovementComponent {
 
     // Calculate which direction is furthest
     if (Math.abs(distanceData.yDistance) >= Math.abs(distanceData.xDistance)) {
-      // Move vertically
-      if (distanceData.yDistance >= 0) {
+    // Move vertically
+    if (distanceData.yDistance >= 0) {
 
-        return towardsLocation ? Direction.S : Direction.N;
-      } else {
-
-        return towardsLocation ? Direction.N : Direction.S;
-      }
+      return towardsLocation ? Direction.S : Direction.N;
     } else {
-      // Move horizontally
-      if (distanceData.xDistance >= 0) {
 
-        return towardsLocation ? Direction.E : Direction.W;
-      } else {
+      return towardsLocation ? Direction.N : Direction.S;
+    }
+    } else {
+    // Move horizontally
+    if (distanceData.xDistance >= 0) {
 
-        return towardsLocation ? Direction.W : Direction.E;
-      }
+      return towardsLocation ? Direction.E : Direction.W;
+    } else {
+
+      return towardsLocation ? Direction.W : Direction.E;
+    }
     }
   }
 
@@ -362,7 +362,7 @@ export class MovementComponent {
     const newLocation = GridHelper.getNextLocation(characterLocation.locationY, characterLocation.locationX, directionToNewLocation, this.areaStateService.locations);
 
     if (newLocation.isLocationFree) {
-      this.moveCharacterWithAnimation(characterLocation, newLocation);
+    this.moveCharacterWithAnimation(characterLocation, newLocation);
     }
 
     return;

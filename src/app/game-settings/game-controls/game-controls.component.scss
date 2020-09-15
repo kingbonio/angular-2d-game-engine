@@ -1,71 +1,71 @@
 .game-controls {
 
-      position: relative;
-      width: 710px;
-      height: 657px;
-      padding: 20px;
-      color: white;
-      font-family: arial;
-      text-align: left;
+    position: relative;
+    width: 710px;
+    height: 657px;
+    padding: 20px;
+    color: white;
+    font-family: arial;
+    text-align: left;
 
-      .input-section {
-            margin-left: 20px;
+    .input-section {
+        margin-left: 20px;
 
-            .controls-title {
-                  margin: 10px 0px;
-                  padding: 10px 0px;
-                  font-weight: 600;
+        .controls-title {
+            margin: 10px 0px;
+            padding: 10px 0px;
+            font-weight: 600;
+        }
+
+        .key-bindings-table {
+            border-collapse: collapse;
+            border-spacing: 0px;
+
+            td {
+                min-width: 130px;
+                padding: 2px;
+                border-bottom: solid 1px grey;
+
+                .key-input-button {
+                    float: right;
+                }
             }
+        }
+        
+        .key-selection-text {
+            padding: 5px;
+            background-color: white;
+            color: grey;
+        }
+    }
 
-            .key-bindings-table {
-                  border-collapse: collapse;
-                  border-spacing: 0px;
+    .additional-settings {
+        margin: 20px;
 
-                  td {
-                        min-width: 130px;
-                        padding: 2px;
-                        border-bottom: solid 1px grey;
+        div {
+            padding-top: 2px;
+        }
+    }
 
-                        .key-input-button {
-                              float: right;
-                        }
-                  }
-            }
-            
-            .key-selection-text {
-                  padding: 5px;
-                  background-color: white;
-                  color: grey;
-            }
-      }
+    .footer-section {
 
-      .additional-settings {
-            margin: 20px;
+        position: absolute;
+        bottom: 20px;
 
-            div {
-                  padding-top: 2px;
-            }
-      }
-
-      .footer-section {
-
-            position: absolute;
-            bottom: 20px;
-
-      
-            .save-settings {
-                  display: inline-block;
-                  padding: 0px 15px 0px 0px;
-            }
-            
-            .restore-defaults {
-                  display: inline-block;
-                  padding: 0px 15px 0px 0px;
-            }
-            
-            .main-menu {
-                  display: inline-block;
-                  padding: 0px 15px 0px 0px;
-            }
-      }
+    
+        .save-settings {
+            display: inline-block;
+            padding: 0px 15px 0px 0px;
+        }
+        
+        .restore-defaults {
+            display: inline-block;
+            padding: 0px 15px 0px 0px;
+        }
+        
+        .main-menu {
+            display: inline-block;
+            padding: 0px 15px 0px 0px;
+        }
+    }
 }
