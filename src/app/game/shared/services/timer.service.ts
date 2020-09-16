@@ -6,31 +6,31 @@ import defaults from '../../../shared/defaults';
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class TimerService {
-  private timer: Observable<number>;
-  private timerSubscriber: any;
-  public counter: BehaviorSubject<number>;
+    private timer: Observable<number>;
+    private timerSubscriber: any;
+    public counter: BehaviorSubject<number>;
 
-  constructor() {
-    this.counter = new BehaviorSubject(0);
-    this.startCounter();
-    this.timerSubscriber = this.timer.subscribe(value => {
-    this.counter.next(value);
-    });
-  }
+    constructor() {
+        this.counter = new BehaviorSubject(0);
+        this.startCounter();
+        this.timerSubscriber = this.timer.subscribe(value => {
+            this.counter.next(value);
+        });
+    }
 
-  private startCounter() {
-    this.timer = timer(0, defaults.gameTimer);
-  }
+    private startCounter() {
+        this.timer = timer(0, defaults.gameTimer);
+    }
 
-  public startTimer(timeToCount: number): Promise<any> {
-    return new Promise((res, rej) => {
-    return setTimeout(() => {
-      res("inputUnpaused");
-    }, timeToCount);
-    });
-  }
+    public startTimer(timeToCount: number): Promise<any> {
+        return new Promise((res, rej) => {
+            return setTimeout(() => {
+                res("inputUnpaused");
+            }, timeToCount);
+        });
+    }
 
 }

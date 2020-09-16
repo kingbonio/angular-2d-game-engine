@@ -12,80 +12,80 @@ import { ApplicationStateService } from './application-state.service';
 @Injectable()
 export class UserInputService {
 
-  public playerMoved: BehaviorSubject<string>;
-  public userSetKey: BehaviorSubject<number>;
+    public playerMoved: BehaviorSubject<string>;
+    public userSetKey: BehaviorSubject<number>;
 
-  constructor(
-    private playerStateService: PlayerStateService,
-    private areaStateService: AreaStateService,
-    private gameSettingsService: GameSettingsService,
-    private gameStateService: GameStateService,
-    private applicationStateService: ApplicationStateService,
-  ) {
-    this.playerMoved = new BehaviorSubject("forceCharacterMove");
-    this.userSetKey = new BehaviorSubject(0);
-  }
-
-  public keyDownEventHandler($e: KeyboardEvent) {
-    if (this.gameStateService.awaitingKeyboardSetting) {
-    this.userSetKey.next($e.keyCode);
+    constructor(
+        private playerStateService: PlayerStateService,
+        private areaStateService: AreaStateService,
+        private gameSettingsService: GameSettingsService,
+        private gameStateService: GameStateService,
+        private applicationStateService: ApplicationStateService,
+    ) {
+        this.playerMoved = new BehaviorSubject("forceCharacterMove");
+        this.userSetKey = new BehaviorSubject(0);
     }
 
-    if (this.applicationStateService.gameOpen && !this.gameStateService.gamePaused && !this.gameStateService.inputPaused) {
-
-    if (this.gameSettingsService.oneHandedControls) {
-
-      // First pause input for x seconds
-      this.gameStateService.pauseInput();
-    }
-
-    const characterAction: IUserAction = this.gameSettingsService.getCharacterActionType($e.keyCode);
-
-    this.invokeAction(characterAction);
-    }
-  }
-
-  public invokeAction(characterAction: IUserAction) {
-    if (characterAction) {
-    switch (characterAction.type) {
-
-      case UserActionTypes.move:
-        if (!this.areaStateService.locations[this.playerStateService.locationY + this.playerStateService.locationX].element.isMovingForwards) {
-        this.playerStateService.move(characterAction.direction, this.gameSettingsService.oneHandedControls);
-        this.playerMoved.next("forceCharacterMove");
+    public keyDownEventHandler($e: KeyboardEvent) {
+        if (this.gameStateService.awaitingKeyboardSetting) {
+            this.userSetKey.next($e.keyCode);
         }
 
-        break;
+        if (this.applicationStateService.gameOpen && !this.gameStateService.gamePaused && !this.gameStateService.inputPaused) {
 
-      case UserActionTypes.direction:
-        if (!this.gameSettingsService.oneHandedControls) {
-        this.playerStateService.direction = characterAction.direction;
-        }
-        break;
+            if (this.gameSettingsService.oneHandedControls) {
 
-      case UserActionTypes.interaction:
-        switch (characterAction.interaction) {
+                // First pause input for x seconds
+                this.gameStateService.pauseInput();
+            }
 
-        case UserInteractionTypes.attack:
-          this.playerStateService.attack();
-          this.playerMoved.next("forceCharacterMove");
-          break;
+            const characterAction: IUserAction = this.gameSettingsService.getCharacterActionType($e.keyCode);
 
-        case UserInteractionTypes.guard:
-          this.playerStateService.guard();
-          this.playerMoved.next("forceCharacterMove");
-          break;
-
-        case UserInteractionTypes.interact:
-          this.playerStateService.interact();
-          break;
-
-        case UserInteractionTypes.speak:
-          this.playerStateService.speak();
-          this.playerMoved.next("forceCharacterMove");
-          break;
+            this.invokeAction(characterAction);
         }
     }
+
+    public invokeAction(characterAction: IUserAction) {
+        if (characterAction) {
+            switch (characterAction.type) {
+
+                case UserActionTypes.move:
+                    if (!this.areaStateService.locations[this.playerStateService.locationY + this.playerStateService.locationX].element.isMovingForwards) {
+                        this.playerStateService.move(characterAction.direction, this.gameSettingsService.oneHandedControls);
+                        this.playerMoved.next("forceCharacterMove");
+                    }
+
+                    break;
+
+                case UserActionTypes.direction:
+                    if (!this.gameSettingsService.oneHandedControls) {
+                        this.playerStateService.direction = characterAction.direction;
+                    }
+                    break;
+
+                case UserActionTypes.interaction:
+                    switch (characterAction.interaction) {
+
+                        case UserInteractionTypes.attack:
+                            this.playerStateService.attack();
+                            this.playerMoved.next("forceCharacterMove");
+                            break;
+
+                        case UserInteractionTypes.guard:
+                            this.playerStateService.guard();
+                            this.playerMoved.next("forceCharacterMove");
+                            break;
+
+                        case UserInteractionTypes.interact:
+                            this.playerStateService.interact();
+                            break;
+
+                        case UserInteractionTypes.speak:
+                            this.playerStateService.speak();
+                            this.playerMoved.next("forceCharacterMove");
+                            break;
+                    }
+            }
+        }
     }
-  }
 }

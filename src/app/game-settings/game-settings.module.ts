@@ -9,17 +9,17 @@ import { SoundComponent } from './sound/sound.component';
 import { MatSliderModule } from '@angular/material';
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    CommonModule,
-    FormsModule,
-    MatSliderModule,
-    GameSettingsRoutingModule,
-  ],
-  declarations: [
-    GameControlsComponent,
-    GameplayComponent,
-    SoundComponent,
-  ],
+    imports: [
+        BrowserModule,
+        CommonModule,
+        FormsModule,
+        MatSliderModule,
+        GameSettingsRoutingModule,
+    ],
+    declarations: [
+        GameControlsComponent,
+        GameplayComponent,
+        SoundComponent,
+    ],
 })
 export class GameSettingsModule { }

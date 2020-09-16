@@ -3,23 +3,23 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 import { ApplicationStateService } from '../shared/services/application-state.service';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class GameGuard implements CanActivate {
 
-  constructor(
-    public applicationStateService: ApplicationStateService,
-    public router: Router
-  ) {
-  }
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (this.applicationStateService.canAccessGame) {
-
-    return true;
+    constructor(
+        public applicationStateService: ApplicationStateService,
+        public router: Router
+    ) {
     }
+    canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+        if (this.applicationStateService.canAccessGame) {
 
-    this.router.navigate(['/']);
+            return true;
+        }
 
-    return false;
-  }
+        this.router.navigate(['/']);
+
+        return false;
+    }
 }

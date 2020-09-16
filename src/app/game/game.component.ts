@@ -23,176 +23,176 @@ import { BackgroundMusicService } from '../shared/services/background-music.serv
 import { AssetLoaderService } from './shared/services/asset-loader.service';
 
 @Component({
-  selector: 'app-game-root',
-  templateUrl: './game.component.html',
-  styleUrls: ['./game.component.scss']
+    selector: 'app-game-root',
+    templateUrl: './game.component.html',
+    styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit, OnDestroy {
 
-  private areaChangeSubscription: Subscription;
-  private areaReadySubscription: Subscription;
-  private areaConfigs = areaConfigs;
-  private deadModalRef: MatDialogRef<any>;
-  private gameMenuModalRef: MatDialogRef<any>;
-  public title = 'game';
-  public loadingText = defaults.gameMenu.loadingText;
-  public areaComponentAlive = true;
-  public PotionEffectType = PotionEffectType;
-  public Direction = Direction;
-  public UserInteractionTypes = UserInteractionTypes;
-  public UserActionTypes = UserActionTypes;
+    private areaChangeSubscription: Subscription;
+    private areaReadySubscription: Subscription;
+    private areaConfigs = areaConfigs;
+    private deadModalRef: MatDialogRef<any>;
+    private gameMenuModalRef: MatDialogRef<any>;
+    public title = 'game';
+    public loadingText = defaults.gameMenu.loadingText;
+    public areaComponentAlive = true;
+    public PotionEffectType = PotionEffectType;
+    public Direction = Direction;
+    public UserInteractionTypes = UserInteractionTypes;
+    public UserActionTypes = UserActionTypes;
 
-  constructor(
-    public playerStateService: PlayerStateService,
-    public equipmentManagerService: EquipmentManagerService,
-    public dialogueService: DialogueService,
-    public userInputService: UserInputService,
-    public aiService: AiService,
-    public areaStateService: AreaStateService,
-    public gameStateService: GameStateService,
-    public gameSettingsService: GameSettingsService,
-    public applicationStateService: ApplicationStateService,
-    public backgroundMusicService: BackgroundMusicService,
-    public assetLoaderService: AssetLoaderService,
-    private dialog: MatDialog,
-  ) {
-    this.applicationStateService.gameOpen = true;
-    this.assetLoaderService.loadAssets();
+    constructor(
+        public playerStateService: PlayerStateService,
+        public equipmentManagerService: EquipmentManagerService,
+        public dialogueService: DialogueService,
+        public userInputService: UserInputService,
+        public aiService: AiService,
+        public areaStateService: AreaStateService,
+        public gameStateService: GameStateService,
+        public gameSettingsService: GameSettingsService,
+        public applicationStateService: ApplicationStateService,
+        public backgroundMusicService: BackgroundMusicService,
+        public assetLoaderService: AssetLoaderService,
+        private dialog: MatDialog,
+    ) {
+        this.applicationStateService.gameOpen = true;
+        this.assetLoaderService.loadAssets();
 
-  }
-
-  ngOnInit(): void {
-    // Destroy the area component
-    this.areaChangeSubscription = this.areaStateService.areaChange.subscribe((newAreaReference) => {
-    this.killAreaComponent();
-    });
-
-    // Reinstate area component when ready
-    this.areaReadySubscription = this.areaStateService.areaReady.subscribe((newAreaReference) => {
-    this.createAreaComponent();
-    });
-
-    // Clear the game history
-    for (const areaReference in this.areaConfigs) {
-    if (this.areaConfigs.hasOwnProperty(areaReference)) {
-      const storageReference = areaReference.substring(4);
-      localStorage.setItem(storageReference, "");
-    }
     }
 
-    this.assetLoaderService.loadAssets();
-  }
+    ngOnInit(): void {
+        // Destroy the area component
+        this.areaChangeSubscription = this.areaStateService.areaChange.subscribe((newAreaReference) => {
+            this.killAreaComponent();
+        });
 
-  /**
-   * Opens a modal for information
-   */
-  private openGameMenuModal(): void {
-    if (!this.gameMenuModalRef) {
-    const modalConfig = new MatDialogConfig();
+        // Reinstate area component when ready
+        this.areaReadySubscription = this.areaStateService.areaReady.subscribe((newAreaReference) => {
+            this.createAreaComponent();
+        });
 
-    modalConfig.disableClose = false;
-    modalConfig.autoFocus = true;
-    modalConfig.hasBackdrop = true;
-    modalConfig.width = '450px';
-    modalConfig.data = "game";
-    modalConfig.panelClass = "menu-modal";
+        // Clear the game history
+        for (const areaReference in this.areaConfigs) {
+            if (this.areaConfigs.hasOwnProperty(areaReference)) {
+                const storageReference = areaReference.substring(4);
+                localStorage.setItem(storageReference, "");
+            }
+        }
 
-
-    this.gameMenuModalRef = this.dialog.open(GameModalComponent, modalConfig);
-
-    this.gameMenuModalRef.afterClosed().subscribe(returnData => {
-      this.gameMenuModalRef = null;
-    });
+        this.assetLoaderService.loadAssets();
     }
-  }
 
-  /**
-   * Opens a modal to show that you've died
-   */
-  private openDeadModal(): void {
-    if (!this.deadModalRef) {
-    const modalConfig = new MatDialogConfig();
+    /**
+     * Opens a modal for information
+     */
+    private openGameMenuModal(): void {
+        if (!this.gameMenuModalRef) {
+            const modalConfig = new MatDialogConfig();
 
-    modalConfig.disableClose = true;
-    modalConfig.autoFocus = true; // Maybe not necessary
-    modalConfig.hasBackdrop = true;
-    modalConfig.width = '250px';
-    modalConfig.height = '150px';
-    modalConfig.data = "dead";
-    modalConfig.panelClass = "dead-modal";
+            modalConfig.disableClose = false;
+            modalConfig.autoFocus = true;
+            modalConfig.hasBackdrop = true;
+            modalConfig.width = '450px';
+            modalConfig.data = "game";
+            modalConfig.panelClass = "menu-modal";
 
 
-    this.deadModalRef = this.dialog.open(DeadModalComponent, modalConfig);
+            this.gameMenuModalRef = this.dialog.open(GameModalComponent, modalConfig);
 
-    this.deadModalRef.afterClosed().subscribe(returnData => {
-      this.deadModalRef = null;
-    });
+            this.gameMenuModalRef.afterClosed().subscribe(returnData => {
+                this.gameMenuModalRef = null;
+            });
+        }
     }
-  }
 
-  /**
-   * Enacts the action requested by the button press
-   *
-   * @param {IUserAction} input Data from the action input
-   */
-  public buttonPress(input: IUserAction): void {
+    /**
+     * Opens a modal to show that you've died
+     */
+    private openDeadModal(): void {
+        if (!this.deadModalRef) {
+            const modalConfig = new MatDialogConfig();
 
-    this.userInputService.invokeAction(input);
-  }
+            modalConfig.disableClose = true;
+            modalConfig.autoFocus = true; // Maybe not necessary
+            modalConfig.hasBackdrop = true;
+            modalConfig.width = '250px';
+            modalConfig.height = '150px';
+            modalConfig.data = "dead";
+            modalConfig.panelClass = "dead-modal";
 
-  /**
-   * Provides a calculation of the player's health or triggers a modal if dead
-   *
-   * @returns {number}
-   */
-  public getCurrentHealth(): number {
-    if (this.playerStateService.health < 1) {
-    this.gameStateService.gameMenuOpen = true;
-    this.openDeadModal();
-    return 0;
+
+            this.deadModalRef = this.dialog.open(DeadModalComponent, modalConfig);
+
+            this.deadModalRef.afterClosed().subscribe(returnData => {
+                this.deadModalRef = null;
+            });
+        }
     }
-    const healthBuff = (this.equipmentManagerService.activeBuff &&
-    this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge) ?
-    this.equipmentManagerService.activeBuff.properties.remainingEffect : 0;
 
-    return this.playerStateService.health + healthBuff;
-  }
+    /**
+     * Enacts the action requested by the button press
+     *
+     * @param {IUserAction} input Data from the action input
+     */
+    public buttonPress(input: IUserAction): void {
 
-  public isAreaComponentAlive() {
-    return this.areaComponentAlive;
-  }
+        this.userInputService.invokeAction(input);
+    }
 
-  public isLoadingArea() {
-    return this.areaStateService.loadingArea;
-  }
+    /**
+     * Provides a calculation of the player's health or triggers a modal if dead
+     *
+     * @returns {number}
+     */
+    public getCurrentHealth(): number {
+        if (this.playerStateService.health < 1) {
+            this.gameStateService.gameMenuOpen = true;
+            this.openDeadModal();
+            return 0;
+        }
+        const healthBuff = (this.equipmentManagerService.activeBuff &&
+            this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge) ?
+            this.equipmentManagerService.activeBuff.properties.remainingEffect : 0;
 
-  public openGameMenu() {
-    this.gameStateService.gameMenuOpen = true;
-    this.openGameMenuModal();
-  }
+        return this.playerStateService.health + healthBuff;
+    }
 
-  private killAreaComponent() {
-    this.areaComponentAlive = false;
-  }
+    public isAreaComponentAlive() {
+        return this.areaComponentAlive;
+    }
 
-  private createAreaComponent() {
+    public isLoadingArea() {
+        return this.areaStateService.loadingArea;
+    }
 
-    // Update the area state service with the new location before reload
-    setTimeout(() => {
+    public openGameMenu() {
+        this.gameStateService.gameMenuOpen = true;
+        this.openGameMenuModal();
+    }
 
-    this.areaComponentAlive = true;
+    private killAreaComponent() {
+        this.areaComponentAlive = false;
+    }
 
-    }, 0);
-  }
+    private createAreaComponent() {
 
-  ngOnDestroy() {
-    this.backgroundMusicService.stopMusic();
+        // Update the area state service with the new location before reload
+        setTimeout(() => {
 
-    this.areaStateService.setDefaults();
-    this.playerStateService.setPlayerDefaults();
-    this.dialogueService.setDefaults();
+            this.areaComponentAlive = true;
 
-    this.areaChangeSubscription.unsubscribe();
-    this.areaReadySubscription.unsubscribe();
-  }
+        }, 0);
+    }
+
+    ngOnDestroy() {
+        this.backgroundMusicService.stopMusic();
+
+        this.areaStateService.setDefaults();
+        this.playerStateService.setPlayerDefaults();
+        this.dialogueService.setDefaults();
+
+        this.areaChangeSubscription.unsubscribe();
+        this.areaReadySubscription.unsubscribe();
+    }
 }

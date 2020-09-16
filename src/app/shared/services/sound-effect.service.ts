@@ -8,45 +8,45 @@ import { GameSettingsService } from './game-settings.service';
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class SoundEffectService {
 
-  private soundEffectInstances = {};
+    private soundEffectInstances = {};
 
-  constructor(
+    constructor(
     ) {
-    for (const soundEffectName in SoundEffects) {
-    if (SoundEffects.hasOwnProperty(soundEffectName)) {
-      this.soundEffectInstances[soundEffectName] = new Audio() as IAudioEngine;
-      this.soundEffectInstances[soundEffectName].src = soundEffects[soundEffectName];
-      this.soundEffectInstances[soundEffectName].load();
+        for (const soundEffectName in SoundEffects) {
+            if (SoundEffects.hasOwnProperty(soundEffectName)) {
+                this.soundEffectInstances[soundEffectName] = new Audio() as IAudioEngine;
+                this.soundEffectInstances[soundEffectName].src = soundEffects[soundEffectName];
+                this.soundEffectInstances[soundEffectName].load();
+            }
+        }
     }
+
+    public setVolume(newVolume: number) {
+        for (const soundEffectInstance in this.soundEffectInstances) {
+            if (this.soundEffectInstances.hasOwnProperty(soundEffectInstance)) {
+                this.soundEffectInstances[soundEffectInstance].volume = newVolume;
+            }
+        }
     }
-  }
 
-  public setVolume(newVolume: number) {
-    for (const soundEffectInstance in this.soundEffectInstances) {
-    if (this.soundEffectInstances.hasOwnProperty(soundEffectInstance)) {
-      this.soundEffectInstances[soundEffectInstance].volume = newVolume;
+    /**
+     * Start an audio item playing and return the item reference
+     * @param soundName filename reference
+     */
+    public playSound(soundName: SoundEffects) {
+
+
+        this.soundEffectInstances[soundName].load();
+        this.soundEffectInstances[soundName].play()
+            .then(() => {
+
+            }).catch(() => {
+
+                // TODO Swallowing errors
+            });
     }
-    }
-  }
-
-  /**
-   * Start an audio item playing and return the item reference
-   * @param soundName filename reference
-   */
-  public playSound(soundName: SoundEffects) {
-
-
-    this.soundEffectInstances[soundName].load();
-    this.soundEffectInstances[soundName].play()
-    .then(() => {
-
-    }).catch(() => {
-
-      // TODO Swallowing errors
-    });
-  }
 }

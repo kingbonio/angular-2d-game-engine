@@ -17,28 +17,28 @@ import { ApplicationStateService } from './shared/services/application-state.ser
 
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    NoopAnimationsModule,
-    MatDialogModule,
-    PersistentStorageModule,
-    GameModule,
-    GameSettingsModule,
-    AppRoutingModule,
-  ],
-  declarations: [
-    AppComponent,
-    MainMenuComponent,
-    GameSettingsComponent,
-  ],
-  providers: [
-    ApplicationStateService,
-    GameGuard,
-    AreaStateService,
-    UserInputService,
-  ],
-  bootstrap: [
-    AppComponent
-  ],
+    imports: [
+        BrowserModule,
+        NoopAnimationsModule,
+        MatDialogModule,
+        PersistentStorageModule,
+        GameModule,
+        GameSettingsModule,
+        AppRoutingModule,
+    ],
+    declarations: [
+        AppComponent,
+        MainMenuComponent,
+        GameSettingsComponent,
+    ],
+    providers: [
+        ApplicationStateService,
+        GameGuard,
+        AreaStateService,
+        UserInputService,
+    ],
+    bootstrap: [
+        AppComponent
+    ],
 })
 export class AppModule { }

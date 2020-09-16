@@ -5,262 +5,262 @@
     margin: auto;
     
     &.show-controls {
-      width: 1174px;
+        width: 1174px;
     }
 
     .direction-controls {
-      width: 200px;
-      height: 759px;
-      position: relative;
-      float: left;
-      border: solid #d1cdc6 2px;
-      color: white;
+        width: 200px;
+        height: 759px;
+        position: relative;
+        float: left;
+        border: solid #d1cdc6 2px;
+        color: white;
       
-      .direction-buttons {
-        width: 170px;
-        height: 170px;
-        position: absolute;
-        bottom: 100px;
-        left: 14px;
-        background-color: grey;
-        border: solid #d1cdc6 1px;
-        border-radius: 90px;
-        cursor: pointer;
-
-        .north, .east, .south, .west {
-            width: 68px;
-            height: 68px;
+        .direction-buttons {
+            width: 170px;
+            height: 170px;
             position: absolute;
+            bottom: 100px;
+            left: 14px;
+            background-color: grey;
             border: solid #d1cdc6 1px;
-            background: url("assets/images/icons/arrow.svg") no-repeat center;
-            background-size: 48px 48px;
+            border-radius: 90px;
+            cursor: pointer;
+
+            .north, .east, .south, .west {
+                width: 68px;
+                height: 68px;
+                position: absolute;
+                border: solid #d1cdc6 1px;
+                background: url("assets/images/icons/arrow.svg") no-repeat center;
+                background-size: 48px 48px;
+            }
+            
+            .north {
+                transform: rotate(45deg);
+                top: 0px;
+                left: 50px;
+            }
+            
+            .east {
+                transform: rotate(135deg);
+                top: 50px;
+                right: 00px;
+            }
+            
+            .south {
+                transform: rotate(225deg);
+                bottom: 00px;
+                right: 50px;
+            }
+            
+            .west {
+                transform: rotate(315deg);
+                bottom: 50px;
+                left: 0px;
+            }
         }
-        
-        .north {
-            transform: rotate(45deg);
-            top: 0px;
-            left: 50px;
-        }
-        
-        .east {
-            transform: rotate(135deg);
-            top: 50px;
-            right: 00px;
-        }
-        
-        .south {
-            transform: rotate(225deg);
-            bottom: 00px;
-            right: 50px;
-        }
-        
-        .west {
-            transform: rotate(315deg);
-            bottom: 50px;
-            left: 0px;
-        }
-      }
     }
 
     .game-container {
-      width: 762px;
-      height: 759px;
-      float: left;
-      background-image: linear-gradient(to bottom right, #737373, #121010);
-      border: solid #d1cdc6 2px;
-      font-family: arial;
-      font-weight: 500;
-      color: rgb(209, 205, 198);
-      
-      .area-container {
-        .loading-overlay {
-            position: fixed;
-            z-index: 11;
-            // TODO Fix this
-            width: 580px;
-            height: 580px;
-            background-color: black;
+        width: 762px;
+        height: 759px;
+        float: left;
+        background-image: linear-gradient(to bottom right, #737373, #121010);
+        border: solid #d1cdc6 2px;
+        font-family: arial;
+        font-weight: 500;
+        color: rgb(209, 205, 198);
+        
+        .area-container {
+            .loading-overlay {
+                position: fixed;
+                z-index: 11;
+                // TODO Fix this
+                width: 580px;
+                height: 580px;
+                background-color: black;
+                
+                .loading-text {
+                position: absolute;
+                width: 200px;
+                height: 30px;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                color: white;
+                font-size: 30px;
+                text-align: centre;
+                }
+            }
             
-            .loading-text {
-              position: absolute;
-              width: 200px;
-              height: 30px;
-              left: 50%;
-              top: 50%;
-              transform: translate(-50%, -50%);
-              color: white;
-              font-size: 30px;
-              text-align: centre;
+            app-area {
+                position: relative;
+                display: inline-block;
+                float: left;
+                height: 560px;
+                border: solid grey 10px;
+                border-style: inset;
+
+                &.battle-mode {
+                border: solid red 10px;
+                border-style: inset;
+                }
             }
         }
         
-        app-area {
+        .dialogue-area {
             position: relative;
             display: inline-block;
             float: left;
-            height: 560px;
-            border: solid grey 10px;
-            border-style: inset;
+            width: 569px;;
+            height: 167px;
+            padding: 5px;
+            border: solid #000 1px;
+            z-index: 2;
+        }
+        
+        .player-menu {
+            position: absolute;
+            display: inline-block;
+            height: 737px;
+            padding: 10px;  
+            border: solid #000 1px;
+            
+            .battle-mode, .you-are-dead {
+                border: solid 1px #b72424;
+                color: #b72424;
+                font-size: 14px;
+                width: 101px;
+            }
+            
+            .menu-button {
+                width: 60px;
+                height: 60px;
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                text-align: center;
+                line-height: 3.7;
+            }
 
-            &.battle-mode {
-              border: solid red 10px;
-              border-style: inset;
+            .paused {
+                width: 60px;
+                height: 27px;
+                position: absolute;
+                bottom: 0px;
+                right: 80px;
             }
         }
-      }
-      
-      .dialogue-area {
-        position: relative;
-        display: inline-block;
-        float: left;
-        width: 569px;;
-        height: 167px;
-        padding: 5px;
-        border: solid #000 1px;
-        z-index: 2;
-      }
-      
-      .player-menu {
-        position: absolute;
-        display: inline-block;
-        height: 737px;
-        padding: 10px;  
-        border: solid #000 1px;
         
-        .battle-mode, .you-are-dead {
-            border: solid 1px #b72424;
-            color: #b72424;
-            font-size: 14px;
-            width: 101px;
-        }
-        
-        .menu-button {
-            width: 60px;
-            height: 60px;
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            text-align: center;
-            line-height: 3.7;
-        }
-
-        .paused {
-            width: 60px;
-            height: 27px;
-            position: absolute;
-            bottom: 0px;
-            right: 80px;
-        }
-      }
-      
-      .game-control {
-        cursor: pointer;
-        border: solid #5A4107 1px;
-        border-radius: 5px;
-        margin: 3px;
-      }
-    }
-    
-    .interaction-controls {
-      width: 200px;
-      height: 759px;
-      position: relative;
-      float: left;
-      border: solid #d1cdc6 2px;
-      color: white;
-
-      .interaction-buttons {
-        width: 170px;
-        height: 170px;
-        position: absolute;
-        bottom: 100px;
-        left: 14px;
-        background-color: grey;
-        border: solid #d1cdc6 1px;
-        border-radius: 90px;
-
-        .top, .right, .bottom, .left {
-            width: 68px;
-            height: 68px;
-            position: absolute;
-            overflow: visible;
-            transform: rotate(-45deg);
-            display: block;
+        .game-control {
             cursor: pointer;
-            font-family: arial;
-            font-weight: 500;
-
-            .button-text {
-              -webkit-user-select: none; /* Safari */      
-              -moz-user-select: none; /* Firefox */
-              -ms-user-select: none; /* IE10+/Edge */
-              user-select: none; /* Standard */
-            }
+            border: solid #5A4107 1px;
+            border-radius: 5px;
+            margin: 3px;
+        }
         }
         
-        .top {
-            transform: rotate(45deg);
-            top: 0px;
-            left: 50px;
-            background: url("assets/images/icons/blue-button.svg") no-repeat center;
-            background-size: 53px 53px;
+        .interaction-controls {
+        width: 200px;
+        height: 759px;
+        position: relative;
+        float: left;
+        border: solid #d1cdc6 2px;
+        color: white;
 
-            .top-text {
-              display: block;
-              transform: rotate(-45deg);
-              position: absolute;
-              top: 49px;
-              left: 39px;
-            }
-        }
-        
-        .right {
-            transform: rotate(135deg);
-            top: 50px;
-            right: 00px;
-            background: url("assets/images/icons/green-button.svg") no-repeat center;
-            background-size: 53px 53px;
+        .interaction-buttons {
+            width: 170px;
+            height: 170px;
+            position: absolute;
+            bottom: 100px;
+            left: 14px;
+            background-color: grey;
+            border: solid #d1cdc6 1px;
+            border-radius: 90px;
 
-            .right-text {
-              display: block;
-              transform: rotate(-135deg);
-              position: absolute;
-              top: -2px;
-              left: 39px;
+            .top, .right, .bottom, .left {
+                width: 68px;
+                height: 68px;
+                position: absolute;
+                overflow: visible;
+                transform: rotate(-45deg);
+                display: block;
+                cursor: pointer;
+                font-family: arial;
+                font-weight: 500;
+
+                .button-text {
+                -webkit-user-select: none; /* Safari */      
+                -moz-user-select: none; /* Firefox */
+                -ms-user-select: none; /* IE10+/Edge */
+                user-select: none; /* Standard */
+                }
             }
-        }
-        
-        .bottom {
-            transform: rotate(225deg);
-            bottom: 00px;
-            right: 50px;
-            background: url("assets/images/icons/yellow-button.svg") no-repeat center;
-            background-size: 53px 53px;
             
-            .bottom-text {
-              display: block;
-              transform: rotate(-225deg);
-              position: absolute;
-              top: -6px;
-              left: -25px;
+            .top {
+                transform: rotate(45deg);
+                top: 0px;
+                left: 50px;
+                background: url("assets/images/icons/blue-button.svg") no-repeat center;
+                background-size: 53px 53px;
+
+                .top-text {
+                display: block;
+                transform: rotate(-45deg);
+                position: absolute;
+                top: 49px;
+                left: 39px;
+                }
             }
-        }
-        
-        .left {
-            transform: rotate(315deg);
-            bottom: 50px;
-            left: 0px;
-            background: url("assets/images/icons/pink-button.svg") no-repeat center;
-            background-size: 53px 53px;
             
-            .left-text {
-              display: block;
-              transform: rotate(-315deg);
-              position: absolute;
-              top: 53px;
-              left: -11px;
+            .right {
+                transform: rotate(135deg);
+                top: 50px;
+                right: 00px;
+                background: url("assets/images/icons/green-button.svg") no-repeat center;
+                background-size: 53px 53px;
+
+                .right-text {
+                display: block;
+                transform: rotate(-135deg);
+                position: absolute;
+                top: -2px;
+                left: 39px;
+                }
+            }
+            
+            .bottom {
+                transform: rotate(225deg);
+                bottom: 00px;
+                right: 50px;
+                background: url("assets/images/icons/yellow-button.svg") no-repeat center;
+                background-size: 53px 53px;
+                
+                .bottom-text {
+                display: block;
+                transform: rotate(-225deg);
+                position: absolute;
+                top: -6px;
+                left: -25px;
+                }
+            }
+            
+            .left {
+                transform: rotate(315deg);
+                bottom: 50px;
+                left: 0px;
+                background: url("assets/images/icons/pink-button.svg") no-repeat center;
+                background-size: 53px 53px;
+                
+                .left-text {
+                display: block;
+                transform: rotate(-315deg);
+                position: absolute;
+                top: 53px;
+                left: -11px;
+                }
             }
         }
-      }
     }
 }
