@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { IAreaElement, IGridReferences } from '../../area/interfaces';
 import { Character } from '../../character-classes/character';
@@ -11,9 +11,8 @@ import { GridHelper } from '../util/area/grid-helper';
 import { AreaExitStatus } from '../../area/enums';
 
 @Injectable()
-export class AreaStateService implements OnInit {
+export class AreaStateService {
 
-    // Stores the location ID
     public currentArea: number;
     public newArea: number;
     public loadingArea = false;
@@ -36,12 +35,14 @@ export class AreaStateService implements OnInit {
         this.areaReady = new BehaviorSubject(1);
     }
 
-    ngOnInit() {
-    }
-
+    /**
+     * Returns the location reference for the player's current position
+     *
+     * @returns {string}
+     */
     get playerLocation(): string {
 
-        // TODO Potentially worth rewriting
+        // TODO Potentially rewrite this
         for (const gridLocation in this.locations) {
             if (this.locations.hasOwnProperty(gridLocation) &&
                 this.locations[gridLocation].element &&
@@ -52,16 +53,27 @@ export class AreaStateService implements OnInit {
         }
     }
 
+    /**
+     * Removes character from local hunting list array
+     *
+     * @param {Character} character The character we'll be removing
+     */
     public removeCharacterFromHuntingList(character: Character): void {
 
         const index = this.huntingList.indexOf(character.id);
 
         if (index !== -1) {
+
             // Remove the item from the hunting list
             this.huntingList.splice(index, 1);
         }
     }
 
+    /**
+     * Adds character to local hunting list array
+     *
+     * @param {Character} character The character we'll be adding
+     */
     public addCharacterToHuntingList(character: Character): void {
 
         if (this.huntingList.indexOf(character.id) === -1) {
@@ -72,9 +84,10 @@ export class AreaStateService implements OnInit {
     }
 
     /**
-     * Push all characters on grid into an array and return it
+     * Returns a list of all characters and their locations in the locations grid
+     *
+     * @returns {{ Character, string }[]}
      */
-    // TODO return type as interface
     public getCharactersOnGrid(): { character: Character, gridLocation: string }[] {
         const characterData = [];
         for (const gridLocation in this.locations) {
@@ -84,6 +97,7 @@ export class AreaStateService implements OnInit {
                 (this.locations[gridLocation].element.type === ElementClass.enemy || this.locations[gridLocation].element.type === ElementClass.npc) &&
                 !this.locations[gridLocation].element.isDead()) {
                 const gridElement = this.locations[gridLocation].element;
+
                 if (gridElement.type && (gridElement.type === ElementClass.enemy || gridElement.type === ElementClass.npc)) {
                     characterData.push({
                         character: gridElement,
@@ -92,13 +106,22 @@ export class AreaStateService implements OnInit {
                 }
             }
         }
+
         return characterData;
     }
 
-    public isCharacterNextToPlayer(gridLocation: string): boolean {
+    /**
+     * Determines if the character is in a horizontal or vertical grid location adjacent to the player
+     *
+     * @param {string} gridLocation The reference for the location we're checking against
+     *
+     * @returns {boolean}
+     */
+    public isLocationNextToPlayer(gridLocation: string): boolean {
         const playerCoordinates = this.splitLocationReference(this.playerLocation);
-        const characterCoordinates = this.splitLocationReference(gridLocation);
-        const distanceFromPlayerCoordinates = this.getDistanceBetweenLocations(playerCoordinates, characterCoordinates);
+        const locationCoordinates = this.splitLocationReference(gridLocation);
+        const distanceFromPlayerCoordinates = this.getDistanceBetweenLocations(playerCoordinates, locationCoordinates);
+
         // Positive differences should be 0 and 1
         if (Math.abs(distanceFromPlayerCoordinates.xDistance) + Math.abs(distanceFromPlayerCoordinates.yDistance) === 1) {
             return true;
@@ -109,41 +132,69 @@ export class AreaStateService implements OnInit {
 
     /**
      * Returns a positive or negative value for both x and y distances to target location
-     * @param currentLocation The location we want the distance to
-     * @param targetLocation The location we want the distance from
+     *
+     * @param {ILocation} currentLocation The location we want the distance from
+     * @param {ILocation} targetLocation The location we want the distance to
+     *
+     * @returns {{ number, number }}
      */
     public getDistanceBetweenLocations(currentLocation: ILocation, targetLocation: ILocation): { yDistance: number, xDistance: number } {
         const differenceBetweenY = targetLocation.locationY.charCodeAt(0) - currentLocation.locationY.charCodeAt(0);
         const differenceBetweenX = currentLocation.locationX - targetLocation.locationX;
+
         return { yDistance: differenceBetweenY, xDistance: differenceBetweenX };
     }
 
     /**
-     * Checks whether the location on the grid exists and can be moved into
-     * @param location the grid reference for the location
+     * Checks whether the location on the grid exists and doesn't have an element already in it
+     *
+     * @param {string} location The grid reference for the location
+     *
+     * @returns {boolean}
      */
     public isLocationFree(location: string): boolean {
         return (this.locations[location] && !this.locations[location].element);
     }
 
-    public repositionCharacter(newLocation: string, currentLocation: string) {
-
+    /**
+     * Moves the element in the first location to the second location overwriting any existing element there
+     *
+     * @param {string} newLocation The target location we're moving element to
+     * @param {string} currentLocation The current location we're moving element from
+     */
+    public repositionGridElement(newLocation: string, currentLocation: string): void {
         this.locations[newLocation].element = this.locations[currentLocation].element;
         this.locations[currentLocation].element = null;
-
     }
 
-    public movePlayer(newLocation: string) {
+    /**
+     * Moves the player from its current location to the new one given
+     *
+     * @param {string} newLocation The location we want to move the player to
+     */
+    public movePlayer(newLocation: string): void {
         if (newLocation !== this.playerLocation) {
 
-            this.repositionCharacter(newLocation, this.playerLocation);
+            this.repositionGridElement(newLocation, this.playerLocation);
         }
     }
 
-    public removeElementFromArea(target: IAreaElement, location: string) {
+    /**
+     * Deletes an element from a given location
+     *
+     * @param {string} location The reference for the location we're deleting from
+     */
+    public removeElementFromArea(location: string): void {
         this.locations[location].element = null;
     }
 
+    /**
+     * Provides an object that has individual x and y corrdinates
+     *
+     * @param {ILocation} gridLocation The reference for the location we're splitting the coordinates for
+     *
+     * @returns {ILocation}
+     */
     public splitLocationReference(gridLocation: string): ILocation {
         return {
             locationY: gridLocation[0],
@@ -151,25 +202,24 @@ export class AreaStateService implements OnInit {
         };
     }
 
-    public notifyAreaChange() {
-        // Let the area state service handle the death of the component
+    /**
+     * Sends an event to say the area is being changed
+     */
+    public notifyAreaChange(): void {
         this.areaReady.next(this.newArea);
     }
 
-    public updateLocation() {
-        this.currentArea = this.newArea;
-        this.newArea = null;
-    }
-
-    // TODO This isn't great, redo this
     /**
      * Backs up current location state, loads the new one and emits event to notify listeners
-     * @param newAreaReference The target are to pull data for
+     *
+     * @param {number} newAreaReference The target area to pull data for
      */
-    public loadNewArea(newAreaReference: number) {
+    public loadNewArea(newAreaReference: number): void {
         this.loadingArea = true;
+
         // Back up current state
         this.saveCurrentAreaState(this.currentArea);
+
         // Save the new area reference
         this.newArea = newAreaReference;
 
@@ -178,14 +228,15 @@ export class AreaStateService implements OnInit {
         const targetAreaData = this.getAreaState(newAreaReference);
         if (targetAreaData) {
             this.loadingExistingArea = true;
+
             // Reset the locations to be the stored data
             this.locations = targetAreaData;
         } else {
+
             // Reset the locations to blank
-            this.locations = this.cloneLocations(locationsDefaults);
+            this.locations = this.cloneLocations(locationsDefaults as IGridReferences);
         }
 
-        // TODO this isn't ideal really, look for the other subject type
         this.areaChange.next(newAreaReference ? newAreaReference : this.currentArea);
 
         // Update the location
@@ -193,7 +244,12 @@ export class AreaStateService implements OnInit {
         this.newArea = null;
     }
 
-    public loadFromSaveGame(savedState: IAreaStateData) {
+    /**
+     * Emits events to trigger the loading of a saved area
+     *
+     * @param {IAreaStateData} savedState The area state data we want to load from
+     */
+    public loadFromSaveGame(savedState: IAreaStateData): void {
         this.loadingSavedGame = true;
 
         this.areaChange.next(savedState.currentLocation);
@@ -201,9 +257,12 @@ export class AreaStateService implements OnInit {
     }
 
     /**
-     * Changes the "same" door to be opened from the new area
+     * Opens the opposite door in the target area, opposite the exit location given, writing the area state to storage after
+     *
+     * @param {number} destination The reference for the area on the opposite side of the door
+     * @param {Direction} exitDirection The direction towards to target area
      */
-    public openSameAreaExitInNextArea(destination: number, exitDirection: Direction) {
+    public openSameAreaExitInNextArea(destination: number, exitDirection: Direction): void {
 
         // Attempt to get the existing area state data
         let nextAreaLocations = this.getAreaState(destination);
@@ -214,7 +273,7 @@ export class AreaStateService implements OnInit {
             const nextAreaExits = this.areaConfigProviderService.getAreaExits(destination);
 
             // Create a fresh locations object
-            nextAreaLocations = this.cloneLocations(locationsDefaults);
+            nextAreaLocations = this.cloneLocations(locationsDefaults as IGridReferences);
 
             // Add all the elements and exits to the new locations
             GridHelper.addElementsToGrid(nextAreaData.areaElements, nextAreaLocations);
@@ -233,10 +292,10 @@ export class AreaStateService implements OnInit {
     /**
      * Reset all local parameters to default
      */
-    public setDefaults() {
+    public setDefaults(): void {
         this.currentArea = 1;
         this.newArea = null;
-        this.locations = this.cloneLocations(locationsDefaults);
+        this.locations = this.cloneLocations(locationsDefaults as IGridReferences);
         this.locationKeys = Object.keys;
         this.loadingArea = false;
         this.loadingExistingArea = false;
@@ -246,25 +305,30 @@ export class AreaStateService implements OnInit {
     }
 
     /**
-     * Save the area state to storage
-     * @param newAreaReference the area number
+     * Save the area locations state to storage
+     *
+     * @param {number} newAreaReference The reference for the area we're saving
      */
-    public saveCurrentAreaState(newAreaReference: number) {
+    public saveCurrentAreaState(newAreaReference: number): void {
         localStorage.setItem(newAreaReference.toString(), JSON.stringify(this.locations));
     }
 
     /**
-     * Save an inactive area state
-     * @param newAreaReference the area number
-     * @param newAreaLocations
+     * Saves an inactive area's locations state to storage
+     *
+     * @param {number} newAreaReference The reference for the area we're saving
+     * @param {any} newAreaLocations The locations object to be saved
      */
-    public saveAreaState(newAreaReference: number, newAreaLocations: any) {
+    public saveAreaState(newAreaReference: number, newAreaLocations: any): void {
         localStorage.setItem(newAreaReference.toString(), JSON.stringify(newAreaLocations));
     }
 
     /**
      * Get the area from storage
+     *
      * @param newAreaReference the area number
+     *
+     * @returns {IGridReferences | null}
      */
     public getAreaState(newAreaReference: number): IGridReferences | null {
         const stateJson = localStorage.getItem(newAreaReference.toString());
@@ -275,14 +339,21 @@ export class AreaStateService implements OnInit {
         }
     }
 
-    private cloneLocations(sourceLocations) {
+    /**
+     * Returns a cloned version of the locations object provided
+     *
+     * @param {IGridReferences} sourceLocations The locations object we are cloning
+     *
+     * @returns {IGridReferences}
+     */
+    private cloneLocations(sourceLocations: IGridReferences): IGridReferences {
         return JSON.parse(JSON.stringify(sourceLocations));
     }
 
     /**
-     * Return the area state for storage
-     * @returns the state data relevant to this service
-     * @returns the state data relevant to this service
+     * Returns an object with the state data for this service
+     *
+     * @returns {IAreaStateData}
      */
     public gatherState(): IAreaStateData {
         return {
@@ -298,7 +369,8 @@ export class AreaStateService implements OnInit {
 
     /**
      * Applies state data to this service
-     * @param newState settings from storage to push to this state service
+     *
+     * @param {IAreaStateData} newState State data to push to this service
      */
     public applyState(newState: IAreaStateData): void {
         for (const stateSetting in newState) {

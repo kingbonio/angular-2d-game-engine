@@ -275,7 +275,7 @@ export class PlayerStateService {
 
                                 break;
                             case ObjectType.door:
-                                this.areaStateService.removeElementFromArea(targetElement, targetReference.locationY + targetReference.locationX);
+                                this.areaStateService.removeElementFromArea(targetReference.locationY + targetReference.locationX);
 
                                 break;
                             default:

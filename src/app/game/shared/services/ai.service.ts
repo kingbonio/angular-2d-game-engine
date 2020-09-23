@@ -30,7 +30,7 @@ export class AiService {
         private gameStateService: GameStateService,
     ) {
         this.userInputService.playerMoved.subscribe(data => {
-            // TODO This may need a more specific flag
+
             // We don't want to perform AI actions if loading game
             if (!this.gameStateService.gamePaused &&
                 !this.areaStateService.loadingArea &&
@@ -40,7 +40,7 @@ export class AiService {
 
         });
         this.timerService.counter.subscribe(value => {
-            // TODO This may need a more specific flag
+
             // We don't want to perform AI actions if loading game
             if (!this.gameStateService.battleMode &&
                 !this.gameStateService.gamePaused &&
@@ -51,18 +51,17 @@ export class AiService {
         });
     }
 
-    // TODO Change this parameter
-    public actionTriggerHandler(userInput: boolean) {
-
-        // if (userInput && this.playerStateService.playerGridLocation && this.playerStateService.playerGridLocation.element.isMovingForwards) {
-        //   return;
-        // }
-
+    /**
+     * Updates and forces action on each character on screen if not paused
+     *
+     * @param {boolean} isUserInput Used to determine if from keyboard input or not
+     */
+    public actionTriggerHandler(isUserInput: boolean): void {
 
         const characters: { character: Character, gridLocation: string }[] = this.areaStateService.getCharactersOnGrid();
         characters.forEach(({ character, gridLocation }) => {
 
-            if (userInput && this.gameStateService.battleMode) {
+            if (isUserInput && this.gameStateService.battleMode) {
 
                 // Only act in this way if is user input in battle mode
                 if (character.isPaused) {
@@ -71,7 +70,7 @@ export class AiService {
                     this.action(character, gridLocation);
                     character.resetPauseCounter();
                 }
-            } else if (!userInput && !this.gameStateService.battleMode) {
+            } else if (!isUserInput && !this.gameStateService.battleMode) {
 
                 // Only act in this way in normal mode
                 this.action(character, gridLocation);
@@ -87,8 +86,13 @@ export class AiService {
         });
     }
 
-    // TODO types
-    public action(character: any, gridLocation: string) {
+    /**
+     * Finite state machine handler which enacts set actions based on current state
+     *
+     * @param {Characte} character The unique character we're calling action on
+     * @param {string} gridLocation The current location of this character
+     */
+    public action(character: Character, gridLocation: string): void {
         if (character) {
             switch (character.currentState) {
                 case CharacterState.dead:
@@ -122,7 +126,6 @@ export class AiService {
                             character.direction = character.startingDirection;
                         }
 
-                        // Maybe update state
                         return;
                     }
 
@@ -142,8 +145,7 @@ export class AiService {
                     if (!this.areaStateService.locations[gridLocation].element.isMovingForwards) {
                         const newLocation = this.movement.walkRoute(character, gridLocation);
 
-                        if ((character.type === ElementClass.enemy || character.currentState === CharacterState.hunting) &&
-                            this.isPlayerInSight(character, newLocation.locationY + newLocation.locationX)) {
+                        if (character.type === ElementClass.enemy && this.isPlayerInSight(character, newLocation.locationY + newLocation.locationX)) {
                             this.startHunting(character);
                         }
                     }
@@ -161,7 +163,6 @@ export class AiService {
                         if (!this.areaStateService.locations[gridLocation].element.isMovingForwards) {
                             this.movement.moveTowardsLocation(character, gridLocation, character.startingLocation);
                         }
-                        // this.movement.returnToStartingPosition(character, gridLocation, character.startingLocation);
                     }
                     break;
                 case CharacterState.hunting:
@@ -189,24 +190,38 @@ export class AiService {
                     // Do nothing
                     break;
             }
-
-            // this.isPlayerInSight(character, gridLocation);
         }
     }
 
-    private startHunting(character: Character) {
+    /**
+     * Places a character in hunting state and adds them to the list of hunting characters
+     *
+     * @param {Character} character The unique character we're calling action on
+     */
+    private startHunting(character: Character): void {
         character.currentState = CharacterState.hunting;
         character.currentHuntingDuration = 0;
 
         this.areaStateService.addCharacterToHuntingList(character);
     }
 
+    /**
+     * Removes the character from the hunting list
+     *
+     * @param {Character} character The unique character we're calling action on
+     */
     private stopHunting(character: Character) {
         character.currentHuntingDuration = 0;
 
         this.areaStateService.removeCharacterFromHuntingList(character);
     }
 
+    /**
+     * Determines if the player is in the visual range of the character
+     *
+     * @param {Character} character The unique character we're calling action on
+     * @param {string} gridLocation The current location of the character
+     */
     private isPlayerInSight(character: Character, gridLocation: string): boolean {
         if (this.equipmentManagerService.activeBuff && this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.invisibility) {
             return false;
@@ -216,13 +231,17 @@ export class AiService {
 
         // We want to know if we can find the player in the given locations, return true if found
         return !!viewAreaLocations.find(location => {
+
             return (location === this.playerStateService.locationY + this.playerStateService.locationX);
-            // return (!this.movement.isTargetLocationOutOfBounds(location) &&
-            //   this.areaStateService.locations[location].element &&
-            //   this.areaStateService.locations[location].element.type === ElementClass.player);
         }, this);
     }
 
+    /**
+     * Determines the direction of the character or last known location of the character to travel towards
+     *
+     * @param {Character} character The unique character we're calling action on
+     * @param {string} gridLocation The current location of the character
+     */
     private huntPlayer(character: Character, gridLocation: string) {
         const playerIsInvisible = (this.equipmentManagerService.activeBuff && this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.invisibility);
         let targetLocation;
@@ -234,7 +253,7 @@ export class AiService {
         }
 
         // Head towards player and attack if next to player, otherwise move towards the player
-        if (this.areaStateService.isCharacterNextToPlayer(gridLocation)) {
+        if (this.areaStateService.isLocationNextToPlayer(gridLocation)) {
             const characterLocation = this.areaStateService.splitLocationReference(gridLocation);
             const directionToPlayer = this.movement.getDirectionWithRespectToLocation(targetLocation, characterLocation, true);
 
@@ -245,19 +264,15 @@ export class AiService {
                 // Do nothing
             } else {
 
-                // // We only want to attack if the player isn't already moving
-                // if (!this.areaStateService.locations[targetLocation].isMovingForwards) {
                 character.attack();
                 this.playerStateService.receiveAttack(character);
-                // }
             }
         } else {
 
             // Character needs to get closer to attack
             if (playerIsInvisible) {
-
-                // TODO This is awful
                 targetLocation = targetLocation.locationY + targetLocation.locationX;
+
                 if (!this.areaStateService.locations[gridLocation].element.isMovingForwards) {
                     this.movement.moveTowardsLocation(character, gridLocation, targetLocation);
                 }

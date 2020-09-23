@@ -232,7 +232,7 @@ export class MovementComponent {
 
     public moveCharacterWithAnimation(splitCharacterLocation: ILocation, targetLocationDetails: ILocation) {
         this.beginCharacterMovementAnimation(splitCharacterLocation, targetLocationDetails);
-        this.areaStateService.repositionCharacter(targetLocationDetails.locationY + targetLocationDetails.locationX, splitCharacterLocation.locationY + splitCharacterLocation.locationX);
+        this.areaStateService.repositionGridElement(targetLocationDetails.locationY + targetLocationDetails.locationX, splitCharacterLocation.locationY + splitCharacterLocation.locationX);
     }
 
     /**
