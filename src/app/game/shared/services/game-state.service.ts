@@ -16,20 +16,38 @@ export class GameStateService {
         private timerService: TimerService) {
     }
 
-    get gameMenuOpen() {
+    /**
+     * Returns if the game menu is open or not
+     *
+     * @returns {boolean}
+     */
+    get gameMenuOpen(): boolean {
         return this._gameMenuOpen;
     }
 
+    /**
+     * Sets the service states to the ones supplies
+     *
+     * @param {boolean} newState The state we're setting the "menu is open" property to
+     */
     set gameMenuOpen(newState: boolean) {
         this._gameMenuOpen = newState;
         this.gamePaused = newState;
     }
 
-    get battleMode() {
+    /**
+     * Returns whether the game is in battle mode or not
+     *
+     * @returns {boolean}
+     */
+    get battleMode(): boolean {
         return this.areaStateService.huntingList.length > 0;
     }
 
-    public pauseInput() {
+    /**
+     * Pauses the user input for a roughly set period
+     */
+    public pauseInput(): void {
         this.inputPaused = true;
 
         this.timerService.startTimer(defaults.userInputPauseTime)
@@ -40,7 +58,8 @@ export class GameStateService {
 
     /**
      * Return the game state for storage
-     * @returns the state data relevant to this service
+     *
+     * @returns {IGameStateData}
      */
     gatherState(): IGameStateData {
         return {
@@ -51,7 +70,8 @@ export class GameStateService {
 
     /**
      * Applies state data to this service
-     * @param newState settings from storage to push to this state service
+     *
+     * @param {IGameStateData} newState settings from storage to push to this state service
      */
     public applyState(newState: IGameStateData): void {
         for (const stateSetting in newState) {
@@ -60,5 +80,4 @@ export class GameStateService {
             }
         }
     }
-
 }

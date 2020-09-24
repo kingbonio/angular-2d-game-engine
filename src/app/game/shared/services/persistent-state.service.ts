@@ -25,6 +25,8 @@ export class PersistentStateService {
 
     /**
      * Gather states from all state-based services and write to storage
+     *
+     * @param {number} saveSlot The reference for this saved game
      */
     public save(saveSlot: number): void {
         this.collectStates();
@@ -33,13 +35,14 @@ export class PersistentStateService {
     }
 
     /**
-     * Gather state from storage and apply to all state-based services
+     * Gather state from storage using the reference provided and applies to all state-based services
+     *
+     * @param {number} saveSlot The reference for the save game we're loading
      */
     public load(saveSlot: number): void {
         this.state = this.gatherFromStorage(saveSlot);
         this.applyToStates();
 
-        // Ensure the areaStateService performs the necessary actions
         this.areaStateService.loadingSavedGame = true;
         this.areaStateService.loadFromSaveGame(this.state.area);
 
@@ -48,20 +51,34 @@ export class PersistentStateService {
 
     /**
      * Remove the game from memory
+     *
+     * @param {number} saveSlot The reference for the save we're removing
      */
     public delete(saveSlot: number): void {
         localStorage.removeItem("save-slot-" + saveSlot);
     }
 
+    /**
+     * Gather the game settings from storage
+     *
+     * @returns {IGameSettings}
+     */
     public getGameSettings(): IGameSettings | null {
         const gameSettings = localStorage.getItem("game-settings");
         if (gameSettings && gameSettings.length) {
+
             return JSON.parse(gameSettings);
         } else {
+
             return null;
         }
     }
 
+    /**
+     * Saves game settings data to storage
+     *
+     * @param {IGameSettings} settings The settings we're pushing to storage
+     */
     public saveGameSettings(settings: IGameSettings): void {
         localStorage.setItem("game-settings", JSON.stringify(settings));
     }
@@ -82,37 +99,56 @@ export class PersistentStateService {
     }
 
     /**
-     * Return the source of the image used for the save icon
+     * Gets the source filename of the image used for the save icon
+     *
+     * @returns {string}
      */
     private getSaveIconSrcFromGame() {
         const playerLocation = this.areaStateService.playerLocation;
         const playerGridElement = this.areaStateService.locations[playerLocation];
+
         return playerGridElement.element.imageFileName;
     }
 
-    public getsaveIconSrcFromStorage(saveSlot): string {
+    /**
+     * Return the source filename of the image used for the save icon from storage
+     *
+     * @param {number} saveSlot The reference of the save game we're pulling data from
+     *
+     * @returns {string}
+     */
+    public getsaveIconSrcFromStorage(saveSlot: number): string {
         const state = this.gatherFromStorage(saveSlot);
+
         return state.saveIconSrc;
     }
 
     /**
-     * Set storage medium to retain current state
+     * Set save data to storage
+     *
+     * @param {number} saveSlot The reference of the save game we're saving
      */
     private saveToStorage(saveSlot: number): void {
         localStorage.setItem("save-slot-" + saveSlot, JSON.stringify(this.state));
     }
 
     /**
-     * Get state data from storage medium
+     * Get state data from storage
+     *
+     * @param {number} saveSlot The reference of the save game we're getting data for
+     *
+     * @param {IStateData}
      */
-    private gatherFromStorage(saveSlot): IStateData {
+    private gatherFromStorage(saveSlot: number): IStateData {
         return JSON.parse(localStorage.getItem("save-slot-" + saveSlot));
     }
 
     /**
-     * Gathers the states of the areas from local storage
+     * Gathers the states of the areas for the current game from local storage
+     *
+     * @returns {any} The collection of area states
      */
-    private gatherAreasFromStorage() {
+    private gatherAreasFromStorage(): any {
         const areaStates = {};
         for (const areaId in this.areaIds) {
             if (this.areaIds.hasOwnProperty(areaId) && Number(this.areaIds[areaId]) !== this.areaStateService.currentArea) {
@@ -124,9 +160,9 @@ export class PersistentStateService {
     }
 
     /**
-     * Writes the states of the areas to local storage
+     * Writes the states of the areas of the current game to local storage
      */
-    private applyAreasToStorage() {
+    private applyAreasToStorage(): void {
         for (const areaId in this.state.otherAreas) {
             if (this.areaIds.includes(areaId) && Number(areaId) !== this.state.area.currentLocation) {
                 localStorage.setItem(areaId, JSON.stringify(this.state.otherAreas[areaId]));
@@ -135,7 +171,7 @@ export class PersistentStateService {
     }
 
     /**
-     * Apply the loaded state data to the services;
+     * Apply the current state data to the services
      */
     private applyToStates(): void {
         this.areaStateService.applyState(this.state.area as IAreaStateData);

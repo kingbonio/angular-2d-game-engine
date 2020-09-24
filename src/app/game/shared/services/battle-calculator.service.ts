@@ -19,18 +19,20 @@ export class BattleCalculatorService {
     }
 
     /**
-     * Checks the armour on the target and calculates damage to from chosen weapon
-     * @param target The character with equipped armour
-     * @param weaponTypeUsed Reference for player weapon type
-     * @param isGuarding Whether or not to consider reducing damage
-     * @param activeBuff Magical effects to attack or defence
+     * Calculates the total damage to a target Character
+     *
+     * @param {Character} target The character we're calculating damage to
+     * @param {WeaponType} weaponTypeUsed Reference for player weapon type
+     * @param {boolean} isGuarding Whether or not to consider reducing damage
+     * @param {IInventoryItem} activeBuff Magical effects to consider
+     *
+     * @returns {number}
      */
-    public getDamageToEnemy(target: Character, weaponTypeUsed: WeaponType, isGuarding = false, activeBuff?: IInventoryItem | null): number | undefined {
+    public getDamageToEnemy(target: Character, weaponTypeUsed: WeaponType, isGuarding = false, activeBuff?: IInventoryItem | null): number {
 
         // TODO this may become redundant
         const equippedWeapon = this.equipmentManagerService.getWeaponType(weaponTypeUsed);
 
-        // We'll be allowing primary only for the time being
         let totalDamage = defaults.playerBaseStats.baseDamage;
 
         if (equippedWeapon) {
@@ -45,17 +47,20 @@ export class BattleCalculatorService {
     }
 
     /**
-     * Checks the armour on the player and calculates damage to from character's weapon
-     * @param target The character with equipped armour
-     * @param weaponTypeUsed Reference for player weapon type
-     * @param isGuarding Whether or not to consider reducing damage
-     * @param activeBuff Magical effects to attack or defence
+     * Calculates the damage to receive to player from an attack
+     *
+     * @param {Character} character The character we're calculating damage from
+     * @param {WeaponType} weaponTypeUsed Reference for charater weapon type
+     * @param {boolean} isGuarding Whether or not to consider reducing damage
+     * @param {IInventoryItem} activeBuff Magical effects to consider
+     *
+     * @returns {number}
      */
     public getDamageToPlayer(character: Character, armour: IArmour, isGuarding = false, activeBuff?: IInventoryItem | null): number {
 
         let characterDamage = character.baseDamage;
 
-        // We'll be allowing primary only for the time being
+        // TODO We'll be allowing primary only for the time being
         if (character.weapons && character.weapons.primary) {
             characterDamage += character.weapons.primary.properties.damage;
         }
@@ -65,8 +70,6 @@ export class BattleCalculatorService {
 
             return calculatedDamage;
         } else {
-
-            // TODO assumed always using primary
             const calculatedDamage = this.calculateDamage(armour, characterDamage, isGuarding);
 
             return calculatedDamage;
@@ -74,13 +77,16 @@ export class BattleCalculatorService {
     }
 
     /**
-     * Calculates damage based on weapon damage and armour
-     * @param targetArmour The set of items use to reduce the damage
-     * @param weaponDamage base amount of damage done by the weapon
-     * @param isGuarding whether or not to consider reducing damage
-     * @param activeBuff Magical effects to attack or defence
+     * Generic method to calculate damage based on weapon damage and equipped armour
+     *
+     * @param {IArmour} targetArmour The set of items use to reduce the damage
+     * @param {number} weaponDamage Base amount of damage done by the weapon
+     * @param {boolean} isGuarding Whether or not to consider reducing damage
+     * @param {IInventoryItem} activeBuff Magical effects to attack or defence
+     *
+     * @returns {number}
      */
-    private calculateDamage(targetArmour: IArmour, weaponDamage: number, isGuarding = false, activeBuff?: IInventoryItem) {
+    private calculateDamage(targetArmour: IArmour, weaponDamage: number, isGuarding = false, activeBuff?: IInventoryItem): number {
         let totalArmourValue = defaults.enemyProperties.baseArmour;
 
         if (targetArmour) {

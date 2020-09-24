@@ -15,10 +15,9 @@ export class AssetLoaderService {
     }
 
     /**
-     * Collect all assset locations into local store
+     * Collect all asset locations and load into local storage
      */
-    public loadAssets() {
-        // Load assets
+    public loadAssets(): void {
         for (const area in areas) {
             if (this.areas.hasOwnProperty(area)) {
                 this.areas[area].default.areaElements.forEach(element => {

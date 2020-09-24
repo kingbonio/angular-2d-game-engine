@@ -9,7 +9,7 @@ import { PotionEffectType } from '../../item/enums/potion-effect-type';
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
 import { InventoryManagerService } from '../../item/services/inventory-manager.service';
 import { CharacterState, Direction, ElementClass, ItemClass, ObjectType } from '../enums';
-import { IInventoryItem, IPlayerStateData } from '../interfaces';
+import { IInventoryItem, IPlayerStateData, ILocationData } from '../interfaces';
 import { GridHelper } from '../util/area/grid-helper';
 import { Dice } from '../util/dice';
 import { MovementComponent } from '../util/movement/movement.component';
@@ -29,10 +29,9 @@ export class PlayerStateService {
     public locationY: string;
     public direction: Direction = Direction.N;
     public lastKnownLocation: string;
-    // TODO default (maybe even scrap the whole options for now)
-    // TODO maybe move this to equipment manager
+
+    // TODO Look into enabling other wweapon slots
     public selectedWeaponSlot: WeaponType = WeaponType.primary;
-    // public location: string;
 
     constructor(
         private areaStateService: AreaStateService,
@@ -43,21 +42,20 @@ export class PlayerStateService {
         private inventoryManagerService: InventoryManagerService,
         private soundEffectService: SoundEffectService,
     ) {
+
         // Pull defaults from defaults file and assign initial values
         this.health = defaults.initialPlayerStats.health;
         this.maxHealth = defaults.initialPlayerStats.maxHealth;
         this.direction = defaults.initialPlayerStats.direction;
     }
 
-    get playerGridLocation() {
-        return this.areaStateService.locations[this.locationY + this.locationX];
-    }
-
     /**
      * Attempts to move the character in a direction
-     * @param direction The direction to attempt to move
+     *
+     * @param {Direction} direction The direction to attempt to move
+     * @param {boolean} isOneHandedControls Whether the player is using directional controls or not
      */
-    public move(direction: Direction, isOneHandedControls: boolean) {
+    public move(direction: Direction, isOneHandedControls: boolean): void {
 
         // Break out of this action if moving action is currently underway
         if (this.areaStateService.locations[this.locationY + this.locationX].element.isMovingForwards) {
@@ -88,11 +86,13 @@ export class PlayerStateService {
                     character: defaults.dialogue.computerCharacterType,
                     name: defaults.dialogue.computerName
                 });
+
                 return;
             } else {
                 // Emit event that new location access attempted, pass areaExit
                 this.areaStateService.locations[this.locationY + this.locationX].areaExit.status = AreaExitStatus.open;
                 this.areaStateService.loadNewArea(this.areaStateService.locations[this.locationY + this.locationX].areaExit.destination);
+
                 return;
             }
         }
@@ -100,7 +100,6 @@ export class PlayerStateService {
         // Update area state
         if (newLocation && newLocation.locationX && newLocation.locationY && newLocation.isLocationFree) {
 
-            // TODO This could be moved into a getter
             const playerLocationDetails = this.areaStateService.splitLocationReference(this.locationY + this.locationX);
 
             // Play walking sound
@@ -112,7 +111,7 @@ export class PlayerStateService {
             this.locationX = newLocation.locationX;
 
         } else {
-            // TODO: Possibly inform user you cannot move here
+            // TODO: Inform user you cannot move here
             // this.dialogueService.displaySpeech(
             //   {
             //     text: defaults.dialogue.nullElementResponse,
@@ -121,25 +120,25 @@ export class PlayerStateService {
             //   }
             // );
         }
-        // this.direction = direction;
-
     }
 
-    public changeDirection(direction: Direction) {
+    /**
+     * Updates the player direction
+     *
+     * @param {Direction} direction The direction we're pointing the player
+     */
+    public changeDirection(direction: Direction): void {
         this.direction = direction;
     }
 
     /**
      * Perform an attack in the direction player is facing
      */
-    public attack() {
+    public attack(): void {
 
         // Allow the player attack animation
         this.areaStateService.locations[this.areaStateService.playerLocation].element.attack();
 
-        // TODO Move this to where it's hitting the attacker
-
-        // if (this.equipmentManagerService.getWeaponType(this.selectedWeaponSlot)) {
         const targetReference = GridHelper.getNextLocation(this.locationY, this.locationX, this.direction, this.areaStateService.locations);
         const targetLocation = this.areaStateService.locations[targetReference.locationY + targetReference.locationX];
 
@@ -149,8 +148,9 @@ export class PlayerStateService {
             const damage = this.battleCalculatorService.getDamageToEnemy(targetElement, this.selectedWeaponSlot, targetElement.isGuarding, this.equipmentManagerService.activeBuff);
 
             if (damage) {
+
                 // No need to assign this
-                targetElement.respond(UserInteractionTypes.attack, GridHelper.getDirectionToFace(this.direction), damage);
+                targetElement.respond(UserInteractionTypes.attack, GridHelper.getOppositeDirection(this.direction), damage);
 
                 // Play slashing sound
                 this.soundEffectService.playSound(SoundEffects.slash);
@@ -175,7 +175,7 @@ export class PlayerStateService {
                     this.areaStateService.removeCharacterFromHuntingList(targetElement);
 
                     // Remove element and leave trace of the character on the grid
-                    GridHelper.decomposeCharacter(targetElement, targetReference.locationY + targetReference.locationX, this.areaStateService.locations);
+                    GridHelper.decomposeCharacter(targetReference.locationY + targetReference.locationX, this.areaStateService.locations);
 
                     this.dialogueService.displayDialogueMessage({
                         text: defaults.dialogue.targetDead + targetElement.name,
@@ -204,7 +204,7 @@ export class PlayerStateService {
     /**
      * Interact with the object in the direction player is facing
      */
-    public interact() {
+    public interact(): void {
         const targetReference = GridHelper.getNextLocation(this.locationY, this.locationX, this.direction, this.areaStateService.locations);
         const currentLocation = this.areaStateService.locations[this.locationY + this.locationX];
         const activeItem = this.equipmentManagerService.activeItem;
@@ -339,20 +339,18 @@ export class PlayerStateService {
     }
 
     /**
-     * Guard against an attack from the direction you are facing
+     * Guard against an attack from the direction the element is facing
      */
-    public guard() {
-
-        // Allow the player attack animation
+    public guard(): void {
         this.areaStateService.locations[this.areaStateService.playerLocation].element.guard();
     }
 
     /**
-     * speak to the object in the direction player is facing
+     * Attempt to speak to the object in the direction player is facing
      */
-    public speak() {
+    public speak(): void {
         const nextGridLocation = GridHelper.getNextLocation(this.locationY, this.locationX, this.direction, this.areaStateService.locations);
-        // TODO rename this
+
         if (nextGridLocation && !GridHelper.isTargetLocationOutOfBounds(nextGridLocation.locationY + nextGridLocation.locationX)) {
             const target = this.areaStateService.locations[nextGridLocation.locationY + nextGridLocation.locationX].element;
 
@@ -362,6 +360,7 @@ export class PlayerStateService {
                     character: defaults.dialogue.computerCharacterType,
                     name: defaults.dialogue.computerName
                 });
+
                 return;
             }
 
@@ -376,7 +375,7 @@ export class PlayerStateService {
             } else {
                 this.dialogueService.displayDialogueMessage(
                     {
-                        text: target.respond(UserInteractionTypes.speak, GridHelper.getDirectionToFace(this.direction)),
+                        text: target.respond(UserInteractionTypes.speak, GridHelper.getOppositeDirection(this.direction)),
                         character: target.type,
                         name: target.name
                     }
@@ -385,17 +384,30 @@ export class PlayerStateService {
         }
     }
 
+    /**
+     * Attempt to steal from the target element, returns outcome
+     *
+     * @param {Character} target The element we're attempting to steal from
+     *
+     * @returns {boolean}
+     */
     private attemptSteal(target: Character): boolean {
-        // TODO Work this out properly
         const diceRoll = Dice.roll1d20();
+
         if (diceRoll > defaults.playerMultipliers.stealSuccessRequirement) {
+
             return true;
         }
+
         return false;
-        // const successChanceMultiplier = target.isAsleep ? defaults.playerMultipliers.
     }
 
-    public receiveAttack(character: Character) {
+    /**
+     * Processes and calculates the damage of an attack on the player
+     *
+     * @param {Character} character The character attacking the player
+     */
+    public receiveAttack(character: Character): void {
 
         const player = this.areaStateService.locations[this.areaStateService.playerLocation].element;
 
@@ -444,12 +456,19 @@ export class PlayerStateService {
                 name: defaults.dialogue.computerName
             });
         }
+
         if (this.health <= 0) {
             // YOU ARE DEAD!
         }
     }
 
-    public useConsumable(item: IInventoryItem, itemSlot: any) {
+    /**
+     * Applies the properties of a consumable item to the player stats
+     *
+     * @param {IInventoryItem} item The item we're processing
+     * @param {string} itemSlot The location in the inventory we're taking the item from
+     */
+    public useConsumable(item: IInventoryItem, itemSlot: string): void {
         if (item.class === ItemClass.potion) {
             switch (item.type) {
                 case PotionType.healing:
@@ -476,6 +495,7 @@ export class PlayerStateService {
                             name: defaults.dialogue.computerName
                         });
                     }
+
                     break;
                 case PotionType.buff:
                     this.equipmentManagerService.activeBuff = item;
@@ -493,6 +513,7 @@ export class PlayerStateService {
                     }
 
                     this.inventoryManagerService.locations[itemSlot] = null;
+
                     break;
             }
         }
@@ -501,7 +522,7 @@ export class PlayerStateService {
     /**
      * Resets player, inventory and equipment states to default
      */
-    public setPlayerDefaults() {
+    public setPlayerDefaults(): void {
         this.health = defaults.initialPlayerStats.health;
         this.maxHealth = defaults.initialPlayerStats.maxHealth;
         this.direction = defaults.initialPlayerStats.direction;
@@ -511,8 +532,9 @@ export class PlayerStateService {
     }
 
     /**
-     * Return the player state for storage
-     * @returns the state data relevant to this service
+     * Return the player state from this service
+     *
+     * @returns {IPlayerStateData}
      */
     public gatherState(): IPlayerStateData {
         return {
@@ -527,7 +549,8 @@ export class PlayerStateService {
 
     /**
      * Applies state data to this service
-     * @param newState settings from storage to push to this state service
+     *
+     * @param {IPlayerStateData} newState Settings to push to this state service
      */
     public applyState(newState: IPlayerStateData): void {
         for (const stateSetting in newState) {

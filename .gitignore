@@ -6,6 +6,9 @@ todo.txt
 # Package lock
 package-lock.json
 
+#Line Counts
+/.VSCodeCounter
+
 #Backups
 /areas-0.1.0
 
