@@ -1,5 +1,5 @@
 import { IAreaElement } from "../../game/area/interfaces";
-import { IWeapons } from "../../game/item/interfaces";
+import { IWeaponSlots } from "../../game/item/interfaces";
 import { CharacterState, Direction, ElementClass, ObjectType } from "../../game/shared/enums";
 import { armour, keyItems, potions, weapons } from "../items";
 import { player } from "../characters";
@@ -37,7 +37,7 @@ export default {
                 },
                 weapons: {
                     primary: weapons.basicKnife,
-                } as IWeapons,
+                } as IWeaponSlots,
                 loot: [
                     potions.smallHealthPotion
                 ],
@@ -73,7 +73,7 @@ export default {
                 },
                 weapons: {
                     primary: weapons.basicKnife,
-                } as IWeapons,
+                } as IWeaponSlots,
                 loot: [
                     potions.smallDamageBuff,
                 ],
@@ -110,7 +110,7 @@ export default {
                 },
                 weapons: {
                     primary: weapons.basicKnife,
-                } as IWeapons,
+                } as IWeaponSlots,
                 loot: [
                     potions.smallHealthPotion,
                 ],
@@ -146,7 +146,7 @@ export default {
                   },
                         weapons: {
                               primary: weapons.basicKnife,
-                        } as IWeapons,
+                        } as IWeaponSlots,
                         loot: [
                               weapons.axe,
                         ],
@@ -182,7 +182,7 @@ export default {
                         },
                         weapons: {
                               primary: weapons.basicKnife,
-                        } as IWeapons,
+                        } as IWeaponSlots,
                         loot: [
                               weapons.sword,
                         ],
@@ -218,7 +218,7 @@ export default {
                         },
                         weapons: {
                               primary: weapons.basicKnife,
-                        } as IWeapons,
+                        } as IWeaponSlots,
                         loot: [
                               potions.smallArmourBuff
                         ],

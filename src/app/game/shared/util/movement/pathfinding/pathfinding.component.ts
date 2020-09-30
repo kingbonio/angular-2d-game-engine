@@ -15,12 +15,14 @@ export class PathfindingComponent {
 
     /**
      * Discovers and returns the best direction to the location from the source
-     * @param startLocation Source location as split location string
-     * @param targetLocation Final location as split location string
-     * @param locationSet The collection of grid references for the map
-     * @returns Path in an array
+     *
+     * @param {ILocation} startLocation Source location as split location string
+     * @param {ILocation} targetLocation Final location as split location string
+     * @param {IGridReferences} locationSet The collection of grid references for the map
+     *
+     * @returns {string[]}
      */
-    public getShortestPath(startLocation: ILocation, targetLocation: ILocation, locationSet: IGridReferences) {
+    public getShortestPath(startLocation: ILocation, targetLocation: ILocation, locationSet: IGridReferences): string[] {
 
         const _frontierQueue = new PriorityQueue();
         const cameFrom = {};
@@ -106,7 +108,16 @@ export class PathfindingComponent {
         return this._getPathBackwards(cameFrom, startLocation, targetLocation);
     }
 
-    private _getPathBackwards(cameFrom: any, startLocation: ILocation, targetLocation: ILocation): any[] {
+    /**
+     * Creates an ordered array of locations to work from the end goal to the starting location
+     *
+     * @param {Object} cameFrom The object containing all the locations mapped and their entry points
+     * @param {ILocation} startLocation The location we want to work backwards to
+     * @param {ILocation} targetLocation Final we need to get a path back from
+     *
+     * @returns {string[]}
+     */
+    private _getPathBackwards(cameFrom: any, startLocation: ILocation, targetLocation: ILocation): string[] {
 
         // Create the path backwards based on the cameFrom array
         const pathBackwards = [];
@@ -125,6 +136,14 @@ export class PathfindingComponent {
         return pathBackwards;
     }
 
+    /**
+     * Calculates the distance between two locations
+     *
+     * @param {ILocation} a The first location
+     * @param {ILocation} b The final location to calculate distance to
+     *
+     * @returns {number}
+     */
     private _heuristic(a: ILocation, b: ILocation): number {
         const heuristicA = {
             x: a.locationX,
@@ -139,10 +158,23 @@ export class PathfindingComponent {
         return (heuristicA.x - heuristicB.x) + (heuristicA.y - heuristicB.y);
     }
 
-    private _placeInQueue(queue: PriorityQueue, item: any) {
+    /**
+     * Places the item into the priority queue
+     *
+     * @param {PriorityQueue} queue The priority queue we're pushing in to
+     * @param {any} item The item we are pushing into the queue
+     */
+    private _placeInQueue(queue: PriorityQueue, item: any): void {
         queue.push(item);
     }
 
+    /**
+     * Gets the last item in the Priority Queue
+     *
+     * @param {PriorityQueue} queue The queue we're getting the item from
+     *
+     * @returns {any}
+     */
     private _getFromQueue(queue: PriorityQueue): any {
 
         return queue.pop();

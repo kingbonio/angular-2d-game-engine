@@ -23,7 +23,14 @@ export class PersistentStorageComponent {
         this.saveSlots = defaults.gameMenu.saveSlots;
     }
 
-    public getSaveIconImageSource(saveSlot: number) {
+    /**
+     * Retrieves the location of the image for the save slot
+     *
+     * @param {number} saveSlot The reference for the save slot
+     *
+     * @returns {string}
+     */
+    public getSaveIconImageSource(saveSlot: number): string {
 
         const saveIconSrc = this.persistentStateService.getsaveIconSrcFromStorage(saveSlot);
 
@@ -34,11 +41,21 @@ export class PersistentStorageComponent {
         }
     }
 
-    public saveGame(saveSlot) {
+    /**
+     * Saves the game state to storage
+     *
+     * @param {number} saveSlot The reference for the save slot
+     */
+    public saveGame(saveSlot: number): void {
         this.persistentStateService.save(saveSlot);
     }
 
-    public loadGame(saveSlot) {
+    /**
+     * Pulls data from storage for the save game and loads it
+     *
+     * @param {number} saveSlot The reference for the save slot
+     */
+    public loadGame(saveSlot: number): void {
         if (this.router.url !== "/game") {
             this.applicationStateService.loadingFromOutsideGame = true;
             this.applicationStateService.canAccessGame = true;
@@ -47,13 +64,24 @@ export class PersistentStorageComponent {
         this.persistentStateService.load(saveSlot);
     }
 
-    public deleteGame(saveSlot) {
+    /**
+     * Deletes the save game from storage
+     *
+     * @param {number} saveSlot The reference for the save slot
+     */
+    public deleteGame(saveSlot: number): void {
         this.persistentStateService.delete(saveSlot);
     }
 
+    /**
+     * Determines if save slot is being used in persistent storage
+     *
+     * @param {number} saveSlot The reference for the save slot
+     *
+     * @returns {boolean}
+     */
     public saveSlotDoesntExist(saveSlot: number): boolean {
-        // TODO Intensely inefficient
-        return !!(localStorage.getItem("save-slot-" + saveSlot));
+        return !!(localStorage["save-slot-" + saveSlot]);
     }
 
 }

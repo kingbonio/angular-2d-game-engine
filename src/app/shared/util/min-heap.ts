@@ -6,6 +6,9 @@ export class MinHeap {
         this._heap = [null];
     }
 
+    /**
+     * Get the top of the heap
+     */
     public getMin() {
         return this._heap[1];
     }

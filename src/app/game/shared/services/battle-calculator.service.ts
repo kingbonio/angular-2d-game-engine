@@ -3,7 +3,7 @@ import defaults from '../../../shared/defaults';
 import { Character } from '../../character-classes/character';
 import { WeaponType } from '../../item/enums';
 import { PotionEffectType } from '../../item/enums/potion-effect-type';
-import { IArmour, IInventoryItem } from '../../item/interfaces';
+import { IArmourSlots, IInventoryItem } from '../../item/interfaces';
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
 import { Dice } from '../util/dice';
 
@@ -56,7 +56,7 @@ export class BattleCalculatorService {
      *
      * @returns {number}
      */
-    public getDamageToPlayer(character: Character, armour: IArmour, isGuarding = false, activeBuff?: IInventoryItem | null): number {
+    public getDamageToPlayer(character: Character, armour: IArmourSlots, isGuarding = false, activeBuff?: IInventoryItem | null): number {
 
         let characterDamage = character.baseDamage;
 
@@ -79,14 +79,14 @@ export class BattleCalculatorService {
     /**
      * Generic method to calculate damage based on weapon damage and equipped armour
      *
-     * @param {IArmour} targetArmour The set of items use to reduce the damage
+     * @param {IArmourSlots} targetArmour The set of items use to reduce the damage
      * @param {number} weaponDamage Base amount of damage done by the weapon
      * @param {boolean} isGuarding Whether or not to consider reducing damage
      * @param {IInventoryItem} activeBuff Magical effects to attack or defence
      *
      * @returns {number}
      */
-    private calculateDamage(targetArmour: IArmour, weaponDamage: number, isGuarding = false, activeBuff?: IInventoryItem): number {
+    private calculateDamage(targetArmour: IArmourSlots, weaponDamage: number, isGuarding = false, activeBuff?: IInventoryItem): number {
         let totalArmourValue = defaults.enemyProperties.baseArmour;
 
         if (targetArmour) {

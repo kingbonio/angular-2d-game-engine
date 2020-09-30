@@ -76,7 +76,6 @@
             .loading-overlay {
                 position: fixed;
                 z-index: 11;
-                // TODO Fix this
                 width: 580px;
                 height: 580px;
                 background-color: black;
@@ -159,9 +158,9 @@
             border-radius: 5px;
             margin: 3px;
         }
-        }
+    }
         
-        .interaction-controls {
+    .interaction-controls {
         width: 200px;
         height: 759px;
         position: relative;
@@ -191,10 +190,10 @@
                 font-weight: 500;
 
                 .button-text {
-                -webkit-user-select: none; /* Safari */      
-                -moz-user-select: none; /* Firefox */
-                -ms-user-select: none; /* IE10+/Edge */
-                user-select: none; /* Standard */
+                    -webkit-user-select: none; /* Safari */      
+                    -moz-user-select: none; /* Firefox */
+                    -ms-user-select: none; /* IE10+/Edge */
+                    user-select: none; /* Standard */
                 }
             }
             
@@ -206,11 +205,11 @@
                 background-size: 53px 53px;
 
                 .top-text {
-                display: block;
-                transform: rotate(-45deg);
-                position: absolute;
-                top: 49px;
-                left: 39px;
+                    display: block;
+                    transform: rotate(-45deg);
+                    position: absolute;
+                    top: 49px;
+                    left: 39px;
                 }
             }
             
@@ -222,11 +221,11 @@
                 background-size: 53px 53px;
 
                 .right-text {
-                display: block;
-                transform: rotate(-135deg);
-                position: absolute;
-                top: -2px;
-                left: 39px;
+                    display: block;
+                    transform: rotate(-135deg);
+                    position: absolute;
+                    top: -2px;
+                    left: 39px;
                 }
             }
             
@@ -238,11 +237,11 @@
                 background-size: 53px 53px;
                 
                 .bottom-text {
-                display: block;
-                transform: rotate(-225deg);
-                position: absolute;
-                top: -6px;
-                left: -25px;
+                    display: block;
+                    transform: rotate(-225deg);
+                    position: absolute;
+                    top: -6px;
+                    left: -25px;
                 }
             }
             
@@ -254,11 +253,11 @@
                 background-size: 53px 53px;
                 
                 .left-text {
-                display: block;
-                transform: rotate(-315deg);
-                position: absolute;
-                top: 53px;
-                left: -11px;
+                    display: block;
+                    transform: rotate(-315deg);
+                    position: absolute;
+                    top: 53px;
+                    left: -11px;
                 }
             }
         }

@@ -1,5 +1,6 @@
 import { ItemClass, PotionType } from "../../game/item/enums";
 import { PotionEffectType } from "../../game/item/enums/potion-effect-type";
+import { IInventoryItem } from "../../game/item/interfaces";
 
 export const potions = {
     smallHealthPotion: {
@@ -13,7 +14,7 @@ export const potions = {
             effectType: PotionEffectType.healing,
             effectAmount: 20,
         }
-    },
+    } as IInventoryItem,
     smallArmourBuff: {
         name: "Small Armour Buff",
         class: ItemClass.potion,
@@ -26,7 +27,7 @@ export const potions = {
             effectType: PotionEffectType.armour,
             effectDuration: 10,
         }
-    },
+    } as IInventoryItem,
     largeArmourBuff: {
         name: "Large Armour Buff",
         class: ItemClass.potion,
@@ -39,7 +40,7 @@ export const potions = {
             effectType: PotionEffectType.armour,
             effectDuration: 10,
         }
-    },
+    } as IInventoryItem,
     largeHealthBuff: {
         name: "Large Health Buff",
         class: ItemClass.potion,
@@ -52,7 +53,7 @@ export const potions = {
             effectDuration: 10,
             remainingEffect: 10,
         }
-    },
+    } as IInventoryItem,
     smallDamageBuff: {
         name: "Small Damage Buff",
         class: ItemClass.potion,
@@ -65,7 +66,7 @@ export const potions = {
             effectDuration: 10,
             effectAmount: 10,
         }
-    },
+    } as IInventoryItem,
     invisiblityPotion: {
         name: "Invisibility Potion",
         class: ItemClass.potion,
@@ -77,5 +78,5 @@ export const potions = {
             effectType: PotionEffectType.invisibility,
             effectDuration: 10,
         }
-    },
+    } as IInventoryItem,
 };

@@ -1,5 +1,5 @@
 import { IInventoryItem } from ".";
 
-export interface IWeapons {
+export interface IWeaponSlots {
     primary: IInventoryItem | null;
 }

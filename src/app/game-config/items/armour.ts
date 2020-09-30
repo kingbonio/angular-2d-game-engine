@@ -1,6 +1,6 @@
 import { ArmourType, ItemClass } from "../../game/item/enums";
+import { IInventoryItem } from "../../game/item/interfaces";
 
-// TODO these should have interfaces
 export const armour = {
     leatherHelmet: {
         name: "Leather Helmet",
@@ -11,7 +11,7 @@ export const armour = {
         properties: {
             defense: 10,
         },
-    },
+    } as IInventoryItem,
     fedora: {
         name: "Fedora",
         class: ItemClass.armour,
@@ -21,7 +21,7 @@ export const armour = {
         properties: {
             defense: 0,
         },
-    },
+    } as IInventoryItem,
     leatherBoots: {
         name: "Leather Boots",
         class: ItemClass.armour,
@@ -31,7 +31,7 @@ export const armour = {
         properties: {
             defense: 12,
         },
-    },
+    } as IInventoryItem,
     ironHelmet: {
         name: "Iron Helmet",
         class: ItemClass.armour,
@@ -41,7 +41,7 @@ export const armour = {
         properties: {
             defense: 12,
         },
-    },
+    } as IInventoryItem,
     leatherChestPiece: {
         name: "Leather Chest Piece",
         class: ItemClass.armour,
@@ -51,5 +51,5 @@ export const armour = {
         properties: {
             defense: 12,
         },
-    },
+    } as IInventoryItem,
 };

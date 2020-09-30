@@ -42,6 +42,7 @@ export class GameControlsComponent {
                 key !== 27 &&
                 !this.keysMapped[key]
             ) {
+
                 // TODO Need to block any that are already selected
                 this.userSetKeyHandler(key);
             } else if (this.gameStateService.awaitingKeyboardSetting && key === 27) {
@@ -52,46 +53,75 @@ export class GameControlsComponent {
 
     /**
      * Sets the new key and clears the previous action the key was set to
+     *
      * @param key key entered for new binding
      * @param action Reference for the action
      */
-    public updateKeyBinding(key: number, action: KeyInputType) {
+    public updateKeyBinding(key: number, action: KeyInputType): void {
         const previousKey = this.keyMap[action];
         this.keyMap[action] = key;
         this.keysMapped[key] = action;
         this.keysMapped[previousKey] = null;
     }
 
-    public getKeyName(key) {
+    /**
+     * Gets the name of a key
+     *
+     * @param {string} key The reference for the key
+     *
+     * @return {string}
+     */
+    public getKeyName(key: string): string {
         return keyReferences[key];
     }
 
     /**
      * Returns the name of the key for each action
+     *
      * @param keyInputType the action we want to get the key name for
-     * @returns The name of the key
+     *
+     * @returns {string}
      */
     public getSelectedKeyName(keyInputType: KeyInputType): string {
         return this.getKeyName(this.keyMap[keyInputType]);
     }
 
-
-    private userSetKeyHandler(key: number) {
+    /**
+     * Handles the setting of the key binding
+     *
+     * @param {number} key The key we're trying to assign an action to
+     */
+    private userSetKeyHandler(key: number): void {
         this.updateKeyBinding(key, this.keyActionSelected);
         this.gameStateService.awaitingKeyboardSetting = false;
         this.keyActionSelected = null;
     }
 
-    public setAwaitingKey(keyAction: KeyInputType) {
+    /**
+     * Sets the component state to expect a new key binding
+     *
+     * @param {KeyInputType} keyAction The action we're binding the upcoming key to
+     */
+    public setAwaitingKey(keyAction: KeyInputType): void {
         this.keyActionSelected = keyAction;
         this.gameStateService.awaitingKeyboardSetting = true;
     }
 
-    public unsetAwaitingKey() {
+    /**
+     * Sets the component state to not expecting a key input
+     */
+    public unsetAwaitingKey(): void {
         this.gameStateService.awaitingKeyboardSetting = false;
     }
 
-    public isHiddenControl(keyName: string) {
+    /**
+     * Determines if the key should be hidden
+     *
+     * @param {string} keyName The name of the key we're checking
+     *
+     * @returns {boolean}
+     */
+    public isHiddenControl(keyName: string): boolean {
 
         // TODO This could be tidier
         const isHidden = (
@@ -104,20 +134,28 @@ export class GameControlsComponent {
         return isHidden;
     }
 
-    public pullCurrentSettings() {
+    /**
+     * Pulls the settings from game settings service state to this component
+     */
+    public pullCurrentSettings(): void {
         this.keyMap = this.gameSettingsService.keyMap;
         this.keysMapped = this.gameSettingsService.keysMapped;
     }
 
-    public saveSettings() {
+    /**
+     * Applies the key maps to the game settings service
+     */
+    public saveSettings(): void {
         this.gameSettingsService.saveGameSettings({
             keyMap: this.keyMap,
             keysMapped: this.keysMapped,
         });
     }
 
-    // Apply defaults to this component
-    public setDefaults() {
+    /**
+     * Pull and apply defaults to this component
+     */
+    public setDefaults(): void {
         this.keyMap = defaults.defaultKeyMap;
 
         // Set up the quick-access key references
@@ -129,8 +167,10 @@ export class GameControlsComponent {
         }
     }
 
-    // Navigate to main menu
-    public loadMainMenu() {
+    /**
+     * Navigate to main menu
+     */
+    public loadMainMenu(): void {
         this.router.navigate(['/']);
     }
 }

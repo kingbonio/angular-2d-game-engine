@@ -19,18 +19,25 @@ export class GameplayComponent {
         this.showControls = this.gameSettingsService.showControls;
     }
 
+    /**
+     * Applies the key maps to the game settings service
+     */
     public saveSettings() {
         this.gameSettingsService.saveGameSettings({
             showControls: this.showControls,
         });
     }
 
-    // Apply defaults to this component
+    /**
+     * Pull and apply defaults to this component
+     */
     public setDefaults() {
         this.showControls = defaults.gameSettings.showControls;
     }
 
-    // Navigate to main menu
+    /**
+     * Navigate to main menu
+     */
     public loadMainMenu() {
         this.router.navigate(['/']);
     }

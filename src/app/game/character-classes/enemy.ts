@@ -1,5 +1,5 @@
 import { UserInteractionTypes } from "../../shared/enums";
-import { IArmour, IInventoryItem, IWeapons } from "../item/interfaces";
+import { IArmourSlots, IInventoryItem, IWeaponSlots } from "../item/interfaces";
 import { CharacterState, Direction, ElementClass } from "../shared/enums";
 import { ILocation } from "../shared/interfaces";
 import { Character } from "./character";
@@ -36,8 +36,8 @@ export class Enemy extends Character {
     public pathfindingDestination: ILocation;
     public currentState: CharacterState;
     public startingState: CharacterState;
-    public armour: IArmour;
-    public weapons: IWeapons;
+    public armour: IArmourSlots;
+    public weapons: IWeaponSlots;
     public loot: IInventoryItem[] = [];
     public level: number;
 

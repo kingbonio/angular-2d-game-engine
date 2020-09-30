@@ -26,7 +26,12 @@ export class UserInputService {
         this.userSetKey = new BehaviorSubject(0);
     }
 
-    public keyDownEventHandler($e: KeyboardEvent) {
+    /**
+     * Performs an action based on the key input
+     *
+     * @param {KeyboardEvent} $e The event containing the key reference we're acting upon
+     */
+    public keyDownEventHandler($e: KeyboardEvent): void {
         if (this.gameStateService.awaitingKeyboardSetting) {
             this.userSetKey.next($e.keyCode);
         }
@@ -45,7 +50,12 @@ export class UserInputService {
         }
     }
 
-    public invokeAction(characterAction: IUserAction) {
+    /**
+     * Updates the player's state dependent on the input action
+     *
+     * @param {IUserAction} characterAction The action we want to invoke on the player character
+     */
+    public invokeAction(characterAction: IUserAction): void {
         if (characterAction) {
             switch (characterAction.type) {
 
@@ -61,6 +71,7 @@ export class UserInputService {
                     if (!this.gameSettingsService.oneHandedControls) {
                         this.playerStateService.direction = characterAction.direction;
                     }
+
                     break;
 
                 case UserActionTypes.interaction:
@@ -69,21 +80,29 @@ export class UserInputService {
                         case UserInteractionTypes.attack:
                             this.playerStateService.attack();
                             this.playerMoved.next("forceCharacterMove");
+
                             break;
 
                         case UserInteractionTypes.guard:
                             this.playerStateService.guard();
                             this.playerMoved.next("forceCharacterMove");
+
                             break;
 
                         case UserInteractionTypes.interact:
                             this.playerStateService.interact();
+
                             break;
 
                         case UserInteractionTypes.speak:
                             this.playerStateService.speak();
                             this.playerMoved.next("forceCharacterMove");
+
                             break;
+
+                        default:
+
+                        // Do nothing
                     }
             }
         }

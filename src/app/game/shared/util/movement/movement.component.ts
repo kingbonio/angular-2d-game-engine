@@ -21,9 +21,12 @@ export class MovementComponent {
 
     /**
      * Return the locations the character can see at any time
-     * @param viewDistance How many squares out the character can see
-     * @param direction Which way the character is facing
-     * @param gridLocation The current location of the character
+     *
+     * @param {number} viewDistance How many squares out the character can see
+     * @param {Direction} direction Which way the character is facing
+     * @param {string} gridLocation The current location of the character
+     *
+     * @returns {string[]}
      */
     public getViewAreaLocations(viewDistance: number, direction: Direction, gridLocation: string): string[] {
         const gridReferences = [];
@@ -34,54 +37,67 @@ export class MovementComponent {
         switch (direction) {
 
             case Direction.N:
+
                 // Get first location
                 location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
                 gridReferences.push(location);
+
                 // Get second location
                 location = GridHelper.nextYReference(splitLocation.locationY) + splitLocation.locationX;
                 gridReferences.push(location);
+
                 // Get third location
                 location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
                 gridReferences.push(location);
-                break;
 
+                break;
             case Direction.E:
+
                 // Get first location
                 location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
                 gridReferences.push(location);
+
                 // Get second location
                 location = splitLocation.locationY + GridHelper.nextXReference(splitLocation.locationX);
                 gridReferences.push(location);
+
                 // Get third location
                 location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
                 gridReferences.push(location);
-                break;
 
+                break;
             case Direction.S:
+
                 // Get first location
                 location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
                 gridReferences.push(location);
+
                 // Get second location
                 location = GridHelper.previousYReference(splitLocation.locationY) + splitLocation.locationX;
                 gridReferences.push(location);
+
                 // Get third location
                 location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
                 gridReferences.push(location);
-                break;
 
+                break;
             case Direction.W:
+
                 // Get first location
                 location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
                 gridReferences.push(location);
+
                 // Get second location
                 location = splitLocation.locationY + GridHelper.previousXReference(splitLocation.locationX);
                 gridReferences.push(location);
+
                 // Get third location
                 location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
                 gridReferences.push(location);
-                break;
 
+                break;
             default:
+
             // Do nothing
         }
 
@@ -90,10 +106,11 @@ export class MovementComponent {
 
     /**
      * Try a random direction then move to that location, if it's blocked, try the other 3 directions or do nothing
-     * @param character wandering character
-     * @param currentLocation character's location
+     *
+     * @param {Character} character The character we want to wander
+     * @param {string} currentLocation The character's current location
      */
-    public wander(character: any, currentLocation: string): void {
+    public wander(character: Character, currentLocation: string): void {
 
         // Break out of this action if moving action is currently underway
         if (this.areaStateService.locations[currentLocation].element.isMovingForwards) {
@@ -105,7 +122,6 @@ export class MovementComponent {
 
         let direction: Direction = GridHelper.getDirectionFromNumber(directionDiceRoll);
 
-        // TODO This seems unnecessary but will need to refactor the method and other dependencies
         let currentLocationDetails = this.areaStateService.splitLocationReference(currentLocation);
 
         let targetLocationDetails = GridHelper.getNextLocation(currentLocationDetails.locationY, currentLocationDetails.locationX, direction, this.areaStateService.locations);
@@ -116,6 +132,7 @@ export class MovementComponent {
 
             this.moveCharacterWithAnimation(currentLocationDetails, targetLocationDetails);
         } else {
+
             // Select a direction to move
             for (let i = 1; i < 4; i++) {
 
@@ -146,7 +163,11 @@ export class MovementComponent {
     /**
      * Cycle through the direction of patrol for character
      * Only move if the next location is free
-     * @returns the newLocation of the character
+     *
+     * @param {Character} character The character we're moving
+     * @param {string} gridLocation The starting location of the character
+     *
+     * @returns {ILocationData}
      */
     public walkRoute(character: Character, gridLocation: string): ILocationData {
 
@@ -161,7 +182,6 @@ export class MovementComponent {
             const splitLocation = this.areaStateService.splitLocationReference(gridLocation);
             const direction = character.directionsForPatrol[character.currentPositionInRoute];
             const newLocation = GridHelper.getNextLocation(splitLocation.locationY, splitLocation.locationX, direction, this.areaStateService.locations);
-
 
             // Call the character's move method
             if (newLocation && newLocation.isLocationFree) {
@@ -194,19 +214,14 @@ export class MovementComponent {
     }
 
     /**
-     * Moves the character towards the starting position of their patrol route
-     */
-    public returnToStartingPosition(character: Character, gridLocation: string, newLocation: string) {
-        this.moveCharacterToLocation(character, gridLocation, newLocation, true);
-    }
-
-    /**
      * If direction is available move the character towards the player's location
-     * @param character The character that will be moving
-     * @param characterLocation The current location of the character in question
-     * @param moveTowardsLocation Whether to more towards or away from target's location
+     *
+     * @param {Character} character The character that we will be moving
+     * @param {string} characterLocation The current location of the character
+     * @param {string} targetLocation The target location of the character
+     * @param {boolean} moveTowardsLocation Whether to more towards or away from target location
      */
-    public moveCharacterToLocation(character: Character, characterLocation: string, targetLocation: string, moveTowardsLocation = true) {
+    public moveCharacterToLocation(character: Character, characterLocation: string, targetLocation: string, moveTowardsLocation = true): void {
 
         // Break out of this action if moving action is currently underway
         if (this.areaStateService.locations[characterLocation].element.isMovingForwards) {
@@ -230,7 +245,13 @@ export class MovementComponent {
         }
     }
 
-    public moveCharacterWithAnimation(splitCharacterLocation: ILocation, targetLocationDetails: ILocation) {
+    /**
+     * Starts animations for movement and moves character
+     *
+     * @param {ILocation} splitCharacterLocation The starting location of the character
+     * @param {ILocation} targetLocationDetails The location we're moving the character to
+     */
+    public moveCharacterWithAnimation(splitCharacterLocation: ILocation, targetLocationDetails: ILocation): void {
         this.beginCharacterMovementAnimation(splitCharacterLocation, targetLocationDetails);
         this.areaStateService.repositionGridElement(targetLocationDetails.locationY + targetLocationDetails.locationX, splitCharacterLocation.locationY + splitCharacterLocation.locationX);
     }
@@ -239,20 +260,14 @@ export class MovementComponent {
      * Start the movement of a character by duplicating character into target location,
      * Set character to animate,
      * Remove the character reference from the previous location
-     * @param {ILocation} currentLocationDetails
-     * @param {ILocation} targetLocationDetails
+     *
+     * @param {ILocation} characterLocation The location of the character
+     * @param {function} additionalWork The function used to callback once animation is complete
      */
-    public beginCharacterMovementAnimation(currentLocationDetails: ILocation, targetLocationDetails: ILocation, additionalWork?: any) {
-        // // Start the movement process
-        // this.areaStateService.setAwaitingArrival(targetLocationDetails);
-        // this.areaStateService.startCharacterMovement(targetLocationDetails.locationY + targetLocationDetails.locationX, currentLocationDetails.locationY + currentLocationDetails.locationX);
+    public beginCharacterMovementAnimation(characterLocation: ILocation, additionalWork?: any): void {
 
         // Call the character's move method
-        this.areaStateService.locations[currentLocationDetails.locationY + currentLocationDetails.locationX].element.moveForwards(() => {
-
-            // // Finish the movement process
-            // this.areaStateService.endCharacterMovement(currentLocationDetails.locationY + currentLocationDetails.locationX);
-            // this.areaStateService.removeAwaitingArrival(targetLocationDetails);
+        this.areaStateService.locations[characterLocation.locationY + characterLocation.locationX].element.moveForwards(() => {
 
             // Perform any extra work that needs to be enacted in the callback
             if (additionalWork) {
@@ -262,15 +277,17 @@ export class MovementComponent {
     }
 
     /**
-     * Get the path to the target location and make the first step towards it
-     * @param character The character that will be moving
-     * @param characterLocation The current location of the character in question
-     * @param targetLocation Whether to more towards or away from player's location
+     * Get the path to the target location and make the first step towards it if possible
+     *
+     * @param {Character} character The character that we will be moving
+     * @param {string} characterLocation The current location of the character in question
+     * @param {string} targetLocation The location we're moving the character towards
      */
-    public moveTowardsLocation(character: Character, characterLocation: string, targetLocation: string) {
+    public moveTowardsLocation(character: Character, characterLocation: string, targetLocation: string): void {
 
         // If we can't get there there's no point in trying
         if (!this.areaStateService.isLocationFree(targetLocation)) {
+
             return;
         }
 
@@ -284,6 +301,7 @@ export class MovementComponent {
 
             // Ranmdoly move if target cannot be gotten to
             this.wander(character, characterLocation);
+
             return;
         }
 
@@ -296,10 +314,11 @@ export class MovementComponent {
 
     /**
      * Get the path to the player location and make the first step towards it
-     * @param character The character that will be moving
-     * @param characterLocation The current location of the character in question
+     *
+     * @param {Character} character The character that will be moving
+     * @param {string} characterLocation The current location of the character
      */
-    public moveTowardsPlayer(character: Character, characterLocation: string) {
+    public moveTowardsPlayer(character: Character, characterLocation: string): void {
         const playerLocation = this.areaStateService.playerLocation;
 
         const splitCurrentLocation = this.areaStateService.splitLocationReference(characterLocation);
@@ -321,15 +340,19 @@ export class MovementComponent {
 
     /**
      * Returns the best direction towards or away from the a new location
-     * @param newLocation The location we're referencing the direction frpm
-     * @param currentLocation The current location of the character to move
-     * @param towardsLocation Whether to more towards or away from new location
+     *
+     * @param {ILocation} newLocation The location we're referencing the direction to
+     * @param {ILocation} currentLocation The current location of the character to change direction
+     * @param {boolean} towardsLocation Whether to get direction towards or away from new location
+     *
+     * @returns {Direction}
      */
     public getDirectionWithRespectToLocation(newLocation: ILocation, currentLocation: ILocation, towardsLocation: boolean): Direction {
         const distanceData = this.areaStateService.getDistanceBetweenLocations(newLocation, currentLocation);
 
         // Calculate which direction is furthest
         if (Math.abs(distanceData.yDistance) >= Math.abs(distanceData.xDistance)) {
+
             // Move vertically
             if (distanceData.yDistance >= 0) {
 
@@ -339,6 +362,7 @@ export class MovementComponent {
                 return towardsLocation ? Direction.N : Direction.S;
             }
         } else {
+
             // Move horizontally
             if (distanceData.xDistance >= 0) {
 
@@ -352,9 +376,12 @@ export class MovementComponent {
 
     /**
      * Moves a character away from a selected location
-     * @param locationToAvoid The location with which we move away from
+     *
+     * @param {Character} character The character we want to move
+     * @param {ILocation} characterLocation The starting location of the character
+     * @param {ILocation} locationToAvoid The location with which we move away from
      */
-    public moveAwayFromLocation(character: Character, characterLocation: ILocation, locationToAvoid: ILocation) {
+    public moveAwayFromLocation(character: Character, characterLocation: ILocation, locationToAvoid: ILocation): void {
         const directionToNewLocation = this.getDirectionWithRespectToLocation(locationToAvoid, characterLocation, false);
 
         character.direction = directionToNewLocation;

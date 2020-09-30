@@ -25,6 +25,11 @@ export class SoundEffectService {
         }
     }
 
+    /**
+     * Sets the volume for all types of sound effects on this service
+     *
+     * @param {number} newVolume The volume we're setting the sound effects to
+     */
     public setVolume(newVolume: number) {
         for (const soundEffectInstance in this.soundEffectInstances) {
             if (this.soundEffectInstances.hasOwnProperty(soundEffectInstance)) {
@@ -34,16 +39,16 @@ export class SoundEffectService {
     }
 
     /**
-     * Start an audio item playing and return the item reference
-     * @param soundName filename reference
+     * Start a sound effect type playing
+     *
+     * @param {SoundEffects} soundName The filename reference
      */
-    public playSound(soundName: SoundEffects) {
-
-
+    public playSound(soundName: SoundEffects): void {
         this.soundEffectInstances[soundName].load();
         this.soundEffectInstances[soundName].play()
             .then(() => {
 
+                // Do Nothing
             }).catch(() => {
 
                 // TODO Swallowing errors

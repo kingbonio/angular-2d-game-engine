@@ -1,5 +1,5 @@
 import { IAreaElement } from "../../game/area/interfaces";
-import { IWeapons } from "../../game/item/interfaces";
+import { IWeaponSlots } from "../../game/item/interfaces";
 import { CharacterState, Direction, ElementClass, ObjectType } from "../../game/shared/enums";
 import { armour, keyItems, weapons } from "../items";
 import { player } from "../characters";
@@ -49,7 +49,7 @@ export default {
                 },
                 weapons: {
                     primary: weapons.basicKnife,
-                } as IWeapons,
+                } as IWeaponSlots,
                 loot: [
                     keyItems.greenDoorKey
                 ],

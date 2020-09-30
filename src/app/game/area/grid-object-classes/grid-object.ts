@@ -2,7 +2,6 @@ import { IInventoryItem } from "../../item/interfaces";
 import { Direction, ElementClass, ObjectType } from "../../shared/enums";
 import { SoundEffects } from "../../../shared/enums";
 import inventoryLocationsDefaults from "../../shared/models/inventoryLocations";
-import { IGridReferences } from "../interfaces";
 import { IInventoryReferences } from "../../item/inventory/interfaces";
 
 export class GridObject {

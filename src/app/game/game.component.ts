@@ -18,7 +18,6 @@ import { AreaStateService } from './shared/services/area-state.service';
 import { DialogueService } from './shared/services/dialogue.service';
 import { GameStateService } from './shared/services/game-state.service';
 import { PlayerStateService } from './shared/services/player-state.service';
-import { Router } from '@angular/router';
 import { BackgroundMusicService } from '../shared/services/background-music.service';
 import { AssetLoaderService } from './shared/services/asset-loader.service';
 
@@ -62,6 +61,7 @@ export class GameComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+
         // Destroy the area component
         this.areaChangeSubscription = this.areaStateService.areaChange.subscribe((newAreaReference) => {
             this.killAreaComponent();
@@ -84,7 +84,7 @@ export class GameComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Opens a modal for information
+     * Opens a modal for the in-game menu
      */
     private openGameMenuModal(): void {
         if (!this.gameMenuModalRef) {
@@ -96,7 +96,6 @@ export class GameComponent implements OnInit, OnDestroy {
             modalConfig.width = '450px';
             modalConfig.data = "game";
             modalConfig.panelClass = "menu-modal";
-
 
             this.gameMenuModalRef = this.dialog.open(GameModalComponent, modalConfig);
 
@@ -120,7 +119,6 @@ export class GameComponent implements OnInit, OnDestroy {
             modalConfig.height = '150px';
             modalConfig.data = "dead";
             modalConfig.panelClass = "dead-modal";
-
 
             this.deadModalRef = this.dialog.open(DeadModalComponent, modalConfig);
 
@@ -158,30 +156,47 @@ export class GameComponent implements OnInit, OnDestroy {
         return this.playerStateService.health + healthBuff;
     }
 
-    public isAreaComponentAlive() {
+    /**
+     * Checks if the area component is currently active
+     *
+     * @returns {boolean}
+     */
+    public isAreaComponentAlive(): boolean {
         return this.areaComponentAlive;
     }
 
-    public isLoadingArea() {
+    /**
+     * Checks if an area is being loaded
+     *
+     * @returns {boolean}
+     */
+    public isLoadingArea(): boolean {
         return this.areaStateService.loadingArea;
     }
 
-    public openGameMenu() {
+    /**
+     * Opens the in game menu
+     */
+    public openGameMenu(): void {
         this.gameStateService.gameMenuOpen = true;
         this.openGameMenuModal();
     }
 
-    private killAreaComponent() {
+    /**
+     * Stops the area component from showing as active
+     */
+    private killAreaComponent(): void {
         this.areaComponentAlive = false;
     }
 
-    private createAreaComponent() {
+    /**
+     * Sets a message on the event queue to show area component as active
+     */
+    private createAreaComponent(): void {
 
         // Update the area state service with the new location before reload
         setTimeout(() => {
-
             this.areaComponentAlive = true;
-
         }, 0);
     }
 

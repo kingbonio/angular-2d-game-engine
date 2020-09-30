@@ -48,7 +48,10 @@ export class GameSettingsService {
 
     /**
      * Returns the action object which can be used to determine outcome for key entry
-     * @param inputKey The key reference to get the action for
+     *
+     * @param {number} inputKey The key reference to get the action for
+     * 
+     * @returns {IUserAction}
      */
     public getCharacterActionType(inputKey: number): IUserAction {
         const characterAction = this.keysMapped[inputKey];
@@ -75,12 +78,18 @@ export class GameSettingsService {
         this.saveToStorage();
     }
 
-    private saveToStorage() {
+    /**
+     * Saves all game settings to storage
+     */
+    private saveToStorage(): void {
         const allSettings = this.gatherAllSettings();
         this.persistentStateService.saveGameSettings(allSettings);
     }
 
-    public setToDefaults() {
+    /**
+     * Pulls and sets defaults to all game settings
+     */
+    public setToDefaults(): void {
         this.keyMap = defaults.defaultKeyMap;
 
         // Set up the quick-access key references
@@ -93,10 +102,10 @@ export class GameSettingsService {
     }
 
     /**
-   * Return the area state for storage
-   * @returns the state data relevant to this service
-   * @returns the state data relevant to this service
-   */
+     * Return theis service's state
+     *
+     * @returns {IGameSettings}
+     */
     public gatherAllSettings(): IGameSettings {
         return {
             showRoomShadow: this.showRoomShadow,
@@ -112,7 +121,8 @@ export class GameSettingsService {
 
     /**
      * Applies state data to this service
-     * @param settings settings from storage to push to this state service
+     *
+     * @param {IGameSettings} settings The settings from storage to push to this state service
      */
     public applyAllSettings(settings: IGameSettings): void {
         for (const setting in settings) {

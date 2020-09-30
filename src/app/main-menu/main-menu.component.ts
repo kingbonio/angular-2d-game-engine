@@ -23,14 +23,22 @@ export class MainMenuComponent {
         this.applicationStateService.gameOpen = false;
     }
 
-    public goToPage(page: string) {
+    /**
+     * Navigates to new page
+     *
+     * @param {string} page Name of the page
+     */
+    public goToPage(page: string): void {
         if (page === "game") {
             this.applicationStateService.canAccessGame = true;
         }
         this.router.navigate([page]);
     }
 
-    public toggleSaveGameSection() {
+    /**
+     * Switches between showing save game component or not
+     */
+    public toggleSaveGameSection(): void {
         this.showSaveGames = !this.showSaveGames;
     }
 }

@@ -5,13 +5,13 @@ import { TimerService } from '../../shared/services/timer.service';
 import { ArmourType, ItemClass } from '../enums';
 import { PotionEffectType } from '../enums/potion-effect-type';
 import { WeaponType } from '../enums/weapon-type';
-import { IArmour, IInventoryItem, IWeapons } from '../interfaces';
+import { IArmourSlots, IInventoryItem, IWeaponSlots } from '../interfaces';
 import { InventoryManagerService } from './inventory-manager.service';
 
 @Injectable()
 export class EquipmentManagerService {
-    public armour: IArmour;
-    public weapons: IWeapons;
+    public armour: IArmourSlots;
+    public weapons: IWeaponSlots;
     public activeItem: IInventoryItem;
     public activeBuff: IInventoryItem | null;
     public buffTimeRemaining: number;

@@ -1,6 +1,6 @@
 import { IInventoryItem } from '.';
 
-export interface IArmour {
+export interface IArmourSlots {
     head: IInventoryItem | null;
     arms: IInventoryItem | null;
     hands: IInventoryItem | null;

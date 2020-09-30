@@ -23,7 +23,10 @@ export class BackgroundMusicService {
         }
     }
 
-    public stopMusic() {
+    /**
+     * Stops playing all types of music on service
+     */
+    public stopMusic(): void {
         for (const backgroundMusicInstance in this.backgroundMusicInstances) {
             if (this.backgroundMusicInstances.hasOwnProperty(backgroundMusicInstance)) {
                 this.backgroundMusicInstances[backgroundMusicInstance].load();
@@ -32,7 +35,12 @@ export class BackgroundMusicService {
         this.currentlyActiveMusic = null;
     }
 
-    public startMusic(musicName: BackgroundMusic) {
+    /**
+     * Starts playing the music type provided
+     *
+     * @param {BackgroundMusic} musicName The reference for the music type
+     */
+    public startMusic(musicName: BackgroundMusic): void {
         if (this.currentlyActiveMusic !== musicName) {
             for (const backgroundMusicInstance in this.backgroundMusicInstances) {
                 if (this.backgroundMusicInstances.hasOwnProperty(backgroundMusicInstance)) {
@@ -46,7 +54,12 @@ export class BackgroundMusicService {
         }
     }
 
-    public setVolume(newVolume: number) {
+    /**
+     * Sets the volume for all types of music on this service
+     *
+     * @param {number} newVolume The volume we're setting the music to
+     */
+    public setVolume(newVolume: number): void {
         for (const backgroundMusicInstance in this.backgroundMusicInstances) {
             if (this.backgroundMusicInstances.hasOwnProperty(backgroundMusicInstance)) {
                 this.backgroundMusicInstances[backgroundMusicInstance].volume = newVolume;

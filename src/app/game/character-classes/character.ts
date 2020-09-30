@@ -1,5 +1,5 @@
 import defaults from "../../shared/defaults";
-import { IArmour, IInventoryItem, IWeapons } from "../item/interfaces";
+import { IArmourSlots, IInventoryItem, IWeaponSlots } from "../item/interfaces";
 import { CharacterState, Direction, ElementClass } from "../shared/enums";
 import { ILocation } from "../shared/interfaces";
 import inventoryLocationsDefaults from "../shared/models/inventoryLocations";
@@ -30,8 +30,8 @@ export class Character {
     pathfindingDestination: ILocation;
     currentState: CharacterState;
     startingState: CharacterState;
-    armour?: IArmour;
-    weapons?: IWeapons;
+    armour?: IArmourSlots;
+    weapons?: IWeaponSlots;
     loot: IInventoryItem[];
     imageFileName: string;
 

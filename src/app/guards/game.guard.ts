@@ -12,6 +12,14 @@ export class GameGuard implements CanActivate {
         public router: Router
     ) {
     }
+    /**
+     * Determines if the game can be loaded
+     *
+     * @param {ActivatedRouteSnapshot} next Unused
+     * @param {RouterStateSnapshot} state Unused
+     *
+     * @returns {boolean}
+     */
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         if (this.applicationStateService.canAccessGame) {
 
