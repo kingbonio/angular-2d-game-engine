@@ -32,7 +32,7 @@ export class Enemy extends Character {
     public currentPositionInRoute: number;
     public currentHuntingDuration: number;
     public maxHuntingDuration: number;
-    public currentPathToDestination: any[]; // TODO PriorityQueue
+    public currentPathToDestination: any[];
     public pathfindingDestination: ILocation;
     public currentState: CharacterState;
     public startingState: CharacterState;

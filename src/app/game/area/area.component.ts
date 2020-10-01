@@ -202,6 +202,7 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
         if (this.areaStateService.loadingSavedGame || this.areaStateService.loadingExistingArea) {
 
             if (this.areaStateService.loadingExistingArea) {
+
                 // Get the existing room config
                 const newLocations: IGridReferences = this.areaStateService.getAreaState(this.areaStateService.currentArea);
 
@@ -221,6 +222,7 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
             this.rebuildArea();
 
         } else {
+
             // get the config from the provider
             this.areaConfig = this.areaConfigProviderService.getAreaConfig(this.areaStateService.currentArea);
             this.areaExits = this.areaConfigProviderService.getAreaExits(this.areaStateService.currentArea);
@@ -232,6 +234,7 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
             // TODO This won't work, needs moving into the loop with a check on player
             this.playerStateService.locationY = this.areaConfig.areaElements[0].startingPositionY;
             this.playerStateService.locationX = this.areaConfig.areaElements[0].startingPositionX;
+
             // Set the monsters
             GridHelper.addElementsToGrid(this.areaConfig.areaElements, this.areaStateService.locations);
 

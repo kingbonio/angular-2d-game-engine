@@ -1,4 +1,3 @@
-// TODO This might be better as an enum
 export default {
     moveNorth: "Move North",
     moveEast: "Move East",

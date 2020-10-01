@@ -115,7 +115,7 @@ export class BattleCalculatorService {
 
         // Reduce the final amount if the target is guarding
         if (isGuarding) {
-            damageTaken = Math.floor(damageTaken * defaults.battleMultipliers.guardDivider);
+            damageTaken = Math.floor(damageTaken * defaults.battleMultipliers.guardMultiplier);
         }
 
         return damageTaken;

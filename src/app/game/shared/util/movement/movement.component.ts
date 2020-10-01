@@ -270,7 +270,7 @@ export class MovementComponent {
         this.areaStateService.locations[characterLocation.locationY + characterLocation.locationX].element.moveForwards(() => {
 
             // Perform any extra work that needs to be enacted in the callback
-            if (additionalWork) {
+            if (typeof additionalWork === "function") {
                 additionalWork();
             }
         });

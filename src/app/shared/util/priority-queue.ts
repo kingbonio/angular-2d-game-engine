@@ -5,7 +5,7 @@ export interface IPriorityItem {
 export class PriorityQueue {
     private _heap: any[];
     private _comparator: any;
-    private top = 0;
+    private topIndex = 0;
 
     constructor() {
         this._heap = [];
@@ -16,34 +16,39 @@ export class PriorityQueue {
 
     /**
      * Get the current size of the heap
-     * @returns { number } The heap size
+     *
+     * @returns {number}
      */
-    get size() {
+    get size(): number {
         return this._heap.length;
     }
 
     /**
      * Get whether or not the heap is empty
-     * @returns { boolean } If heap is empty
+     *
+     * @returns {boolean}
      */
-    public isEmpty() {
+    public isEmpty(): boolean {
         return this.size === 0;
     }
 
     /**
      * Get the first item in the queue
-     * @returns { any } The stored item at index 0
+     *
+     * @returns {IPriorityItem}
      */
-    public peek() {
-        return this._heap[this.top];
+    public peek(): IPriorityItem {
+        return this._heap[this.topIndex];
     }
 
     /**
      * Adds an item to the bottom of the heap and bubbles it up if necessary
-     * @param { any[] } values The items to add to the heap
-     * @returns { number } The heap size
+     *
+     * @param {IPriorityItem[]} values The items to add to the heap
+     *
+     * @returns {number}
      */
-    public push(...values) {
+    public push(...values: IPriorityItem[]) {
         values.forEach((value: IPriorityItem) => {
 
             // Push item to the end of the heap array
@@ -58,32 +63,28 @@ export class PriorityQueue {
 
     /**
      * Removes and returns the first item in the queue (index 0) and reshuffles the heap upwards
-     * @returns { any } The item from the front of the queue
+     *
+     * @returns {IPriorityItem}
      */
-    public pop() {
+    public pop(): IPriorityItem {
 
         // Get the first item without removing it
         const poppedValue = this.peek();
 
         // Get the index of the bottom of the heap
-        const bottom = this.size - 1;
+        const bottomIndex = this.size - 1;
 
         // Only switch if the item's priority is higher than its parent
-        // TODO item.priority should be used instead
-        if (bottom > this.top) {
+        if (bottomIndex > this.topIndex) {
 
             // Perform the switch of the locations of the items to reorder
-            this._swap(this.top, bottom);
+            this._swap(this.topIndex, bottomIndex);
         }
 
         // Remove the last item in the queue as we already have poppedValue
-        // TODO This may not work as poppedValue would be a reference to the one in the array and may die with the pop action
-        // TODO Maybe just reassign it here poppedValue = this._heap.pop()...
         this._heap.pop();
 
-        // TODO come back to this
-        // TODO Why would it sift down
-        //
+        // Reshuffle the heap
         this._siftDown();
 
         return poppedValue;
@@ -91,15 +92,16 @@ export class PriorityQueue {
 
     /**
      * Swaps out the item at the front of the queue and reshuffles it down if necessary
-     * @param { any } value The item to put into the queue
+     *
+     * @param {IPriorityItem} value The item to put into the queue
      */
-    public replace(value) {
+    public replace(value: IPriorityItem): IPriorityItem {
 
         // Get reference to the first item in the queue
         const replacedValue = this.peek();
 
         // Replace the first item with the new one
-        this._heap[this.top] = value;
+        this._heap[this.topIndex] = value;
 
         // Perform  a shuffle down if necessary
         this._siftDown();
@@ -109,62 +111,73 @@ export class PriorityQueue {
 
     /**
      * Gets the parent index of a given index in the heap
-     * @param { number } i The starting index
-     * @returns { number } The index of the parent item
+     *
+     * @param {number} i The starting index
+     *
+     * @returns {number}
      */
-    private _parent(i: any) {
+    private _parent(i: number): number {
+
         return ((i + 1) >>> 1) - 1;
     }
 
     /**
      * Gets the left child index of a given index in the heap
-     * @param { number } i The starting index
-     * @returns { number } The index of the left child item
+     *
+     * @param {number} i The starting index
+     *
+     * @returns {number}
      */
-    private _left(i: any) {
+    private _left(i: number): number {
+
         return (i << 1) + 1;
     }
 
     /**
      * Gets the right child index of a given index in the heap
-     * @param { number } i The starting index
-     * @returns { number } The index of the right child item
+     *
+     * @param {number} i The starting index
+     *
+     * @returns {number}
      */
-    private _right(i: any) {
+    private _right(i: number) {
+
         return (i + 1) << 1;
     }
 
     /**
      * Get whether the item's priority is greater than another or not
-     * @param { number } i The index of the first item
-     * @param { number } j The index of the second item
-     * @returns { boolean } The outcome of the comparison
+     *
+     * @param {number} i The index of the first item
+     * @param {number} j The index of the second item
+     *
+     * @returns {boolean}
      */
-    private _greater(i, j) {
+    private _greater(i: number, j: number): boolean {
 
-        // TODO This needs to check the priority property on the object
         return this._comparator(this._heap[i], this._heap[j]);
     }
 
     /**
      * Switches the locations of two items in the heap
-     * @param { number } i The index of the first item
-     * @param { number } j The index of the second item
+     *
+     * @param {number} i The index of the first item
+     * @param {number} j The index of the second item
      */
-    private _swap(i, j) {
+    private _swap(i: number, j: number): void {
         [this._heap[i], this._heap[j]] = [this._heap[j], this._heap[i]];
     }
 
     /**
      * Reshuffles the last item in the heap upwards until the heap is again ordered
      */
-    private _siftUp() {
+    private _siftUp(): void {
 
         // Get the last item in the heap
         let node = this.size - 1;
 
         // Cycle over the items all the way down the heap and switch any items that aren't ordered
-        while (node > this.top && this._greater(node, this._parent(node))) {
+        while (node > this.topIndex && this._greater(node, this._parent(node))) {
 
             // Switch positions with the parent node
             this._swap(node, this._parent(node));
@@ -177,10 +190,10 @@ export class PriorityQueue {
     /**
      * Reshuffles the heap after removing from the front of the queue
      */
-    private _siftDown() {
+    private _siftDown(): void {
 
         // Start with the front of the queue
-        let node = this.top;
+        let node = this.topIndex;
 
         // Restrict the loop to only when we are not at the bottom of the heap and one of the current item's children is of higher priority
         while (
@@ -197,5 +210,4 @@ export class PriorityQueue {
             node = maxChild;
         }
     }
-
 }
