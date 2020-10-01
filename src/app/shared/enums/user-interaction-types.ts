@@ -1,6 +1,6 @@
 export enum UserInteractionTypes {
-      attack = "attack",
-      guard = "guard",
-      interact = "interact",
-      speak = "speak",
+    attack = "attack",
+    guard = "guard",
+    interact = "interact",
+    speak = "speak",
 }

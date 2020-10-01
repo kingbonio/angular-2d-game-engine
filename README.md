@@ -22,24 +22,24 @@ Run `npm install` in the repo folder and then `ng serve`, this will launch the e
 
 ### Movement:
 
-      W: Move north
-      D: Move east
-      S: Move south
-      A: Move west
+    W: Move north
+    D: Move east
+    S: Move south
+    A: Move west
 
 ### Direction:
 
-      W: Face north
-      D: Face east
-      S: Face south
-      A: Face west
+    W: Face north
+    D: Face east
+    S: Face south
+    A: Face west
 
 ### Interaction:
 
-      Q:     Speak
-      E:     Interact
-      Space: Attack
-      Ctrl:  Defend
+    Q:     Speak
+    E:     Interact
+    Space: Attack
+    Ctrl:  Defend
 
 
 # Save Games
@@ -56,10 +56,16 @@ https://www.youtube.com/channel/UCmU68D0OK6fXo351hs3qqjQ
 
 # Change Log
 
-v0.13.0a
+v0.14.0a
 
-* Moved blood and other images into files in assets
-* Updated the character state icon to the bottom right with new images from files in assets
+* Tidied config files so easier to implement characters/grid objects
+* Added the "running away" character state in cases of low health
+* Added volume controls to settings
+* Tidied the settings menu and included the option to hide handheld controls
+* Moved battle indicator to area border
+* Updated area exits to be custom images
+* Improved area exits to open opposite side when opened
+
 
 
 ## Background Music credits
@@ -85,3 +91,5 @@ v0.13.0a
 * https://www.flaticon.com/free-icon/eye_3077287
 * https://www.flaticon.com/free-icon/eye_2948075
 * https://www.flaticon.com/free-icon/witness_2210317
+* https://www.flaticon.com/free-icon/running-shoe_926188
+* http://www.photoshoptextures.com/

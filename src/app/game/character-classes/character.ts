@@ -1,158 +1,162 @@
 import defaults from "../../shared/defaults";
-import { IArmour, IInventoryItem, IWeapons } from "../item/interfaces";
+import { IArmourSlots, IInventoryItem, IWeaponSlots } from "../item/interfaces";
 import { CharacterState, Direction, ElementClass } from "../shared/enums";
 import { ILocation } from "../shared/interfaces";
+import inventoryLocationsDefaults from "../shared/models/inventoryLocations";
+import { IInventoryReferences } from "../item/inventory/interfaces";
 
 export class Character {
-      id: string;
-      name: string;
-      currentHp: number;
-      maxHp: number;
-      xp: number;
-      isAsleep: boolean;
-      isAngry: boolean;
-      isAttacking: boolean;
-      isGuarding: boolean;
-      isReceivingAttack: boolean;
-      isMovingForwards: boolean;
-      baseDamage: number;
-      pauseCounter: number;
-      maxPauseDuration: number;
-      type: ElementClass;
-      direction: Direction;
-      startingDirection: Direction;
-      startingLocation: string;
-      patrolArea: boolean;
-      directionsForPatrol: Direction[];
-      startingTargetLocation: string;
-      currentPositionInRoute: number;
-      currentHuntingDuration: number;
-      maxHuntingDuration: number;
-      currentPathToDestination: any[]; // TODO PriorityQueue
-      pathfindingDestination: ILocation;
-      currentState: CharacterState;
-      startingState: CharacterState;
-      armour?: IArmour;
-      weapons?: IWeapons;
-      loot: IInventoryItem[];
-      level: number;
-      imageFileName: string;
+    id: string;
+    name: string;
+    currentHp: number;
+    maxHp: number;
+    isAttacking: boolean;
+    isGuarding: boolean;
+    isReceivingAttack: boolean;
+    isMovingForwards: boolean;
+    baseDamage: number;
+    pauseCounter: number;
+    attackPauseDuration: number;
+    type: ElementClass;
+    direction: Direction;
+    startingDirection: Direction;
+    startingLocation: string;
+    directionsForPatrol: Direction[];
+    startingTargetLocation: string;
+    currentPositionInRoute: number;
+    currentHuntingDuration: number;
+    maxHuntingDuration: number;
+    currentPathToDestination: any[];
+    pathfindingDestination: ILocation;
+    currentState: CharacterState;
+    startingState: CharacterState;
+    armour?: IArmourSlots;
+    weapons?: IWeaponSlots;
+    loot: IInventoryItem[];
+    imageFileName: string;
 
-      inventoryLocations: any;
-      locationKeys: any;
-      this: any;
+    inventoryLocations: IInventoryReferences;
+    locationKeys: any;
 
-      constructor() {
-            this.inventoryLocations = {
-                  a1: null,
-                  a2: null,
-                  a3: null,
-                  a4: null,
-                  a5: null,
-                  b1: null,
-                  b2: null,
-                  b3: null,
-                  b4: null,
-                  b5: null,
-                  c1: null,
-                  c2: null,
-                  c3: null,
-                  c4: null,
-                  c5: null,
-                  d1: null,
-                  d2: null,
-                  d3: null,
-                  d4: null,
-                  d5: null,
-                  e1: null,
-                  e2: null,
-                  e3: null,
-                  e4: null,
-                  e5: null,
-            };
-            this.locationKeys = Object.keys;
-      }
+    constructor() {
+        this.inventoryLocations = this.cloneInventoryLocations(inventoryLocationsDefaults);
+        this.locationKeys = Object.keys;
+    }
 
-      get isPaused(): boolean {
-            return (this.pauseCounter <= this.maxPauseDuration);
-      }
+    /**
+     * Returns whether the character is paused for attack
+     *
+     * @returns {boolean}
+     */
+    get isPaused(): boolean {
+        return (this.pauseCounter <= this.attackPauseDuration);
+    }
 
-      /**
-       * Checks to see if there are any objects in the inventory and returns false if there are any
-       */
-      get hasNoLoot(): boolean {
-            let _isEmpty = true;
+    /**
+     * Checks to see if there are any objects in the inventory and returns false if there are any
+     *
+     * @returns {boolean}
+     */
+    get hasNoLoot(): boolean {
+        let _isEmpty = true;
 
-            for (const slot in this.inventoryLocations) {
+        for (const slot in this.inventoryLocations) {
 
-                  // Check if the key exists and the slot contains an element
-                  if (this.inventoryLocations.hasOwnProperty(slot) && this.inventoryLocations[slot]) {
-                        _isEmpty = false;
-                        break;
-                  }
+            // Check if the key exists and the slot contains an element
+            if (this.inventoryLocations.hasOwnProperty(slot) && this.inventoryLocations[slot]) {
+                _isEmpty = false;
+                break;
             }
+        }
 
-            return _isEmpty;
-      }
+        return _isEmpty;
+    }
 
-      public wait() {
-            this.pauseCounter++;
-      }
+    /**
+     * Adds a count to the total paused time for the character
+     */
+    public wait(): void {
+        this.pauseCounter++;
+    }
 
-      public resetPauseCounter() {
-            this.pauseCounter = 0;
-      }
+    /**
+     * Sets the amount of time the character's action is paused to 0
+     */
+    public resetPauseCounter(): void {
+        this.pauseCounter = 0;
+    }
 
-      public guard() {
-            this.isGuarding = true;
+    /**
+     * Sets the character to guard state and sets a timer to remove this state
+     */
+    public guard(): void {
+        this.isGuarding = true;
 
-            // Clear the attack animation once it's played out
-            setTimeout(() => {
-                  this.isGuarding = false;
-            }, defaults.animations.guardDurationMilliseconds);
-      }
+        // Clear the attack animation once it's played out
+        setTimeout(() => {
+            this.isGuarding = false;
+        }, defaults.animations.guardDurationMilliseconds);
+    }
 
-      public attack() {
+    /**
+     * Sets the character to attack state after an initial setTimeout
+     */
+    public attack(): void {
+        this.isAttacking = false;
+
+        // Allow the page to rerender before starting animation
+        setTimeout(() => {
+            this.isAttacking = true;
+        }, 0);
+
+        // Clear the attack animation once it's played out
+        setTimeout(() => {
             this.isAttacking = false;
+        }, defaults.animations.attackDurationMilliseconds);
 
-            // Allow the page to rerender before starting animation
-            setTimeout(() => {
-                  this.isAttacking = true;
-            }, 0);
+    }
 
-            // Clear the attack animation once it's played out
-            setTimeout(() => {
-                  this.isAttacking = false;
-            }, defaults.animations.attackDurationMilliseconds);
+    /**
+     * Sets the character to receive attack state after an initial setTimeout
+     */
+    public receiveAttack(): void {
+        this.isReceivingAttack = false;
 
-      }
+        // Allow the page to rerender before starting animation
+        setTimeout(() => {
+            this.isReceivingAttack = true;
+        }, 0);
 
-      public receiveAttack() {
+        // Clear the attack animation once it's played out
+        setTimeout(() => {
             this.isReceivingAttack = false;
+        }, defaults.animations.receiveAttackDurationMilliseconds);
+    }
 
-            // Allow the page to rerender before starting animation
-            setTimeout(() => {
-                  this.isReceivingAttack = true;
-            }, 0);
+    /**
+     * Sets the character to moving forward state and sets a timer to remove this state
+     *
+     * @param { function } finishMovementCallback
+     */
+    public moveForwards(finishMovementCallback: any): void {
+        this.isMovingForwards = true;
 
-            // Clear the attack animation once it's played out
-            setTimeout(() => {
-                  this.isReceivingAttack = false;
-            }, defaults.animations.receiveAttackDurationMilliseconds);
-      }
+        // Clear the attack animation once it's played out
+        setTimeout(() => {
+            this.isMovingForwards = false;
+            finishMovementCallback();
+        }, defaults.animations.movementDurationMilliseconds);
+    }
 
-      /**
-       * Start and prepare a finishing callback for the character moving forwards
-       * @param { function } finishMovementCallback
-       */
-      public moveForwards(finishMovementCallback: any) {
-            this.isMovingForwards = true;
-
-            // Clear the attack animation once it's played out
-            setTimeout(() => {
-                  this.isMovingForwards = false;
-                  finishMovementCallback();
-            }, defaults.animations.movementDurationMilliseconds);
-      }
+    /**
+     * Returns a cloned version of the locations object provided
+     *
+     * @param {IInventoryReferences} sourceInventoryLocations The locations object we are cloning
+     *
+     * @returns {IInventoryReferences}
+     */
+    public cloneInventoryLocations(sourceInventoryLocations: IInventoryReferences): IInventoryReferences {
+        return JSON.parse(JSON.stringify(sourceInventoryLocations));
+    }
 
 }

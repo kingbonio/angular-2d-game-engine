@@ -1,7 +1,7 @@
-import { IArmour, IInventoryItem, IWeapons } from "../../item/interfaces";
+import { IArmourSlots, IInventoryItem, IWeaponSlots } from "../../item/interfaces";
 
 export interface IEquipmentStateData {
-      armour: IArmour;
-      weapons: IWeapons;
-      activeItem: IInventoryItem;
+    armour: IArmourSlots;
+    weapons: IWeaponSlots;
+    activeItem: IInventoryItem;
 }

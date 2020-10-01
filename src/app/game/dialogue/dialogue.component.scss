@@ -1,28 +1,27 @@
 .dialogue-text {
     height: 172px;
     overflow-y: scroll;
-
 }
 
 .message-container {
 
-      &.enemy {
-            color: #ff9999;
-      }
+    &.enemy {
+        color: #ff9999;
+    }
 
-      &.npc {
-            color: #46b946;
-      }
+    &.npc {
+        color: #46b946;
+    }
 
-      &.area-tips {
-            color: #b9b946;
-      }
+    &.area-tips {
+        color: #b9b946;
+    }
 
-      .character-name {
-            color: inherit;
-      }
+    .character-name {
+        color: inherit;
+    }
 }
 
 .dialogue {
-      display: inline-block
+    display: inline-block
 }

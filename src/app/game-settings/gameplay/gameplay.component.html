@@ -1,16 +1,19 @@
 <div class="gameplay">
-      <div class="settings-section">
-            <div class="gameplay-title">Gameplay Settings</div>
-            <div class="gameplay-settings">
-                  <input type="checkbox" [(ngModel)]="gameSettingsService.showRoomShadow">Show room shadow
-            </div>
-      </div>
-      <div class="footer-section">
-            <div class="save-settings">
-                  <button (click)="saveSettings()">Save settings</button>
-            </div>
-            <div class="restore-defaults">
-                  <button (click)="resetToDefaults()">Restore defaults</button>
-            </div>
-      </div>
+    <div class="gameplay-section">
+        <div class="gameplay-title">Gameplay Settings</div>
+        <div class="gameplay-settings">
+            <input type="checkbox" [(ngModel)]="showControls">Show Handheld Controls
+        </div>
+    </div>
+    <div class="footer-section">
+        <div class="main-menu">
+            <button (click)="loadMainMenu()">Back To Main Menu</button>
+        </div>
+        <div class="save-settings">
+            <button (click)="saveSettings()">Apply settings</button>
+        </div>
+        <div class="restore-defaults">
+            <button (click)="setDefaults()">Restore defaults</button>
+        </div>
+    </div>
 </div>

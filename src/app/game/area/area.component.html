@@ -1,61 +1,59 @@
 <div class="grid-container" [ngClass]="{ 'show-room-shadow': gameSettingsService.showRoomShadow, 'battle-mode': gameStateService.battleMode }">
-      <div *ngFor="let key of areaStateService.locationKeys(areaStateService.locations)" class="grid-box"
-            [ngStyle]="{ 'background-image': 'url(' + getFloorImageSource(areaConfig.floorImageFileName) + ')'}">
-            <!-- <span style="position: absolute; color: white; z-index: 9999999"> {{ key }} </span> -->
-            <!-- <div *ngIf="element">Has element</div> -->
+    <div *ngFor="let key of areaStateService.locationKeys(areaStateService.locations)" class="grid-box"
+        [ngStyle]="{ 'background-image': 'url(' + getFloorImageSource(areaConfig.floorImageFileName) + ')'}">
 
-            <div class="ground-item" *ngIf="areaStateService.locations[key].groundItem" [ngClass]="areaStateService.locations[key].groundItem.name">
-                  
+        <div class="ground-item" *ngIf="areaStateService.locations[key].groundItem" [ngClass]="areaStateService.locations[key].groundItem.name">
+            
+        </div>
+
+        <div class="floor-style" [ngClass]="areaStateService.locations[key].floorStyle">
+
+        </div>
+
+        <div class="area-exit" *ngIf="areaStateService.locations[key].areaExit" [ngClass]="getLocationExitClass(key, areaStateService.locations[key])">
+            <div class="door">
+                <div class="left-door" [ngClass]="[areaStateService.locations[key].areaExit.status, areaStateService.locations[key].areaExit.keyColourNeeded]"></div>
+                <div class="right-door" [ngClass]="[areaStateService.locations[key].areaExit.status, areaStateService.locations[key].areaExit.keyColourNeeded]"></div>
             </div>
+        </div>
 
-            <div class="floor-style" [ngClass]="areaStateService.locations[key].floorStyle">
+        <div class="grid-item" *ngIf="areaStateService.locations[key].element"
+            [ngClass]="getDirectionClass(areaStateService.locations[key].element)">
 
-            </div>
-
-            <div class="area-exit" *ngIf="areaStateService.locations[key].areaExit" [ngClass]="locationExit(key, areaStateService.locations[key])">
-                  <div class="door">
-                        <div class="left-door" [ngClass]="[areaStateService.locations[key].areaExit.status, areaStateService.locations[key].areaExit.keyColourNeeded]"></div>
-                        <div class="right-door" [ngClass]="[areaStateService.locations[key].areaExit.status, areaStateService.locations[key].areaExit.keyColourNeeded]"></div>
-                  </div>
-            </div>
-
-            <div class="grid-item" *ngIf="areaStateService.locations[key].element"
-                  [ngClass]="getDirectionClass(areaStateService.locations[key].element)">
-
-                  <div class="animation-layer"
-                        [ngClass]="{ 'moving-forwards': areaStateService.locations[key].element.isMovingForwards }">
-                        <div class="element">
-                              <div *ngIf="areaStateService.locations[key].element.type === ElementClass.object"
-                                    class="object">
-                                    <img [src]="getGridElementImageSource(areaStateService.locations[key].element)"
-                                          title="{{areaStateService.locations[key].element.name}}" />
-                              </div>
-            
-                              <div *ngIf="areaStateService.locations[key].element.type !== ElementClass.object"
-                                    class="character-type"
-                                    [ngStyle]="{ 'background-image': 'url(' + getGridElementImageSource(areaStateService.locations[key].element) + ')'}">
-            
-            
-            
-                                    <div *ngIf="areaStateService.locations[key].element.isAttacking" class="swing-weapon">
-                                          <!-- Is swinging their weapon -->
-                                    </div>
-                                    <div *ngIf="areaStateService.locations[key].element.isGuarding" class="guard">
-                                          <!-- Is guarding from attacks -->
-                                    </div>
-                                    <div *ngIf="areaStateService.locations[key].element.isReceivingAttack" class="receive-attack">
-                                          <!-- Is receiving an attack -->
-                                    </div>
-                              </div>
+            <div class="animation-layer"
+                [ngClass]="{ 'moving-forwards': areaStateService.locations[key].element.isMovingForwards }">
+                <div class="element">
+                    <div *ngIf="areaStateService.locations[key].element.type === ElementClass.object"
+                        class="object">
+                        <img [src]="getGridElementImageSource(areaStateService.locations[key].element)"
+                            title="{{areaStateService.locations[key].element.name}}" />
+                    </div>
+        
+                    <div *ngIf="areaStateService.locations[key].element.type !== ElementClass.object"
+                        class="character-type"
+                        [ngStyle]="{ 'background-image': 'url(' + getGridElementImageSource(areaStateService.locations[key].element) + ')'}">
+        
+        
+        
+                        <div *ngIf="areaStateService.locations[key].element.isAttacking" class="swing-weapon">
+                            <!-- Is swinging their weapon -->
                         </div>
-                        <div *ngIf="areaStateService.locations[key].element && areaStateService.locations[key].element.type !== ElementClass.object"
-                              class="overlay {{ getDirectionClass(areaStateService.locations[key].element) }}"
-                              [ngClass]="getDeadClass(areaStateService.locations[key].element)">
-                              <span class="character-state" [ngClass]="CharacterState[areaStateService.locations[key].element.currentState]">
-                              </span>
+                        <div *ngIf="areaStateService.locations[key].element.isGuarding" class="guard">
+                            <!-- Is guarding from attacks -->
                         </div>
-                  </div>
+                        <div *ngIf="areaStateService.locations[key].element.isReceivingAttack" class="receive-attack">
+                            <!-- Is receiving an attack -->
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="areaStateService.locations[key].element && areaStateService.locations[key].element.type !== ElementClass.object"
+                    class="overlay {{ getDirectionClass(areaStateService.locations[key].element) }}"
+                    [ngClass]="getDeadClass(areaStateService.locations[key].element)">
+                    <span class="character-state" [ngClass]="CharacterState[areaStateService.locations[key].element.currentState]">
+                    </span>
+                </div>
             </div>
+        </div>
 
-      </div>
+    </div>
 </div>

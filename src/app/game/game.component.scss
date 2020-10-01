@@ -1,8 +1,12 @@
 .outer-container {
     position: relative;
-    width: 1174px;
+    width: 762px;
     float: none;
     margin: auto;
+    
+    &.show-controls {
+        width: 1174px;
+    }
 
     .direction-controls {
         width: 200px;
@@ -11,7 +15,7 @@
         float: left;
         border: solid #d1cdc6 2px;
         color: white;
-        
+      
         .direction-buttons {
             width: 170px;
             height: 170px;
@@ -72,21 +76,20 @@
             .loading-overlay {
                 position: fixed;
                 z-index: 11;
-                // TODO Fix this
                 width: 580px;
                 height: 580px;
                 background-color: black;
                 
                 .loading-text {
-                    position: absolute;
-                    width: 200px;
-                    height: 30px;
-                    left: 50%;
-                    top: 50%;
-                    transform: translate(-50%, -50%);
-                    color: white;
-                    font-size: 30px;
-                    text-align: centre;
+                position: absolute;
+                width: 200px;
+                height: 30px;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                color: white;
+                font-size: 30px;
+                text-align: centre;
                 }
             }
             
@@ -97,6 +100,11 @@
                 height: 560px;
                 border: solid grey 10px;
                 border-style: inset;
+
+                &.battle-mode {
+                border: solid red 10px;
+                border-style: inset;
+                }
             }
         }
         
@@ -128,19 +136,19 @@
             .menu-button {
                 width: 60px;
                 height: 60px;
-                background-color: white;
                 position: absolute;
                 bottom: 10px;
                 right: 10px;
-                cursor: pointer;
-                
-                .menu-icon {
-                    text-align: center;
-                    color: #000;
-                    // TODO Bad juju
-                    line-height: 3.7;
-                    border: solid #121010 2px;
-                }
+                text-align: center;
+                line-height: 3.7;
+            }
+
+            .paused {
+                width: 60px;
+                height: 27px;
+                position: absolute;
+                bottom: 0px;
+                right: 80px;
             }
         }
         
@@ -151,7 +159,7 @@
             margin: 3px;
         }
     }
-    
+        
     .interaction-controls {
         width: 200px;
         height: 759px;
@@ -182,7 +190,7 @@
                 font-weight: 500;
 
                 .button-text {
-                    -webkit-user-select: none; /* Safari */        
+                    -webkit-user-select: none; /* Safari */      
                     -moz-user-select: none; /* Firefox */
                     -ms-user-select: none; /* IE10+/Edge */
                     user-select: none; /* Standard */

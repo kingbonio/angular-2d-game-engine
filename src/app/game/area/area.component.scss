@@ -1,367 +1,357 @@
 .grid-container {
-      width: 560px;
-      display: flex;
-      flex-wrap: wrap;
+    width: 560px;
+    display: flex;
+    flex-wrap: wrap;
 
-      &.show-room-shadow {
+    &.show-room-shadow {
 
-            -moz-box-shadow:    inset 0 0 20px 10px #000000;
-            -webkit-box-shadow: inset 0 0 20px 10px #000000;
-            box-shadow:         inset 0 0 20px 10px #000000;
+        -moz-box-shadow:    inset 0 0 20px 10px #000000;
+        -webkit-box-shadow: inset 0 0 20px 10px #000000;
+        box-shadow:       inset 0 0 20px 10px #000000;
+        
+        &.battle-mode {
+            -moz-box-shadow:    inset 0 0 20px 10px #c20000;
+            -webkit-box-shadow: inset 0 0 20px 10px #c20000;
+            box-shadow:       inset 0 0 20px 10px #c20000;
+        }
+    }
+
+    .grid-box {
+        width: 80px;
+        height: 80px;
+        position: relative;
+        
+        .area-exit {
+            z-index: 1;
+            position: absolute;
             
-            &.battle-mode {
-                  -moz-box-shadow:    inset 0 0 20px 10px #c20000;
-                  -webkit-box-shadow: inset 0 0 20px 10px #c20000;
-                  box-shadow:         inset 0 0 20px 10px #c20000;
-
+            &.northExit, &.eastExit, &.southExit, &.westExit {
+                border-color: red;
+                background-image: inherit;
+                position: absolute;
+                overflow: hidden;
+                width: 100%;
+                height: 10px;
             }
-      }
-
-      .grid-box {
-            // z-index: -1;
-            width: 80px;
-            height: 80px;
-            position: relative;
             
-            .area-exit {
-                  z-index: 1;
-                  position: absolute;
-                  
-                  &.northExit, &.eastExit, &.southExit, &.westExit {
-                        border-color: red;
-                        background-image: inherit;
-                        position: absolute;
-                        overflow: hidden;
-                        // width: 100%;
-                        // height: 100%;
-                        // border-color: red;
-                        // background-image: url("assets/images/grid-decoration/area-exit.png");
-                        width: 100%;
-                        height: 10px;
-                  }
-                  
-                  &.northExit {
-                        top: -10px;
+            &.northExit {
+                top: -10px;
+                transform: rotate(0deg);
+            }
+            
+            &.eastExit {
+                left: 45px;
+                top: 35px;
+                transform: rotate(90deg);
+            }
+            
+            &.southExit {
+                bottom: -10px;
+                transform: rotate(180deg);
+            }
+            
+            &.westExit {
+                left: -45px;
+                top: 35px;
+                transform: rotate(270deg);
+            }
+        }
+
+        .door {
+
+            .left-door, .right-door {
+                position: absolute;
+                width: 50%;
+                height: 10px;
+                background-color: #FFF;
+                
+                &.green {
+                    background-color: #22B14C;
+                }
+                
+                &.red {
+                    background-color: #FF3C41;
+                }
+                
+                &.blue {
+                    background-color: blue;
+                }
+                
+                &.yellow {
+                    background-color: yellow;
+                }
+            }
+
+            @-moz-keyframes openLeftDoor { 100% { -moz-transform: translate(-40px, 0px); } }
+            @-webkit-keyframes openLeftDoor { 100% { -webkit-transform: translate(-40px, 0px); } }
+            @keyframes openLeftDoor { 100% { -webkit-transform: translate(-40px, 0px); } }
+
+            @-moz-keyframes openRightDoor { 100% { -moz-transform: translate(40px, 0px); } }
+            @-webkit-keyframes openRightDoor { 100% { -webkit-transform: translate(40px, 0px); } }
+            @keyframes openRightDoor { 100% { -webkit-transform: translate(40px, 0px); } }
+            
+            .left-door {
+
+                left: 0px;
+                background-image: url("assets/images/area-exits/door-left.png");
+
+                &.opening {
+                    animation-name: openLeftDoor;
+                    animation-fill-mode:forwards;
+                    animation-duration: 2s;
+                }
+
+                &.open {
+                    display: none;
+                }
+            }
+
+            .right-door {
+                
+                right: 0px;
+                background-image: url("assets/images/area-exits/door-right.png");
+
+                &.opening {
+                    animation-name: openRightDoor;
+                    animation-fill-mode:forwards;
+                    animation-duration: 2s;
+                }
+
+                &.open {
+                    display: none;
+                }
+            }
+        }
+        
+        .floor-style {
+            &.blood {
+                z-index: 0;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-image: url("assets/images/ground-effects/blood.png");
+            }
+        }
+        
+        .ground-item {
+            &.loot-bag {
+                z-index: 1;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                border-color: red;
+                background-image: url("assets/images/ground-effects/loot-bag.png");
+            }
+        }
+
+        .grid-item {
+            z-index: 11;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+
+            &.direction-n {
+                transform: rotate(0deg);
+            }
+            
+            &.direction-e {
+                transform: rotate(90deg);
+            }
+            
+            &.direction-s {
+                transform: rotate(180deg);
+            }
+            
+            &.direction-w {
+                transform: rotate(270deg);
+            }
+            
+            .animation-layer {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                
+                &.moving-forwards {
+                    z-index: 999999;
+                    animation-name: moving-forwards;
+                    
+                    // Must match the same duration as in defaults config
+                    animation-duration: 0.17s;
+                }
+                
+                @-moz-keyframes moving-forwards { 
+                    0% { -moz-transform: translateY(80px); } 
+                    100% { -moz-transform: translateY(0px); } 
+                }
+                @-webkit-keyframes moving-forwards {
+                    0% { -webkit-transform: translateY(80px); } 
+                    100% { -webkit-transform: translateY(0px); } 
+                }
+                @keyframes moving-forwards { 
+                    0% { -webkit-transform: translateY(80px);
+                        transform: translateY(80px); } 
+                    100% { -webkit-transform: translateY(0px);
+                        transform: translateY(0px); } 
+                }
+                
+                .element {
+                    position: absolute;
+                    
+                    .character-type {
+                        width: 80px;
+                        height: 80px;
+                        
+                        .character {
+                            width: 80px;
+                            height: 80px;
+                        }
+    
+                        @-moz-keyframes swing { 
+                            100% { -moz-transform: rotate(30deg) translate(30px, 0px) scale(0.5); } 
+                        }
+                        @-webkit-keyframes swing {
+                            100% { -webkit-transform: rotate(30deg) translate(30px, 0px) scale(0.5); } 
+                        }
+                        @keyframes swing { 
+                            100% { -webkit-transform: rotate(30deg) translate(30px, 0px) scale(0.5);
+                                transform: rotate(30deg) translate(30px, 0px) scale(0.5); } 
+                        }
+            
+                        @-moz-keyframes guard { 
+                            from { -moz-transform: rotate(-10deg) scaleX(0.1) scaleY(0.1); }
+                            to { -moz-transform: rotate(0deg) scaleX(1) scaleY(1); } 
+                        }
+                        @-webkit-keyframes guard {
+                            from { -webkit-transform: rotate(-10deg) scaleX(0.1) scaleY(0.1); }
+                            to { -webkit-transform: rotate(0deg) scaleX(1) scaleY(1); } 
+                        }
+                        @keyframes guard { 
+                            from { -webkit-transform: rotate(-10deg) scaleX(0.1) scaleY(0.1);
+                                transform: rotate(-10deg) scaleX(0.1) scaleY(0.1); }
+                            to { -webkit-transform: rotate(0deg) scaleX(1) scaleY(1);
+                                transform: rotate(0deg) scaleX(1) scaleY(1); } 
+                        }
+            
+                        @-moz-keyframes receive-attack {
+                            from { -moz-transform: scale(1) rotate(180deg); }
+                            to { -moz-transform: scale(0.3) translate(-70px, 0px) rotate(180deg); } 
+                        }
+                        @-webkit-keyframes receive-attack {
+                            from { -webkit-transform: scale(1) rotate(180deg); }
+                            to { -webkit-transform: scale(0.3) translate(-70px, 0px) rotate(180deg); } 
+                        }
+                        @keyframes receive-attack {
+                            from { -webkit-transform: scale(1) rotate(180deg);
+                                transform: scale(1) rotate(180deg); }
+                            to { -webkit-transform: scale(0.3) translate(-70px, 0px) rotate(180deg);
+                                transform: scale(0.3) translate(-70px, 0px) rotate(180deg); } 
+                        }
+            
+                        .swing-weapon, .receive-attack, .guard {
+                            width: 100%;
+                            height: 100%;
+                            position: absolute;
+                            background-repeat: no-repeat;
+                        }
+            
+                        .swing-weapon {
+                            background-image: url("assets/images/animations/slash.svg");
+                            animation-name: swing;
+                            
+                            // Must match the same duration as in defaults config
+                            animation-duration: 0.17s;
+                            background-position: right 0px top 0px;
+                            background-size: 80px 80px;
+                        }
+                        
+                        .guard {
+                            background-image: url("assets/images/animations/guard.svg");
+                            animation-name: guard;
+                            
+                            // // Must match the same duration as in defaults config
+                            animation-duration: 0.17s;
+                            background-position: right 0px top 0px;
+                            background-size: 80px 80px;
+                        }
+                        
+                        .receive-attack {
+                            background-image: url("assets/images/animations/receive-attack.svg");
+                            animation-name: receive-attack;
+                            
+                            // Must match the same duration as in defaults config
+                            animation-duration: 0.17s;
+                            background-position: right 0px top -10px;
+                            background-size: 160px 160px;
+                        }
+                    }
+                }
+                
+                .overlay {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    
+                    &.direction-n {
                         transform: rotate(0deg);
-                  }
-                  
-                  &.eastExit {
-                        left: 45px;
-                        top: 35px;
-                        transform: rotate(90deg);
-                  }
-                  
-                  &.southExit {
-                        bottom: -10px;
-                        transform: rotate(180deg);
-                  }
-                  
-                  &.westExit {
-                        left: -45px;
-                        top: 35px;
-                        transform: rotate(270deg);
-                  }
-            }
-
-            .door {
-
-                  .left-door, .right-door {
+                    }
+                    
+                    &.direction-e {
+                        transform: rotate(-90deg);
+                    }
+                    
+                    &.direction-s {
+                        transform: rotate(-180deg);
+                    }
+                    
+                    &.direction-w {
+                        transform: rotate(-270deg);
+                    }
+                    
+                    .character-state {
                         position: absolute;
-                        width: 50%;
-                        height: 10px;
-                        background-color: grey;
-                        border-color: white;
-                        border-style: solid;
-                        border-width: 3px 3px 0px 3px;
-                        box-sizing: border-box;
-                        
-                        &.green {
-                              background-color: #22B14C;
+                        width: 20px;
+                        height: 20px;
+                        bottom: 3px;
+                        right: 3px;
+    
+                        &.hunting {
+                            color: red;
+                            background: url("assets/images/character-states/hunting.svg") no-repeat center;
+                            background-size: 20px 20px;
                         }
                         
-                        &.red {
-                              background-color: #FF3C41;
+                        &.patrolling {
+                            color: yellow;
+                            background: url("assets/images/character-states/patrolling.svg") no-repeat center;
+                            background-size: 20px 20px;
                         }
-                  }
-
-                  @-moz-keyframes openLeftDoor { 100% { -moz-transform: translate(-40px, 0px); } }
-                  @-webkit-keyframes openLeftDoor { 100% { -webkit-transform: translate(-40px, 0px); } }
-                  @keyframes openLeftDoor { 100% { -webkit-transform: translate(-40px, 0px); } }
-
-                  @-moz-keyframes openRightDoor { 100% { -moz-transform: translate(40px, 0px); } }
-                  @-webkit-keyframes openRightDoor { 100% { -webkit-transform: translate(40px, 0px); } }
-                  @keyframes openRightDoor { 100% { -webkit-transform: translate(40px, 0px); } }
-                  
-                  .left-door {
-                        left: 0px;
-
-                        &.opening {
-                              animation-name: openLeftDoor;
-                              animation-fill-mode:forwards;
-                              animation-duration: 2s;
+                        
+                        &.returningToPosition {
+                            color: orange;
+                            background: url("assets/images/character-states/returning.svg") no-repeat center;
+                            background-size: 20px 20px;
                         }
-
-                        &.open {
-                              display: none;
+                        
+                        &.asleep {
+                            color: white;
+                            background: url("assets/images/character-states/asleep.svg") no-repeat center;
+                            background-size: 20px 20px;
                         }
-                  }
-
-                  .right-door {
-                        right: 0px;
-
-                        &.opening {
-                              animation-name: openRightDoor;
-                              animation-fill-mode:forwards;
-                              animation-duration: 2s;
+                        
+                        &.wandering {
+                            color: blue;
+                            background: url("assets/images/character-states/wandering.svg") no-repeat center;
+                            background-size: 20px 20px;
                         }
-
-                        &.open {
-                              display: none;
+                        
+                        &.afraid {
+                            color: blue;
+                            background: url("assets/images/character-states/afraid.svg") no-repeat center;
+                            background-size: 20px 20px;
                         }
-                  }
-                  
-                  // &.north {
-                  //       transform: rotate(0deg);
-                  // }
-                  
-                  // &.east {
-                  //       transform: rotate(90deg);
-                  // }
-                  
-                  // &.south {
-                  //       transform: rotate(180deg);
-                  // }
-                  
-                  // &.west {
-                  //       transform: rotate(270deg);
-                  // }
-
+                    }
+                }
             }
-            
-            .floor-style {
-                  &.blood {
-                        position: absolute;
-                        width: 100%;
-                        height: 100%;
-                        background-image: url("assets/images/ground-effects/blood.png");
-                        z-index: 0;
-                  }
-            }
-            
-            .ground-item {
-                  &.loot-bag {
-                        width: 100%;
-                        height: 100%;
-                        position: absolute;
-                        border-color: red;
-                        background-image: url("assets/images/ground-effects/loot-bag.png");
-                        z-index: 1;
-                  }
-            }
-
-            .grid-item {
-                  position: absolute;
-                  z-index: 11;
-                  width: 100%;
-                  height: 100%;
-
-                  &.direction-n {
-                        transform: rotate(0deg);
-                  }
-                  
-                  &.direction-e {
-                        transform: rotate(90deg);
-                  }
-                  
-                  &.direction-s {
-                        transform: rotate(180deg);
-                  }
-                  
-                  &.direction-w {
-                        transform: rotate(270deg);
-                  }
-                  
-                  .animation-layer {
-                        position: absolute;
-                        width: 100%;
-                        height: 100%;
-                        
-                        &.moving-forwards {
-                              z-index: 999999;
-                              animation-name: moving-forwards;
-                              
-                              // Must match the same duration as in defaults config
-                              animation-duration: 0.17s;
-                        }
-                        
-                        @-moz-keyframes moving-forwards { 
-                              0% { -moz-transform: translateY(80px); } 
-                              100% { -moz-transform: translateY(0px); } 
-                        }
-                        @-webkit-keyframes moving-forwards {
-                              0% { -webkit-transform: translateY(80px); } 
-                              100% { -webkit-transform: translateY(0px); } 
-                        }
-                        @keyframes moving-forwards { 
-                              0% { -webkit-transform: translateY(80px);
-                                    transform: translateY(80px); } 
-                              100% { -webkit-transform: translateY(0px);
-                                    transform: translateY(0px); } 
-                        }
-                        
-                        .element {
-                              position: absolute;
-                              
-                              .character-type {
-                                    width: 80px;
-                                    height: 80px;
-                                    
-                                    .character {
-                                          width: 80px;
-                                          height: 80px;
-                                    }
-      
-                                    @-moz-keyframes swing { 
-                                          100% { -moz-transform: rotate(30deg) translate(30px, 0px) scale(0.5); } 
-                                    }
-                                    @-webkit-keyframes swing {
-                                          100% { -webkit-transform: rotate(30deg) translate(30px, 0px) scale(0.5); } 
-                                    }
-                                    @keyframes swing { 
-                                          100% { -webkit-transform: rotate(30deg) translate(30px, 0px) scale(0.5);
-                                                transform: rotate(30deg) translate(30px, 0px) scale(0.5); } 
-                                    }
-                  
-                                    @-moz-keyframes guard { 
-                                          from { -moz-transform: rotate(-10deg) scaleX(0.1) scaleY(0.1); }
-                                          to { -moz-transform: rotate(0deg) scaleX(1) scaleY(1); } 
-                                    }
-                                    @-webkit-keyframes guard {
-                                          from { -webkit-transform: rotate(-10deg) scaleX(0.1) scaleY(0.1); }
-                                          to { -webkit-transform: rotate(0deg) scaleX(1) scaleY(1); } 
-                                    }
-                                    @keyframes guard { 
-                                          from { -webkit-transform: rotate(-10deg) scaleX(0.1) scaleY(0.1);
-                                                transform: rotate(-10deg) scaleX(0.1) scaleY(0.1); }
-                                          to { -webkit-transform: rotate(0deg) scaleX(1) scaleY(1);
-                                                transform: rotate(0deg) scaleX(1) scaleY(1); } 
-                                    }
-                  
-                                    @-moz-keyframes receive-attack {
-                                          from { -moz-transform: scale(1) rotate(180deg); }
-                                          to { -moz-transform: scale(0.3) translate(-70px, 0px) rotate(180deg); } 
-                                    }
-                                    @-webkit-keyframes receive-attack {
-                                          from { -webkit-transform: scale(1) rotate(180deg); }
-                                          to { -webkit-transform: scale(0.3) translate(-70px, 0px) rotate(180deg); } 
-                                    }
-                                    @keyframes receive-attack {
-                                          from { -webkit-transform: scale(1) rotate(180deg);
-                                                transform: scale(1) rotate(180deg); }
-                                          to { -webkit-transform: scale(0.3) translate(-70px, 0px) rotate(180deg);
-                                                transform: scale(0.3) translate(-70px, 0px) rotate(180deg); } 
-                                    }
-                  
-                                    .swing-weapon, .receive-attack, .guard {
-                                          width: 100%;
-                                          height: 100%;
-                                          position: absolute;
-                                          background-repeat: no-repeat;
-                                    }
-                  
-                                    
-                                    .swing-weapon {
-                                          background-image: url("assets/images/animations/slash.svg");
-                                          animation-name: swing;
-                                          
-                                          // Must match the same duration as in defaults config
-                                          animation-duration: 0.17s;
-                                          background-position: right 0px top 0px;
-                                          background-size: 80px 80px;
-                                    }
-                                    
-                                    .guard {
-                                          background-image: url("assets/images/animations/guard.svg");
-                                          animation-name: guard;
-                                          
-                                          // // Must match the same duration as in defaults config
-                                          animation-duration: 0.17s;
-                                          background-position: right 0px top 0px;
-                                          background-size: 80px 80px;
-                                    }
-                                    
-                                    .receive-attack {
-                                          background-image: url("assets/images/animations/receive-attack.svg");
-                                          animation-name: receive-attack;
-                                          
-                                          // Must match the same duration as in defaults config
-                                          animation-duration: 0.17s;
-                                          background-position: right 0px top -10px;
-                                          background-size: 160px 160px;
-                                    }
-                              }
-                        }
-                        
-                        .overlay {
-                              position: absolute;
-                              width: 100%;
-                              height: 100%;
-                              
-                              &.direction-n {
-                                    transform: rotate(0deg);
-                              }
-                              
-                              &.direction-e {
-                                    transform: rotate(-90deg);
-                              }
-                              
-                              &.direction-s {
-                                    transform: rotate(-180deg);
-                              }
-                              
-                              &.direction-w {
-                                    transform: rotate(-270deg);
-                              }
-                              
-                              .character-state {
-                                    position: absolute;
-                                    width: 20px;
-                                    height: 20px;
-                                    bottom: 3px;
-                                    right: 3px;
-      
-                                    &.hunting {
-                                          color: red;
-                                          background: url("assets/images/character-states/hunting.svg") no-repeat center;
-                                          background-size: 20px 20px;
-                                    }
-                                    
-                                    &.patrolling {
-                                          color: yellow;
-                                          background: url("assets/images/character-states/patrolling.svg") no-repeat center;
-                                          background-size: 20px 20px;
-                                    }
-                                    
-                                    &.returningToPosition {
-                                          color: orange;
-                                          background: url("assets/images/character-states/returning.svg") no-repeat center;
-                                          background-size: 20px 20px;
-                                    }
-                                    
-                                    &.asleep {
-                                          color: white;
-                                          background: url("assets/images/character-states/asleep.svg") no-repeat center;
-                                          background-size: 20px 20px;
-                                    }
-                                    
-                                    &.wandering {
-                                          color: blue;
-                                          background: url("assets/images/character-states/wandering.svg") no-repeat center;
-                                          background-size: 20px 20px;
-                                    }
-                              }
-                        }
-                  }
-            }
-      }
+        }
+    }
 }

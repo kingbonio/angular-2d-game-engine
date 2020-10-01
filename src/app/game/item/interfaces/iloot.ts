@@ -1,9 +1,9 @@
-import { IArmour } from "./iarmour";
-import { IWeapons } from "./iweapons";
+import { IArmourSlots } from "./iarmour-slots";
+import { IWeaponSlots } from "./iweapons-slots";
+import { IInventoryItem } from "./iinventory-item";
 
 export interface ILoot {
-      armour: IArmour;
-      weapons: IWeapons;
-      // TODO: Resolve any
-      items: any;
+    armour: IArmourSlots;
+    weapons: IWeaponSlots;
+    items: IInventoryItem[];
 }

@@ -9,344 +9,389 @@ import { PathfindingComponent } from './pathfinding/pathfinding.component';
 import { GameSettingsService } from '../../../../shared/services/game-settings.service';
 
 @Component({
-  selector: 'app-movement',
-  template: '',
+    selector: 'app-movement',
+    template: '',
 })
 export class MovementComponent {
 
-  constructor(
-    private areaStateService: AreaStateService,
-    private pathfinding: PathfindingComponent
-  ) { }
+    constructor(
+        private areaStateService: AreaStateService,
+        private pathfinding: PathfindingComponent
+    ) { }
 
-  /**
-   * Return the locations the character can see at any time
-   * @param viewDistance How many squares out the character can see
-   * @param direction Which way the character is facing
-   * @param gridLocation The current location of the character
-   */
-  public getViewAreaLocations(viewDistance: number, direction: Direction, gridLocation: string): string[] {
-    const gridReferences = [];
-    const splitLocation = this.areaStateService.splitLocationReference(gridLocation);
+    /**
+     * Return the locations the character can see at any time
+     *
+     * @param {number} viewDistance How many squares out the character can see
+     * @param {Direction} direction Which way the character is facing
+     * @param {string} gridLocation The current location of the character
+     *
+     * @returns {string[]}
+     */
+    public getViewAreaLocations(viewDistance: number, direction: Direction, gridLocation: string): string[] {
+        const gridReferences = [];
+        const splitLocation = this.areaStateService.splitLocationReference(gridLocation);
 
-    // TODO Only catering for 1 view distance at the moment
-    let location: string;
-    switch (direction) {
+        // TODO Only catering for 1 view distance at the moment
+        let location: string;
+        switch (direction) {
 
-      case Direction.N:
-        // Get first location
-        location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
-        gridReferences.push(location);
-        // Get second location
-        location = GridHelper.nextYReference(splitLocation.locationY) + splitLocation.locationX;
-        gridReferences.push(location);
-        // Get third location
-        location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
-        gridReferences.push(location);
-        break;
+            case Direction.N:
 
-      case Direction.E:
-        // Get first location
-        location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
-        gridReferences.push(location);
-        // Get second location
-        location = splitLocation.locationY + GridHelper.nextXReference(splitLocation.locationX);
-        gridReferences.push(location);
-        // Get third location
-        location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
-        gridReferences.push(location);
-        break;
+                // Get first location
+                location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
+                gridReferences.push(location);
 
-      case Direction.S:
-        // Get first location
-        location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
-        gridReferences.push(location);
-        // Get second location
-        location = GridHelper.previousYReference(splitLocation.locationY) + splitLocation.locationX;
-        gridReferences.push(location);
-        // Get third location
-        location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
-        gridReferences.push(location);
-        break;
+                // Get second location
+                location = GridHelper.nextYReference(splitLocation.locationY) + splitLocation.locationX;
+                gridReferences.push(location);
 
-      case Direction.W:
-        // Get first location
-        location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
-        gridReferences.push(location);
-        // Get second location
-        location = splitLocation.locationY + GridHelper.previousXReference(splitLocation.locationX);
-        gridReferences.push(location);
-        // Get third location
-        location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
-        gridReferences.push(location);
-        break;
+                // Get third location
+                location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
+                gridReferences.push(location);
 
-      default:
-      // Do nothing
-    }
+                break;
+            case Direction.E:
 
-    return gridReferences;
-  }
+                // Get first location
+                location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
+                gridReferences.push(location);
 
-  /**
-   * Try a random direction then move to that location, if it's blocked, try the other 3 directions or do nothing
-   * @param character wandering character
-   * @param currentLocation character's location
-   */
-  public wander(character: any, currentLocation: string): void {
+                // Get second location
+                location = splitLocation.locationY + GridHelper.nextXReference(splitLocation.locationX);
+                gridReferences.push(location);
 
-    // Break out of this action if moving action is currently underway
-    if (this.areaStateService.locations[currentLocation].element.isMovingForwards) {
+                // Get third location
+                location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
+                gridReferences.push(location);
 
-      return;
-    }
+                break;
+            case Direction.S:
 
-    const directionDiceRoll = Dice.roll1d4();
+                // Get first location
+                location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.nextXReference(splitLocation.locationX);
+                gridReferences.push(location);
 
-    let direction: Direction = GridHelper.getDirectionFromNumber(directionDiceRoll);
+                // Get second location
+                location = GridHelper.previousYReference(splitLocation.locationY) + splitLocation.locationX;
+                gridReferences.push(location);
 
-    // TODO This seems unnecessary but will need to refactor the method and other dependencies
-    let currentLocationDetails = this.areaStateService.splitLocationReference(currentLocation);
+                // Get third location
+                location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
+                gridReferences.push(location);
 
-    let targetLocationDetails = GridHelper.getNextLocation(currentLocationDetails.locationY, currentLocationDetails.locationX, direction, this.areaStateService.locations);
+                break;
+            case Direction.W:
 
-    if (targetLocationDetails && targetLocationDetails.isLocationFree) {
-      const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
-      this.areaStateService.locations[currentLocation].element.direction = direction;
+                // Get first location
+                location = GridHelper.previousYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
+                gridReferences.push(location);
 
-      this.moveCharacterWithAnimation(currentLocationDetails, targetLocationDetails);
-    } else {
-      // Select a direction to move
-      for (let i = 1; i < 4; i++) {
+                // Get second location
+                location = splitLocation.locationY + GridHelper.previousXReference(splitLocation.locationX);
+                gridReferences.push(location);
 
-        if (i === directionDiceRoll) {
-          continue;
+                // Get third location
+                location = GridHelper.nextYReference(splitLocation.locationY) + GridHelper.previousXReference(splitLocation.locationX);
+                gridReferences.push(location);
+
+                break;
+            default:
+
+            // Do nothing
         }
 
-        direction = GridHelper.getDirectionFromNumber(i);
+        return gridReferences;
+    }
 
-        currentLocationDetails = this.areaStateService.splitLocationReference(currentLocation);
+    /**
+     * Try a random direction then move to that location, if it's blocked, try the other 3 directions or do nothing
+     *
+     * @param {Character} character The character we want to wander
+     * @param {string} currentLocation The character's current location
+     */
+    public wander(character: Character, currentLocation: string): void {
 
-        targetLocationDetails = GridHelper.getNextLocation(currentLocationDetails.locationY, currentLocationDetails.locationX, direction, this.areaStateService.locations);
+        // Break out of this action if moving action is currently underway
+        if (this.areaStateService.locations[currentLocation].element.isMovingForwards) {
+
+            return;
+        }
+
+        const directionDiceRoll = Dice.roll1d4();
+
+        let direction: Direction = GridHelper.getDirectionFromNumber(directionDiceRoll);
+
+        let currentLocationDetails = this.areaStateService.splitLocationReference(currentLocation);
+
+        let targetLocationDetails = GridHelper.getNextLocation(currentLocationDetails.locationY, currentLocationDetails.locationX, direction, this.areaStateService.locations);
 
         if (targetLocationDetails && targetLocationDetails.isLocationFree) {
-          this.areaStateService.locations[currentLocation].element.direction = direction;
+            const targetLocation = targetLocationDetails.locationY + targetLocationDetails.locationX;
+            this.areaStateService.locations[currentLocation].element.direction = direction;
 
-          this.moveCharacterWithAnimation(currentLocationDetails, targetLocationDetails);
-
-          return;
-        }
-      }
-    }
-
-    // Do nothing
-    return;
-  }
-
-  /**
-   * Cycle through the direction of patrol for character
-   * Only move if the next location is free
-   * @returns the newLocation of the character
-   */
-  public walkRoute(character: Character, gridLocation: string): ILocationData {
-
-    // Break out of this action if moving action is currently underway
-    if (this.areaStateService.locations[gridLocation].element.isMovingForwards) {
-
-      return;
-    }
-
-    if (character.directionsForPatrol.length) {
-      const routeIndex = character.currentPositionInRoute;
-      const splitLocation = this.areaStateService.splitLocationReference(gridLocation);
-      const direction = character.directionsForPatrol[character.currentPositionInRoute];
-      const newLocation = GridHelper.getNextLocation(splitLocation.locationY, splitLocation.locationX, direction, this.areaStateService.locations);
-
-
-      // Call the character's move method
-      if (newLocation && newLocation.isLocationFree) {
-
-        this.moveCharacterWithAnimation(splitLocation, newLocation);
-
-        if (routeIndex >= (character.directionsForPatrol.length - 1)) {
-          character.currentPositionInRoute = 0;
+            this.moveCharacterWithAnimation(currentLocationDetails, targetLocationDetails);
         } else {
-          character.currentPositionInRoute++;
+
+            // Select a direction to move
+            for (let i = 1; i < 4; i++) {
+
+                if (i === directionDiceRoll) {
+                    continue;
+                }
+
+                direction = GridHelper.getDirectionFromNumber(i);
+
+                currentLocationDetails = this.areaStateService.splitLocationReference(currentLocation);
+
+                targetLocationDetails = GridHelper.getNextLocation(currentLocationDetails.locationY, currentLocationDetails.locationX, direction, this.areaStateService.locations);
+
+                if (targetLocationDetails && targetLocationDetails.isLocationFree) {
+                    this.areaStateService.locations[currentLocation].element.direction = direction;
+
+                    this.moveCharacterWithAnimation(currentLocationDetails, targetLocationDetails);
+
+                    return;
+                }
+            }
         }
 
-        // Cycle back around if we're at the end of the route
-        const previousDirection = character.currentPositionInRoute === 0 ?
-          character.directionsForPatrol[character.directionsForPatrol.length - 1] :
-          character.directionsForPatrol[character.currentPositionInRoute - 1];
-
-        character.direction = previousDirection;
-      } else {
-        character.direction = character.directionsForPatrol[character.currentPositionInRoute];
-      }
-
-      // Character has moved to new location, return the new location data
-      return newLocation;
-
-    } else {
-
-      return;
-    }
-  }
-
-  /**
-   * Moves the character towards the starting position of their patrol route
-   */
-  public returnToStartingPosition(character: Character, gridLocation: string, newLocation: string) {
-    this.moveCharacterToLocation(character, gridLocation, newLocation, true);
-  }
-
-  /**
-   * If direction is available move the character towards the player's location
-   * @param character The character that will be moving
-   * @param characterLocation The current location of the character in question
-   * @param moveTowardsLocation Whether to more towards or away from target's location
-   */
-  public moveCharacterToLocation(character: Character, characterLocation: string, targetLocation: string, moveTowardsLocation = true) {
-
-    // Break out of this action if moving action is currently underway
-    if (this.areaStateService.locations[characterLocation].element.isMovingForwards) {
-
-      return;
+        // Do nothing
+        return;
     }
 
-    const splitNewLocation: ILocation = this.areaStateService.splitLocationReference(targetLocation);
-    const splitCharacterLocation: ILocation = this.areaStateService.splitLocationReference(characterLocation);
+    /**
+     * Cycle through the direction of patrol for character
+     * Only move if the next location is free
+     *
+     * @param {Character} character The character we're moving
+     * @param {string} gridLocation The starting location of the character
+     *
+     * @returns {ILocationData}
+     */
+    public walkRoute(character: Character, gridLocation: string): ILocationData {
 
-    // Get and apply the direction to face
-    const furthestDirectionToPlayer = this.getDirectionWithRespectToPlayer(splitNewLocation, splitCharacterLocation, moveTowardsLocation);
-    this.areaStateService.locations[characterLocation].element.direction = furthestDirectionToPlayer;
-    const targetLocationDetails = GridHelper.getNextLocation(splitCharacterLocation.locationY, splitCharacterLocation.locationX, furthestDirectionToPlayer, this.areaStateService.locations);
+        // Break out of this action if moving action is currently underway
+        if (this.areaStateService.locations[gridLocation].element.isMovingForwards) {
 
-    // If the target location is free, move into it
-    if (targetLocationDetails && targetLocationDetails.isLocationFree) {
-      const targetLocationCoords = targetLocationDetails.locationY + targetLocationDetails.locationX;
+            return;
+        }
 
-      this.moveCharacterWithAnimation(splitCharacterLocation, targetLocationDetails);
-    }
-  }
+        if (character.directionsForPatrol.length) {
+            const routeIndex = character.currentPositionInRoute;
+            const splitLocation = this.areaStateService.splitLocationReference(gridLocation);
+            const direction = character.directionsForPatrol[character.currentPositionInRoute];
+            const newLocation = GridHelper.getNextLocation(splitLocation.locationY, splitLocation.locationX, direction, this.areaStateService.locations);
 
-  public moveCharacterWithAnimation(splitCharacterLocation: ILocation, targetLocationDetails: ILocation) {
-    this.beginCharacterMovementAnimation(splitCharacterLocation, targetLocationDetails);
-    this.areaStateService.repositionCharacter(targetLocationDetails.locationY + targetLocationDetails.locationX, splitCharacterLocation.locationY + splitCharacterLocation.locationX);
-  }
+            // Call the character's move method
+            if (newLocation && newLocation.isLocationFree) {
 
-  /**
-   * Start the movement of a character by duplicating character into target location,
-   * Set character to animate,
-   * Remove the character reference from the previous location
-   * @param {ILocation} currentLocationDetails
-   * @param {ILocation} targetLocationDetails
-   */
-  public beginCharacterMovementAnimation(currentLocationDetails: ILocation, targetLocationDetails: ILocation, additionalWork?: any) {
-    // // Start the movement process
-    // this.areaStateService.setAwaitingArrival(targetLocationDetails);
-    // this.areaStateService.startCharacterMovement(targetLocationDetails.locationY + targetLocationDetails.locationX, currentLocationDetails.locationY + currentLocationDetails.locationX);
+                this.moveCharacterWithAnimation(splitLocation, newLocation);
 
-    // Call the character's move method
-    this.areaStateService.locations[currentLocationDetails.locationY + currentLocationDetails.locationX].element.moveForwards(() => {
+                if (routeIndex >= (character.directionsForPatrol.length - 1)) {
+                    character.currentPositionInRoute = 0;
+                } else {
+                    character.currentPositionInRoute++;
+                }
 
-      // // Finish the movement process
-      // this.areaStateService.endCharacterMovement(currentLocationDetails.locationY + currentLocationDetails.locationX);
-      // this.areaStateService.removeAwaitingArrival(targetLocationDetails);
+                // Cycle back around if we're at the end of the route
+                const previousDirection = character.currentPositionInRoute === 0 ?
+                    character.directionsForPatrol[character.directionsForPatrol.length - 1] :
+                    character.directionsForPatrol[character.currentPositionInRoute - 1];
 
-      // Perform any extra work that needs to be enacted in the callback
-      if (additionalWork) {
-        additionalWork();
-      }
-    });
-  }
+                character.direction = previousDirection;
+            } else {
+                character.direction = character.directionsForPatrol[character.currentPositionInRoute];
+            }
 
-  /**
-   * Get the path to the target location and make the first step towards it
-   * @param character The character that will be moving
-   * @param characterLocation The current location of the character in question
-   * @param targetLocation Whether to more towards or away from player's location
-   */
-  public moveTowardsLocation(character: Character, characterLocation: string, targetLocation: string) {
+            // Character has moved to new location, return the new location data
+            return newLocation;
 
-    // If we can't get there there's no point in trying
-    if (!this.areaStateService.isLocationFree(targetLocation)) {
-      return;
+        } else {
+
+            return;
+        }
     }
 
-    const splitCurrentLocation = this.areaStateService.splitLocationReference(characterLocation);
+    /**
+     * If direction is available move the character towards the player's location
+     *
+     * @param {Character} character The character that we will be moving
+     * @param {string} characterLocation The current location of the character
+     * @param {string} targetLocation The target location of the character
+     * @param {boolean} moveTowardsLocation Whether to more towards or away from target location
+     */
+    public moveCharacterToLocation(character: Character, characterLocation: string, targetLocation: string, moveTowardsLocation = true): void {
 
-    const splitNewLocation = this.areaStateService.splitLocationReference(targetLocation);
+        // Break out of this action if moving action is currently underway
+        if (this.areaStateService.locations[characterLocation].element.isMovingForwards) {
 
-    character.currentPathToDestination = this.pathfinding.getShortestPath(splitCurrentLocation, splitNewLocation, this.areaStateService.locations);
+            return;
+        }
 
-    if (!character.currentPathToDestination || !character.currentPathToDestination.length) {
+        const splitNewLocation: ILocation = this.areaStateService.splitLocationReference(targetLocation);
+        const splitCharacterLocation: ILocation = this.areaStateService.splitLocationReference(characterLocation);
 
-      // Ranmdoly move if target cannot be gotten to
-      this.wander(character, characterLocation);
-      return;
+        // Get and apply the direction to face
+        const furthestDirectionToPlayer = this.getDirectionWithRespectToLocation(splitNewLocation, splitCharacterLocation, moveTowardsLocation);
+        this.areaStateService.locations[characterLocation].element.direction = furthestDirectionToPlayer;
+        const targetLocationDetails = GridHelper.getNextLocation(splitCharacterLocation.locationY, splitCharacterLocation.locationX, furthestDirectionToPlayer, this.areaStateService.locations);
+
+        // If the target location is free, move into it
+        if (targetLocationDetails && targetLocationDetails.isLocationFree) {
+            const targetLocationCoords = targetLocationDetails.locationY + targetLocationDetails.locationX;
+
+            this.moveCharacterWithAnimation(splitCharacterLocation, targetLocationDetails);
+        }
     }
 
-    // Get the next target location
-    const nextPathfindingLocation = character.currentPathToDestination[0];
-
-    // Walk the path
-    this.moveCharacterToLocation(character, characterLocation, nextPathfindingLocation, true);
-  }
-
-  /**
-   * Get the path to the player location and make the first step towards it
-   * @param character The character that will be moving
-   * @param characterLocation The current location of the character in question
-   */
-  public moveTowardsPlayer(character: Character, characterLocation: string) {
-    const playerLocation = this.areaStateService.playerLocation;
-
-    const splitCurrentLocation = this.areaStateService.splitLocationReference(characterLocation);
-
-    const splitNewLocation = this.areaStateService.splitLocationReference(playerLocation);
-
-    character.currentPathToDestination = this.pathfinding.getShortestPath(splitCurrentLocation, splitNewLocation, this.areaStateService.locations);
-
-    if (!character.currentPathToDestination || !character.currentPathToDestination.length) {
-
-      return;
+    /**
+     * Starts animations for movement and moves character
+     *
+     * @param {ILocation} splitCharacterLocation The starting location of the character
+     * @param {ILocation} targetLocationDetails The location we're moving the character to
+     */
+    public moveCharacterWithAnimation(splitCharacterLocation: ILocation, targetLocationDetails: ILocation): void {
+        this.beginCharacterMovementAnimation(splitCharacterLocation, targetLocationDetails);
+        this.areaStateService.repositionGridElement(targetLocationDetails.locationY + targetLocationDetails.locationX, splitCharacterLocation.locationY + splitCharacterLocation.locationX);
     }
 
-    // Get the next target location
-    const nextPathfindingLocation = character.currentPathToDestination[0];
+    /**
+     * Start the movement of a character by duplicating character into target location,
+     * Set character to animate,
+     * Remove the character reference from the previous location
+     *
+     * @param {ILocation} characterLocation The location of the character
+     * @param {function} additionalWork The function used to callback once animation is complete
+     */
+    public beginCharacterMovementAnimation(characterLocation: ILocation, additionalWork?: any): void {
 
-    this.moveTowardsLocation(character, characterLocation, nextPathfindingLocation);
-  }
+        // Call the character's move method
+        this.areaStateService.locations[characterLocation.locationY + characterLocation.locationX].element.moveForwards(() => {
 
-  /**
-   * Returns the best direction towards or away from the player's location
-   * @param playerLocation The current location of the player
-   * @param characterLocation The current location of the character to move
-   * @param towardsPlayer Whether to more towards or away from player's location
-   */
-  public getDirectionWithRespectToPlayer(playerLocation: ILocation, characterLocation: ILocation, towardsPlayer: boolean): Direction {
-    const distanceData = this.areaStateService.getDistanceBetweenLocations(playerLocation, characterLocation);
-
-    // Calculate which direction is furthest
-    if (Math.abs(distanceData.yDistance) >= Math.abs(distanceData.xDistance)) {
-      // Move vertically
-      if (distanceData.yDistance >= 0) {
-
-        return towardsPlayer ? Direction.S : Direction.N;
-      } else {
-
-        return towardsPlayer ? Direction.N : Direction.S;
-      }
-    } else {
-      // Move horizontally
-      if (distanceData.xDistance >= 0) {
-
-        return towardsPlayer ? Direction.E : Direction.W;
-      } else {
-
-        return towardsPlayer ? Direction.W : Direction.E;
-      }
+            // Perform any extra work that needs to be enacted in the callback
+            if (typeof additionalWork === "function") {
+                additionalWork();
+            }
+        });
     }
-  }
+
+    /**
+     * Get the path to the target location and make the first step towards it if possible
+     *
+     * @param {Character} character The character that we will be moving
+     * @param {string} characterLocation The current location of the character in question
+     * @param {string} targetLocation The location we're moving the character towards
+     */
+    public moveTowardsLocation(character: Character, characterLocation: string, targetLocation: string): void {
+
+        // If we can't get there there's no point in trying
+        if (!this.areaStateService.isLocationFree(targetLocation)) {
+
+            return;
+        }
+
+        const splitCurrentLocation = this.areaStateService.splitLocationReference(characterLocation);
+
+        const splitNewLocation = this.areaStateService.splitLocationReference(targetLocation);
+
+        character.currentPathToDestination = this.pathfinding.getShortestPath(splitCurrentLocation, splitNewLocation, this.areaStateService.locations);
+
+        if (!character.currentPathToDestination || !character.currentPathToDestination.length) {
+
+            // Ranmdoly move if target cannot be gotten to
+            this.wander(character, characterLocation);
+
+            return;
+        }
+
+        // Get the next target location
+        const nextPathfindingLocation = character.currentPathToDestination[0];
+
+        // Walk the path
+        this.moveCharacterToLocation(character, characterLocation, nextPathfindingLocation, true);
+    }
+
+    /**
+     * Get the path to the player location and make the first step towards it
+     *
+     * @param {Character} character The character that will be moving
+     * @param {string} characterLocation The current location of the character
+     */
+    public moveTowardsPlayer(character: Character, characterLocation: string): void {
+        const playerLocation = this.areaStateService.playerLocation;
+
+        const splitCurrentLocation = this.areaStateService.splitLocationReference(characterLocation);
+
+        const splitNewLocation = this.areaStateService.splitLocationReference(playerLocation);
+
+        character.currentPathToDestination = this.pathfinding.getShortestPath(splitCurrentLocation, splitNewLocation, this.areaStateService.locations);
+
+        if (!character.currentPathToDestination || !character.currentPathToDestination.length) {
+
+            return;
+        }
+
+        // Get the next target location
+        const nextPathfindingLocation = character.currentPathToDestination[0];
+
+        this.moveTowardsLocation(character, characterLocation, nextPathfindingLocation);
+    }
+
+    /**
+     * Returns the best direction towards or away from the a new location
+     *
+     * @param {ILocation} newLocation The location we're referencing the direction to
+     * @param {ILocation} currentLocation The current location of the character to change direction
+     * @param {boolean} towardsLocation Whether to get direction towards or away from new location
+     *
+     * @returns {Direction}
+     */
+    public getDirectionWithRespectToLocation(newLocation: ILocation, currentLocation: ILocation, towardsLocation: boolean): Direction {
+        const distanceData = this.areaStateService.getDistanceBetweenLocations(newLocation, currentLocation);
+
+        // Calculate which direction is furthest
+        if (Math.abs(distanceData.yDistance) >= Math.abs(distanceData.xDistance)) {
+
+            // Move vertically
+            if (distanceData.yDistance >= 0) {
+
+                return towardsLocation ? Direction.S : Direction.N;
+            } else {
+
+                return towardsLocation ? Direction.N : Direction.S;
+            }
+        } else {
+
+            // Move horizontally
+            if (distanceData.xDistance >= 0) {
+
+                return towardsLocation ? Direction.E : Direction.W;
+            } else {
+
+                return towardsLocation ? Direction.W : Direction.E;
+            }
+        }
+    }
+
+    /**
+     * Moves a character away from a selected location
+     *
+     * @param {Character} character The character we want to move
+     * @param {ILocation} characterLocation The starting location of the character
+     * @param {ILocation} locationToAvoid The location with which we move away from
+     */
+    public moveAwayFromLocation(character: Character, characterLocation: ILocation, locationToAvoid: ILocation): void {
+        const directionToNewLocation = this.getDirectionWithRespectToLocation(locationToAvoid, characterLocation, false);
+
+        character.direction = directionToNewLocation;
+
+        const newLocation = GridHelper.getNextLocation(characterLocation.locationY, characterLocation.locationX, directionToNewLocation, this.areaStateService.locations);
+
+        if (newLocation.isLocationFree) {
+            this.moveCharacterWithAnimation(characterLocation, newLocation);
+        }
+
+        return;
+    }
 }

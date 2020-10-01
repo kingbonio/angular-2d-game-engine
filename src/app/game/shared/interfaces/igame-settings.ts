@@ -1,9 +1,10 @@
 export interface IGameSettings {
-      allowInGameMenu: boolean;
-      showRoomShadow: boolean;
-      oneHandedControls: boolean;
-      // TODO Any
-      keyMap: any;
-      keysMapped: any;
-      border: boolean;
+    allowInGameMenu: boolean;
+    showControls: boolean;
+    showRoomShadow: boolean;
+    oneHandedControls: boolean;
+    keyMap: any;
+    keysMapped: any;
+    musicVolume: number;
+    soundEffectVolume: number;
 }

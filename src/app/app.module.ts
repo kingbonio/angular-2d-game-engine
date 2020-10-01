@@ -10,7 +10,6 @@ import { GameModule } from './game/game.module';
 import { AreaStateService } from './game/shared/services/area-state.service';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { PersistentStorageModule } from './shared/modules/persistent-storage/persistent-storage.module';
-import { MenuStateService } from './shared/services/menu-state.service';
 import { UserInputService } from './shared/services/user-input.service';
 import { GameGuard } from './guards/game.guard';
 import { ApplicationStateService } from './shared/services/application-state.service';
@@ -18,29 +17,28 @@ import { ApplicationStateService } from './shared/services/application-state.ser
 
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    NoopAnimationsModule,
-    MatDialogModule,
-    PersistentStorageModule,
-    GameModule,
-    GameSettingsModule,
-    AppRoutingModule,
-  ],
-  declarations: [
-    AppComponent,
-    MainMenuComponent,
-    GameSettingsComponent,
-  ],
-  providers: [
-    ApplicationStateService,
-    GameGuard,
-    AreaStateService,
-    MenuStateService,
-    UserInputService,
-  ],
-  bootstrap: [
-    AppComponent
-  ],
+    imports: [
+        BrowserModule,
+        NoopAnimationsModule,
+        MatDialogModule,
+        PersistentStorageModule,
+        GameModule,
+        GameSettingsModule,
+        AppRoutingModule,
+    ],
+    declarations: [
+        AppComponent,
+        MainMenuComponent,
+        GameSettingsComponent,
+    ],
+    providers: [
+        ApplicationStateService,
+        GameGuard,
+        AreaStateService,
+        UserInputService,
+    ],
+    bootstrap: [
+        AppComponent
+    ],
 })
 export class AppModule { }

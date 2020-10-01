@@ -1,62 +1,41 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import * as areaConfigs from "../../../game-config/areas";
 import * as maps from "../../../game-config/areas/map";
-import * as borderAreaConfigs from "../../../game-config/border/areas";
-import * as borderMaps from "../../../game-config/border/areas/map";
-import { armour, keyItems } from '../../../game-config/items';
-import { GameSettingsService } from '../../../shared/services/game-settings.service';
-import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
-import { InventoryManagerService } from '../../item/services/inventory-manager.service';
+import { IAreaConfig, IAreaExits } from '../../../game-config/interfaces';
 
 @Injectable()
-export class AreaConfigProviderService implements OnInit {
+export class AreaConfigProviderService {
 
-  private areas: any;
-  private map: any;
+    private areas: any;
+    private map: any;
 
-  constructor(
-    private equipmentManagerService: EquipmentManagerService,
-    public inventoryManagerService: InventoryManagerService,
-    public gameSettingsService: GameSettingsService,
+    constructor(
     ) {
-      // TODO: This needs fixing
-      if (this.gameSettingsService.border) {
-        this.areas = borderAreaConfigs;
-        this.map = borderMaps.default;
-      } else {
         this.areas = areaConfigs;
         this.map = maps.default;
-      }
-      this.assignEquipmentToPlayer();
-      this.assignItemsToInventory();
-  }
+    }
 
-  ngOnInit() {
-  }
+    /**
+     * Retrieves the specific config file for the area requested
+     *
+     * @param {number} id The reference for the area we're retrieving
+     *
+     * @returns {IAreaConfig}
+     */
+    public getAreaConfig(id?: number): IAreaConfig {
 
-  // TODO Probably move this to another class
-  private assignEquipmentToPlayer() {
-    // TODO This might be useful when properly setting equipment
-    // this.equipmentManagerService.setWeaponType(Weapons.cutthroatRazor);
-  }
+        return this.areas["area" + id].default as IAreaConfig;
+    }
 
-  private assignItemsToInventory() {
-    // TODO Do this for defaults, hook it in to that
-  }
+    /**
+     * Retrieves the specific config file for the area requested
+     *
+     * @param {number} id The reference for the area we're retrieving area exits for
+     *
+     * @returns {IAreaExits}
+     */
+    public getAreaExits(id: number): IAreaExits {
 
-  /**
-   * Retrieves the specific config file for the area requested
-   * @param id reference for the area
-   * @returns the area config object
-   */
-  public getAreaConfig(id?: number): any {
-    // TODO: Should be returning IAreaConfig
-    return this.areas["area" + id].default;
-  }
-
-  public getAreaExits(id?: number): any {
-    // TODO Should get from id
-    return this.map[id];
-  }
-
+        return this.map[id];
+    }
 }

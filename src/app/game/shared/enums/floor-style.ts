@@ -1,3 +1,3 @@
 export enum FloorStyle {
-      blood = "blood",
+    blood = "blood",
 }

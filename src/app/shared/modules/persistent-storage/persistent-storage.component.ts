@@ -5,55 +5,83 @@ import defaults from '../../defaults';
 import { ApplicationStateService } from '../../services/application-state.service';
 
 @Component({
-  selector: 'app-persistent-storage',
-  templateUrl: './persistent-storage.component.html',
-  styleUrls: ['./persistent-storage.component.scss']
+    selector: 'app-persistent-storage',
+    templateUrl: './persistent-storage.component.html',
+    styleUrls: ['./persistent-storage.component.scss']
 })
 export class PersistentStorageComponent {
 
-  public objectKeys;
-  public saveSlots;
+    public objectKeys;
+    public saveSlots;
 
-  constructor(
-    private persistentStateService: PersistentStateService,
-    public applicationStateService: ApplicationStateService,
-    private router: Router,
-  ) {
-    this.objectKeys = Object.keys;
-    this.saveSlots = defaults.gameMenu.saveSlots;
-  }
-
-  public getSaveIconImageSource(saveSlot: number) {
-
-    const saveIconSrc = this.persistentStateService.getsaveIconSrcFromStorage(saveSlot);
-
-    if (saveIconSrc) {
-      return 'assets/images/save-icons/' + saveIconSrc;
-    } else {
-      return "default-save-icon.png";
+    constructor(
+        private persistentStateService: PersistentStateService,
+        public applicationStateService: ApplicationStateService,
+        private router: Router,
+    ) {
+        this.objectKeys = Object.keys;
+        this.saveSlots = defaults.gameMenu.saveSlots;
     }
-  }
 
-  public saveGame(saveSlot) {
-    this.persistentStateService.save(saveSlot);
-  }
+    /**
+     * Retrieves the location of the image for the save slot
+     *
+     * @param {number} saveSlot The reference for the save slot
+     *
+     * @returns {string}
+     */
+    public getSaveIconImageSource(saveSlot: number): string {
 
-  public loadGame(saveSlot) {
-    if (this.router.url !== "/game") {
-      this.applicationStateService.loadingFromOutsideGame = true;
-      this.applicationStateService.canAccessGame = true;
-      this.router.navigate(["game"]);
+        const saveIconSrc = this.persistentStateService.getsaveIconSrcFromStorage(saveSlot);
+
+        if (saveIconSrc) {
+            return 'assets/images/save-icons/' + saveIconSrc;
+        } else {
+            return "default-save-icon.png";
+        }
     }
-    this.persistentStateService.load(saveSlot);
-  }
 
-  public deleteGame(saveSlot) {
-    this.persistentStateService.delete(saveSlot);
-  }
+    /**
+     * Saves the game state to storage
+     *
+     * @param {number} saveSlot The reference for the save slot
+     */
+    public saveGame(saveSlot: number): void {
+        this.persistentStateService.save(saveSlot);
+    }
 
-  public saveSlotDoesntExist(saveSlot: number): boolean {
-    // TODO Intensely inefficient
-    return !!(localStorage.getItem("save-slot-" + saveSlot));
-  }
+    /**
+     * Pulls data from storage for the save game and loads it
+     *
+     * @param {number} saveSlot The reference for the save slot
+     */
+    public loadGame(saveSlot: number): void {
+        if (this.router.url !== "/game") {
+            this.applicationStateService.loadingFromOutsideGame = true;
+            this.applicationStateService.canAccessGame = true;
+            this.router.navigate(["game"]);
+        }
+        this.persistentStateService.load(saveSlot);
+    }
+
+    /**
+     * Deletes the save game from storage
+     *
+     * @param {number} saveSlot The reference for the save slot
+     */
+    public deleteGame(saveSlot: number): void {
+        this.persistentStateService.delete(saveSlot);
+    }
+
+    /**
+     * Determines if save slot is being used in persistent storage
+     *
+     * @param {number} saveSlot The reference for the save slot
+     *
+     * @returns {boolean}
+     */
+    public saveSlotDoesntExist(saveSlot: number): boolean {
+        return !!(localStorage["save-slot-" + saveSlot]);
+    }
 
 }

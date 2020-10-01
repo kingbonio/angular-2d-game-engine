@@ -1,5 +1,5 @@
 export enum ObjectType {
-      lootObject,
-      door,
-      lootBag,
+    lootObject,
+    door,
+    lootBag,
 }

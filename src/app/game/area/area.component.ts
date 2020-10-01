@@ -1,8 +1,6 @@
 import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { IAreaExits } from '../../game-config/interfaces';
 import defaults from '../../shared/defaults';
 import { GameSettingsService } from '../../shared/services/game-settings.service';
 import { Enemy, NPC } from '../character-classes';
@@ -10,372 +8,357 @@ import { Character } from '../character-classes/character';
 import { Player } from '../character-classes/player';
 import { LootingModalComponent } from '../item/looting/looting-modal.component';
 import { MessageModalComponent } from '../message/message-modal.component';
-import { CharacterState, CharacterType, Direction, ElementClass } from '../shared/enums';
+import { CharacterState, CharacterType, Direction, ElementClass, ObjectType } from '../shared/enums';
 import { AreaConfigProviderService } from '../shared/services/area-config-provider.service';
 import { AreaStateService } from '../shared/services/area-state.service';
 import { BattleCalculatorService } from '../shared/services/battle-calculator.service';
 import { DialogueService } from '../shared/services/dialogue.service';
 import { GameStateService } from '../shared/services/game-state.service';
 import { PlayerStateService } from '../shared/services/player-state.service';
-import { AreaType } from './enums/area-type';
 import { GridObject } from './grid-object-classes/grid-object';
-import { IAreaElement } from './interfaces';
+import { IGridReferences } from './interfaces';
 import { IGridData } from './interfaces/igrid-data';
-import { ILevelData } from './interfaces/ilevel-data';
-import { SoundEffectService } from '../../shared/services/sound-effect.service';
 import { BackgroundMusicService } from '../../shared/services/background-music.service';
+import { GridHelper } from '../shared/util/area/grid-helper';
+import { LootBag } from './grid-object-classes/loot-bag';
 
 @Component({
-  selector: 'app-area',
-  templateUrl: './area.component.html',
-  styleUrls: ['./area.component.scss']
+    selector: 'app-area',
+    templateUrl: './area.component.html',
+    styleUrls: ['./area.component.scss']
 })
 export class AreaComponent implements OnDestroy, AfterViewInit {
 
-  private areaConfig: any;
-  private areaExits: any;
-  public character = CharacterType;
-  public direction = Direction;
-  private modalRef: MatDialogRef<any>;
-  public ElementClass = ElementClass;
-  public CharacterState = CharacterState;
-  public openLootingModalSubscription: Subscription;
-  public openMessageModalSubscription: Subscription;
+    private areaConfig: any;
+    private areaExits: any;
+    public character = CharacterType;
+    public direction = Direction;
+    private modalRef: MatDialogRef<any>;
+    public ElementClass = ElementClass;
+    public CharacterState = CharacterState;
+    public openLootingModalSubscription: Subscription;
+    public openMessageModalSubscription: Subscription;
 
-  constructor(
-    private route: ActivatedRoute,
-    public areaStateService: AreaStateService,
-    public dialogueService: DialogueService,
-    public areaConfigProviderService: AreaConfigProviderService,
-    public soundEffectService: SoundEffectService,
-    public backgroundMusicService: BackgroundMusicService,
-    public playerStateService: PlayerStateService,
-    public battleCalculatorService: BattleCalculatorService,
-    public gameSettingsService: GameSettingsService,
-    public gameStateService: GameStateService,
-    private dialog: MatDialog,
-  ) {
+    constructor(
+        public areaStateService: AreaStateService,
+        public dialogueService: DialogueService,
+        public areaConfigProviderService: AreaConfigProviderService,
+        public backgroundMusicService: BackgroundMusicService,
+        public playerStateService: PlayerStateService,
+        public battleCalculatorService: BattleCalculatorService,
+        public gameSettingsService: GameSettingsService,
+        public gameStateService: GameStateService,
+        private dialog: MatDialog,
+    ) {
 
-    this.openLootingModalSubscription = this.playerStateService.openLootingModal.subscribe((target: IGridData) => {
-      this.openLootingModal(target);
-    });
-
-    this.openMessageModalSubscription = this.playerStateService.openMessageModal.subscribe((message: string) => {
-      this.openMessageModal(message);
-    });
-
-    // Build the area
-    this.prepareArea();
-
-    // Play background music
-    // TODO Need to get a way of retaining the existing music playing if it's no different
-    this.backgroundMusicService.startMusic(this.areaConfig.backgroundMusic);
-  }
-
-  ngAfterViewInit() {
-
-    // Declare component loading complete
-    setTimeout(() => {
-      this.areaStateService.loadingPreviousArea = false;
-    }, 0);
-  }
-
-  /**
-   * Opens the looting component modal allowing manipulation of target's inventory
-   * @param target The target grid data for looting
-   */
-  private openLootingModal(target: IGridData) {
-    if (this.modalRef) {
-      this.modalRef.close();
-    } else {
-      const modalConfig = new MatDialogConfig();
-
-      modalConfig.disableClose = false;
-      modalConfig.autoFocus = true; // Maybe not necessary
-      modalConfig.hasBackdrop = true;
-      modalConfig.width = '450px';
-      modalConfig.height = '300px';
-      modalConfig.panelClass = "looting-modal";
-
-      // TODO This probably isn't the best way of doing this
-      // Select which part of the grid data we want to loot
-      if (target.element) {
-        modalConfig.data = target.element;
-      } else if (target.groundItem) {
-        modalConfig.data = target.groundItem;
-      }
-
-      this.modalRef = this.dialog.open(LootingModalComponent, modalConfig);
-
-      this.modalRef.afterClosed().subscribe(returnData => {
-
-        if (target.element) {
-
-          // Do nothing
-        } else if (target.groundItem && target.groundItem.isEmpty) {
-
-          // Get rid of the bag
-          target.groundItem = null;
-        }
-
-        this.modalRef = null;
-      });
-    }
-  }
-
-  /**
-   * Opens the dialogue component modal to show dialogue from the target element
-   * @param target The target grid data for looting
-   */
-  private openMessageModal(message: string) {
-    if (this.modalRef) {
-      this.modalRef.close();
-    } else {
-      const modalConfig = new MatDialogConfig();
-
-      modalConfig.disableClose = false;
-      modalConfig.autoFocus = true; // Maybe not necessary
-      modalConfig.hasBackdrop = true;
-      modalConfig.width = '250px';
-      modalConfig.height = '150px';
-      modalConfig.panelClass = "dialogue-modal";
-      modalConfig.data = message;
-
-      this.modalRef = this.dialog.open(MessageModalComponent, modalConfig);
-
-      this.modalRef.afterClosed().subscribe(returnData => {
-
-        this.modalRef = null;
-      });
-    }
-  }
-
-  public getGridElementImageSource(gridElement: Character | GridObject) {
-    return 'assets/images/elements/' + gridElement.imageFileName;
-  }
-
-  public getFloorImageSource(imageName: string) {
-    return 'assets/images/floor-style/' + imageName;
-  }
-
-  /**
-   * Concatenates the classes necessary for animations
-   */
-  public getAnimationClasses(isMovingForwards: boolean, element: Character) {
-    const direction = this.getDirectionClass(element);
-
-    const classes = isMovingForwards ? direction + " moving-forwards" : direction;
-
-    if (element.type === ElementClass.enemy) {
-      console.log(classes);
-    }
-
-    return classes;
-  }
-
-  public getDirectionClass(gridElement: Character | GridObject) {
-    // TODO this is proving strange, might want to come back to directions
-    const isPlayer = (gridElement && gridElement.type === ElementClass.player);
-    if (isPlayer) {
-      return 'direction-' + this.playerStateService.direction;
-    }
-    return gridElement ? 'direction-' + gridElement.direction : "";
-  }
-
-  public getDeadClass(character: Character): string {
-    // TODO This is representative of the character parent class issue
-    return character.currentHp < 1 ? "dead" : "";
-  }
-
-  public getCharacterType(gridCharacter: Character): ElementClass {
-    return gridCharacter.type;
-  }
-
-  private prepareArea(): void {
-
-    // // Kill any currently playing sounds
-    // this.soundEffectService.stopSound();
-
-    if (this.areaStateService.loadingExistingArea) {
-      // get the config from the provider
-      this.areaConfig = this.areaConfigProviderService.getAreaConfig(this.areaStateService.currentArea);
-      this.areaExits = this.areaConfigProviderService.getAreaExits(this.areaStateService.currentArea);
-      this.addExitsToGrid(this.areaExits);
-
-      // TODO Do nothing as area state service should be updating
-      this.rebuildArea();
-    } else {
-      // get the config from the provider
-      this.areaConfig = this.areaConfigProviderService.getAreaConfig(this.areaStateService.currentArea);
-      this.areaExits = this.areaConfigProviderService.getAreaExits(this.areaStateService.currentArea);
-      this.addExitsToGrid(this.areaExits);
-
-      // Set the player location
-      // TODO This won't work, needs moving into the loop with a check on player
-      this.playerStateService.locationY = this.areaConfig.areaElements[0].startingPositionY;
-      this.playerStateService.locationX = this.areaConfig.areaElements[0].startingPositionX;
-      // Set the monsters
-      this.addElementsToGrid(this.areaConfig.areaElements);
-
-      if (this.areaConfig.areaLoadMessage) {
-        this.dialogueService.displayDialogueMessage({
-          text: this.areaConfig.areaLoadMessage,
-          character: defaults.dialogue.areaTipsType,
-          name: defaults.dialogue.areaTipsName
+        this.openLootingModalSubscription = this.playerStateService.openLootingModal.subscribe((target: IGridData) => {
+            this.openLootingModal(target);
         });
-      }
+
+        this.openMessageModalSubscription = this.playerStateService.openMessageModal.subscribe((message: string) => {
+            this.openMessageModal(message);
+        });
+
+        // Build the area
+        this.prepareArea();
+
+        // Play background music
+        this.backgroundMusicService.startMusic(this.areaConfig.backgroundMusic);
     }
 
-    // If player is entering a new area we want to update the location to be opposite the way they came in
-    if (this.areaStateService.loadingPreviousArea) {
-      this.updatePlayerLocation();
+    ngAfterViewInit() {
+
+        // Declare component loading complete
+        setTimeout(() => {
+            this.areaStateService.loadingArea = false;
+        }, 0);
     }
-    this.areaStateService.loadingExistingArea = false;
-  }
 
-  private addElementsToGrid(elements: IAreaElement[]): void {
-    elements.forEach(element => {
-      // Check element's preferred grid reference and attempt to add it there
-      const gridReference = element.startingPositionY + element.startingPositionX;
-      if (!this.areaStateService.locations[gridReference].element) {
-        // We want to create instances of each character in the config
-        switch (element.type) {
-          case ElementClass.enemy:
-            this.areaStateService.locations[gridReference].element = new Enemy(element.elementProperties);
-            break;
-          case ElementClass.player:
-            this.areaStateService.locations[gridReference].element = new Player(element.elementProperties);
-            break;
-          case ElementClass.npc:
-            this.areaStateService.locations[gridReference].element = new NPC(element.elementProperties);
-            break;
-          case ElementClass.object:
-            this.areaStateService.locations[gridReference].element = new GridObject(element.elementProperties);
-            break;
-          default:
-            this.areaStateService.locations[gridReference].element = element;
-        }
-      } else {
-        // TODO: Move them to another position, up to x amount (need to block overcrowding)
-      }
-    });
-  }
+    /**
+     * Opens the looting component modal allowing manipulation of target's inventory
+     *
+     * @param {IGridData} target The target grid data for looting
+     */
+    private openLootingModal(target: IGridData): void {
+        if (this.modalRef) {
+            this.modalRef.close();
+        } else {
+            const modalConfig = new MatDialogConfig();
 
-  // TODO this seems like it's possibly unnecessary, look for a better way of doing this
-  private rebuildArea(): void {
-    for (const location in this.areaStateService.locations) {
-      if (this.areaStateService.locations.hasOwnProperty(location) && this.areaStateService.locations[location].element) {
-        // We want to create instances of each character in the config
-        switch (this.areaStateService.locations[location].element.type) {
-          case ElementClass.enemy:
-            this.areaStateService.locations[location].element = new Enemy(this.areaStateService.locations[location].element);
-            // TODO Maybe this would be better suited somewhere more abstracted from core code
-            if (this.areaStateService.locations[location].element.currentState === CharacterState.hunting && !this.areaStateService.locations[location].element.isDead()) {
-              this.areaStateService.locations[location].element.currentState = CharacterState.returningToPosition;
+            modalConfig.disableClose = false;
+            modalConfig.autoFocus = true; // Maybe not necessary
+            modalConfig.hasBackdrop = true;
+            modalConfig.width = '250px';
+            modalConfig.panelClass = "looting-modal";
+
+            // TODO This probably isn't the best way of doing this
+            // Select which part of the grid data we want to loot
+            if (target.element) {
+                modalConfig.data = target.element;
+            } else if (target.groundItem) {
+                modalConfig.data = target.groundItem;
             }
-            break;
-          case ElementClass.player:
-            this.areaStateService.locations[location].element = new Player(this.areaStateService.locations[location].element);
-            break;
-          case ElementClass.npc:
-            this.areaStateService.locations[location].element = new NPC(this.areaStateService.locations[location].element);
-            if (this.areaStateService.locations[location].element.currentState === CharacterState.hunting && !this.areaStateService.locations[location].element.isDead()) {
-              this.areaStateService.locations[location].element.currentState = CharacterState.returningToPosition;
-            }
-            break;
-          case ElementClass.object:
-            this.areaStateService.locations[location].element = new GridObject(this.areaStateService.locations[location].element);
-            break;
-          default:
-          // Do nothing
+
+            this.modalRef = this.dialog.open(LootingModalComponent, modalConfig);
+
+            this.modalRef.afterClosed().subscribe(returnData => {
+
+                if (target.element) {
+
+                    // Do nothing
+                } else if (target.groundItem && target.groundItem.isEmpty) {
+
+                    // Get rid of the bag
+                    target.groundItem = null;
+                }
+
+                this.modalRef = null;
+            });
         }
-      }
     }
-  }
 
+    /**
+     * Opens the information component modal to show information provided in message
+     *
+     * @param {string} message The message we're going to show
+     */
+    private openMessageModal(message: string): void {
+        if (this.modalRef) {
+            this.modalRef.close();
+        } else {
+            const modalConfig = new MatDialogConfig();
 
-  private updatePlayerLocation() {
-    // We haven't updated the player state service yet, update that to where the player came into the area
-    const previousLocation = this.areaStateService.previousPlayerLocation;
+            modalConfig.disableClose = false;
+            modalConfig.autoFocus = true;
+            modalConfig.hasBackdrop = true;
+            modalConfig.width = '250px';
+            modalConfig.height = '150px';
+            modalConfig.panelClass = "dialogue-modal";
+            modalConfig.data = message;
 
-    let newLocation;
+            this.modalRef = this.dialog.open(MessageModalComponent, modalConfig);
 
-    // TODO Currently we're overwriting anything that's in the entrance location
-    switch (previousLocation) {
-      case defaults.areaExitLocations.northExit:
-        newLocation = defaults.areaExitLocations.southExit;
-        this.areaStateService.movePlayer(newLocation);
-        break;
-      case defaults.areaExitLocations.eastExit:
-        newLocation = defaults.areaExitLocations.westExit;
-        this.areaStateService.movePlayer(newLocation);
-        break;
-      case defaults.areaExitLocations.southExit:
-        newLocation = defaults.areaExitLocations.northExit;
-        this.areaStateService.movePlayer(newLocation);
-        break;
-      case defaults.areaExitLocations.westExit:
-        newLocation = defaults.areaExitLocations.eastExit;
-        this.areaStateService.movePlayer(newLocation);
-        break;
+            this.modalRef.afterClosed().subscribe(returnData => {
+
+                this.modalRef = null;
+            });
+        }
     }
-    const splitNewLocation = this.areaStateService.splitLocationReference(newLocation);
-    this.playerStateService.locationY = splitNewLocation.locationY;
-    this.playerStateService.locationX = splitNewLocation.locationX;
-  }
 
-  private addExitsToGrid(areaExits: IAreaExits) {
-    if (areaExits.north) {
+    /**
+     * Produces a relative file location for the image name given
+     *
+     * @param {Character|GridObject} gridElement The data for the element in the location
+     * @returns {string}
+     */
+    public getGridElementImageSource(gridElement: Character | GridObject): string {
 
-      // TODO HERE:
-      this.areaStateService.locations[defaults.areaExitLocations.northExit].areaExit = areaExits.north;
+        return 'assets/images/elements/' + gridElement.imageFileName;
     }
-    if (areaExits.east) {
-      this.areaStateService.locations[defaults.areaExitLocations.eastExit].areaExit = areaExits.east;
+
+    /**
+     * Produces a relative file location for the image name given
+     *
+     * @param {string} imageName The name of the image file
+     * @returns {string}
+     */
+    public getFloorImageSource(imageName: string): string {
+
+        return 'assets/images/floor-style/' + imageName;
     }
-    if (areaExits.south) {
-      this.areaStateService.locations[defaults.areaExitLocations.southExit].areaExit = areaExits.south;
+
+    /**
+     * Returns a class based on the character's direction
+     *
+     * @param {Character} gridElement The element we're getting the class for
+     * @returns {string}
+     */
+    public getDirectionClass(gridElement: Character | GridObject): string {
+        const isPlayer = (gridElement && gridElement.type === ElementClass.player);
+
+        if (isPlayer) {
+            return 'direction-' + this.playerStateService.direction;
+        }
+
+        return gridElement ? 'direction-' + gridElement.direction : "";
     }
-    if (areaExits.west) {
-      this.areaStateService.locations[defaults.areaExitLocations.westExit].areaExit = areaExits.west;
+
+    /**
+     * Returns a class if the character is dead
+     *
+     * @param {Character} character The element we're getting the class for
+     * @returns {string}
+     */
+    public getDeadClass(character: Character): string {
+
+        return character.currentHp < 1 ? "dead" : "";
     }
-  }
 
-  /**
-   * Allows the area component to collect data from the level received by the router
-   * @returns The details about the level
-   */
-  public getCurrentLevelData(): ILevelData {
-    // TODO: Dummy return data for now
-    return {
-      name: "test level",
-      width: 6,
-      height: 6,
-      type: AreaType.puzzle
-    } as ILevelData;
-  }
+    /**
+     * Gathers area data and applies to this component and to Area State Service
+     */
+    private prepareArea(): void {
 
-  public locationExit(location: string, gridObject: IGridData): string {
-    for (const locationReference in defaults.areaExitLocations) {
-      if (defaults.areaExitLocations.hasOwnProperty(locationReference) &&
-        defaults.areaExitLocations[locationReference] === location &&
-        gridObject.areaExit
-      ) {
-        return locationReference;
-      }
+        if (this.areaStateService.loadingSavedGame || this.areaStateService.loadingExistingArea) {
+
+            if (this.areaStateService.loadingExistingArea) {
+
+                // Get the existing room config
+                const newLocations: IGridReferences = this.areaStateService.getAreaState(this.areaStateService.currentArea);
+
+                // Set the locations to area state service
+                this.areaStateService.locations = newLocations;
+
+                if (!newLocations) {
+
+                    // Build fresh from config
+                    this.areaExits = this.areaConfigProviderService.getAreaExits(this.areaStateService.currentArea);
+
+                    GridHelper.addExitsToGrid(this.areaExits, this.areaStateService.locations);
+                }
+            }
+
+            this.areaConfig = this.areaConfigProviderService.getAreaConfig(this.areaStateService.currentArea);
+            this.rebuildArea();
+
+        } else {
+
+            // get the config from the provider
+            this.areaConfig = this.areaConfigProviderService.getAreaConfig(this.areaStateService.currentArea);
+            this.areaExits = this.areaConfigProviderService.getAreaExits(this.areaStateService.currentArea);
+
+            // Pass by locations by reference
+            GridHelper.addExitsToGrid(this.areaExits, this.areaStateService.locations);
+
+            // Set the player location
+            // TODO This won't work, needs moving into the loop with a check on player
+            this.playerStateService.locationY = this.areaConfig.areaElements[0].startingPositionY;
+            this.playerStateService.locationX = this.areaConfig.areaElements[0].startingPositionX;
+
+            // Set the monsters
+            GridHelper.addElementsToGrid(this.areaConfig.areaElements, this.areaStateService.locations);
+
+            if (this.areaConfig.areaLoadMessage) {
+                this.dialogueService.displayDialogueMessage({
+                    text: this.areaConfig.areaLoadMessage,
+                    character: defaults.dialogue.areaTipsType,
+                    name: defaults.dialogue.areaTipsName
+                });
+            }
+        }
+
+        // If player is entering a new area we want to update the location to be opposite the way they came in
+        if (this.areaStateService.loadingArea) {
+            this.updatePlayerLocation();
+        }
+
+        this.areaStateService.loadingExistingArea = false;
+        this.areaStateService.loadingSavedGame = false;
     }
-    return "";
-  }
 
-  ngOnDestroy() {
+    /**
+     * Instantiates instances of the character/object types and pushes these to locations object
+     */
+    private rebuildArea(): void {
+        for (const location in this.areaStateService.locations) {
+            if (this.areaStateService.locations.hasOwnProperty(location)) {
+                if (this.areaStateService.locations[location].element) {
+                    // We want to create instances of each character in the config
+                    switch (this.areaStateService.locations[location].element.type) {
+                        case ElementClass.enemy:
+                            this.areaStateService.locations[location].element = new Enemy(this.areaStateService.locations[location].element);
+                            // TODO Maybe this would be better suited somewhere more abstracted from core code
+                            if (this.areaStateService.locations[location].element.currentState === CharacterState.hunting && !this.areaStateService.locations[location].element.isDead()) {
+                                this.areaStateService.locations[location].element.currentState = CharacterState.returningToPosition;
+                            }
+                            break;
+                        case ElementClass.player:
+                            this.areaStateService.locations[location].element = new Player(this.areaStateService.locations[location].element);
+                            break;
+                        case ElementClass.npc:
+                            this.areaStateService.locations[location].element = new NPC(this.areaStateService.locations[location].element);
+                            if (this.areaStateService.locations[location].element.currentState === CharacterState.hunting && !this.areaStateService.locations[location].element.isDead()) {
+                                this.areaStateService.locations[location].element.currentState = CharacterState.returningToPosition;
+                            }
+                            break;
+                        case ElementClass.object:
+                            this.areaStateService.locations[location].element = new GridObject(this.areaStateService.locations[location].element);
+                            break;
+                        default:
+                        // Do nothing
+                    }
+                }
 
+                if (this.areaStateService.locations[location].groundItem) {
+                    switch (this.areaStateService.locations[location].groundItem.objectType) {
+                        case ObjectType.lootBag:
+                            this.areaStateService.locations[location].groundItem = new LootBag(null, this.areaStateService.locations[location].groundItem.inventoryLocations);
+                    }
+                }
+            }
+        }
+    }
 
+    /**
+     * Repositions player character to the location where they enter the room
+     */
+    private updatePlayerLocation() {
+        // We haven't updated the player state service yet, update that to where the player came into the area
+        const previousLocation = this.areaStateService.previousPlayerLocation;
 
-    this.openLootingModalSubscription.unsubscribe();
-    this.openMessageModalSubscription.unsubscribe();
+        let newLocation;
 
-    // Revert characters who were hunting to normal mode in this area
-    this.areaStateService.huntingList = [];
-    this.areaStateService.notifyAreaChange();
-  }
+        // TODO Currently we're overwriting anything that's in the entrance location
+        switch (previousLocation) {
+            case defaults.areaExitLocations.northExit:
+                newLocation = defaults.areaExitLocations.southExit;
+                this.areaStateService.movePlayer(newLocation);
+                break;
+            case defaults.areaExitLocations.eastExit:
+                newLocation = defaults.areaExitLocations.westExit;
+                this.areaStateService.movePlayer(newLocation);
+                break;
+            case defaults.areaExitLocations.southExit:
+                newLocation = defaults.areaExitLocations.northExit;
+                this.areaStateService.movePlayer(newLocation);
+                break;
+            case defaults.areaExitLocations.westExit:
+                newLocation = defaults.areaExitLocations.eastExit;
+                this.areaStateService.movePlayer(newLocation);
+                break;
+        }
+        const splitNewLocation = this.areaStateService.splitLocationReference(newLocation);
+        this.playerStateService.locationY = splitNewLocation.locationY;
+        this.playerStateService.locationX = splitNewLocation.locationX;
+    }
+
+    /**
+     * Gets the class name for an area exit
+     *
+     * @param {string} location The grid reference for the area we're checking
+     * @param {IGridData} gridObject The data for the location
+     * @returns {string}
+     */
+    public getLocationExitClass(location: string, gridObject: IGridData): string {
+        for (const locationReference in defaults.areaExitLocations) {
+            if (defaults.areaExitLocations.hasOwnProperty(locationReference) &&
+                defaults.areaExitLocations[locationReference] === location &&
+                gridObject.areaExit
+            ) {
+                return locationReference;
+            }
+        }
+        return "";
+    }
+
+    ngOnDestroy() {
+
+        // Remove subscriptions to event emitters
+        this.openLootingModalSubscription.unsubscribe();
+        this.openMessageModalSubscription.unsubscribe();
+
+        // Revert characters who were hunting to normal mode in this area
+        this.areaStateService.huntingList = [];
+        this.areaStateService.notifyAreaChange();
+    }
 }

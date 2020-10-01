@@ -6,31 +6,40 @@ import defaults from '../../../shared/defaults';
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class TimerService {
-  private timer: Observable<number>;
-  private timerSubscriber: any;
-  public counter: BehaviorSubject<number>;
+    private timer: Observable<number>;
+    private timerSubscriber: any;
+    public counter: BehaviorSubject<number>;
 
-  constructor() {
-    this.counter = new BehaviorSubject(0);
-    this.startCounter();
-    this.timerSubscriber = this.timer.subscribe(value => {
-      this.counter.next(value);
-    });
-  }
+    constructor() {
+        this.counter = new BehaviorSubject(0);
+        this.startCounter();
+        this.timerSubscriber = this.timer.subscribe(value => {
+            this.counter.next(value);
+        });
+    }
 
-  private startCounter() {
-    this.timer = timer(0, defaults.gameTimer);
-  }
+    /**
+     * Starts counting the duration pulled from config
+     */
+    private startCounter(): void {
+        this.timer = timer(0, defaults.gameTimer);
+    }
 
-  public startTimer(timeToCount: number): Promise<any> {
-    return new Promise((res, rej) => {
-      return setTimeout(() => {
-        res("inputUnpaused");
-      }, timeToCount);
-    });
-  }
-
+    /**
+     * Starts a timer inside a promise
+     *
+     * @param {number} timeToCount The time we're counting to in miliseconds
+     *
+     * @returns {Promise<any>}
+     */
+    public startTimer(timeToCount: number): Promise<any> {
+        return new Promise((res, rej) => {
+            return setTimeout(() => {
+                res("inputUnpaused");
+            }, timeToCount);
+        });
+    }
 }

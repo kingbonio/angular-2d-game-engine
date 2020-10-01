@@ -1,17 +1,16 @@
-
 .item-grid-container {
-      width: 160px;
-      display: flex;
-      flex-wrap: wrap;
+    width: 160px;
+    display: flex;
+    flex-wrap: wrap;
 
-      .slot {
-            width: 30px;
-            height: 30px;
-            border: solid 1px #8a8181;
-            overflow: hidden;
-            cursor: pointer;
-            -moz-box-shadow:    inset 0 0 3px 3px #000000;
-            -webkit-box-shadow: inset 0 0 3px 3px #000000;
-            box-shadow:         inset 0 0 3px 3px #000000;
-      }
+    .slot {
+        width: 30px;
+        height: 30px;
+        border: solid 1px #8a8181;
+        overflow: hidden;
+        cursor: pointer;
+        -moz-box-shadow:    inset 0 0 3px 3px #000000;
+        -webkit-box-shadow: inset 0 0 3px 3px #000000;
+        box-shadow:       inset 0 0 3px 3px #000000;
+    }
 }

@@ -1,4 +1,4 @@
 export enum BackgroundMusic {
-      gameMusic = "gameMusic",
-      bossMusic = "bossMusic",
+    gameMusic = "gameMusic",
+    bossMusic = "bossMusic",
 }

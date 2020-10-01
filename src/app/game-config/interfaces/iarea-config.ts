@@ -1,6 +1,9 @@
 import { IAreaElement } from "../../game/area/interfaces";
 
 export interface IAreaConfig {
-      areaElements: IAreaElement[];
-      areaCompleteRequirements: any;
+    room: number;
+    backgroundMusic: string;
+    floorImageFileName: string;
+    areaLoadMessage: string;
+    areaElements: IAreaElement[];
 }

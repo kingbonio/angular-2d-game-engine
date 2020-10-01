@@ -1,86 +1,76 @@
-<div class="outer-container">
+<div [ngClass]="{'show-controls': gameSettingsService.showControls }" class="outer-container">
 
-      <div class="direction-controls">
-      <!-- <div *ngIf="gameSettingsService.oneHandedControls" class="direction-controls"> -->
-            
-            <div class="direction-buttons">
-                  <div class="north" (click)="buttonPress({ type: UserActionTypes.move, direction: Direction.N })"></div>
-                  <div class="east" (click)="buttonPress({ type: UserActionTypes.move, direction: Direction.E })"></div>
-                  <div class="south" (click)="buttonPress({ type: UserActionTypes.move, direction: Direction.S })"></div>
-                  <div class="west" (click)="buttonPress({ type: UserActionTypes.move, direction: Direction.W })"></div>
-            </div>
-      </div>
+    <div *ngIf="gameSettingsService.showControls" class="direction-controls">
+        
+        <div class="direction-buttons">
+            <div class="north" (click)="buttonPress({ type: UserActionTypes.move, direction: Direction.N })"></div>
+            <div class="east" (click)="buttonPress({ type: UserActionTypes.move, direction: Direction.E })"></div>
+            <div class="south" (click)="buttonPress({ type: UserActionTypes.move, direction: Direction.S })"></div>
+            <div class="west" (click)="buttonPress({ type: UserActionTypes.move, direction: Direction.W })"></div>
+        </div>
+    </div>
 
-      <div class="game-container">
-            <div class="top-menu">
+    <div class="game-container">
+        <div class="top-menu">
 
+        </div>
+        <div class="area-container">
+            <div *ngIf="isLoadingArea()" class="loading-overlay">
+                <div class="loading-text">
+                    {{ loadingText }}
+                </div>
             </div>
-            <div class="area-container">
-                  <div *ngIf="isLoadingArea()" class="loading-overlay">
-                        <div class="loading-text">
-                              {{ loadingText }}
-                        </div>
-                  </div>
-                  <app-area *ngIf="isAreaComponentAlive() && applicationStateService.gameOpen"></app-area>
+            <app-area *ngIf="isAreaComponentAlive() && applicationStateService.gameOpen" [ngClass]="{ 'battle-mode': gameStateService.battleMode }"></app-area>
+        </div>
+        <div class="dialogue-area">
+            <app-dialogue class="dialogue-box"></app-dialogue>
+        </div>
+        <div class="player-menu">
+            <div class="equipment-section">
+                <app-equipment></app-equipment>
             </div>
-            <div class="dialogue-area">
-                  <app-dialogue class="dialogue-box"></app-dialogue>
+            <div class="inventory-section">
+                <app-inventory></app-inventory>
             </div>
-            <div class="player-menu">
-                  <div class="equipment-section">
-                        <app-equipment></app-equipment>
-                  </div>
-                  <div class="inventory-section">
-                        <app-inventory></app-inventory>
-                  </div>
-                  <div class="status">
-                        <div class="health">
-                              HP: {{ getCurrentHealth() }}/{{ playerStateService.maxHealth }}
-                        </div>
-                        <div class="armour">
-                              Total Armour: {{ equipmentManagerService.armourTotal }}
-                        </div>
-                        <div class="weapon">
-                              Weapon Damage: {{ equipmentManagerService.getWeaponDamage }}
-                        </div>
+            <div class="status">
+                <div class="health">
+                    HP: {{ getCurrentHealth() }}/{{ playerStateService.maxHealth }}
+                </div>
+                <div class="armour">
+                    Total Armour: {{ equipmentManagerService.armourTotal }}
+                </div>
+                <div class="weapon">
+                    Weapon Damage: {{ equipmentManagerService.getWeaponDamage }}
+                </div>
 
-                        <div class="status-effects">
+                <div class="status-effects">
 
-                        </div>
-                  </div>
-                  <div *ngIf="gameStateService.battleMode" class="battle-mode">
-                        Battle mode
-                        (Turn based)
-                        Escape or fight
-                  </div>
-                  <div class="menu-button">
-                        <div *ngIf="gameSettingsService.allowInGameMenu" (click)="openGameMenu()" class="menu-icon">Menu</div>
-                  </div>
+                </div>
             </div>
-      </div>
+            <div *ngIf="gameStateService.gamePaused" class="paused">
+                Paused
+            </div>
+            <div class="menu-button">
+                <div *ngIf="gameSettingsService.allowInGameMenu" (click)="openGameMenu()" class="menu-icon">Menu</div>
+            </div>
+        </div>
+    </div>
 
-      <div class="interaction-controls">
-            <!-- <div *ngIf="gameSettingsService.oneHandedControls" class="direction-controls"> -->
+    <div *ngIf="gameSettingsService.showControls" class="interaction-controls">
 
-            <div class="interaction-buttons">
-                  <div class="top" (click)="buttonPress({ type: UserActionTypes.interaction, interaction: UserInteractionTypes.speak })">
-                        <span class="button-text top-text">speak</span>
-                  </div>
-                  <div class="right" (click)="buttonPress({ type: UserActionTypes.interaction, interaction: UserInteractionTypes.guard })">
-                        <span class="button-text right-text">guard</span>
-                  </div>
-                  <div class="bottom" (click)="buttonPress({ type: UserActionTypes.interaction, interaction: UserInteractionTypes.interact })">
-                        <span class="button-text bottom-text">interact</span>
-                  </div>
-                  <div class="left" (click)="buttonPress({ type: UserActionTypes.interaction, interaction: UserInteractionTypes.attack })">                        
-                        <span class="button-text left-text">attack</span>
-                  </div>
+        <div class="interaction-buttons">
+            <div class="top" (click)="buttonPress({ type: UserActionTypes.interaction, interaction: UserInteractionTypes.speak })">
+                <span class="button-text top-text">speak</span>
             </div>
-      </div>
-      <!-- <div *ngIf="assetLoaderService.assetsLoaded" class="hidden-assets">
-            <div *ngFor="let imageLocation of assetLoaderService.assets" class="assets">
-                  {{ imageLocation }}
-                  <img src="imageLocation" />
+            <div class="right" (click)="buttonPress({ type: UserActionTypes.interaction, interaction: UserInteractionTypes.guard })">
+                <span class="button-text right-text">guard</span>
             </div>
-      </div> -->
+            <div class="bottom" (click)="buttonPress({ type: UserActionTypes.interaction, interaction: UserInteractionTypes.interact })">
+                <span class="button-text bottom-text">interact</span>
+            </div>
+            <div class="left" (click)="buttonPress({ type: UserActionTypes.interaction, interaction: UserInteractionTypes.attack })">                
+                <span class="button-text left-text">attack</span>
+            </div>
+        </div>
+    </div>
 </div>

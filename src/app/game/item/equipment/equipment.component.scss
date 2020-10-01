@@ -1,36 +1,34 @@
 .character-section {
-      border: solid 1px black;
+    border: solid 1px black;
 
-      .armour, .weapons, .active-items, .active-buffs {
-            padding: 5px;
+    .armour, .weapons, .active-items, .active-buffs {
+        padding: 5px;
+        border: solid 1px black;
 
-            .title {
-                  text-align: center;
-                  padding: 5px 0px;
+        .title {
+            padding: 5px 0px;
+            text-align: center;
+        }
+
+        .slot-name {
+            display: inline-block;
+            width: 100px;
+            vertical-align: top;
+            padding-top: 6px;
+        }
+
+        .equipped-slot {
+            display: inline-block;
+            min-width: 30px;
+            height: 30px;
+            border: solid 1px #8a8181;
+            -moz-box-shadow:    inset 0 0 3px 3px #000000;
+            -webkit-box-shadow: inset 0 0 3px 3px #000000;
+            box-shadow:         inset 0 0 3px 3px #000000;
+
+            &.clickable {
+                cursor: pointer;
             }
-
-            border: solid 1px black;
-
-            .slot-name {
-                  display: inline-block;
-                  width: 100px;
-                  // TODO Bad juju
-                  vertical-align: top;
-                  padding-top: 6px;
-            }
-
-            .equipped-slot {
-                  display: inline-block;
-                  border: solid 1px #8a8181;
-                  min-width: 30px;
-                  height: 30px;
-                  -moz-box-shadow:    inset 0 0 3px 3px #000000;
-                  -webkit-box-shadow: inset 0 0 3px 3px #000000;
-                  box-shadow:         inset 0 0 3px 3px #000000;
-
-                  &.clickable {
-                        cursor: pointer;
-                  }
-            }
-      }
+        }
+    }
 }
