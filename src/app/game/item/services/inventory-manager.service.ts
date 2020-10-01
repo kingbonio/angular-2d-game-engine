@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IInventoryItem, IInventoryStateData } from '../../shared/interfaces';
 import { IInventoryReferences } from '../inventory/interfaces';
-import { armour } from '../../../game-config/items';
 import inventoryLocationsDefaults from '../../shared/models/inventoryLocations';
 import { initialItems } from '../../../game-config/initial-items';
 
