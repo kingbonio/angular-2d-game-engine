@@ -3,6 +3,7 @@ import { IInventoryItem, IInventoryStateData } from '../../shared/interfaces';
 import { IInventoryReferences } from '../inventory/interfaces';
 import { armour } from '../../../game-config/items';
 import inventoryLocationsDefaults from '../../shared/models/inventoryLocations';
+import { initialItems } from '../../../game-config/initial-items';
 
 @Injectable()
 export class InventoryManagerService {
@@ -11,7 +12,7 @@ export class InventoryManagerService {
 
     constructor(
     ) {
-      this.setDefaults();
+        this.setDefaults();
     }
 
     /**
@@ -20,38 +21,51 @@ export class InventoryManagerService {
      * @returns {string|null}
      */
     private getNextFreeSlot(): string | null {
-      for (const itemSlot in this.locations) {
-        if (this.locations.hasOwnProperty(itemSlot) && !this.locations[itemSlot]) {
-            return itemSlot;
+        for (const itemSlot in this.locations) {
+            if (this.locations.hasOwnProperty(itemSlot) && !this.locations[itemSlot]) {
+
+                return itemSlot;
+            }
         }
-      }
-      return null;
+
+        return null;
     }
 
     /**
-	 * Adds an inventory item to the inventory is there is space,
-	 * otherwise throws an error
+     * Adds an inventory item to the inventory if there is space,
+     * otherwise throws an error
      *
-	 * @param newItem The item added to the inventory
+     * @param {IInventoryItem} newItem The item added to the inventory
      *
      * @throws {Error}
-	 */
+     */
     public addItemToInventory(newItem: IInventoryItem): void {
-      const targetLocation = this.getNextFreeSlot();
-      if (!targetLocation) {
-        throw new Error("Inventory full");
-      } else {
-        this.locations[targetLocation] = newItem;
-      }
+        const targetLocation = this.getNextFreeSlot();
+        if (!targetLocation) {
+            throw new Error("Inventory full");
+        } else {
+            this.locations[targetLocation] = newItem;
+        }
     }
 
     /**
-	 * Sets all service states to default
-	 */
+     * Adds inventory items to the inventory
+     *
+     * @param {IInventoryItem[]} newItems The items to be added to the inventory
+     */
+    public addItemsToInventory(newItems: IInventoryItem[]): void {
+        newItems.forEach((item: IInventoryItem) => {
+            this.addItemToInventory(item);
+        });
+    }
+
+    /**
+     * Sets all service states to default
+     */
     public setDefaults(): void {
-      this.locations = this.cloneInventoryLocations(inventoryLocationsDefaults);
-      this.locationKeys = Object.keys;
-      this.addItemToInventory(armour.leatherChestPiece);
+        this.locations = this.cloneInventoryLocations(inventoryLocationsDefaults);
+        this.locationKeys = Object.keys;
+        this.addItemsToInventory(initialItems);
     }
 
     /**
@@ -62,19 +76,21 @@ export class InventoryManagerService {
      * @returns {IInventoryReferences}
      */
     public cloneInventoryLocations(sourceInventoryLocations: IInventoryReferences): IInventoryReferences {
-      return JSON.parse(JSON.stringify(sourceInventoryLocations));
+
+        return JSON.parse(JSON.stringify(sourceInventoryLocations));
     }
 
     /**
-	 * Return the inventory state for storage
+     * Return the inventory state for storage
      *
-	 * @returns {IInventoryStateData}
-	 */
+     * @returns {IInventoryStateData}
+     */
     public gatherState(): IInventoryStateData {
-      return {
-        locationKeys: this.locationKeys,
-        locations: this.locations,
-      };
+
+        return {
+            locationKeys: this.locationKeys,
+            locations: this.locations,
+        };
     }
 
     /**
@@ -83,10 +99,10 @@ export class InventoryManagerService {
      * @param {IInventoryStateData} newState Settings to push to this state service
      */
     public applyState(newState: IInventoryStateData): void {
-      for (const stateSetting in newState) {
-        if (newState.hasOwnProperty(stateSetting)) {
-            this[stateSetting] = newState[stateSetting];
+        for (const stateSetting in newState) {
+            if (newState.hasOwnProperty(stateSetting)) {
+                this[stateSetting] = newState[stateSetting];
+            }
         }
-      }
     }
 }

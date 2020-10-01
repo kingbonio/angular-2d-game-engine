@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { initialEquipment } from '../../../game-config/initial-items';
 import defaults from '../../../shared/defaults';
 import { IEquipmentStateData } from '../../shared/interfaces/iequipment-state-data';
 import { TimerService } from '../../shared/services/timer.service';
@@ -17,17 +18,17 @@ export class EquipmentManagerService {
     public buffTimeRemaining: number;
 
     constructor(
-      private inventoryManagerService: InventoryManagerService,
-      private timerService: TimerService,
+        private inventoryManagerService: InventoryManagerService,
+        private timerService: TimerService,
     ) {
-      this.setDefaults();
-      this.timerService.counter.subscribe(value => {
-        if (this.buffTimeRemaining > 0) {
-            this.buffTimeRemaining--;
-        } else {
-            this.activeBuff = null;
-        }
-      });
+        this.setDefaults();
+        this.timerService.counter.subscribe(value => {
+            if (this.buffTimeRemaining > 0) {
+                this.buffTimeRemaining--;
+            } else {
+                this.activeBuff = null;
+            }
+        });
     }
 
     /**
@@ -36,19 +37,18 @@ export class EquipmentManagerService {
      * @returns {number}
      */
     get armourTotal(): number {
-      let armourTotal = 0;
-      for (const armourSlot in this.armour) {
-        if (this.armour.hasOwnProperty(armourSlot) && this.armour[armourSlot]) {
-            armourTotal += this.armour[armourSlot].properties.defense;
-
+        let armourTotal = 0;
+        for (const armourSlot in this.armour) {
+            if (this.armour.hasOwnProperty(armourSlot) && this.armour[armourSlot]) {
+                armourTotal += this.armour[armourSlot].properties.defense;
+            }
         }
-      }
 
-      if (this.activeBuff && this.activeBuff.properties.effectType === PotionEffectType.armour) {
-        armourTotal += this.activeBuff.properties.effectAmount;
-      }
+        if (this.activeBuff && this.activeBuff.properties.effectType === PotionEffectType.armour) {
+            armourTotal += this.activeBuff.properties.effectAmount;
+        }
 
-      return armourTotal;
+        return armourTotal;
     }
 
     /**
@@ -57,12 +57,12 @@ export class EquipmentManagerService {
      * @returns {number}
      */
     get getWeaponDamage(): number {
-      let totalDamage = this.weapons.primary ? this.weapons.primary.properties.damage : defaults.playerBaseStats.baseDamage;
-      if (this.activeBuff && this.activeBuff.properties.effectType === PotionEffectType.damageOvercharge) {
-        totalDamage += this.activeBuff.properties.effectAmount;
-      }
+        let totalDamage = this.weapons.primary ? this.weapons.primary.properties.damage : defaults.playerBaseStats.baseDamage;
+        if (this.activeBuff && this.activeBuff.properties.effectType === PotionEffectType.damageOvercharge) {
+            totalDamage += this.activeBuff.properties.effectAmount;
+        }
 
-      return totalDamage;
+        return totalDamage;
     }
 
     /**
@@ -71,16 +71,16 @@ export class EquipmentManagerService {
      * @param newArmour armour item being added
      */
     public setArmourType(newArmour: IInventoryItem): void {
-      if (newArmour.class !== ItemClass.armour) {
-        // TODO: build recipient of this and insert translation service
-        // this.notificationsService("Item is not armour");
-      } else {
-        if (this.armour[newArmour.armourSlot]) {
-            // TODO This actually isn't being used yet but if it is it needs safeguardng for inventory full error
-            this.inventoryManagerService.addItemToInventory(this.armour[newArmour.armourSlot]);
+        if (newArmour.class !== ItemClass.armour) {
+            // TODO: build recipient of this and insert translation service
+            // this.notificationsService("Item is not armour");
+        } else {
+            if (this.armour[newArmour.armourSlot]) {
+                // TODO This actually isn't being used yet but if it is it needs safeguardng for inventory full error
+                this.inventoryManagerService.addItemToInventory(this.armour[newArmour.armourSlot]);
+            }
+            this.armour[newArmour.armourSlot] = newArmour;
         }
-        this.armour[newArmour.armourSlot] = newArmour;
-      }
     }
 
     /**
@@ -89,11 +89,12 @@ export class EquipmentManagerService {
      * @param newWeapon weapon item being add
      */
     public setWeaponType(newWeapon: IInventoryItem): void {
-      if (newWeapon.class !== ItemClass.weapon) {
-        // Do nothing
-      } else {
-        this.weapons[newWeapon.weaponSlot] = newWeapon;
-      }
+        if (newWeapon.class !== ItemClass.weapon) {
+
+            // Do nothing
+        } else {
+            this.weapons[newWeapon.weaponSlot] = newWeapon;
+        }
     }
 
     /**
@@ -104,9 +105,10 @@ export class EquipmentManagerService {
      * @returns {IInventoryItem}
      */
     public switchArmourType(item: IInventoryItem): IInventoryItem {
-      const returnItem = this.armour[item.armourSlot];
-      this.armour[item.armourSlot] = item;
-      return returnItem;
+        const returnItem = this.armour[item.armourSlot];
+        this.armour[item.armourSlot] = item;
+
+        return returnItem;
     }
 
     /**
@@ -117,9 +119,9 @@ export class EquipmentManagerService {
      * @returns {IInventoryItem}
      */
     public switchWeaponType(item: IInventoryItem): IInventoryItem {
-      const returnItem = this.weapons[item.weaponSlot];
-      this.weapons[item.weaponSlot] = item;
-      return returnItem;
+        const returnItem = this.weapons[item.weaponSlot];
+        this.weapons[item.weaponSlot] = item;
+        return returnItem;
     }
 
     /**
@@ -130,9 +132,9 @@ export class EquipmentManagerService {
      * @returns {IInventoryItem}
      */
     public switchActiveItem(item: IInventoryItem): IInventoryItem {
-      const returnItem = this.activeItem;
-      this.activeItem = item;
-      return returnItem;
+        const returnItem = this.activeItem;
+        this.activeItem = item;
+        return returnItem;
     }
 
     /**
@@ -141,7 +143,7 @@ export class EquipmentManagerService {
      * @param {ArmourType} armourSlot
      */
     public removeArmour(armourSlot: ArmourType): void {
-      this.armour[armourSlot] = null;
+        this.armour[armourSlot] = null;
     }
 
     /**
@@ -150,21 +152,21 @@ export class EquipmentManagerService {
      * @param {WeaponType} armourSlot
      */
     public removeWeapon(weaponSlot: WeaponType): void {
-      this.weapons[weaponSlot] = null;
+        this.weapons[weaponSlot] = null;
     }
 
     /**
      * Destroys the equipped active item
      */
     public removeActiveItem(): void {
-      this.activeItem = null;
+        this.activeItem = null;
     }
 
     /**
      * Destroys the equipped active item
      */
     public destroyActiveItem(): void {
-      this.activeItem = null;
+        this.activeItem = null;
     }
 
     /**
@@ -175,7 +177,7 @@ export class EquipmentManagerService {
      * @returns {IInventoryItem}
      */
     public getArmourType(type: ArmourType): IInventoryItem {
-      return this.armour[type];
+        return this.armour[type];
     }
 
     /**
@@ -186,7 +188,7 @@ export class EquipmentManagerService {
      * @returns {IInventoryItem}
      */
     public getWeaponType(type: WeaponType = WeaponType.primary): IInventoryItem {
-      return this.weapons[type];
+        return this.weapons[type];
     }
 
     /**
@@ -195,28 +197,19 @@ export class EquipmentManagerService {
      * @param duration The starting time of the duration
      */
     public startBuffTimer(duration: number): void {
-      this.buffTimeRemaining = duration;
+        this.buffTimeRemaining = duration;
     }
 
     /**
      * Sets service's state to default
      */
     public setDefaults(): void {
-      this.armour = {
-        head: null,
-        arms: null,
-        hands: null,
-        torso: null,
-        legs: null,
-        boots: null,
-      };
-      this.weapons = {
-        primary: null
-      };
+        this.armour = initialEquipment.armour;
+        this.weapons = initialEquipment.weapons;
 
-      this.activeItem = null;
-      this.activeBuff = null;
-      this.buffTimeRemaining = 0;
+        this.activeItem = null;
+        this.activeBuff = null;
+        this.buffTimeRemaining = 0;
     }
 
     /**
@@ -225,11 +218,11 @@ export class EquipmentManagerService {
      * @returns {IEquipmentStateData}
      */
     public gatherState(): IEquipmentStateData {
-      return {
-        armour: this.armour,
-        weapons: this.weapons,
-        activeItem: this.activeItem,
-      };
+        return {
+            armour: this.armour,
+            weapons: this.weapons,
+            activeItem: this.activeItem,
+        };
     }
 
     /**
@@ -238,10 +231,10 @@ export class EquipmentManagerService {
      * @param {IEquipmentStateData} newState Settings to push to this state service
      */
     public applyState(newState: IEquipmentStateData): void {
-      for (const stateSetting in newState) {
-        if (newState.hasOwnProperty(stateSetting)) {
-            this[stateSetting] = newState[stateSetting];
+        for (const stateSetting in newState) {
+            if (newState.hasOwnProperty(stateSetting)) {
+                this[stateSetting] = newState[stateSetting];
+            }
         }
-      }
     }
 }
