@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { GameStateService } from '../shared/services/game-state.service';
 
 @Component({
     selector: 'app-dead-modal',
@@ -12,7 +14,7 @@ export class DeadModalComponent {
     /**
      * Call to reload the main page
      */
-    public restartGame(): void {
+    public returnToMainMenu(): void {
         window.location.reload();
     }
 }
