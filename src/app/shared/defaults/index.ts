@@ -54,7 +54,7 @@ export default {
         // The theme shown in the dialogue area (text colour for example)
         computerCharacterType: "computer",
         // The name that will show for area tips
-        areaTipsName: "area tips",
+        areaTipsName: "Area tips",
         // The theme shown in the dialogue area (text colour for example)
         areaTipsType: "area-tips",
         // If the door you're trying to open is locked

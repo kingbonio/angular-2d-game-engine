@@ -5,7 +5,7 @@ import { Direction } from "../../game/shared/enums";
 export default {
     1: {
         north: { direction: Direction.N, destination: 2, status: AreaExitStatus.locked, itemReferenceNeeded: "73c02921-f0a6-4ea1-8b24-97842ee28fb6", keyColourNeeded: "green" },
-        east: { direction: Direction.E, destination: 3, status: AreaExitStatus.closed, itemReferenceNeeded: "", keyColourNeeded: "" },
+        east: null,
         south: null,
         west: null,
     } as IAreaExits,
