@@ -232,13 +232,12 @@ export class PlayerStateService {
                     // Play door opening sound
                     this.soundEffectService.playSound(SoundEffects.openStoneDoor);
 
-                } else {
+                } else if (currentLocation.areaExit.status !== AreaExitStatus.open && currentLocation.areaExit.status !== AreaExitStatus.opening) {
                     this.dialogueService.displayDialogueMessage({
                         text: defaults.dialogue.areaExitKeyNotActive(currentLocation.areaExit.keyColourNeeded),
                         character: defaults.dialogue.computerCharacterType,
                         name: defaults.dialogue.computerName
                     });
-
                 }
             }
 

@@ -8,6 +8,7 @@ export default {
     room: 1,
     backgroundMusic: "gameMusic",
     floorImageFileName: "wood.png",
+    areaVisited: false,
     areaLoadMessage: "Your first enemy! If you attack the enemy or step in their (short) line of sight, you will enter a turn-based 'Battle Mode' where they will move slower than you but only when you do. The enemy will chase you and attack you. They will give up chasing you if you stay out of sight for a few rounds of movement. Click on the blue armour icon on the right to equip so you can protect yourself. Attack with (Default) 'Space'. After the enemy has been defeated, interact with the dropped loot bag to get the door key and set it to your active item, then unlock and walk through north door.",
     areaElements: [
         player,

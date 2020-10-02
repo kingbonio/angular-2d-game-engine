@@ -8,6 +8,7 @@ export default {
     room: 5,
     backgroundMusic: "bossMusic",
     floorImageFileName: "pavement.png",
+    areaVisited: false,
     areaLoadMessage: "In the chest you will find a damage buff potion, which boosts your strength for 10 seconds, use it to attack this strong enemy. Remember to equip any armour and weapons you have to make the fight easier.",
     areaElements: [
         player,

@@ -8,6 +8,7 @@ export default {
     room: 6,
     backgroundMusic: "bossMusic",
     floorImageFileName: "pavement.png",
+    areaVisited: false,
     areaLoadMessage: "Test area",
     areaElements: [
         player,

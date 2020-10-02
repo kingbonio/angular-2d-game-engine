@@ -56,16 +56,7 @@ https://www.youtube.com/channel/UCmU68D0OK6fXo351hs3qqjQ
 
 # Change Log
 
-v0.14.0a
-
-* Tidied config files so easier to implement characters/grid objects
-* Added the "running away" character state in cases of low health
-* Added volume controls to settings
-* Tidied the settings menu and included the option to hide handheld controls
-* Moved battle indicator to area border
-* Updated area exits to be custom images
-* Improved area exits to open opposite side when opened
-
+v0.15.0a
 
 
 ## Background Music credits

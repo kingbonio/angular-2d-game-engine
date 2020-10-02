@@ -83,5 +83,4 @@ export class PersistentStorageComponent {
     public saveSlotDoesntExist(saveSlot: number): boolean {
         return !!(localStorage["save-slot-" + saveSlot]);
     }
-
 }
