@@ -238,7 +238,7 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
             // Set the monsters
             GridHelper.addElementsToGrid(this.areaConfig.areaElements, this.areaStateService.locations);
         }
-        if (!this.areaConfig.visitedArea) {
+        if (!this.areaConfig.areaVisited) {
 
             // Show the area messge from config
             if (this.areaConfig.areaLoadMessage) {
@@ -255,7 +255,7 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
             this.updatePlayerLocation();
         }
 
-        this.areaConfig.visitedArea = true;
+        this.areaConfig.areaVisited = true;
         this.areaStateService.loadingExistingArea = false;
         this.areaStateService.loadingSavedGame = false;
     }
