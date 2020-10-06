@@ -21,6 +21,7 @@ export class GameSettingsService {
     public keysMapped = {};
     public musicVolume = defaults.volumes.music;
     public soundEffectVolume = defaults.volumes.soundEffect;
+    public dyslexiaFont = defaults.gameSettings.dyslexiaFont;
 
     constructor(
         public persistentStateService: PersistentStateService,
@@ -116,6 +117,7 @@ export class GameSettingsService {
             keysMapped: this.keysMapped,
             musicVolume: this.musicVolume,
             soundEffectVolume: this.soundEffectVolume,
+            dyslexiaFont: this.dyslexiaFont,
         };
     }
 

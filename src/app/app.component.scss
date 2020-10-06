@@ -1,35 +1,8 @@
-.border-selection {
-    width: 1px;
-    height: 1px;
-    position: fixed;
-    bottom: 0px;
-    right: 0px;
-    cursor: pointer;
+.wrapper {
+    font-family: arial;
 
-    &.on {
-        border: solid red 1px;
-    }
-}
-
-.background-music-button {
-    position: fixed;
-    bottom: 0px;
-    left: 0px;
-    height: 48px;
-    width: 48px;
-    color: grey;
-    cursor: pointer;
-    
-    
-    .audio-icon {
-        height: 48px;
-        width: 48px;
-        background: url("assets/images/icons/speaker.svg") no-repeat center;
-        background-size: 48px 48px;
-        fill: red;
-
-        &.on {
-            fill: white;
-        }
+    &.dyslexia-font {
+        font-family: OpenDyslexic;
+        line-height: 18px;
     }
 }

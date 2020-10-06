@@ -1,0 +1,19 @@
+<div class="accessibility">
+    <div class="accessibility-section">
+        <div class="accessibility-title">Accessibility Settings</div>
+        <div class="accessibility-settings">
+            <input type="checkbox" [(ngModel)]="dyslexiaFont">Use Dyslexic Friendly Font
+        </div>
+    </div>
+    <div class="footer-section">
+        <div class="main-menu">
+            <button (click)="loadMainMenu()">Back To Main Menu</button>
+        </div>
+        <div class="save-settings">
+            <button (click)="saveSettings()">Apply settings</button>
+        </div>
+        <div class="restore-defaults">
+            <button (click)="setDefaults()">Restore defaults</button>
+        </div>
+    </div>
+</div>

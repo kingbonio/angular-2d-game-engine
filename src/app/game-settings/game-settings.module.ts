@@ -7,6 +7,7 @@ import { GameSettingsRoutingModule } from './game-settings-routing.module';
 import { FormsModule } from '@angular/forms';
 import { SoundComponent } from './sound/sound.component';
 import { MatSliderModule } from '@angular/material';
+import { AccessibilityComponent } from './accessibility/accessibility.component';
 
 @NgModule({
     imports: [
@@ -20,6 +21,7 @@ import { MatSliderModule } from '@angular/material';
         GameControlsComponent,
         GameplayComponent,
         SoundComponent,
+        AccessibilityComponent,
     ],
 })
 export class GameSettingsModule { }

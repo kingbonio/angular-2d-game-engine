@@ -75,6 +75,15 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
     }
 
     /**
+     * Gets a string of classes for the modal
+     *
+     * @returns {string}
+     */
+    private getModalClass() {
+        return this.gameSettingsService.dyslexiaFont ? "dyslexia-font" : "";
+    }
+
+    /**
      * Opens the looting component modal allowing manipulation of target's inventory
      *
      * @param {IGridData} target The target grid data for looting
@@ -89,7 +98,7 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
             modalConfig.autoFocus = true; // Maybe not necessary
             modalConfig.hasBackdrop = true;
             modalConfig.width = '250px';
-            modalConfig.panelClass = "looting-modal";
+            modalConfig.panelClass = this.getModalClass();
 
             // TODO This probably isn't the best way of doing this
             // Select which part of the grid data we want to loot
@@ -133,7 +142,7 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
             modalConfig.hasBackdrop = true;
             modalConfig.width = '250px';
             modalConfig.height = '150px';
-            modalConfig.panelClass = "dialogue-modal";
+            modalConfig.panelClass = this.getModalClass();
             modalConfig.data = message;
 
             this.modalRef = this.dialog.open(MessageModalComponent, modalConfig);

@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Subscription } from 'rxjs/Subscription';
+import { GameSettingsService } from './shared/services/game-settings.service';
 import { UserInputService } from './shared/services/user-input.service';
 
 @Component({
@@ -14,6 +15,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     constructor(
         private userInputService: UserInputService,
+        public gameSettingsService: GameSettingsService
     ) { }
 
     ngOnInit() {

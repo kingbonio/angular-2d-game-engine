@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { AccessibilityComponent } from "./accessibility/accessibility.component";
 import { GameControlsComponent } from "./game-controls/game-controls.component";
 import { GameSettingsComponent } from "./game-settings.component";
 import { GameplayComponent } from "./gameplay/gameplay.component";
@@ -24,6 +25,11 @@ const gameSettingsRoutes = [
                 path: 'controls',
                 pathMatch: "full",
                 component: GameControlsComponent
+            },
+            {
+                path: 'accessibility',
+                pathMatch: "full",
+                component: AccessibilityComponent
             },
             {
                 path: '**',
