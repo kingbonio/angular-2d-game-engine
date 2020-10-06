@@ -127,6 +127,8 @@ export default {
         showRoomShadow: false,
         // If we want the game to start with one-handed controls
         oneHandedControls: true,
+        // If we want to start with an accessible font
+        dyslexiaFont: false,
     },
     gameConfig: {
         // Maximum number of messages to show in the dialogue area at once

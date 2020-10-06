@@ -13,6 +13,11 @@
   @include angular-material-theme($grey-app-theme);
 }
 
+@font-face {
+  font-family: OpenDyslexic;
+  src: url(assets/fonts/OpenDyslexic-Regular.otf) format("opentype");
+}
+
 /* You can add global styles to this file, and also import other style files */
 body {
     position: absolute;
@@ -58,12 +63,22 @@ app-game-settings {
     max-height: inherit;
     background: none;
     position: relative;
+
+    &.dyslexia-font {
+        font-family: OpenDyslexic;
+        line-height: 18px;
+    }
 }
 
-.looting-modal, .menu-modal, .dead-modal, .dialogue-modal {
+.cdk-overlay-pane {
     background-image: linear-gradient(to bottom right, #737373, #121010);
     border: solid #121010 3px;
     margin: auto;
+
+    &.dyslexia-font {
+        font-family: OpenDyslexic;
+        line-height: 18px;
+    }
 }
 
 button, .menu-button {

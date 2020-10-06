@@ -84,6 +84,15 @@ export class GameComponent implements OnInit, OnDestroy {
     }
 
     /**
+     * Gets a string of classes for the modal
+     *
+     * @returns {string}
+     */
+    private getModalClass() {
+        return this.gameSettingsService.dyslexiaFont ? "dyslexia-font" : "";
+    }
+
+    /**
      * Opens a modal for the in-game menu
      */
     private openGameMenuModal(): void {
@@ -95,7 +104,7 @@ export class GameComponent implements OnInit, OnDestroy {
             modalConfig.hasBackdrop = true;
             modalConfig.width = '450px';
             modalConfig.data = "game";
-            modalConfig.panelClass = "menu-modal";
+            modalConfig.panelClass = this.getModalClass();
 
             this.gameMenuModalRef = this.dialog.open(GameModalComponent, modalConfig);
 
@@ -118,7 +127,7 @@ export class GameComponent implements OnInit, OnDestroy {
             modalConfig.width = '250px';
             modalConfig.height = '150px';
             modalConfig.data = "dead";
-            modalConfig.panelClass = "dead-modal";
+            modalConfig.panelClass = this.getModalClass();
 
             this.deadModalRef = this.dialog.open(DeadModalComponent, modalConfig);
 

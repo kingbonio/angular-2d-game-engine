@@ -7,4 +7,5 @@ export interface IGameSettings {
     keysMapped: any;
     musicVolume: number;
     soundEffectVolume: number;
+    dyslexiaFont: boolean;
 }
