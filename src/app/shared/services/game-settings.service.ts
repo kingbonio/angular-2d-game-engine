@@ -37,12 +37,12 @@ export class GameSettingsService {
         }
 
         // Push volume settings to background music setting
-        if (persistentGameSettings.musicVolume) {
+        if (persistentGameSettings.musicVolume !== undefined) {
             this.backgroundMusicService.setVolume(persistentGameSettings.musicVolume);
         }
 
         // Push volume settings to sound effect setting
-        if (persistentGameSettings.soundEffectVolume) {
+        if (persistentGameSettings.soundEffectVolume !== undefined) {
             this.soundEffectService.setVolume(persistentGameSettings.soundEffectVolume);
         }
     }
@@ -67,12 +67,12 @@ export class GameSettingsService {
         }
 
         // Push volume settings to background music setting
-        if (newSettings.musicVolume) {
+        if (newSettings.musicVolume !== undefined) {
             this.backgroundMusicService.setVolume(newSettings.musicVolume);
         }
 
         // Push volume settings to sound effect setting
-        if (newSettings.soundEffectVolume) {
+        if (newSettings.soundEffectVolume !== undefined) {
             this.soundEffectService.setVolume(newSettings.soundEffectVolume);
         }
 
