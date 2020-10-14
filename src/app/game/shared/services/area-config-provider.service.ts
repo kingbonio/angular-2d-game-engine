@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as areaConfigs from "../../../game-config/areas";
 import * as maps from "../../../game-config/areas/map";
 import { IAreaConfig, IAreaExits } from '../../../game-config/interfaces';
+import { Helper } from '../../../shared/util/helper';
 
 @Injectable()
 export class AreaConfigProviderService {
@@ -24,7 +25,7 @@ export class AreaConfigProviderService {
      */
     public getAreaConfig(id?: number): IAreaConfig {
 
-        return this.areas["area" + id].default as IAreaConfig;
+        return Helper.cloneObject(this.areas["area" + id].default) as IAreaConfig;
     }
 
     /**

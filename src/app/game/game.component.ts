@@ -215,6 +215,7 @@ export class GameComponent implements OnInit, OnDestroy {
         this.areaStateService.setDefaults();
         this.playerStateService.setPlayerDefaults();
         this.dialogueService.setDefaults();
+        this.equipmentManagerService.setDefaults();
 
         this.areaChangeSubscription.unsubscribe();
         this.areaReadySubscription.unsubscribe();

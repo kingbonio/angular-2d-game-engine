@@ -8,4 +8,5 @@ export interface IAreaStateData {
     locationKeys: any;
     locations: IGridReferences;
     previousPlayerLocation: string;
+    huntingList: any[];
 }
