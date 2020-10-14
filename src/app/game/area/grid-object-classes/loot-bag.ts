@@ -3,6 +3,7 @@ import inventoryLocationsDefaults from "../../shared/models/inventoryLocations";
 import { IInventoryReferences } from "../../item/inventory/interfaces";
 import { IGridReferences } from "../interfaces";
 import { IInventoryItem } from "../../item/interfaces";
+import { Helper } from "../../../shared/util/helper";
 
 export class LootBag {
 
@@ -13,7 +14,7 @@ export class LootBag {
     public locationKeys: any;
 
     constructor(loot: any, inventoryLocations?: IInventoryReferences) {
-        this.inventoryLocations = this.cloneInventoryLocations(inventoryLocationsDefaults);
+        this.inventoryLocations = Helper.cloneObject(inventoryLocationsDefaults);
         this.locationKeys = Object.keys;
 
         if (loot) {
@@ -69,16 +70,5 @@ export class LootBag {
         } else {
             this.inventoryLocations = loot;
         }
-    }
-
-    /**
-     * Returns a cloned version of the locations object provided
-     *
-     * @param {IInventoryReferences} sourceInventoryLocations The locations object we are cloning
-     *
-     * @return {IInventoryReferences}
-     */
-    public cloneInventoryLocations(sourceInventoryLocations: IInventoryReferences): IInventoryReferences {
-        return JSON.parse(JSON.stringify(sourceInventoryLocations));
     }
 }

@@ -9,6 +9,7 @@ import { AreaConfigProviderService } from './area-config-provider.service';
 import defaults from '../../../shared/defaults';
 import { GridHelper } from '../util/area/grid-helper';
 import { AreaExitStatus } from '../../area/enums';
+import { Helper } from '../../../shared/util/helper';
 
 @Injectable()
 export class AreaStateService {
@@ -234,7 +235,7 @@ export class AreaStateService {
         } else {
 
             // Reset the locations to blank
-            this.locations = this.cloneLocations(locationsDefaults as IGridReferences);
+            this.locations = Helper.cloneObject(locationsDefaults as IGridReferences);
         }
 
         this.areaChange.next(newAreaReference ? newAreaReference : this.currentArea);
@@ -273,7 +274,7 @@ export class AreaStateService {
             const nextAreaExits = this.areaConfigProviderService.getAreaExits(destination);
 
             // Create a fresh locations object
-            nextAreaLocations = this.cloneLocations(locationsDefaults as IGridReferences);
+            nextAreaLocations = Helper.cloneObject(locationsDefaults as IGridReferences);
 
             // Add all the elements and exits to the new locations
             GridHelper.addElementsToGrid(nextAreaData.areaElements, nextAreaLocations);
@@ -295,7 +296,7 @@ export class AreaStateService {
     public setDefaults(): void {
         this.currentArea = 1;
         this.newArea = null;
-        this.locations = this.cloneLocations(locationsDefaults as IGridReferences);
+        this.locations = Helper.cloneObject(locationsDefaults as IGridReferences);
         this.locationKeys = Object.keys;
         this.loadingArea = false;
         this.loadingExistingArea = false;
@@ -340,17 +341,6 @@ export class AreaStateService {
     }
 
     /**
-     * Returns a cloned version of the locations object provided
-     *
-     * @param {IGridReferences} sourceLocations The locations object we are cloning
-     *
-     * @returns {IGridReferences}
-     */
-    private cloneLocations(sourceLocations: IGridReferences): IGridReferences {
-        return JSON.parse(JSON.stringify(sourceLocations));
-    }
-
-    /**
      * Returns an object with the state data for this service
      *
      * @returns {IAreaStateData}
@@ -364,6 +354,7 @@ export class AreaStateService {
             locationKeys: this.locationKeys,
             locations: this.locations,
             previousPlayerLocation: this.previousPlayerLocation,
+            huntingList: this.huntingList,
         };
     }
 

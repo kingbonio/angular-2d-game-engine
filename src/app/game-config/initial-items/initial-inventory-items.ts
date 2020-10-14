@@ -3,6 +3,6 @@ import { weapons } from '../items';
 import { keyItems } from '../items';
 import { IInventoryItem } from '../../game/item/interfaces';
 
-export const initialItems: IInventoryItem[] = [
+export const initialInventoryItems: IInventoryItem[] = [
     armour.leatherChestPiece,
 ];

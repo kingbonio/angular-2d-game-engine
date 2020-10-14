@@ -280,19 +280,19 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
                     switch (this.areaStateService.locations[location].element.type) {
                         case ElementClass.enemy:
                             this.areaStateService.locations[location].element = new Enemy(this.areaStateService.locations[location].element);
-                            // TODO Maybe this would be better suited somewhere more abstracted from core code
-                            if (this.areaStateService.locations[location].element.currentState === CharacterState.hunting && !this.areaStateService.locations[location].element.isDead()) {
-                                this.areaStateService.locations[location].element.currentState = CharacterState.returningToPosition;
-                            }
+                            // // TODO Maybe this would be better suited somewhere more abstracted from core code
+                            // if (this.areaStateService.locations[location].element.currentState === CharacterState.hunting && !this.areaStateService.locations[location].element.isDead()) {
+                            //     this.areaStateService.locations[location].element.currentState = CharacterState.returningToPosition;
+                            // }
                             break;
                         case ElementClass.player:
                             this.areaStateService.locations[location].element = new Player(this.areaStateService.locations[location].element);
                             break;
                         case ElementClass.npc:
                             this.areaStateService.locations[location].element = new NPC(this.areaStateService.locations[location].element);
-                            if (this.areaStateService.locations[location].element.currentState === CharacterState.hunting && !this.areaStateService.locations[location].element.isDead()) {
-                                this.areaStateService.locations[location].element.currentState = CharacterState.returningToPosition;
-                            }
+                            // if (this.areaStateService.locations[location].element.currentState === CharacterState.hunting && !this.areaStateService.locations[location].element.isDead()) {
+                            //     this.areaStateService.locations[location].element.currentState = CharacterState.returningToPosition;
+                            // }
                             break;
                         case ElementClass.object:
                             this.areaStateService.locations[location].element = new GridObject(this.areaStateService.locations[location].element);

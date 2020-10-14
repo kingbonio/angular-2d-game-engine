@@ -4,42 +4,43 @@ import { CharacterState, Direction, ElementClass } from "../shared/enums";
 import { ILocation } from "../shared/interfaces";
 import inventoryLocationsDefaults from "../shared/models/inventoryLocations";
 import { IInventoryReferences } from "../item/inventory/interfaces";
+import { Helper } from "../../shared/util/helper";
 
 export class Character {
-    id: string;
-    name: string;
+    armour?: IArmourSlots;
+    attackPauseDuration: number;
+    baseDamage: number;
     currentHp: number;
-    maxHp: number;
+    currentHuntingDuration: number;
+    currentPathToDestination: any[];
+    currentPositionInRoute: number;
+    currentState: CharacterState;
+    direction: Direction;
+    directionsForPatrol: Direction[];
+    id: string;
+    imageFileName: string;
     isAttacking: boolean;
     isGuarding: boolean;
-    isReceivingAttack: boolean;
     isMovingForwards: boolean;
-    baseDamage: number;
+    isReceivingAttack: boolean;
+    loot: IInventoryItem[];
+    maxHp: number;
+    maxHuntingDuration: number;
+    name: string;
+    pathfindingDestination: ILocation;
     pauseCounter: number;
-    attackPauseDuration: number;
-    type: ElementClass;
-    direction: Direction;
     startingDirection: Direction;
     startingLocation: string;
-    directionsForPatrol: Direction[];
-    startingTargetLocation: string;
-    currentPositionInRoute: number;
-    currentHuntingDuration: number;
-    maxHuntingDuration: number;
-    currentPathToDestination: any[];
-    pathfindingDestination: ILocation;
-    currentState: CharacterState;
     startingState: CharacterState;
-    armour?: IArmourSlots;
+    startingTargetLocation: string;
+    type: ElementClass;
     weapons?: IWeaponSlots;
-    loot: IInventoryItem[];
-    imageFileName: string;
 
     inventoryLocations: IInventoryReferences;
     locationKeys: any;
 
     constructor() {
-        this.inventoryLocations = this.cloneInventoryLocations(inventoryLocationsDefaults);
+        this.inventoryLocations = Helper.cloneObject(inventoryLocationsDefaults);
         this.locationKeys = Object.keys;
     }
 
@@ -147,16 +148,4 @@ export class Character {
             finishMovementCallback();
         }, defaults.animations.movementDurationMilliseconds);
     }
-
-    /**
-     * Returns a cloned version of the locations object provided
-     *
-     * @param {IInventoryReferences} sourceInventoryLocations The locations object we are cloning
-     *
-     * @returns {IInventoryReferences}
-     */
-    public cloneInventoryLocations(sourceInventoryLocations: IInventoryReferences): IInventoryReferences {
-        return JSON.parse(JSON.stringify(sourceInventoryLocations));
-    }
-
 }

@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { IInventoryItem, IInventoryStateData } from '../../shared/interfaces';
 import { IInventoryReferences } from '../inventory/interfaces';
 import inventoryLocationsDefaults from '../../shared/models/inventoryLocations';
-import { initialItems } from '../../../game-config/initial-items';
+import { initialInventoryItems } from '../../../game-config/initial-items';
+import { Helper } from '../../../shared/util/helper';
 
 @Injectable()
 export class InventoryManagerService {
@@ -62,21 +63,9 @@ export class InventoryManagerService {
      * Sets all service states to default
      */
     public setDefaults(): void {
-        this.locations = this.cloneInventoryLocations(inventoryLocationsDefaults);
+        this.locations = Helper.cloneObject(inventoryLocationsDefaults);
         this.locationKeys = Object.keys;
-        this.addItemsToInventory(initialItems);
-    }
-
-    /**
-     * Returns a cloned version of the locations object provided
-     *
-     * @param {IInventoryReferences} sourceInventoryLocations The locations object we are cloning
-     *
-     * @returns {IInventoryReferences}
-     */
-    public cloneInventoryLocations(sourceInventoryLocations: IInventoryReferences): IInventoryReferences {
-
-        return JSON.parse(JSON.stringify(sourceInventoryLocations));
+        this.addItemsToInventory(initialInventoryItems);
     }
 
     /**

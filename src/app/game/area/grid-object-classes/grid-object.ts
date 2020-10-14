@@ -3,41 +3,42 @@ import { Direction, ElementClass, ObjectType } from "../../shared/enums";
 import { SoundEffects } from "../../../shared/enums";
 import inventoryLocationsDefaults from "../../shared/models/inventoryLocations";
 import { IInventoryReferences } from "../../item/inventory/interfaces";
+import { Helper } from "../../../shared/util/helper";
 
 export class GridObject {
-    public type = ElementClass.object;
-    public name: string;
-    public imageFileName: string;
-    public soundEffect: SoundEffects;
     public canBeTraversed: boolean;
+    public direction: Direction;
+    public imageFileName: string;
     public isInteractive: boolean;
     public isLocked: boolean;
-    public lockedDialogue: string;
     public itemReferenceNeeded: string;
-    public direction: Direction;
-    public startingDirection: Direction;
+    public lockedDialogue: string;
     public loot: IInventoryItem[] = [];
+    public name: string;
     public objectType: ObjectType;
+    public soundEffect: SoundEffects;
+    public startingDirection: Direction;
+    public type = ElementClass.object;
 
     public inventoryLocations: IInventoryReferences;
     public locationKeys: any;
 
     constructor(elementProperties: any) {
-        this.inventoryLocations = elementProperties.inventoryLocations || this.cloneInventoryLocations(inventoryLocationsDefaults);
+        this.inventoryLocations = elementProperties.inventoryLocations || Helper.cloneObject(inventoryLocationsDefaults);
         this.locationKeys = Object.keys;
 
-        this.name = elementProperties.name;
-        this.imageFileName = elementProperties.imageFileName;
-        this.soundEffect = elementProperties.soundEffect;
         this.canBeTraversed = elementProperties.canBeTraversed;
-        this.isInteractive = elementProperties.isInteractive;
         this.direction = elementProperties.startingDirection;
-        this.startingDirection = elementProperties.startingDirection;
+        this.imageFileName = elementProperties.imageFileName;
+        this.isInteractive = elementProperties.isInteractive;
         this.isLocked = elementProperties.isLocked;
-        this.lockedDialogue = elementProperties.lockedDialogue;
         this.itemReferenceNeeded = elementProperties.itemReferenceNeeded;
+        this.lockedDialogue = elementProperties.lockedDialogue;
         this.loot = elementProperties.loot;
+        this.name = elementProperties.name;
         this.objectType = elementProperties.objectType;
+        this.soundEffect = elementProperties.soundEffect;
+        this.startingDirection = elementProperties.startingDirection;
 
         // Overwrite existing inventoryLocations if provided
         if (elementProperties.inventoryLocations) {
@@ -67,16 +68,5 @@ export class GridObject {
         } else {
             this.isLocked = false;
         }
-    }
-
-    /**
-     * Returns a cloned version of the locations object provided
-     *
-     * @param {IInventoryReferences} sourceInventoryLocations The locations object we are cloning
-     *
-     * @returns {IInventoryReferences}
-     */
-    public cloneInventoryLocations(sourceInventoryLocations: IInventoryReferences): IInventoryReferences {
-        return JSON.parse(JSON.stringify(sourceInventoryLocations));
     }
 }

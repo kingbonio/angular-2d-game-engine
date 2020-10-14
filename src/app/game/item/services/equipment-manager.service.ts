@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { initialEquipment } from '../../../game-config/initial-items';
 import defaults from '../../../shared/defaults';
+import { Helper } from '../../../shared/util/helper';
 import { IEquipmentStateData } from '../../shared/interfaces/iequipment-state-data';
 import { TimerService } from '../../shared/services/timer.service';
 import { ArmourType, ItemClass } from '../enums';
@@ -204,8 +205,8 @@ export class EquipmentManagerService {
      * Sets service's state to default
      */
     public setDefaults(): void {
-        this.armour = initialEquipment.armour;
-        this.weapons = initialEquipment.weapons;
+        this.armour = Helper.cloneObject(initialEquipment.armour);
+        this.weapons = Helper.cloneObject(initialEquipment.weapons);
 
         this.activeItem = null;
         this.activeBuff = null;
