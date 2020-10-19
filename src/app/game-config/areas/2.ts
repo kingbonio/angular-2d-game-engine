@@ -7,7 +7,7 @@ import { BackgroundMusic } from "../../shared/enums";
 
 export default {
     room: 2,
-    backgroundMusic: BackgroundMusic.gameMusic,,
+    backgroundMusic: BackgroundMusic.gameMusic,
     floorImageFileName: "wood.png",
     areaVisited: false,
     areaLoadMessage: "Sneak up behind and pickpocket the (much tougher) enemy using Interact (default 'E') and take the key, you'll need it later. If the enemy spots you or they realise what you're doing you will enter 'Battle Mode' and will need to run away until they give up the chase and return to their patrol route. If you kill the enemy, use Interact on their corpse to loot them. Once you have the key, walk through the north exit",
