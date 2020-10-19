@@ -18,33 +18,11 @@ Clone the repo using `git clone https://github.com/kingbonio/angular-rpg-game-en
 Run `npm install` in the repo folder and then `ng serve`, this will launch the engine at the location `localhost:4200`.
 
 
-# Default Controls
+# Wiki
 
-### Movement:
+To learn how to use the game engine visit the Wiki here:
 
-    W: Move north
-    D: Move east
-    S: Move south
-    A: Move west
-
-### Direction:
-
-    W: Face north
-    D: Face east
-    S: Face south
-    A: Face west
-
-### Interaction:
-
-    Q:     Speak
-    E:     Interact
-    Space: Attack
-    Ctrl:  Defend
-
-
-# Save Games
-
-The application uses local storage to persist game element/room states
+https://github.com/kingbonio/angular-rpg-game-engine/wiki
 
 
 # Current Presentation

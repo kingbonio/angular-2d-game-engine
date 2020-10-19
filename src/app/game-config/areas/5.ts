@@ -3,10 +3,11 @@ import { IWeaponSlots } from "../../game/item/interfaces";
 import { CharacterState, Direction, ElementClass, ObjectType } from "../../game/shared/enums";
 import { armour, potions, weapons } from "../items";
 import { player } from "../characters";
+import { BackgroundMusic } from "../../shared/enums";
 
 export default {
     room: 5,
-    backgroundMusic: "bossMusic",
+    backgroundMusic: BackgroundMusic.bossMusic,
     floorImageFileName: "pavement.png",
     areaVisited: false,
     areaLoadMessage: "In the chest you will find a damage buff potion, which boosts your strength for 10 seconds, use it to attack this strong enemy. Remember to equip any armour and weapons you have to make the fight easier.",
