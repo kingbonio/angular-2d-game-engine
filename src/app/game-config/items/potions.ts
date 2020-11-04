@@ -24,7 +24,7 @@ export const potions = {
         imageFileName: "armour-buff-potion.png",
         properties: {
             effectAmount: 20,
-            effectType: PotionEffectType.armour,
+            effectType: PotionEffectType.armourOvercharge,
             effectDuration: 10,
         }
     } as IInventoryItem,
@@ -37,7 +37,7 @@ export const potions = {
         imageFileName: "armour-buff-potion.png",
         properties: {
             effectAmount: 40,
-            effectType: PotionEffectType.armour,
+            effectType: PotionEffectType.armourOvercharge,
             effectDuration: 10,
         }
     } as IInventoryItem,

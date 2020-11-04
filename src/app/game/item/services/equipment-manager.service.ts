@@ -45,7 +45,7 @@ export class EquipmentManagerService {
             }
         }
 
-        if (this.activeBuff && this.activeBuff.properties.effectType === PotionEffectType.armour) {
+        if (this.activeBuff && this.activeBuff.properties.effectType === PotionEffectType.armourOvercharge) {
             armourTotal += this.activeBuff.properties.effectAmount;
         }
 
