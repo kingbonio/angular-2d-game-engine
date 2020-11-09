@@ -227,7 +227,7 @@ export class AiService {
             return false;
         }
 
-        const viewAreaLocations = this.movement.getViewAreaLocations(defaults.enemyConfig.viewDistance, character.direction, gridLocation);
+        const viewAreaLocations = this.movement.getViewAreaLocations(defaults.enemyProperties.viewDistance, character.direction, gridLocation);
 
         // We want to know if we can find the player in the given locations, return true if found
         return !!viewAreaLocations.find(location => {

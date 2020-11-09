@@ -34,14 +34,10 @@ https://www.youtube.com/channel/UCmU68D0OK6fXo351hs3qqjQ
 
 # Change Log
 
-v0.15.0a
+v0.16.0a
 
-* Added dyslexia-friendly font option in menu
-* Tidied codebase
-* Resolved bugs:
-** Volume setting to 0%
-** Restoring character states
-** Equipment objects sometimes persisting if starting new game
+* Removed and altered types and config
+* Built the Wiki in GitHub
 
 
 ## Background Music credits
