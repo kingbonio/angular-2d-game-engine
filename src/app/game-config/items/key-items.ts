@@ -58,4 +58,16 @@ export const keyItems = {
             keyItem: true,
         }
     } as IInventoryItem,
+    trophy: {
+        name: "Trophy",
+        itemReference: "560e76d0-e7f1-4573-ae0a-ec5746486b7b",
+        class: ItemClass.keyItem,
+        armourSlot: null,
+        weaponSlot: null,
+        imageFileName: "trophy.png",
+        gameEndTrigger: true,
+        properties: {
+            keyItem: true,
+        }
+    } as IInventoryItem,
 };

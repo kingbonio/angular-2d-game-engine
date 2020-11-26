@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { Subject } from 'rxjs/Subject';
 import defaults from '../../../shared/defaults';
 import { IGameStateData } from '../interfaces';
 import { AreaStateService } from './area-state.service';
@@ -9,11 +11,15 @@ export class GameStateService {
     public gamePaused = false;
     public inputPaused = false;
     public awaitingKeyboardSetting = false;
+    public gameEnd = false;
     private _gameMenuOpen;
+    public gameEndSubject: Subject<string>;
 
     constructor(
         public areaStateService: AreaStateService,
-        private timerService: TimerService) {
+        private timerService: TimerService
+    ) {
+        this.gameEndSubject = new ReplaySubject<string>();
     }
 
     /**

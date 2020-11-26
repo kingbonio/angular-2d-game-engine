@@ -1,0 +1,17 @@
+.game-end-container {
+    font-weight: 700;
+    
+    .notice-container {
+        display: flex;
+        text-align: center;
+        color: #32a852;
+        font-size: 14px;
+    }
+
+    .button-container {
+        display: flex;
+        text-align: center;
+        margin: 15px;
+        color: inherit;
+    }
+}

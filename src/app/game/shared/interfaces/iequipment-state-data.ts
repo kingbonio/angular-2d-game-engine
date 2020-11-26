@@ -4,4 +4,6 @@ export interface IEquipmentStateData {
     armour: IArmourSlots;
     weapons: IWeaponSlots;
     activeItem: IInventoryItem;
+    activeBuff: IInventoryItem;
+    buffTimeRemaining: number;
 }

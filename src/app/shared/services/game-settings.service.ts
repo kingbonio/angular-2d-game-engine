@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { IGameSettings } from '../../game/shared/interfaces';
 import { PersistentStateService } from '../../game/shared/services/persistent-state.service';
 import defaults from '../../shared/defaults';
@@ -11,7 +11,7 @@ import keyActions from '../../shared/util/key-actions';
 @Injectable({
     providedIn: 'root'
 })
-export class GameSettingsService {
+export class GameSettingsService implements OnInit {
 
     public allowInGameMenu = defaults.gameSettings.allowInGameMenu;
     public showRoomShadow = defaults.gameSettings.showRoomShadow;
@@ -36,15 +36,14 @@ export class GameSettingsService {
             this.setToDefaults();
         }
 
+    }
+
+    ngOnInit() {
         // Push volume settings to background music setting
-        if (persistentGameSettings.musicVolume !== undefined) {
-            this.backgroundMusicService.setVolume(persistentGameSettings.musicVolume);
-        }
+        this.backgroundMusicService.setVolume(this.musicVolume);
 
         // Push volume settings to sound effect setting
-        if (persistentGameSettings.soundEffectVolume !== undefined) {
-            this.soundEffectService.setVolume(persistentGameSettings.soundEffectVolume);
-        }
+        this.soundEffectService.setVolume(this.soundEffectVolume);
     }
 
     /**
@@ -100,6 +99,13 @@ export class GameSettingsService {
                 this.keysMapped[this.keyMap[inputReference]] = inputReference;
             }
         }
+
+        this.showRoomShadow = defaults.gameSettings.showRoomShadow;
+        this.showControls = defaults.gameSettings.showControls;
+        this.oneHandedControls = defaults.gameSettings.oneHandedControls;
+        this.musicVolume = defaults.volumes.music;
+        this.soundEffectVolume = defaults.volumes.soundEffect;
+        this.dyslexiaFont = defaults.gameSettings.dyslexiaFont;
     }
 
     /**

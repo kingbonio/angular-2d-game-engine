@@ -53,7 +53,8 @@ export default {
                     primary: weapons.basicKnife,
                 } as IWeaponSlots,
                 loot: [
-                    keyItems.greenDoorKey
+                    keyItems.greenDoorKey,
+                    keyItems.trophy
                 ],
                 imageFileName: "shadow-enemy.png",
                 startingLocation: "d7",

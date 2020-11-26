@@ -10,6 +10,7 @@ import defaults from '../../../shared/defaults';
 import { GridHelper } from '../util/area/grid-helper';
 import { AreaExitStatus } from '../../area/enums';
 import { Helper } from '../../../shared/util/helper';
+import { IAreaConfig, IAreaData } from '../../../game-config/interfaces';
 
 @Injectable()
 export class AreaStateService {
@@ -21,6 +22,7 @@ export class AreaStateService {
     public loadingSavedGame = false;
     public locationKeys: any;
     public locations: IGridReferences;
+    public areaConfig: IAreaConfig;
     public previousPlayerLocation: string;
     public huntingList = [];
 
@@ -218,20 +220,25 @@ export class AreaStateService {
     public loadNewArea(newAreaReference: number): void {
         this.loadingArea = true;
 
+        const currentAreaData: IAreaData = {
+            config: this.areaConfig,
+            locations: this.locations,
+        };
+
         // Back up current state
-        this.saveCurrentAreaState(this.currentArea);
+        this.saveCurrentAreaData(this.currentArea, currentAreaData);
 
         // Save the new area reference
         this.newArea = newAreaReference;
 
         this.previousPlayerLocation = this.playerLocation;
 
-        const targetAreaData = this.getAreaState(newAreaReference);
+        const targetAreaData = this.getAreaData(newAreaReference);
         if (targetAreaData) {
             this.loadingExistingArea = true;
 
             // Reset the locations to be the stored data
-            this.locations = targetAreaData;
+            this.locations = targetAreaData.locations;
         } else {
 
             // Reset the locations to blank
@@ -253,8 +260,11 @@ export class AreaStateService {
     public loadFromSaveGame(savedState: IAreaStateData): void {
         this.loadingSavedGame = true;
 
-        this.areaChange.next(savedState.currentLocation);
-        this.areaReady.next(savedState.currentLocation);
+        // Set the local storage to match what's in the save data
+        console.log(savedState);
+
+        this.areaChange.next(savedState.currentArea);
+        this.areaReady.next(savedState.currentArea);
     }
 
     /**
@@ -266,18 +276,21 @@ export class AreaStateService {
     public openSameAreaExitInNextArea(destination: number, exitDirection: Direction): void {
 
         // Attempt to get the existing area state data
-        let nextAreaLocations = this.getAreaState(destination);
+        const nextAreaData = this.getAreaData(destination);
+
+        let nextAreaLocations = nextAreaData ? nextAreaData.locations : null;
+        let nextAreaConfig = nextAreaData ? nextAreaData.config : null;
 
         // If we don't have existing data, create new data
         if (!nextAreaLocations) {
-            const nextAreaData = this.areaConfigProviderService.getAreaConfig(destination);
             const nextAreaExits = this.areaConfigProviderService.getAreaExits(destination);
+            nextAreaConfig = this.areaConfigProviderService.getAreaConfig(destination);
 
             // Create a fresh locations object
             nextAreaLocations = Helper.cloneObject(locationsDefaults as IGridReferences);
 
             // Add all the elements and exits to the new locations
-            GridHelper.addElementsToGrid(nextAreaData.areaElements, nextAreaLocations);
+            GridHelper.addElementsToGrid(nextAreaConfig.areaElements, nextAreaLocations);
             GridHelper.addExitsToGrid(nextAreaExits, nextAreaLocations);
         }
 
@@ -287,7 +300,12 @@ export class AreaStateService {
             nextAreaLocations[locationOfAreaExit].areaExit.status = AreaExitStatus.open;
         }
 
-        this.saveAreaState(destination, nextAreaLocations);
+        const areaData: IAreaData = {
+            config: nextAreaConfig,
+            locations: nextAreaLocations,
+        };
+
+        this.saveAreaData(destination, areaData);
     }
 
     /**
@@ -310,8 +328,8 @@ export class AreaStateService {
      *
      * @param {number} newAreaReference The reference for the area we're saving
      */
-    public saveCurrentAreaState(newAreaReference: number): void {
-        localStorage.setItem(newAreaReference.toString(), JSON.stringify(this.locations));
+    public saveCurrentAreaData(newAreaReference: number, data: IAreaData): void {
+        localStorage.setItem(newAreaReference.toString(), JSON.stringify(data));
     }
 
     /**
@@ -320,19 +338,19 @@ export class AreaStateService {
      * @param {number} newAreaReference The reference for the area we're saving
      * @param {any} newAreaLocations The locations object to be saved
      */
-    public saveAreaState(newAreaReference: number, newAreaLocations: any): void {
+    public saveAreaData(newAreaReference: number, newAreaLocations: any): void {
         localStorage.setItem(newAreaReference.toString(), JSON.stringify(newAreaLocations));
     }
 
     /**
-     * Get the area from storage
+     * Get the area data object
      *
-     * @param newAreaReference the area number
+     * @param areaReference The area reference
      *
-     * @returns {IGridReferences | null}
+     * @returns {IAreaData | null}
      */
-    public getAreaState(newAreaReference: number): IGridReferences | null {
-        const stateJson = localStorage.getItem(newAreaReference.toString());
+    public getAreaData(areaReference: number): IAreaData | null {
+        const stateJson = localStorage.getItem(areaReference.toString());
         if (stateJson && stateJson.length && stateJson !== "{}") {
             return JSON.parse(stateJson);
         } else {
@@ -347,12 +365,13 @@ export class AreaStateService {
      */
     public gatherState(): IAreaStateData {
         return {
-            currentLocation: this.currentArea,
+            currentArea: this.currentArea,
             newLocation: this.newArea,
             loadingArea: this.loadingArea,
             loadingExistingArea: this.loadingExistingArea,
             locationKeys: this.locationKeys,
             locations: this.locations,
+            areaConfig: this.areaConfig,
             previousPlayerLocation: this.previousPlayerLocation,
             huntingList: this.huntingList,
         };

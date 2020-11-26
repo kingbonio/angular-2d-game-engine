@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as maps from "../../../game-config/areas/map";
+import { IAreaData } from '../../../game-config/interfaces';
 import { EquipmentManagerService } from '../../item/services/equipment-manager.service';
 import { InventoryManagerService } from '../../item/services/inventory-manager.service';
 import { IAreaStateData, IDialogueStateData, IGameSettings, IInventoryStateData, IPlayerStateData, IStateData } from '../interfaces';
@@ -163,8 +164,18 @@ export class PersistentStateService {
      * Writes the states of the areas of the current game to local storage
      */
     private applyAreasToStorage(): void {
+
+        // Set the current area
+        const currentArea: IAreaData = {
+            config: this.state.area.areaConfig,
+            locations: this.state.area.locations
+        };
+
+        localStorage.setItem(String(this.state.area.currentArea), JSON.stringify(currentArea));
+
+        // Set the other areas
         for (const areaId in this.state.otherAreas) {
-            if (this.areaIds.includes(areaId) && Number(areaId) !== this.state.area.currentLocation) {
+            if (this.areaIds.includes(areaId) && Number(areaId) !== this.state.area.currentArea) {
                 localStorage.setItem(areaId, JSON.stringify(this.state.otherAreas[areaId]));
             }
         }

@@ -132,6 +132,8 @@ export default {
         // Maximum number of messages to show in the dialogue area at once
         dialogueLines: 8,
     },
+    gameEndMessage: "Congratulations, you completed the demo!",
+    deadMessage: "You died",
     // The references for the keyboard keys set as default
     defaultKeyMap: {
         moveNorth: 87,

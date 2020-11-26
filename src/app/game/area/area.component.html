@@ -1,6 +1,6 @@
 <div class="grid-container" [ngClass]="{ 'show-room-shadow': gameSettingsService.showRoomShadow, 'battle-mode': gameStateService.battleMode }">
     <div *ngFor="let key of areaStateService.locationKeys(areaStateService.locations)" class="grid-box"
-        [ngStyle]="{ 'background-image': 'url(' + getFloorImageSource(areaConfig.floorImageFileName) + ')'}">
+        [ngStyle]="{ 'background-image': 'url(' + getFloorImageSource(areaStateService.areaConfig.floorImageFileName) + ')'}">
 
         <div class="ground-item" *ngIf="areaStateService.locations[key].groundItem" [ngClass]="areaStateService.locations[key].groundItem.name">
             

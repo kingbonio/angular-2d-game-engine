@@ -4,6 +4,10 @@ import { IInventoryReferences } from '../inventory/interfaces';
 import inventoryLocationsDefaults from '../../shared/models/inventoryLocations';
 import { initialInventoryItems } from '../../../game-config/initial-items';
 import { Helper } from '../../../shared/util/helper';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { GameStateService } from '../../shared/services/game-state.service';
 
 @Injectable()
 export class InventoryManagerService {
@@ -11,6 +15,7 @@ export class InventoryManagerService {
     public locations: IInventoryReferences;
 
     constructor(
+        private gameStateService: GameStateService
     ) {
         this.setDefaults();
     }
@@ -45,6 +50,12 @@ export class InventoryManagerService {
             throw new Error("Inventory full");
         } else {
             this.locations[targetLocation] = newItem;
+        }
+
+        // Trigger game end if item has the correct property
+        if (newItem.gameEndTrigger) {
+            this.gameStateService.gameEnd = true;
+            this.gameStateService.gameEndSubject.next("Game is completed");
         }
     }
 
