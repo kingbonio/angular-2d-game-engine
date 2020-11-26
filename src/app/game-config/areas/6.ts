@@ -3,10 +3,11 @@ import { IWeaponSlots } from "../../game/item/interfaces";
 import { CharacterState, Direction, ElementClass, ObjectType } from "../../game/shared/enums";
 import { armour, keyItems, potions, weapons } from "../items";
 import { player } from "../characters";
+import { BackgroundMusic } from "../../shared/enums";
 
 export default {
     room: 6,
-    backgroundMusic: "bossMusic",
+    backgroundMusic: BackgroundMusic.bossMusic,
     floorImageFileName: "pavement.png",
     areaVisited: false,
     areaLoadMessage: "Test area",

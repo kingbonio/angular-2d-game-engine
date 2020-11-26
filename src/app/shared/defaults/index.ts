@@ -41,6 +41,9 @@ export default {
         baseArmour: 5,
         // The minimum dice roll needed to succeed in an attack
         minimumAttackRoll: 3,
+        // For determining the distance in locations an enemy can view
+        // NOT USED - Do not change this from 1
+        viewDistance: 1,
     },
     dialogue: {
         // If an object does not have a response
@@ -75,7 +78,7 @@ export default {
         targetDead: "You have killed ",
         // If you receive a successful attack, shows attacker and damage dealt to player
         enemyAttacks: (damage, name) => {
-            return `Your were attacked by ${name}, you take ${damage} damage`;
+            return `You were attacked by ${name}, you take ${damage} damage`;
         },
         // If the character fails to hit the player
         enemyFailsAttack: (name) => {
@@ -99,11 +102,6 @@ export default {
         music: 0.5,
         // Volume for sound effects
         soundEffect: 0.5,
-    },
-    enemyConfig: {
-        // For determining the distance in locations an enemy can view
-        // NOT USED - Do not change this from 1
-        viewDistance: 1,
     },
     gameMenu: {
         // Text to be displayed while the area is loading
@@ -130,7 +128,7 @@ export default {
         // If we want to start with an accessible font
         dyslexiaFont: false,
     },
-    gameConfig: {
+    dialogueConfig: {
         // Maximum number of messages to show in the dialogue area at once
         dialogueLines: 8,
     },

@@ -112,26 +112,22 @@ export class AiService {
                     break;
                 case CharacterState.walkingPath:
 
-                    // TODO Maybe this would be better to approach the location anyway
-                    // If we can't get there there's no point in trying
-                    if (!this.areaStateService.isLocationFree(character.startingTargetLocation)) {
-
-                        if (gridLocation !== character.startingTargetLocation) {
-
-                            // Ranmdoly move if target cannot be gotten to
-                            if (!this.areaStateService.locations[gridLocation].element.isMovingForwards) {
-                                this.movement.wander(character, gridLocation);
-                            }
-                        } else {
-                            character.direction = character.startingDirection;
-                        }
+                    // If we're already there don't do anything
+                    if (gridLocation === character.startingTargetLocation) {
+                        character.currentState = CharacterState.still;
+                        character.direction = character.startingDirection;
 
                         return;
                     }
 
-                    // If we're already there don't do anything
-                    if (gridLocation === character.startingTargetLocation) {
-                        character.currentState = CharacterState.still;
+                    // TODO Maybe this would be better to approach the location anyway
+                    // If we can't get there there's no point in trying
+                    if (!this.areaStateService.isLocationFree(character.startingTargetLocation)) {
+
+                        // Ranmdoly move if target cannot be gotten to
+                        if (!this.areaStateService.locations[gridLocation].element.isMovingForwards) {
+                            this.movement.wander(character, gridLocation);
+                        }
 
                         return;
                     }
@@ -227,7 +223,7 @@ export class AiService {
             return false;
         }
 
-        const viewAreaLocations = this.movement.getViewAreaLocations(defaults.enemyConfig.viewDistance, character.direction, gridLocation);
+        const viewAreaLocations = this.movement.getViewAreaLocations(defaults.enemyProperties.viewDistance, character.direction, gridLocation);
 
         // We want to know if we can find the player in the given locations, return true if found
         return !!viewAreaLocations.find(location => {

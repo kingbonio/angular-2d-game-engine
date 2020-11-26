@@ -9,42 +9,11 @@ You can play a technical demo of the game engine in its current "master" branch 
 https://kingbonio.github.io/angular-rpg-game-engine/
 
 
-# Running Locally
+# Wiki
 
-**Running this respository locally requires [Angular CLI 8](https://angular.io/cli) to be installed on your machine**
+To learn how to use the game engine visit the Wiki here:
 
-Clone the repo using `git clone https://github.com/kingbonio/angular-rpg-game-engine.git`
-
-Run `npm install` in the repo folder and then `ng serve`, this will launch the engine at the location `localhost:4200`.
-
-
-# Default Controls
-
-### Movement:
-
-    W: Move north
-    D: Move east
-    S: Move south
-    A: Move west
-
-### Direction:
-
-    W: Face north
-    D: Face east
-    S: Face south
-    A: Face west
-
-### Interaction:
-
-    Q:     Speak
-    E:     Interact
-    Space: Attack
-    Ctrl:  Defend
-
-
-# Save Games
-
-The application uses local storage to persist game element/room states
+https://github.com/kingbonio/angular-rpg-game-engine/wiki
 
 
 # Current Presentation
@@ -56,20 +25,41 @@ https://www.youtube.com/channel/UCmU68D0OK6fXo351hs3qqjQ
 
 # Change Log
 
-v0.15.0a
+v1.0.0
 
-* Added dyslexia-friendly font option in menu
-* Tidied codebase
-* Resolved bugs:
-** Volume setting to 0%
-** Restoring character states
-** Equipment objects sometimes persisting if starting new game
+* Removed and altered types and config
+* Built the Wiki in 
+* Updated the last areas in the technical demo
+* Added end game state
+* Minor tweaks
+
+
+## To Do
+
+* Animate Internal Doors
+* Fix CSS rotation on east and west Area Exit Floor Style
+* Add prompt to delete save game button
+* Add option to load game after death
+* Add quick save functionality
+* Add sound effects specifically for different item types
+* Get Cordova building the app
+* Language support
+* Refactor the prepareArea method in area.component.ts
+* Stop players from overwriting Characters/Grid Elements in the entrance when entering an Area
+* Refactor save game data to avoid saving empty Grid Locations
+* Move logic out of AiService
+* Move interaction logic out of PlayerStateService
+* Move unnecessary logic out of AreaStateService
+* Prepare services for testing
+* Prepare components for testing
+* Add testing
 
 
 ## Background Music credits
 
 * https://www.youtube.com/watch?v=ykye8Hw1TgA
 * https://freesound.org/people/Magmi.Soundtracks/sounds/475737/
+
 
 ## Sound credits
 
@@ -81,6 +71,7 @@ v0.15.0a
 * https://freesound.org/people/Abyssmal/sounds/35213/
 * https://freesound.org/people/rabban625/sounds/436465/
 
+
 ## Image credits
 
 * https://www.flaticon.com/free-icon/return_758665
@@ -90,4 +81,6 @@ v0.15.0a
 * https://www.flaticon.com/free-icon/eye_2948075
 * https://www.flaticon.com/free-icon/witness_2210317
 * https://www.flaticon.com/free-icon/running-shoe_926188
+* https://www.flaticon.com/free-icon/human-shoes-footprints_21581
+* https://www.flaticon.com/free-icon/left-and-right-shoe-footprints_1426
 * http://www.photoshoptextures.com/

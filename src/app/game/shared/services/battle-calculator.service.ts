@@ -65,7 +65,7 @@ export class BattleCalculatorService {
             characterDamage += character.weapons.primary.properties.damage;
         }
 
-        if (activeBuff && activeBuff.properties.effectType === PotionEffectType.armour) {
+        if (activeBuff && activeBuff.properties.effectType === PotionEffectType.armourOvercharge) {
             const calculatedDamage = this.calculateDamage(armour, characterDamage, isGuarding, activeBuff);
 
             return calculatedDamage;
@@ -96,7 +96,7 @@ export class BattleCalculatorService {
                 }
             }
 
-            if (activeBuff && activeBuff.properties.effectType === PotionEffectType.armour) {
+            if (activeBuff && activeBuff.properties.effectType === PotionEffectType.armourOvercharge) {
                 totalArmourValue += activeBuff.properties.effectAmount;
             }
         }
