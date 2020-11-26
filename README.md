@@ -25,13 +25,9 @@ https://www.youtube.com/channel/UCmU68D0OK6fXo351hs3qqjQ
 
 # Change Log
 
-v1.0.0
+v0.16.0a
 
-* Removed and altered types and config
-* Built the Wiki in 
-* Updated the last areas in the technical demo
-* Added end game state
-* Minor tweaks
+* Tidied interfaces, references etc.
 
 
 ## To Do
