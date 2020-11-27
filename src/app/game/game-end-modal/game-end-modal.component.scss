@@ -1,16 +1,19 @@
 .game-end-container {
     font-weight: 700;
+    font-family: arial;
     
     .notice-container {
         display: flex;
         text-align: center;
+        justify-content: center;
         color: #32a852;
         font-size: 14px;
     }
-
+    
     .button-container {
         display: flex;
         text-align: center;
+        justify-content: center;
         margin: 15px;
         color: inherit;
     }

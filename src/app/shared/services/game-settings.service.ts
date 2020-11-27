@@ -7,7 +7,6 @@ import { BackgroundMusicService } from './background-music.service';
 import { IUserAction } from '../interfaces';
 import keyActions from '../../shared/util/key-actions';
 
-
 @Injectable({
     providedIn: 'root'
 })
@@ -25,8 +24,8 @@ export class GameSettingsService implements OnInit {
 
     constructor(
         public persistentStateService: PersistentStateService,
-        private soundEffectService: SoundEffectService,
-        private backgroundMusicService: BackgroundMusicService,
+        public soundEffectService: SoundEffectService,
+        public backgroundMusicService: BackgroundMusicService,
     ) {
         const persistentGameSettings: IGameSettings = this.persistentStateService.getGameSettings();
 
@@ -35,7 +34,6 @@ export class GameSettingsService implements OnInit {
         } else {
             this.setToDefaults();
         }
-
     }
 
     ngOnInit() {

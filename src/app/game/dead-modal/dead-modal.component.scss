@@ -1,8 +1,10 @@
 .dead-container {
     font-weight: 700;
+    font-family: arial;
     
     .notice-container {
         display: flex;
+        text-align: center;
         justify-content: center;
         color: #b72424;
         font-size: 30px;
@@ -10,6 +12,7 @@
 
     .button-container {
         display: flex;
+        text-align: center;
         justify-content: center;
         margin: 15px;
         color: inherit;

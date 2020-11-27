@@ -138,7 +138,7 @@ export class PersistentStateService {
      *
      * @param {number} saveSlot The reference of the save game we're getting data for
      *
-     * @param {IStateData}
+     * @return {IStateData}
      */
     private gatherFromStorage(saveSlot: number): IStateData {
         return JSON.parse(localStorage.getItem("save-slot-" + saveSlot));
@@ -165,6 +165,8 @@ export class PersistentStateService {
      */
     private applyAreasToStorage(): void {
 
+        this.clearAreas();
+
         // Set the current area
         const currentArea: IAreaData = {
             config: this.state.area.areaConfig,
@@ -177,6 +179,19 @@ export class PersistentStateService {
         for (const areaId in this.state.otherAreas) {
             if (this.areaIds.includes(areaId) && Number(areaId) !== this.state.area.currentArea) {
                 localStorage.setItem(areaId, JSON.stringify(this.state.otherAreas[areaId]));
+            }
+        }
+    }
+
+    /**
+     * Clears the local storage of area data
+     */
+    public clearAreas() {
+
+        // Set all areas to be empty
+        for (const areaId in this.areaIds) {
+            if (this.areaIds.hasOwnProperty(areaId)) {
+                localStorage.setItem(areaId, "{}");
             }
         }
     }

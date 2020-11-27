@@ -22,6 +22,7 @@ import { BackgroundMusicService } from '../shared/services/background-music.serv
 import { AssetLoaderService } from './shared/services/asset-loader.service';
 import { InventoryManagerService } from './item/services/inventory-manager.service';
 import { GameEndModalComponent } from './game-end-modal/game-end-modal.component';
+import { PersistentStateService } from './shared/services/persistent-state.service';
 
 @Component({
     selector: 'app-game-root',
@@ -58,10 +59,16 @@ export class GameComponent implements OnInit, OnDestroy {
         public backgroundMusicService: BackgroundMusicService,
         public assetLoaderService: AssetLoaderService,
         public inventoryManagerService: InventoryManagerService,
+        public persistentStateService: PersistentStateService,
         private dialog: MatDialog,
     ) {
         this.applicationStateService.gameOpen = true;
         this.assetLoaderService.loadAssets();
+
+        // If this is a new game, we want to clear the saved areas
+        if (!this.areaStateService.loadingSavedGame) {
+            this.persistentStateService.clearAreas();
+        }
     }
 
     ngOnInit(): void {
