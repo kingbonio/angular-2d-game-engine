@@ -25,9 +25,10 @@ https://www.youtube.com/channel/UCmU68D0OK6fXo351hs3qqjQ
 
 # Change Log
 
-v0.16.0a
+v0.17.0a
 
-* Tidied interfaces, references etc.
+* Resolved major bugs with save games
+* Added game end modal triggered on item pick up
 
 
 ## To Do
