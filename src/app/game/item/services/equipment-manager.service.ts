@@ -3,6 +3,7 @@ import { initialEquipment } from '../../../game-config/initial-items';
 import defaults from '../../../shared/defaults';
 import { Helper } from '../../../shared/util/helper';
 import { IEquipmentStateData } from '../../shared/interfaces/iequipment-state-data';
+import { GameStateService } from '../../shared/services/game-state.service';
 import { TimerService } from '../../shared/services/timer.service';
 import { ArmourType, ItemClass } from '../enums';
 import { PotionEffectType } from '../enums/potion-effect-type';
@@ -21,13 +22,16 @@ export class EquipmentManagerService {
     constructor(
         private inventoryManagerService: InventoryManagerService,
         private timerService: TimerService,
+        private gameStateService: GameStateService,
     ) {
         this.setDefaults();
         this.timerService.counter.subscribe(value => {
-            if (this.buffTimeRemaining > 0) {
-                this.buffTimeRemaining--;
-            } else {
-                this.activeBuff = null;
+            if (!this.gameStateService.gamePaused) {
+                if (this.buffTimeRemaining > 0) {
+                    this.buffTimeRemaining--;
+                } else {
+                    this.activeBuff = null;
+                }
             }
         });
     }
@@ -223,6 +227,8 @@ export class EquipmentManagerService {
             armour: this.armour,
             weapons: this.weapons,
             activeItem: this.activeItem,
+            activeBuff: this.activeBuff,
+            buffTimeRemaining: this.buffTimeRemaining,
         };
     }
 

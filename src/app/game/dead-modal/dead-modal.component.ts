@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import defaults from '../../shared/defaults';
 import { GameStateService } from '../shared/services/game-state.service';
 
 @Component({
@@ -8,8 +9,11 @@ import { GameStateService } from '../shared/services/game-state.service';
     styleUrls: ['./dead-modal.component.scss']
 })
 export class DeadModalComponent {
+    public deadMessage: string;
 
-    constructor() { }
+    constructor() {
+        this.deadMessage = defaults.deadMessage;
+    }
 
     /**
      * Call to reload the main page

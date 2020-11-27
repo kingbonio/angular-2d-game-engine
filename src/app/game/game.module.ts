@@ -26,6 +26,7 @@ import { PersistentStateService } from './shared/services/persistent-state.servi
 import { PlayerStateService } from './shared/services/player-state.service';
 import { MovementComponent } from './shared/util/movement/movement.component';
 import { PathfindingComponent } from './shared/util/movement/pathfinding/pathfinding.component';
+import { GameEndModalComponent } from './game-end-modal/game-end-modal.component';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { PathfindingComponent } from './shared/util/movement/pathfinding/pathfin
         GameModalComponent,
         DeadModalComponent,
         MessageModalComponent,
+        GameEndModalComponent,
     ],
     providers: [
         AreaConfigProviderService,
@@ -70,6 +72,7 @@ import { PathfindingComponent } from './shared/util/movement/pathfinding/pathfin
         MessageModalComponent,
         GameModalComponent,
         DeadModalComponent,
+        GameEndModalComponent,
     ],
 })
 export class GameModule { }

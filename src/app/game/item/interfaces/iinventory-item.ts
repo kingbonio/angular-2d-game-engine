@@ -11,5 +11,6 @@ export interface IInventoryItem {
     weaponSlot: WeaponType | null;
     itemReference?: string;
     imageFileName?: string;
+    gameEndTrigger?: boolean;
     properties: IItemProperties;
 }

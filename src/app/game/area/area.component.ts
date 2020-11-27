@@ -21,6 +21,7 @@ import { IGridData } from './interfaces/igrid-data';
 import { BackgroundMusicService } from '../../shared/services/background-music.service';
 import { GridHelper } from '../shared/util/area/grid-helper';
 import { LootBag } from './grid-object-classes/loot-bag';
+import { IAreaData } from '../../game-config/interfaces';
 
 @Component({
     selector: 'app-area',
@@ -29,7 +30,6 @@ import { LootBag } from './grid-object-classes/loot-bag';
 })
 export class AreaComponent implements OnDestroy, AfterViewInit {
 
-    private areaConfig: any;
     private areaExits: any;
     public character = CharacterType;
     public direction = Direction;
@@ -63,7 +63,7 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
         this.prepareArea();
 
         // Play background music
-        this.backgroundMusicService.startMusic(this.areaConfig.backgroundMusic);
+        this.backgroundMusicService.startMusic(this.areaStateService.areaConfig.backgroundMusic);
     }
 
     ngAfterViewInit() {
@@ -210,30 +210,25 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
 
         if (this.areaStateService.loadingSavedGame || this.areaStateService.loadingExistingArea) {
 
+            const areaData: IAreaData = this.areaStateService.getAreaData(this.areaStateService.currentArea);
+
             if (this.areaStateService.loadingExistingArea) {
 
+
                 // Get the existing room config
-                const newLocations: IGridReferences = this.areaStateService.getAreaState(this.areaStateService.currentArea);
+                const newLocations: IGridReferences = areaData.locations;
 
                 // Set the locations to area state service
                 this.areaStateService.locations = newLocations;
-
-                if (!newLocations) {
-
-                    // Build fresh from config
-                    this.areaExits = this.areaConfigProviderService.getAreaExits(this.areaStateService.currentArea);
-
-                    GridHelper.addExitsToGrid(this.areaExits, this.areaStateService.locations);
-                }
             }
 
-            this.areaConfig = this.areaConfigProviderService.getAreaConfig(this.areaStateService.currentArea);
+            this.areaStateService.areaConfig = areaData.config;
             this.rebuildArea();
 
         } else {
 
             // get the config from the provider
-            this.areaConfig = this.areaConfigProviderService.getAreaConfig(this.areaStateService.currentArea);
+            this.areaStateService.areaConfig = this.areaConfigProviderService.getAreaConfig(this.areaStateService.currentArea);
             this.areaExits = this.areaConfigProviderService.getAreaExits(this.areaStateService.currentArea);
 
             // Pass by locations by reference
@@ -241,18 +236,19 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
 
             // Set the player location
             // TODO This won't work, needs moving into the loop with a check on player
-            this.playerStateService.locationY = this.areaConfig.areaElements[0].startingPositionY;
-            this.playerStateService.locationX = this.areaConfig.areaElements[0].startingPositionX;
+            this.playerStateService.locationY = this.areaStateService.areaConfig.areaElements[0].startingPositionY;
+            this.playerStateService.locationX = this.areaStateService.areaConfig.areaElements[0].startingPositionX;
 
             // Set the monsters
-            GridHelper.addElementsToGrid(this.areaConfig.areaElements, this.areaStateService.locations);
+            GridHelper.addElementsToGrid(this.areaStateService.areaConfig.areaElements, this.areaStateService.locations);
         }
-        if (!this.areaConfig.areaVisited) {
+
+        if (!this.areaStateService.areaConfig.areaVisited) {
 
             // Show the area messge from config
-            if (this.areaConfig.areaLoadMessage) {
+            if (this.areaStateService.areaConfig.areaLoadMessage) {
                 this.dialogueService.displayDialogueMessage({
-                    text: this.areaConfig.areaLoadMessage,
+                    text: this.areaStateService.areaConfig.areaLoadMessage,
                     character: defaults.dialogue.areaTipsType,
                     name: defaults.dialogue.areaTipsName
                 });
@@ -264,7 +260,7 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
             this.updatePlayerLocation();
         }
 
-        this.areaConfig.areaVisited = true;
+        this.areaStateService.areaConfig.areaVisited = true;
         this.areaStateService.loadingExistingArea = false;
         this.areaStateService.loadingSavedGame = false;
     }

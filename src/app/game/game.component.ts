@@ -20,6 +20,9 @@ import { GameStateService } from './shared/services/game-state.service';
 import { PlayerStateService } from './shared/services/player-state.service';
 import { BackgroundMusicService } from '../shared/services/background-music.service';
 import { AssetLoaderService } from './shared/services/asset-loader.service';
+import { InventoryManagerService } from './item/services/inventory-manager.service';
+import { GameEndModalComponent } from './game-end-modal/game-end-modal.component';
+import { PersistentStateService } from './shared/services/persistent-state.service';
 
 @Component({
     selector: 'app-game-root',
@@ -30,8 +33,10 @@ export class GameComponent implements OnInit, OnDestroy {
 
     private areaChangeSubscription: Subscription;
     private areaReadySubscription: Subscription;
+    private gameEndSubscription: Subscription;
     private areaConfigs = areaConfigs;
     private deadModalRef: MatDialogRef<any>;
+    private gameEndModalRef: MatDialogRef<any>;
     private gameMenuModalRef: MatDialogRef<any>;
     public title = 'game';
     public loadingText = defaults.gameMenu.loadingText;
@@ -53,11 +58,17 @@ export class GameComponent implements OnInit, OnDestroy {
         public applicationStateService: ApplicationStateService,
         public backgroundMusicService: BackgroundMusicService,
         public assetLoaderService: AssetLoaderService,
+        public inventoryManagerService: InventoryManagerService,
+        public persistentStateService: PersistentStateService,
         private dialog: MatDialog,
     ) {
         this.applicationStateService.gameOpen = true;
         this.assetLoaderService.loadAssets();
 
+        // If this is a new game, we want to clear the saved areas
+        if (!this.areaStateService.loadingSavedGame) {
+            this.persistentStateService.clearAreas();
+        }
     }
 
     ngOnInit(): void {
@@ -72,13 +83,10 @@ export class GameComponent implements OnInit, OnDestroy {
             this.createAreaComponent();
         });
 
-        // Clear the game history
-        for (const areaReference in this.areaConfigs) {
-            if (this.areaConfigs.hasOwnProperty(areaReference)) {
-                const storageReference = areaReference.substring(4);
-                localStorage.setItem(storageReference, "");
-            }
-        }
+        // Handle end game event
+        this.gameEndSubscription = this.gameStateService.gameEndSubject.subscribe((newAreaReference) => {
+            this.triggerGameEnd();
+        });
 
         this.assetLoaderService.loadAssets();
     }
@@ -138,6 +146,29 @@ export class GameComponent implements OnInit, OnDestroy {
     }
 
     /**
+     * Opens a modal to show that you've completed the game
+     */
+    private openGameEndModal(): void {
+        if (!this.gameEndModalRef) {
+            const modalConfig = new MatDialogConfig();
+
+            modalConfig.disableClose = true;
+            modalConfig.autoFocus = true; // Maybe not necessary
+            modalConfig.hasBackdrop = true;
+            modalConfig.width = '250px';
+            modalConfig.height = '150px';
+            modalConfig.data = "success";
+            modalConfig.panelClass = this.getModalClass();
+
+            this.gameEndModalRef = this.dialog.open(GameEndModalComponent, modalConfig);
+
+            this.gameEndModalRef.afterClosed().subscribe(returnData => {
+                this.gameEndModalRef = null;
+            });
+        }
+    }
+
+    /**
      * Enacts the action requested by the button press
      *
      * @param {IUserAction} input Data from the action input
@@ -192,6 +223,19 @@ export class GameComponent implements OnInit, OnDestroy {
     }
 
     /**
+     * Opens the game end modal
+     */
+    public triggerGameEnd(): void {
+
+        // Close all existing modals first
+        this.dialog.closeAll();
+
+        // Pause the game again
+        this.gameStateService.gamePaused = true;
+        this.openGameEndModal();
+    }
+
+    /**
      * Stops the area component from showing as active
      */
     private killAreaComponent(): void {
@@ -219,5 +263,8 @@ export class GameComponent implements OnInit, OnDestroy {
 
         this.areaChangeSubscription.unsubscribe();
         this.areaReadySubscription.unsubscribe();
+        this.gameEndSubscription.unsubscribe();
+
+        this.gameStateService.gameEnd = false;
     }
 }
