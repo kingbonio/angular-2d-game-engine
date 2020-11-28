@@ -10,7 +10,7 @@ export default {
     backgroundMusic: BackgroundMusic.gameMusic,
     floorImageFileName: "wood.png",
     areaVisited: false,
-    areaLoadMessage: "Your first non-player character, they will wander freely and will not attack you unless they catch you pickpocketing, you can either attempt a pickpocket or kill the character (He will fight back) to obtain his key. Once you have the key, click on it in your inventory (bottom right) to set it as your active item and use Interact on the wooden door in the bottom left of the area, switch to your other key to open the chest",
+    areaLoadMessage: "Your first Non-Player Character, these will not attack you automatically",
     areaElements: [
         player,
         {
@@ -38,10 +38,10 @@ export default {
         {
             type: ElementClass.object,
             elementProperties: {
-                name: "Corner Wall",
+                name: "Straight Wall",
                 startingDirection: Direction.E,
                 isInteractive: false,
-                imageFileName: "wall-corner.png",
+                imageFileName: "wall-straight.png",
             },
             startingPositionX: 3,
             startingPositionY: "c",
@@ -51,27 +51,59 @@ export default {
             elementProperties: {
                 name: "Door",
                 objectType: ObjectType.door,
-                startingDirection: Direction.N,
+                startingDirection: Direction.E,
                 isInteractive: true,
                 isLocked: true,
                 itemReferenceNeeded: "64c87a80-4f1a-4dc3-b2c8-c47a9c393f61",
                 imageFileName: "door.png",
                 soundEffect: "openWoodenDoor",
             },
-            startingPositionX: 3,
-            startingPositionY: "b",
+            startingPositionX: 4,
+            startingPositionY: "c",
         },
         {
             type: ElementClass.object,
             elementProperties: {
                 name: "Straight Wall",
-                startingDirection: Direction.S,
-                direction: Direction.S,
+                startingDirection: Direction.E,
                 isInteractive: false,
                 imageFileName: "wall-straight.png",
             },
-            startingPositionX: 3,
-            startingPositionY: "a",
+            startingPositionX: 4,
+            startingPositionY: "c",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Straight Wall",
+                startingDirection: Direction.E,
+                isInteractive: false,
+                imageFileName: "wall-straight.png",
+            },
+            startingPositionX: 5,
+            startingPositionY: "c",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Straight Wall",
+                startingDirection: Direction.E,
+                isInteractive: false,
+                imageFileName: "wall-straight.png",
+            },
+            startingPositionX: 6,
+            startingPositionY: "c",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Straight Wall",
+                startingDirection: Direction.E,
+                isInteractive: false,
+                imageFileName: "wall-straight.png",
+            },
+            startingPositionX: 7,
+            startingPositionY: "c",
         },
         {
             type: ElementClass.object,
@@ -90,7 +122,7 @@ export default {
                 ]
             },
             startingPositionX: 1,
-            startingPositionY: "a",
+            startingPositionY: "d",
         },
         {
             type: ElementClass.npc,
@@ -101,7 +133,7 @@ export default {
                 lowHealthThreshold: 15,
                 attackPauseDuration: 2,
                 name: "David",
-                startingDirection: Direction.E,
+                startingDirection: Direction.W,
                 directionsForPatrol: [
                 ],
                 maxHuntingDuration: 3,
@@ -120,14 +152,14 @@ export default {
                     primary: weapons.basicKnife,
                 } as IWeaponSlots,
                 loot: [
-                    keyItems.fancyKey,
+                    keyItems.rustyOldKey,
                     potions.smallHealthPotion,
                 ],
                 imageFileName: "shadow-npc.png",
-                startingLocation: "f2",
+                startingLocation: "a7",
             },
-            startingPositionX: 2,
-            startingPositionY: "f",
+            startingPositionX: 7,
+            startingPositionY: "a",
         },
     ] as IAreaElement[]
 };

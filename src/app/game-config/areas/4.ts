@@ -10,9 +10,46 @@ export default {
     backgroundMusic: BackgroundMusic.gameMusic,
     floorImageFileName: "wood.png",
     areaVisited: false,
-    areaLoadMessage: "Open the chest with the same key you used for the previous chest and take the invisibility potion. When you click on the invisibility potion in your inventory you will have 10 seconds (Counter is in the top right) to move to the north exit past the enemies.",
+    areaLoadMessage: "There's a 3 second invisibility potion in the chest on your left",
     areaElements: [
         player,
+        // Left column
+        {
+            type: ElementClass.enemy,
+            elementProperties: {
+                id: "bac53a6c-ea18-41e6-a4db-d62bd055aeb0",
+                maxHp: 30,
+                baseDamage: 2,
+                lowHealthThreshold: 6,
+                attackPauseDuration: 1,
+                name: "Gary The Dick",
+                startingDirection: Direction.E,
+                directionsForPatrol: [
+                ],
+                maxHuntingDuration: 3,
+                startingState: CharacterState.still,
+                speechResponse: "I'm gonna kill you",
+                sleepResponse: "Zzzzzzzzzzzzzzzz",
+                armour: {
+                    head: armour.leatherHelmet,
+                    arms: null,
+                    hands: null,
+                    torso: null,
+                    legs: null,
+                    boots: armour.leatherBoots,
+                },
+                weapons: {
+                    primary: weapons.basicKnife,
+                } as IWeaponSlots,
+                loot: [
+                    weapons.sword,
+                ],
+                imageFileName: "shadow-enemy.png",
+                startingLocation: "g3",
+            },
+            startingPositionY: "g",
+            startingPositionX: 3,
+        },
         {
             type: ElementClass.enemy,
             elementProperties: {
@@ -88,6 +125,115 @@ export default {
         {
             type: ElementClass.enemy,
             elementProperties: {
+                id: "b3d7d7b2-c672-4226-82bd-f28g3863158b",
+                maxHp: 30,
+                baseDamage: 2,
+                lowHealthThreshold: 6,
+                attackPauseDuration: 1,
+                name: "Gary The Dick",
+                startingDirection: Direction.E,
+                directionsForPatrol: [
+                ],
+                maxHuntingDuration: 3,
+                startingState: CharacterState.still,
+                speechResponse: "I'm gonna kill you",
+                sleepResponse: "Zzzzzzzzzzzzzzzz",
+                armour: {
+                    head: armour.leatherHelmet,
+                    arms: null,
+                    hands: null,
+                    torso: null,
+                    legs: null,
+                    boots: armour.leatherBoots,
+                },
+                weapons: {
+                    primary: weapons.basicKnife,
+                } as IWeaponSlots,
+                loot: [
+                    potions.smallDamageBuff,
+                ],
+                imageFileName: "shadow-enemy.png",
+                startingLocation: "d3",
+            },
+            startingPositionY: "d",
+            startingPositionX: 3,
+        },
+        {
+            type: ElementClass.enemy,
+            elementProperties: {
+                id: "b3d7d7b2-c672-4226-82bd-f28g386ff58b",
+                maxHp: 30,
+                baseDamage: 2,
+                lowHealthThreshold: 6,
+                attackPauseDuration: 1,
+                name: "Gary The Dick",
+                startingDirection: Direction.E,
+                directionsForPatrol: [
+                ],
+                maxHuntingDuration: 3,
+                startingState: CharacterState.still,
+                speechResponse: "I'm gonna kill you",
+                sleepResponse: "Zzzzzzzzzzzzzzzz",
+                armour: {
+                    head: armour.leatherHelmet,
+                    arms: null,
+                    hands: null,
+                    torso: null,
+                    legs: null,
+                    boots: armour.leatherBoots,
+                },
+                weapons: {
+                    primary: weapons.basicKnife,
+                } as IWeaponSlots,
+                loot: [
+                    potions.smallDamageBuff,
+                ],
+                imageFileName: "shadow-enemy.png",
+                startingLocation: "c3",
+            },
+            startingPositionY: "c",
+            startingPositionX: 3,
+        },
+        // Right column
+        {
+            type: ElementClass.enemy,
+            elementProperties: {
+                id: "22adab29-22f8-4cf7-b996-bf98282a144f",
+                maxHp: 30,
+                baseDamage: 2,
+                lowHealthThreshold: 6,
+                attackPauseDuration: 1,
+                name: "Gary The Dick",
+                startingDirection: Direction.W,
+                directionsForPatrol: [
+                ],
+                maxHuntingDuration: 3,
+                startingState: CharacterState.still,
+                speechResponse: "I'm gonna kill you",
+                sleepResponse: "Zzzzzzzzzzzzzzzz",
+                armour: {
+                    head: armour.leatherHelmet,
+                    arms: null,
+                    hands: null,
+                    torso: null,
+                    legs: null,
+                    boots: armour.leatherBoots,
+                },
+                weapons: {
+                    primary: weapons.basicKnife,
+                } as IWeaponSlots,
+                loot: [
+                    potions.smallArmourBuff
+                ],
+                imageFileName: "shadow-enemy.png",
+                startingLocation: "g5",
+            },
+            startingPositionY: "g",
+            startingPositionX: 5,
+        },
+        {
+            type: ElementClass.enemy,
+            elementProperties: {
                 id: "6fa3d2d4-b6d9-4dca-8c29-9778164152e7",
                 maxHp: 30,
                 baseDamage: 2,
@@ -145,109 +291,108 @@ export default {
                     torso: null,
                     legs: null,
                     boots: armour.leatherBoots,
-                  },
-                        weapons: {
-                              primary: weapons.basicKnife,
-                        } as IWeaponSlots,
-                        loot: [
-                              weapons.axe,
-                        ],
-                        imageFileName: "shadow-enemy.png",
-                        startingLocation: "e5",
-                  },
-                  startingPositionY: "e",
-                  startingPositionX: 5,
+                },
+                weapons: {
+                    primary: weapons.basicKnife,
+                } as IWeaponSlots,
+                loot: [
+                    weapons.axe,
+                ],
+                imageFileName: "shadow-enemy.png",
+                startingLocation: "e5",
             },
-            {
-                  type: ElementClass.enemy,
-                  elementProperties: {
-                        id: "bac53a6c-ea18-41e6-a4db-d62bd055aeb0",
-                        maxHp: 30,
-                        baseDamage: 2,
-                        lowHealthThreshold: 6,
-                        attackPauseDuration: 1,
-                        name: "Gary The Dick",
-                        startingDirection: Direction.E,
-                        directionsForPatrol: [
-                        ],
-                        maxHuntingDuration: 3,
-                        startingState: CharacterState.still,
-                        speechResponse: "I'm gonna kill you",
-                        sleepResponse: "Zzzzzzzzzzzzzzzz",
-                        armour: {
-                              head: armour.leatherHelmet,
-                              arms: null,
-                              hands: null,
-                              torso: null,
-                              legs: null,
-                              boots: armour.leatherBoots,
-                        },
-                        weapons: {
-                              primary: weapons.basicKnife,
-                        } as IWeaponSlots,
-                        loot: [
-                              weapons.sword,
-                        ],
-                        imageFileName: "shadow-enemy.png",
-                        startingLocation: "g3",
-                  },
-                  startingPositionY: "g",
-                  startingPositionX: 3,
+            startingPositionY: "e",
+            startingPositionX: 5,
+        },
+        {
+            type: ElementClass.enemy,
+            elementProperties: {
+                id: "89edf160-6f45-43bf-82d6-ef3fe3b9ea4f",
+                maxHp: 30,
+                baseDamage: 2,
+                lowHealthThreshold: 6,
+                attackPauseDuration: 1,
+                name: "Gary The Dick",
+                startingDirection: Direction.W,
+                directionsForPatrol: [
+                ],
+                maxHuntingDuration: 3,
+                startingState: CharacterState.still,
+                speechResponse: "I'm gonna kill you",
+                sleepResponse: "Zzzzzzzzzzzzzzzz",
+                armour: {
+                    head: armour.leatherHelmet,
+                    arms: null,
+                    hands: null,
+                    torso: null,
+                    legs: null,
+                    boots: armour.leatherBoots,
+                },
+                weapons: {
+                    primary: weapons.basicKnife,
+                } as IWeaponSlots,
+                loot: [
+                    weapons.axe,
+                ],
+                imageFileName: "shadow-enemy.png",
+                startingLocation: "d5",
             },
-            {
-                  type: ElementClass.enemy,
-                  elementProperties: {
-                        id: "22adab29-22f8-4cf7-b996-bf98282a144f",
-                        maxHp: 30,
-                        baseDamage: 2,
-                        lowHealthThreshold: 6,
-                        attackPauseDuration: 1,
-                        name: "Gary The Dick",
-                        startingDirection: Direction.W,
-                        directionsForPatrol: [
-                        ],
-                        maxHuntingDuration: 3,
-                        startingState: CharacterState.still,
-                        speechResponse: "I'm gonna kill you",
-                        sleepResponse: "Zzzzzzzzzzzzzzzz",
-                        armour: {
-                              head: armour.leatherHelmet,
-                              arms: null,
-                              hands: null,
-                              torso: null,
-                              legs: null,
-                              boots: armour.leatherBoots,
-                        },
-                        weapons: {
-                              primary: weapons.basicKnife,
-                        } as IWeaponSlots,
-                        loot: [
-                              potions.smallArmourBuff
-                        ],
-                        imageFileName: "shadow-enemy.png",
-                        startingLocation: "g5",
-                  },
-                  startingPositionY: "g",
-                  startingPositionX: 5,
+            startingPositionY: "d",
+            startingPositionX: 5,
+        },
+        {
+            type: ElementClass.enemy,
+            elementProperties: {
+                id: "89edf160-6f45-43bf-8e36-ef3fe3b9ea4f",
+                maxHp: 30,
+                baseDamage: 2,
+                lowHealthThreshold: 6,
+                attackPauseDuration: 1,
+                name: "Gary The Dick",
+                startingDirection: Direction.W,
+                directionsForPatrol: [
+                ],
+                maxHuntingDuration: 3,
+                startingState: CharacterState.still,
+                speechResponse: "I'm gonna kill you",
+                sleepResponse: "Zzzzzzzzzzzzzzzz",
+                armour: {
+                    head: armour.leatherHelmet,
+                    arms: null,
+                    hands: null,
+                    torso: null,
+                    legs: null,
+                    boots: armour.leatherBoots,
+                },
+                weapons: {
+                    primary: weapons.basicKnife,
+                } as IWeaponSlots,
+                loot: [
+                    weapons.axe,
+                ],
+                imageFileName: "shadow-enemy.png",
+                startingLocation: "c5",
             },
-            {
-                  type: ElementClass.object,
-                  elementProperties: {
-                        name: "Old chest",
-                        objectType: ObjectType.lootObject,
-                        startingDirection: Direction.E,
-                        isInteractive: true,
-                        isLocked: true,
-                        itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbf693c76",
-                        imageFileName: "old-chest.png",
-                        soundEffect: "openChest",
-                        loot: [
-                              potions.invisiblityPotion,
-                              keyItems.redDoorKey
-                        ]
-                  },
-                  startingPositionX: 3,
-                  startingPositionY: "a",
+            startingPositionY: "c",
+            startingPositionX: 5,
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Old chest",
+                objectType: ObjectType.lootObject,
+                startingDirection: Direction.E,
+                isInteractive: true,
+                isLocked: true,
+                itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbf693c76",
+                imageFileName: "old-chest.png",
+                soundEffect: "openChest",
+                loot: [
+                    potions.invisiblityPotion,
+                ]
             },
-      ] as IAreaElement[]
+            startingPositionX: 3,
+            startingPositionY: "a",
+        },
+    ] as IAreaElement[]
 };

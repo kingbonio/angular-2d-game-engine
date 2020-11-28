@@ -10,7 +10,7 @@ export default {
     backgroundMusic: BackgroundMusic.gameMusic,
     floorImageFileName: "wood.png",
     areaVisited: false,
-    areaLoadMessage: "Sneak up behind and pickpocket the (much tougher) enemy using Interact (default 'E') and take the key, you'll need it later. If the enemy spots you or they realise what you're doing you will enter 'Battle Mode' and will need to run away until they give up the chase and return to their patrol route. If you kill the enemy, use Interact on their corpse to loot them. Once you have the key, walk through the north exit",
+    areaLoadMessage: "This guy's a little harder",
     areaElements: [
         player,
         {
@@ -18,25 +18,15 @@ export default {
             elementProperties: {
                 id: "535a28ed-da6d-4d84-84df-cd297cb667ef",
                 maxHp: 50,
-                baseDamage: 2,
+                baseDamage: 3,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
                 name: "Gary The Dick",
-                startingDirection: Direction.W,
+                startingDirection: Direction.S,
                 directionsForPatrol: [
-                    Direction.W,
-                    Direction.W,
-                    Direction.N,
-                    Direction.N,
-                    Direction.N,
-                    Direction.E,
-                    Direction.E,
-                    Direction.S,
-                    Direction.S,
-                    Direction.S,
                 ],
                 maxHuntingDuration: 3,
-                startingState: CharacterState.patrolling,
+                startingState: CharacterState.still,
                 speechResponse: "I'm gonna kill you",
                 sleepResponse: "Zzzzzzzzzzzzzzzz",
                 armour: {
@@ -52,13 +42,25 @@ export default {
                 } as IWeaponSlots,
                 loot: [
                     armour.ironHelmet,
-                    keyItems.rustyOldKey,
+                    keyItems.fancyKey,
                 ],
                 imageFileName: "shadow-enemy.png",
-                startingLocation: "d3",
+                startingLocation: "c4",
             },
-            startingPositionY: "d",
+            startingPositionY: "c",
+            startingPositionX: 4,
+        },
+        // Left wall
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Straight Wall",
+                startingDirection: Direction.N,
+                isInteractive: false,
+                imageFileName: "wall-straight.png",
+            },
             startingPositionX: 3,
+            startingPositionY: "d",
         },
         {
             type: ElementClass.object,
@@ -69,7 +71,18 @@ export default {
                 imageFileName: "wall-straight.png",
             },
             startingPositionX: 2,
-            startingPositionY: "f",
+            startingPositionY: "d",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Straight Wall",
+                startingDirection: Direction.N,
+                isInteractive: false,
+                imageFileName: "wall-straight.png",
+            },
+            startingPositionX: 3,
+            startingPositionY: "e",
         },
         {
             type: ElementClass.object,
@@ -81,6 +94,139 @@ export default {
             },
             startingPositionX: 2,
             startingPositionY: "e",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Corner Wall",
+                startingDirection: Direction.S,
+                isInteractive: false,
+                imageFileName: "wall-corner.png",
+            },
+            startingPositionX: 3,
+            startingPositionY: "c",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Corner Wall",
+                startingDirection: Direction.W,
+                isInteractive: false,
+                imageFileName: "wall-corner.png",
+            },
+            startingPositionX: 2,
+            startingPositionY: "c",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Corner Wall",
+                startingDirection: Direction.N,
+                isInteractive: false,
+                imageFileName: "wall-corner.png",
+            },
+            startingPositionX: 2,
+            startingPositionY: "f",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Corner Wall",
+                startingDirection: Direction.E,
+                isInteractive: false,
+                imageFileName: "wall-corner.png",
+            },
+            startingPositionX: 3,
+            startingPositionY: "f",
+        },
+        // Right wall
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Straight Wall",
+                startingDirection: Direction.N,
+                isInteractive: false,
+                imageFileName: "wall-straight.png",
+            },
+            startingPositionX: 6,
+            startingPositionY: "d",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Straight Wall",
+                startingDirection: Direction.N,
+                isInteractive: false,
+                imageFileName: "wall-straight.png",
+            },
+            startingPositionX: 5,
+            startingPositionY: "d",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Straight Wall",
+                startingDirection: Direction.N,
+                isInteractive: false,
+                imageFileName: "wall-straight.png",
+            },
+            startingPositionX: 6,
+            startingPositionY: "e",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Straight Wall",
+                startingDirection: Direction.N,
+                isInteractive: false,
+                imageFileName: "wall-straight.png",
+            },
+            startingPositionX: 5,
+            startingPositionY: "e",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Corner Wall",
+                startingDirection: Direction.S,
+                isInteractive: false,
+                imageFileName: "wall-corner.png",
+            },
+            startingPositionX: 6,
+            startingPositionY: "c",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Corner Wall",
+                startingDirection: Direction.W,
+                isInteractive: false,
+                imageFileName: "wall-corner.png",
+            },
+            startingPositionX: 5,
+            startingPositionY: "c",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Corner Wall",
+                startingDirection: Direction.N,
+                isInteractive: false,
+                imageFileName: "wall-corner.png",
+            },
+            startingPositionX: 5,
+            startingPositionY: "f",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Corner Wall",
+                startingDirection: Direction.E,
+                isInteractive: false,
+                imageFileName: "wall-corner.png",
+            },
+            startingPositionX: 6,
+            startingPositionY: "f",
         },
     ] as IAreaElement[]
 };

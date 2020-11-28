@@ -368,10 +368,10 @@ export default {
                 imageFileName: "old-chest.png",
                 soundEffect: "openChest",
                 loot: [
-                    potions.smallDamageBuff,
+                    keyItems.trophy,
                 ]
             },
-            startingPositionY: "b",
+            startingPositionY: "d",
             startingPositionX: 4,
         },
         {
@@ -386,34 +386,11 @@ export default {
                 imageFileName: "old-chest.png",
                 soundEffect: "openChest",
                 loot: [
-                    potions.smallDamageBuff,
+                    keyItems.trophy,
                 ]
             },
-            startingPositionY: "b",
+            startingPositionY: "a",
             startingPositionX: 3,
-        },
-        {
-            type: ElementClass.object,
-            elementProperties: {
-                name: "Old chest",
-                objectType: ObjectType.lootObject,
-                startingDirection: Direction.E,
-                isInteractive: true,
-                isLocked: true,
-                lockedDialogue: "Kill the darkness to open the chest",
-                itemReferenceNeeded: "58e99098-ede4-4c2f-813d-40c77ab304d4",
-                imageFileName: "old-chest.png",
-                soundEffect: "openChest",
-                loot: [
-                    weapons.axe,
-                    potions.smallHealthPotion,
-                    potions.smallHealthPotion,
-                    potions.smallDamageBuff,
-                    potions.invisiblityPotion,
-                ]
-            },
-            startingPositionY: "b",
-            startingPositionX: 5,
         },
     ] as IAreaElement[]
 };

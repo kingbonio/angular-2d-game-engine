@@ -424,18 +424,18 @@ export class PlayerStateService {
 
             if (this.equipmentManagerService.activeBuff &&
                 this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge &&
-                damage <= this.equipmentManagerService.activeBuff.properties.remainingEffect) {
+                damage <= this.equipmentManagerService.activeBuff.properties.effectAmount) {
 
                 // Take any damage off the health buff first
-                this.equipmentManagerService.activeBuff.properties.remainingEffect -= damage;
+                this.equipmentManagerService.activeBuff.properties.effectAmount -= damage;
             } else {
 
                 if (this.equipmentManagerService.activeBuff &&
                     this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge) {
 
                     // Reduce the damage by what remains after health buff used
-                    damage = damage - this.equipmentManagerService.activeBuff.properties.remainingEffect;
-                    this.equipmentManagerService.activeBuff.properties.remainingEffect = 0;
+                    damage = damage - this.equipmentManagerService.activeBuff.properties.effectAmount;
+                    this.equipmentManagerService.activeBuff.properties.effectAmount = 0;
                 }
 
                 // Reduce health by remaining damage

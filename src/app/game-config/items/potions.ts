@@ -51,7 +51,7 @@ export const potions = {
         properties: {
             effectType: PotionEffectType.healthOvercharge,
             effectDuration: 10,
-            remainingEffect: 10,
+            effectAmount: 40,
         }
     } as IInventoryItem,
     smallDamageBuff: {
@@ -64,7 +64,7 @@ export const potions = {
         properties: {
             effectType: PotionEffectType.damageOvercharge,
             effectDuration: 10,
-            effectAmount: 10,
+            effectAmount: 15,
         }
     } as IInventoryItem,
     invisiblityPotion: {
@@ -76,7 +76,7 @@ export const potions = {
         imageFileName: "invisibility-potion.png",
         properties: {
             effectType: PotionEffectType.invisibility,
-            effectDuration: 10,
+            effectDuration: 3,
         }
     } as IInventoryItem,
 };
