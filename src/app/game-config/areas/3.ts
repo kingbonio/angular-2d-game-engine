@@ -8,7 +8,7 @@ import { BackgroundMusic } from "../../shared/enums";
 export default {
     room: 3,
     backgroundMusic: BackgroundMusic.gameMusic,
-    floorImageFileName: "wood.png",
+    floorImageFileName: "pavement.png",
     areaVisited: false,
     areaLoadMessage: "Your first Non-Player Character, these will not attack you automatically",
     areaElements: [

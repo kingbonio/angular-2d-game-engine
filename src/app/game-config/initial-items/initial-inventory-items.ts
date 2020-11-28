@@ -3,10 +3,4 @@ import { IInventoryItem } from '../../game/item/interfaces';
 
 export const initialInventoryItems: IInventoryItem[] = [
     armour.leatherChestPiece,
-    keyItems.greenDoorKey,
-    potions.largeHealthBuff,
-    potions.largeArmourBuff,
-    potions.invisiblityPotion,
-    potions.smallHealthPotion,
-    potions.smallDamageBuff
 ];

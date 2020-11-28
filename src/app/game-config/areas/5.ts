@@ -8,7 +8,7 @@ import { BackgroundMusic } from "../../shared/enums";
 export default {
     room: 5,
     backgroundMusic: BackgroundMusic.gameMusic,
-    floorImageFileName: "wood.png",
+    floorImageFileName: "pavement.png",
     areaVisited: false,
     areaLoadMessage: "There's a 10 second damage increase potion in the chest on your left. You might want to save the game.",
     areaElements: [
@@ -41,7 +41,8 @@ export default {
                     primary: weapons.axe,
                 } as IWeaponSlots,
                 loot: [
-                    potions.smallHealthPotion
+                    potions.smallHealthPotion,
+                    keyItems.lightBulb
                 ],
                 imageFileName: "shadow-enemy.png",
                 startingLocation: "e4",
@@ -78,7 +79,6 @@ export default {
                 } as IWeaponSlots,
                 loot: [
                     potions.largeHealthBuff,
-                    keyItems.lightBulb
                 ],
                 imageFileName: "shadow-enemy.png",
                 startingLocation: "c1",
@@ -288,8 +288,7 @@ export default {
                 startingDirection: Direction.S,
                 isInteractive: true,
                 isLocked: true,
-                lockedDialogue: "Kill the darkness to open the chest",
-                itemReferenceNeeded: "58e99098-ede4-4c2f-813d-40c77ab304d4",
+                itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbf693c76",
                 imageFileName: "old-chest.png",
                 soundEffect: "openChest",
                 loot: [
@@ -322,23 +321,5 @@ export default {
             startingPositionX: 3,
             startingPositionY: "a",
         },
-        // {
-        //     type: ElementClass.object,
-        //     elementProperties: {
-        //         name: "Old chest",
-        //         objectType: ObjectType.lootObject,
-        //         startingDirection: Direction.S,
-        //         isInteractive: true,
-        //         isLocked: true,
-        //         itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbe69dc76",
-        //         imageFileName: "old-chest.png",
-        //         soundEffect: "openChest",
-        //         loot: [
-        //             potions.smallDamageBuff,
-        //         ]
-        //     },
-        //     startingPositionX: 7,
-        //     startingPositionY: "d",
-        // },
     ] as IAreaElement[]
 };
