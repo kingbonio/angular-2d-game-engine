@@ -41,7 +41,7 @@ export default {
                     primary: weapons.axe,
                 } as IWeaponSlots,
                 loot: [
-                    keyItems.lightBulb
+                    keyItems.boltCutters
                 ],
                 imageFileName: "shadow-enemy.png",
                 startingLocation: "e4",

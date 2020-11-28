@@ -64,7 +64,7 @@ export const potions = {
         properties: {
             effectType: PotionEffectType.damageOvercharge,
             effectDuration: 10,
-            effectAmount: 18,
+            effectAmount: 5,
         }
     } as IInventoryItem,
     invisiblityPotion: {

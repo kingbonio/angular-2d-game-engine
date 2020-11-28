@@ -19,7 +19,7 @@ export default {
             elementProperties: {
                 id: "53831a37-395e-47f6-88ed-bc6be994c0c6",
                 maxHp: 50,
-                baseDamage: 3,
+                baseDamage: 5,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
                 name: "Strong Awful Gary",
@@ -40,7 +40,7 @@ export default {
                     boots: armour.leatherBoots,
                 },
                 weapons: {
-                    primary: weapons.axe,
+                    primary: weapons.largeAxe,
                 } as IWeaponSlots,
                 loot: [
                     potions.largeDamageBuff,
@@ -57,7 +57,7 @@ export default {
             elementProperties: {
                 id: "5ac92002-3033-4adb-9832-3a520ea02f5f",
                 maxHp: 50,
-                baseDamage: 3,
+                baseDamage: 5,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
                 name: "Strong Awful Gary",
@@ -78,11 +78,10 @@ export default {
                     boots: armour.leatherBoots,
                 },
                 weapons: {
-                    primary: weapons.axe,
+                    primary: weapons.largeAxe,
                 } as IWeaponSlots,
                 loot: [
                     potions.largeDamageBuff,
-                    keyItems.lightBulb
                 ],
                 imageFileName: "shadow-enemy-hard.png",
                 startingLocation: "g4",
@@ -95,7 +94,7 @@ export default {
             elementProperties: {
                 id: "5ac92002-3a33-4adb-9832-3aae0ea02f5f",
                 maxHp: 50,
-                baseDamage: 3,
+                baseDamage: 5,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
                 name: "Strong Awful Gary",
@@ -116,11 +115,11 @@ export default {
                     boots: armour.leatherBoots,
                 },
                 weapons: {
-                    primary: weapons.axe,
+                    primary: weapons.largeAxe,
                 } as IWeaponSlots,
                 loot: [
                     potions.largeDamageBuff,
-                    keyItems.lightBulb
+                    keyItems.boltCutters
                 ],
                 imageFileName: "shadow-enemy-hard.png",
                 startingLocation: "f6",
@@ -133,7 +132,7 @@ export default {
             elementProperties: {
                 id: "2f475fc48-65a6-4d5e-8908-ddd259ae57f5",
                 maxHp: 50,
-                baseDamage: 3,
+                baseDamage: 5,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
                 name: "Strong Awful Gary",
@@ -154,7 +153,7 @@ export default {
                     boots: armour.leatherBoots,
                 },
                 weapons: {
-                    primary: weapons.axe,
+                    primary: weapons.largeAxe,
                 } as IWeaponSlots,
                 loot: [
                     potions.largeDamageBuff,
@@ -170,7 +169,7 @@ export default {
             elementProperties: {
                 id: "595f3d40-37df-4531-b4b3-35bf2ede1f2f",
                 maxHp: 50,
-                baseDamage: 3,
+                baseDamage: 5,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
                 name: "Strong Awful Gary",
@@ -191,7 +190,7 @@ export default {
                     boots: armour.leatherBoots,
                 },
                 weapons: {
-                    primary: weapons.axe,
+                    primary: weapons.largeAxe,
                 } as IWeaponSlots,
                 loot: [
                     potions.largeDamageBuff,
@@ -207,7 +206,7 @@ export default {
             elementProperties: {
                 id: "5c5f3d40-37df-4a31-b4b3-35bf2eee1f2f",
                 maxHp: 50,
-                baseDamage: 3,
+                baseDamage: 5,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
                 name: "Strong Awful Gary",
@@ -228,7 +227,7 @@ export default {
                     boots: armour.leatherBoots,
                 },
                 weapons: {
-                    primary: weapons.axe,
+                    primary: weapons.largeAxe,
                 } as IWeaponSlots,
                 loot: [
                     potions.largeDamageBuff,
@@ -244,7 +243,7 @@ export default {
             elementProperties: {
                 id: "5c543d40-37df-4a31-b4b3-35bf2eee1fa3",
                 maxHp: 50,
-                baseDamage: 3,
+                baseDamage: 5,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
                 name: "Strong Awful Gary",
@@ -265,7 +264,7 @@ export default {
                     boots: armour.leatherBoots,
                 },
                 weapons: {
-                    primary: weapons.axe,
+                    primary: weapons.largeAxe,
                 } as IWeaponSlots,
                 loot: [
                     potions.largeDamageBuff,
@@ -281,7 +280,7 @@ export default {
             elementProperties: {
                 id: "5c5a3d40-37df-4a31-b4a3-35bf2a4e1fa3",
                 maxHp: 50,
-                baseDamage: 3,
+                baseDamage: 5,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
                 name: "Strong Awful Gary",
@@ -302,7 +301,7 @@ export default {
                     boots: armour.leatherBoots,
                 },
                 weapons: {
-                    primary: weapons.axe,
+                    primary: weapons.largeAxe,
                 } as IWeaponSlots,
                 loot: [
                     potions.largeDamageBuff,
@@ -340,8 +339,8 @@ export default {
                 startingDirection: Direction.S,
                 isInteractive: true,
                 isLocked: true,
-                lockedDialogue: "Kill the darkness to open the chest",
-                itemReferenceNeeded: "58e99098-ede4-4c2f-813d-40c77ab304d4",
+                lockedDialogue: "The lock looks mangled and a it's clear key won't work",
+                itemReferenceNeeded: "58e99098-ede4-2c2f-813d-40c77ab3ded4",
                 imageFileName: "old-chest.png",
                 soundEffect: "openChest",
                 loot: [

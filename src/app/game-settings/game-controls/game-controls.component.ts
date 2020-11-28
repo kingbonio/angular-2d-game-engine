@@ -140,6 +140,7 @@ export class GameControlsComponent {
     public pullCurrentSettings(): void {
         this.keyMap = this.gameSettingsService.keyMap;
         this.keysMapped = this.gameSettingsService.keysMapped;
+        this.oneHandedControls =  this.gameSettingsService.oneHandedControls;
     }
 
     /**
@@ -149,6 +150,7 @@ export class GameControlsComponent {
         this.gameSettingsService.saveGameSettings({
             keyMap: this.keyMap,
             keysMapped: this.keysMapped,
+            oneHandedControls: this.oneHandedControls,
         });
     }
 

@@ -18,7 +18,7 @@ export default {
             elementProperties: {
                 id: "535a28ed-da6d-4d84-84df-cd297cb667ef",
                 maxHp: 50,
-                baseDamage: 3,
+                baseDamage: 17,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
                 name: "Strong Awful Gary",
