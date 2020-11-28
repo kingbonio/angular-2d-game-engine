@@ -260,9 +260,6 @@ export class AreaStateService {
     public loadFromSaveGame(savedState: IAreaStateData): void {
         this.loadingSavedGame = true;
 
-        // Set the local storage to match what's in the save data
-        console.log(savedState);
-
         this.areaChange.next(savedState.currentArea);
         this.areaReady.next(savedState.currentArea);
     }

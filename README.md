@@ -71,6 +71,7 @@ v0.17.0a
 
 ## Image credits
 
+* Jim Kissaglis
 * https://www.flaticon.com/free-icon/return_758665
 * https://www.flaticon.com/free-icon/angry-eye_98471
 * https://www.flaticon.com/free-icon/eye-closed_94674

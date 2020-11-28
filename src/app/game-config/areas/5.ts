@@ -1,16 +1,16 @@
 import { IAreaElement } from "../../game/area/interfaces";
 import { IWeaponSlots } from "../../game/item/interfaces";
 import { CharacterState, Direction, ElementClass, ObjectType } from "../../game/shared/enums";
-import { armour, potions, weapons } from "../items";
+import { armour, keyItems, potions, weapons } from "../items";
 import { player } from "../characters";
 import { BackgroundMusic } from "../../shared/enums";
 
 export default {
     room: 5,
-    backgroundMusic: BackgroundMusic.bossMusic,
-    floorImageFileName: "pavement.png",
+    backgroundMusic: BackgroundMusic.gameMusic,
+    floorImageFileName: "grass.png",
     areaVisited: false,
-    areaLoadMessage: "In the chest you will find a damage buff potion, which boosts your strength for 10 seconds, use it to attack this strong enemy. Remember to equip any armour and weapons you have to make the fight easier.",
+    areaLoadMessage: "There's a 10 second damage increase potion in the chest on your left. You might want to save the game.",
     areaElements: [
         player,
         {
@@ -21,7 +21,7 @@ export default {
                 baseDamage: 2,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
-                name: "Gary The Dick",
+                name: "Awful Gary",
                 startingDirection: Direction.S,
                 directionsForPatrol: [
                 ],
@@ -41,14 +41,262 @@ export default {
                     primary: weapons.axe,
                 } as IWeaponSlots,
                 loot: [
-                    potions.largeHealthBuff,
-                    potions.smallDamageBuff,
+                    keyItems.boltCutters
                 ],
                 imageFileName: "shadow-enemy.png",
-                startingLocation: "e5",
+                startingLocation: "e4",
             },
             startingPositionY: "e",
+            startingPositionX: 4,
+        },
+        {
+            type: ElementClass.enemy,
+            elementProperties: {
+                id: "a4944dda-0ac7-479c-84c3-c0gedbf67d39",
+                maxHp: 50,
+                baseDamage: 2,
+                lowHealthThreshold: 6,
+                attackPauseDuration: 1,
+                name: "Awful Gary",
+                startingDirection: Direction.S,
+                directionsForPatrol: [
+                ],
+                maxHuntingDuration: 3,
+                startingState: CharacterState.still,
+                speechResponse: "I'm gonna kill you",
+                sleepResponse: "Zzzzzzzzzzzzzzzz",
+                armour: {
+                    head: armour.leatherHelmet,
+                    arms: null,
+                    hands: null,
+                    torso: armour.leatherChestPiece,
+                    legs: null,
+                    boots: armour.leatherBoots,
+                },
+                weapons: {
+                    primary: weapons.axe,
+                } as IWeaponSlots,
+                loot: [
+                    potions.largeArmourBuff
+                ],
+                imageFileName: "shadow-enemy.png",
+                startingLocation: "c1",
+            },
+            startingPositionY: "c",
+            startingPositionX: 1,
+        },
+        // Left side
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Straight Wall",
+                startingDirection: Direction.E,
+                isInteractive: false,
+                imageFileName: "wall-straight.png",
+            },
+            startingPositionX: 1,
+            startingPositionY: "e",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Corner Wall",
+                startingDirection: Direction.E,
+                isInteractive: false,
+                imageFileName: "wall-corner.png",
+            },
+            startingPositionX: 2,
+            startingPositionY: "e",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Straight Wall",
+                startingDirection: Direction.N,
+                isInteractive: false,
+                imageFileName: "wall-straight.png",
+            },
+            startingPositionX: 2,
+            startingPositionY: "d",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Corner Wall",
+                startingDirection: Direction.W,
+                isInteractive: false,
+                imageFileName: "wall-corner.png",
+            },
+            startingPositionX: 2,
+            startingPositionY: "c",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Corner Wall",
+                startingDirection: Direction.S,
+                isInteractive: false,
+                imageFileName: "wall-corner.png",
+            },
+            startingPositionX: 3,
+            startingPositionY: "c",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Straight Wall",
+                startingDirection: Direction.N,
+                isInteractive: false,
+                imageFileName: "wall-straight.png",
+            },
+            startingPositionX: 3,
+            startingPositionY: "d",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Straight Wall",
+                startingDirection: Direction.N,
+                isInteractive: false,
+                imageFileName: "wall-straight.png",
+            },
+            startingPositionX: 3,
+            startingPositionY: "e",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Straight Wall",
+                startingDirection: Direction.N,
+                isInteractive: false,
+                imageFileName: "wall-straight.png",
+            },
+            startingPositionX: 3,
+            startingPositionY: "f",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Corner Wall",
+                startingDirection: Direction.N,
+                isInteractive: false,
+                imageFileName: "wall-corner.png",
+            },
+            startingPositionX: 3,
+            startingPositionY: "g",
+        },
+        // Door
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Door",
+                objectType: ObjectType.door,
+                startingDirection: Direction.E,
+                isInteractive: true,
+                isLocked: true,
+                itemReferenceNeeded: "64c87a80-4f1a-4dc3-b2c8-c47a9c393f61",
+                imageFileName: "door.png",
+                soundEffect: "openWoodenDoor",
+            },
+            startingPositionX: 4,
+            startingPositionY: "g",
+        },
+        // Right side
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Corner Wall",
+                startingDirection: Direction.E,
+                isInteractive: false,
+                imageFileName: "wall-corner.png",
+            },
             startingPositionX: 5,
+            startingPositionY: "g",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Straight Wall",
+                startingDirection: Direction.N,
+                isInteractive: false,
+                imageFileName: "wall-straight.png",
+            },
+            startingPositionX: 5,
+            startingPositionY: "f",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Straight Wall",
+                startingDirection: Direction.N,
+                isInteractive: false,
+                imageFileName: "wall-straight.png",
+            },
+            startingPositionX: 5,
+            startingPositionY: "e",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Straight Wall",
+                startingDirection: Direction.N,
+                isInteractive: false,
+                imageFileName: "wall-straight.png",
+            },
+            startingPositionX: 5,
+            startingPositionY: "d",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Corner Wall",
+                startingDirection: Direction.W,
+                isInteractive: false,
+                imageFileName: "wall-corner.png",
+            },
+            startingPositionX: 5,
+            startingPositionY: "c",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Straight Wall",
+                startingDirection: Direction.E,
+                isInteractive: false,
+                imageFileName: "wall-straight.png",
+            },
+            startingPositionX: 6,
+            startingPositionY: "c",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Straight Wall",
+                startingDirection: Direction.E,
+                isInteractive: false,
+                imageFileName: "wall-straight.png",
+            },
+            startingPositionX: 7,
+            startingPositionY: "c",
+        },
+        {
+            type: ElementClass.object,
+            elementProperties: {
+                name: "Old chest",
+                objectType: ObjectType.lootObject,
+                startingDirection: Direction.S,
+                isInteractive: true,
+                isLocked: true,
+                itemReferenceNeeded: "b27f504c-4fb4-4855-a4e7-9facbf693c76",
+                imageFileName: "old-chest.png",
+                soundEffect: "openChest",
+                loot: [
+                    potions.smallHealthPotion,
+                    keyItems.redDoorKey
+                ]
+            },
+            startingPositionY: "d",
+            startingPositionX: 1,
         },
         {
             type: ElementClass.object,
@@ -62,7 +310,7 @@ export default {
                 imageFileName: "old-chest.png",
                 soundEffect: "openChest",
                 loot: [
-                    potions.smallDamageBuff,
+                    potions.largeDamageBuff,
                 ]
             },
             startingPositionX: 3,

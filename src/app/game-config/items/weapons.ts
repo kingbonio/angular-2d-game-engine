@@ -42,4 +42,14 @@ export const weapons = {
             damage: 5,
         },
     } as IInventoryItem,
+    largeAxe: {
+        name: "Large Axe",
+        class: ItemClass.weapon,
+        armourSlot: null,
+        weaponSlot: WeaponType.primary,
+        imageFileName: "axe.png",
+        properties: {
+            damage: 12,
+        },
+    } as IInventoryItem,
 };

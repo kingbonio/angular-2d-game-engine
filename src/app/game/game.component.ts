@@ -191,7 +191,7 @@ export class GameComponent implements OnInit, OnDestroy {
         }
         const healthBuff = (this.equipmentManagerService.activeBuff &&
             this.equipmentManagerService.activeBuff.properties.effectType === PotionEffectType.healthOvercharge) ?
-            this.equipmentManagerService.activeBuff.properties.remainingEffect : 0;
+            this.equipmentManagerService.activeBuff.properties.effectAmount : 0;
 
         return this.playerStateService.health + healthBuff;
     }

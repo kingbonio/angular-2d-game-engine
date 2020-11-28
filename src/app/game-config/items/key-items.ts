@@ -46,14 +46,14 @@ export const keyItems = {
             keyItem: true,
         }
     } as IInventoryItem,
-    lightBulb: {
-        name: "Light Bulb",
+    boltCutters: {
+        name: "Bolt Cutters",
         itemReference: "58e99098-ede4-4c2f-813d-40c77ab304d4",
         class: ItemClass.keyItem,
         destroyedOnUse: true,
         armourSlot: null,
         weaponSlot: null,
-        imageFileName: "light-bulb.png",
+        imageFileName: "bolt-cutters.png",
         properties: {
             keyItem: true,
         }
