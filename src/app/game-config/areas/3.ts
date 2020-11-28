@@ -8,7 +8,7 @@ import { BackgroundMusic } from "../../shared/enums";
 export default {
     room: 3,
     backgroundMusic: BackgroundMusic.gameMusic,
-    floorImageFileName: "pavement.png",
+    floorImageFileName: "grass.png",
     areaVisited: false,
     areaLoadMessage: "Your first Non-Player Character, these will not attack you automatically",
     areaElements: [
@@ -138,7 +138,7 @@ export default {
                 ],
                 maxHuntingDuration: 3,
                 startingState: CharacterState.still,
-                speechResponse: "Stop bothering me, you fool!",
+                speechResponse: "I have a key to that chest through there, but I'm not going to give it to you!",
                 sleepResponse: "Zzzzzzzzzzzzzzzz",
                 armour: {
                     head: null,

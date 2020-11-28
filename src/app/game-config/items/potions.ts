@@ -54,8 +54,8 @@ export const potions = {
             effectAmount: 40,
         }
     } as IInventoryItem,
-    smallDamageBuff: {
-        name: "Small Damage Buff",
+    largeDamageBuff: {
+        name: "Large Damage Buff",
         class: ItemClass.potion,
         type: PotionType.buff,
         armourSlot: null,
@@ -64,7 +64,7 @@ export const potions = {
         properties: {
             effectType: PotionEffectType.damageOvercharge,
             effectDuration: 10,
-            effectAmount: 15,
+            effectAmount: 18,
         }
     } as IInventoryItem,
     invisiblityPotion: {

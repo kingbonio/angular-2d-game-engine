@@ -8,7 +8,7 @@ import { BackgroundMusic } from "../../shared/enums";
 export default {
     room: 4,
     backgroundMusic: BackgroundMusic.gameMusic,
-    floorImageFileName: "pavement.png",
+    floorImageFileName: "grass.png",
     areaVisited: false,
     areaLoadMessage: "There's a 3 second invisibility potion in the chest on your left",
     areaElements: [
@@ -22,7 +22,7 @@ export default {
                 baseDamage: 2,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
-                name: "Gary The Dick",
+                name: "Awful Gary",
                 startingDirection: Direction.E,
                 directionsForPatrol: [
                 ],
@@ -58,7 +58,7 @@ export default {
                 baseDamage: 2,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
-                name: "Gary The Dick",
+                name: "Awful Gary",
                 startingDirection: Direction.E,
                 directionsForPatrol: [
                 ],
@@ -94,7 +94,7 @@ export default {
                 baseDamage: 2,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
-                name: "Gary The Dick",
+                name: "Awful Gary",
                 startingDirection: Direction.E,
                 directionsForPatrol: [
                 ],
@@ -114,7 +114,7 @@ export default {
                     primary: weapons.basicKnife,
                 } as IWeaponSlots,
                 loot: [
-                    potions.smallDamageBuff,
+                    potions.largeDamageBuff,
                 ],
                 imageFileName: "shadow-enemy.png",
                 startingLocation: "e3",
@@ -130,7 +130,7 @@ export default {
                 baseDamage: 2,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
-                name: "Gary The Dick",
+                name: "Awful Gary",
                 startingDirection: Direction.E,
                 directionsForPatrol: [
                 ],
@@ -150,7 +150,7 @@ export default {
                     primary: weapons.basicKnife,
                 } as IWeaponSlots,
                 loot: [
-                    potions.smallDamageBuff,
+                    potions.largeDamageBuff,
                 ],
                 imageFileName: "shadow-enemy.png",
                 startingLocation: "d3",
@@ -166,7 +166,7 @@ export default {
                 baseDamage: 2,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
-                name: "Gary The Dick",
+                name: "Awful Gary",
                 startingDirection: Direction.E,
                 directionsForPatrol: [
                 ],
@@ -186,7 +186,7 @@ export default {
                     primary: weapons.basicKnife,
                 } as IWeaponSlots,
                 loot: [
-                    potions.smallDamageBuff,
+                    potions.largeDamageBuff,
                 ],
                 imageFileName: "shadow-enemy.png",
                 startingLocation: "c3",
@@ -203,7 +203,7 @@ export default {
                 baseDamage: 2,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
-                name: "Gary The Dick",
+                name: "Awful Gary",
                 startingDirection: Direction.W,
                 directionsForPatrol: [
                 ],
@@ -239,7 +239,7 @@ export default {
                 baseDamage: 2,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
-                name: "Gary The Dick",
+                name: "Awful Gary",
                 startingDirection: Direction.W,
                 patrolArea: true,
                 directionsForPatrol: [
@@ -276,7 +276,7 @@ export default {
                 baseDamage: 2,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
-                name: "Gary The Dick",
+                name: "Awful Gary",
                 startingDirection: Direction.W,
                 directionsForPatrol: [
                 ],
@@ -312,7 +312,7 @@ export default {
                 baseDamage: 2,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
-                name: "Gary The Dick",
+                name: "Awful Gary",
                 startingDirection: Direction.W,
                 directionsForPatrol: [
                 ],
@@ -348,7 +348,7 @@ export default {
                 baseDamage: 2,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
-                name: "Gary The Dick",
+                name: "Awful Gary",
                 startingDirection: Direction.W,
                 directionsForPatrol: [
                 ],

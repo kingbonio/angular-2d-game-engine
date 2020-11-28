@@ -8,7 +8,7 @@ import { BackgroundMusic } from "../../shared/enums";
 export default {
     room: 5,
     backgroundMusic: BackgroundMusic.gameMusic,
-    floorImageFileName: "pavement.png",
+    floorImageFileName: "grass.png",
     areaVisited: false,
     areaLoadMessage: "There's a 10 second damage increase potion in the chest on your left. You might want to save the game.",
     areaElements: [
@@ -21,7 +21,7 @@ export default {
                 baseDamage: 2,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
-                name: "Gary The Dick",
+                name: "Awful Gary",
                 startingDirection: Direction.S,
                 directionsForPatrol: [
                 ],
@@ -41,7 +41,6 @@ export default {
                     primary: weapons.axe,
                 } as IWeaponSlots,
                 loot: [
-                    potions.smallHealthPotion,
                     keyItems.lightBulb
                 ],
                 imageFileName: "shadow-enemy.png",
@@ -58,7 +57,7 @@ export default {
                 baseDamage: 2,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
-                name: "Gary The Dick",
+                name: "Awful Gary",
                 startingDirection: Direction.S,
                 directionsForPatrol: [
                 ],
@@ -78,7 +77,7 @@ export default {
                     primary: weapons.axe,
                 } as IWeaponSlots,
                 loot: [
-                    potions.largeHealthBuff,
+                    potions.largeArmourBuff
                 ],
                 imageFileName: "shadow-enemy.png",
                 startingLocation: "c1",
@@ -292,8 +291,6 @@ export default {
                 imageFileName: "old-chest.png",
                 soundEffect: "openChest",
                 loot: [
-                    potions.largeArmourBuff,
-                    potions.smallHealthPotion,
                     potions.smallHealthPotion,
                     keyItems.redDoorKey
                 ]
@@ -313,9 +310,7 @@ export default {
                 imageFileName: "old-chest.png",
                 soundEffect: "openChest",
                 loot: [
-                    potions.largeHealthBuff,
-                    potions.smallHealthPotion,
-                    potions.smallHealthPotion,
+                    potions.largeDamageBuff,
                 ]
             },
             startingPositionX: 3,

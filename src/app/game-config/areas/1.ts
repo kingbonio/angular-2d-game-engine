@@ -8,7 +8,7 @@ import { BackgroundMusic } from "../../shared/enums";
 export default {
     room: 1,
     backgroundMusic: BackgroundMusic.gameMusic,
-    floorImageFileName: "pavement.png",
+    floorImageFileName: "grass.png",
     areaVisited: false,
     areaLoadMessage: "Welcome to the game engine demo! This enemy has a green key on them. Remember you can use Interact (E default), Attack (Space Default), Defend (Ctrl Default) and Speak (Q Default).",
     areaElements: [
@@ -21,7 +21,7 @@ export default {
                 baseDamage: 2,
                 lowHealthThreshold: 18,
                 attackPauseDuration: 1,
-                name: "Gary The Dick",
+                name: "Awful Gary",
                 startingDirection: Direction.S,
                 directionsForPatrol: [
                     Direction.S,

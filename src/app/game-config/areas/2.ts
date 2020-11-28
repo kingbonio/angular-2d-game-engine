@@ -8,7 +8,7 @@ import { BackgroundMusic } from "../../shared/enums";
 export default {
     room: 2,
     backgroundMusic: BackgroundMusic.gameMusic,
-    floorImageFileName: "pavement.png",
+    floorImageFileName: "grass.png",
     areaVisited: false,
     areaLoadMessage: "This guy's a little harder",
     areaElements: [
@@ -21,7 +21,7 @@ export default {
                 baseDamage: 3,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
-                name: "Gary The Dick",
+                name: "Strong Awful Gary",
                 startingDirection: Direction.S,
                 directionsForPatrol: [
                 ],
@@ -44,7 +44,7 @@ export default {
                     armour.ironHelmet,
                     keyItems.fancyKey,
                 ],
-                imageFileName: "shadow-enemy.png",
+                imageFileName: "shadow-enemy-hard.png",
                 startingLocation: "c4",
             },
             startingPositionY: "c",

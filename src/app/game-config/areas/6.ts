@@ -19,10 +19,10 @@ export default {
             elementProperties: {
                 id: "53831a37-395e-47f6-88ed-bc6be994c0c6",
                 maxHp: 50,
-                baseDamage: 2,
+                baseDamage: 3,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
-                name: "Gary The Dick",
+                name: "Strong Awful Gary",
                 startingDirection: Direction.W,
                 directionsForPatrol: [
                 ],
@@ -43,10 +43,9 @@ export default {
                     primary: weapons.axe,
                 } as IWeaponSlots,
                 loot: [
-                    potions.largeHealthBuff,
-                    potions.smallDamageBuff,
+                    potions.largeDamageBuff,
                 ],
-                imageFileName: "shadow-enemy.png",
+                imageFileName: "shadow-enemy-hard.png",
                 startingLocation: "g2",
             },
             startingPositionY: "g",
@@ -58,10 +57,10 @@ export default {
             elementProperties: {
                 id: "5ac92002-3033-4adb-9832-3a520ea02f5f",
                 maxHp: 50,
-                baseDamage: 2,
+                baseDamage: 3,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
-                name: "Gary The Dick",
+                name: "Strong Awful Gary",
                 startingDirection: Direction.N,
                 directionsForPatrol: [
                 ],
@@ -82,11 +81,10 @@ export default {
                     primary: weapons.axe,
                 } as IWeaponSlots,
                 loot: [
-                    potions.largeHealthBuff,
-                    potions.smallDamageBuff,
+                    potions.largeDamageBuff,
                     keyItems.lightBulb
                 ],
-                imageFileName: "shadow-enemy.png",
+                imageFileName: "shadow-enemy-hard.png",
                 startingLocation: "g4",
             },
             startingPositionY: "g",
@@ -97,10 +95,10 @@ export default {
             elementProperties: {
                 id: "5ac92002-3a33-4adb-9832-3aae0ea02f5f",
                 maxHp: 50,
-                baseDamage: 2,
+                baseDamage: 3,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
-                name: "Gary The Dick",
+                name: "Strong Awful Gary",
                 startingDirection: Direction.N,
                 directionsForPatrol: [
                 ],
@@ -121,11 +119,10 @@ export default {
                     primary: weapons.axe,
                 } as IWeaponSlots,
                 loot: [
-                    potions.largeHealthBuff,
-                    potions.smallDamageBuff,
+                    potions.largeDamageBuff,
                     keyItems.lightBulb
                 ],
-                imageFileName: "shadow-enemy.png",
+                imageFileName: "shadow-enemy-hard.png",
                 startingLocation: "f6",
             },
             startingPositionY: "f",
@@ -136,10 +133,10 @@ export default {
             elementProperties: {
                 id: "2f475fc48-65a6-4d5e-8908-ddd259ae57f5",
                 maxHp: 50,
-                baseDamage: 2,
+                baseDamage: 3,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
-                name: "Test",
+                name: "Strong Awful Gary",
                 startingDirection: Direction.E,
                 directionsForPatrol: [
                 ],
@@ -160,10 +157,9 @@ export default {
                     primary: weapons.axe,
                 } as IWeaponSlots,
                 loot: [
-                    potions.largeHealthBuff,
-                    potions.smallDamageBuff,
+                    potions.largeDamageBuff,
                 ],
-                imageFileName: "shadow-enemy.png",
+                imageFileName: "shadow-enemy-hard.png",
                 startingLocation: "e6",
             },
             startingPositionY: "e",
@@ -174,10 +170,10 @@ export default {
             elementProperties: {
                 id: "595f3d40-37df-4531-b4b3-35bf2ede1f2f",
                 maxHp: 50,
-                baseDamage: 2,
+                baseDamage: 3,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
-                name: "Test",
+                name: "Strong Awful Gary",
                 startingDirection: Direction.E,
                 directionsForPatrol: [
                 ],
@@ -198,10 +194,9 @@ export default {
                     primary: weapons.axe,
                 } as IWeaponSlots,
                 loot: [
-                    potions.largeHealthBuff,
-                    potions.smallDamageBuff,
+                    potions.largeDamageBuff,
                 ],
-                imageFileName: "shadow-enemy.png",
+                imageFileName: "shadow-enemy-hard.png",
                 startingLocation: "c6",
             },
             startingPositionY: "c",
@@ -212,10 +207,10 @@ export default {
             elementProperties: {
                 id: "5c5f3d40-37df-4a31-b4b3-35bf2eee1f2f",
                 maxHp: 50,
-                baseDamage: 2,
+                baseDamage: 3,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
-                name: "Test",
+                name: "Strong Awful Gary",
                 startingDirection: Direction.S,
                 directionsForPatrol: [
                 ],
@@ -236,10 +231,9 @@ export default {
                     primary: weapons.axe,
                 } as IWeaponSlots,
                 loot: [
-                    potions.largeHealthBuff,
-                    potions.smallDamageBuff,
+                    potions.largeDamageBuff,
                 ],
-                imageFileName: "shadow-enemy.png",
+                imageFileName: "shadow-enemy-hard.png",
                 startingLocation: "c4",
             },
             startingPositionY: "c",
@@ -250,10 +244,10 @@ export default {
             elementProperties: {
                 id: "5c543d40-37df-4a31-b4b3-35bf2eee1fa3",
                 maxHp: 50,
-                baseDamage: 2,
+                baseDamage: 3,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
-                name: "Test",
+                name: "Strong Awful Gary",
                 startingDirection: Direction.S,
                 directionsForPatrol: [
                 ],
@@ -274,10 +268,9 @@ export default {
                     primary: weapons.axe,
                 } as IWeaponSlots,
                 loot: [
-                    potions.largeHealthBuff,
-                    potions.smallDamageBuff,
+                    potions.largeDamageBuff,
                 ],
-                imageFileName: "shadow-enemy.png",
+                imageFileName: "shadow-enemy-hard.png",
                 startingLocation: "c2",
             },
             startingPositionY: "c",
@@ -288,10 +281,10 @@ export default {
             elementProperties: {
                 id: "5c5a3d40-37df-4a31-b4a3-35bf2a4e1fa3",
                 maxHp: 50,
-                baseDamage: 2,
+                baseDamage: 3,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
-                name: "Test",
+                name: "Strong Awful Gary",
                 startingDirection: Direction.W,
                 directionsForPatrol: [
                 ],
@@ -312,10 +305,9 @@ export default {
                     primary: weapons.axe,
                 } as IWeaponSlots,
                 loot: [
-                    potions.largeHealthBuff,
-                    potions.smallDamageBuff,
+                    potions.largeDamageBuff,
                 ],
-                imageFileName: "shadow-enemy.png",
+                imageFileName: "shadow-enemy-hard.png",
                 startingLocation: "e2",
             },
             startingPositionY: "e",
@@ -334,7 +326,7 @@ export default {
                 soundEffect: "openChest",
                 loot: [
                     potions.invisiblityPotion,
-                    potions.smallDamageBuff,
+                    potions.largeDamageBuff,
                 ]
             },
             startingPositionY: "a",
