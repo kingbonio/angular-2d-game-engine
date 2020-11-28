@@ -25,10 +25,10 @@ https://www.youtube.com/channel/UCmU68D0OK6fXo351hs3qqjQ
 
 # Change Log
 
-v0.17.0a
+v0.18.0a
 
-* Resolved major bugs with save games
-* Added game end modal triggered on item pick up
+* Tweaked issues with items
+* Updated the whole game demo
 
 
 ## To Do
@@ -71,7 +71,7 @@ v0.17.0a
 
 ## Image credits
 
-* Jim Kissaglis
+* Item icon art by Jim Kissaglis
 * https://www.flaticon.com/free-icon/return_758665
 * https://www.flaticon.com/free-icon/angry-eye_98471
 * https://www.flaticon.com/free-icon/eye-closed_94674
