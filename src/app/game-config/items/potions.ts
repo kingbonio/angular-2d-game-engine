@@ -76,7 +76,7 @@ export const potions = {
         imageFileName: "invisibility-potion.png",
         properties: {
             effectType: PotionEffectType.invisibility,
-            effectDuration: 3,
+            effectDuration: 5,
         }
     } as IInventoryItem,
 };

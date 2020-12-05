@@ -10,7 +10,7 @@ export default {
     backgroundMusic: BackgroundMusic.gameMusic,
     floorImageFileName: "grass.png",
     areaVisited: false,
-    areaLoadMessage: "There's a 10 second damage increase potion in the chest on your left. You might want to save the game.",
+    areaLoadMessage: "Use the 10-second Damage Buff Potion in the chest to take out these guards.",
     areaElements: [
         player,
         {

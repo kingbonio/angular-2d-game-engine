@@ -10,7 +10,7 @@ export default {
     backgroundMusic: BackgroundMusic.gameMusic,
     floorImageFileName: "grass.png",
     areaVisited: false,
-    areaLoadMessage: "Your first Non-Player Character, these will not attack you automatically",
+    areaLoadMessage: "Try speaking to this Non Player Character using Speak (Q)",
     areaElements: [
         player,
         {
@@ -117,7 +117,7 @@ export default {
                 imageFileName: "old-chest.png",
                 soundEffect: "openChest",
                 loot: [
-                    weapons.axe,
+                    weapons.sword,
                     potions.smallHealthPotion,
                 ]
             },

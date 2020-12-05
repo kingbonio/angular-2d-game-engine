@@ -10,7 +10,7 @@ export default {
     backgroundMusic: BackgroundMusic.gameMusic,
     floorImageFileName: "grass.png",
     areaVisited: false,
-    areaLoadMessage: "There's a 3 second invisibility potion in the chest on your left",
+    areaLoadMessage: "Drinking a Buff potion will give you a temporary ability. Use the 5-second Invisibility Potion to get past these guards. You might want to save your game in the Menu (bottom-right button)",
     areaElements: [
         player,
         // Left column
@@ -296,7 +296,6 @@ export default {
                     primary: weapons.basicKnife,
                 } as IWeaponSlots,
                 loot: [
-                    weapons.axe,
                 ],
                 imageFileName: "shadow-enemy.png",
                 startingLocation: "e5",
@@ -332,7 +331,7 @@ export default {
                     primary: weapons.basicKnife,
                 } as IWeaponSlots,
                 loot: [
-                    weapons.axe,
+                    weapons.largeAxe,
                 ],
                 imageFileName: "shadow-enemy.png",
                 startingLocation: "d5",
@@ -368,7 +367,6 @@ export default {
                     primary: weapons.basicKnife,
                 } as IWeaponSlots,
                 loot: [
-                    weapons.axe,
                 ],
                 imageFileName: "shadow-enemy.png",
                 startingLocation: "c5",

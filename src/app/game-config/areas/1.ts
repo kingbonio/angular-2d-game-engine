@@ -10,7 +10,7 @@ export default {
     backgroundMusic: BackgroundMusic.gameMusic,
     floorImageFileName: "grass.png",
     areaVisited: false,
-    areaLoadMessage: "Welcome to the game engine demo! This enemy has a green key on them. Remember you can use Interact (E default), Attack (Space Default), Defend (Ctrl Default) and Speak (Q Default).",
+    areaLoadMessage: "Kill this enemy in Turn-Based combat to get the Green Door Key. You can Attack (Space) and Defend (Ctrl). Equip your armour for extra protection.",
     areaElements: [
         player,
         {
