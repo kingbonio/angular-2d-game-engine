@@ -25,10 +25,10 @@ https://www.youtube.com/channel/UCmU68D0OK6fXo351hs3qqjQ
 
 # Change Log
 
-v0.18.0a
+v0.19.0b
 
-* Tweaked issues with items
-* Updated the whole game demo
+* Added first fix for landscape mobile devices
+* Reworked demo difficulty and hints
 
 
 ## To Do
