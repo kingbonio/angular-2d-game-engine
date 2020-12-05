@@ -22,16 +22,14 @@ export class AppComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
 
-        console.log(window.navigator.userAgent);
-        console.log(screen);
+        // Sets the scale level to fit landscape mobile devices which won't fit the game in otherwise
         if (screen.height < 763 && (screen.orientation.angle === 90 || screen.orientation.angle === -90)) {
             this.meta.removeTag("name=viewport");
             this.meta.addTag({
-                content: "width=device-width,initial-scale=0.45,maximum-scale=1,user-scalable=no",
+                content: "width=device-width,initial-scale=0.45,maximum-scale=1,user-scalable=yes",
                 name: "viewport"
             });
         }
-        console.log(this.meta.getTag("name=viewport"));
 
         // Listen for keyboard input events
         this.userInputSubscription = fromEvent(document, 'keydown').subscribe(($e: KeyboardEvent) => {

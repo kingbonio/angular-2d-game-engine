@@ -10,7 +10,7 @@ export default {
     backgroundMusic: BackgroundMusic.gameMusic,
     floorImageFileName: "grass.png",
     areaVisited: false,
-    areaLoadMessage: "This guy's a little harder",
+    areaLoadMessage: "This enemy is much tougher and fighting him will be difficult. Try to steal his items using Interact (E).",
     areaElements: [
         player,
         {
@@ -38,7 +38,7 @@ export default {
                     boots: armour.leatherBoots,
                 },
                 weapons: {
-                    primary: weapons.axe,
+                    primary: weapons.largeAxe,
                 } as IWeaponSlots,
                 loot: [
                     armour.ironHelmet,

@@ -10,7 +10,7 @@ export default {
     backgroundMusic: BackgroundMusic.bossMusic,
     floorImageFileName: "pavement.png",
     areaVisited: false,
-    areaLoadMessage: "Test area",
+    areaLoadMessage: "Your final test. You must collect the Trophy from the centre chest. You will find some Potions in the chest on your left.",
     areaElements: [
         player,
         // Top left of set
@@ -43,7 +43,6 @@ export default {
                     primary: weapons.largeAxe,
                 } as IWeaponSlots,
                 loot: [
-                    potions.largeDamageBuff,
                 ],
                 imageFileName: "shadow-enemy-hard.png",
                 startingLocation: "g2",
@@ -81,7 +80,6 @@ export default {
                     primary: weapons.largeAxe,
                 } as IWeaponSlots,
                 loot: [
-                    potions.largeDamageBuff,
                 ],
                 imageFileName: "shadow-enemy-hard.png",
                 startingLocation: "g4",
@@ -118,7 +116,6 @@ export default {
                     primary: weapons.largeAxe,
                 } as IWeaponSlots,
                 loot: [
-                    potions.largeDamageBuff,
                     keyItems.boltCutters
                 ],
                 imageFileName: "shadow-enemy-hard.png",
@@ -156,7 +153,6 @@ export default {
                     primary: weapons.largeAxe,
                 } as IWeaponSlots,
                 loot: [
-                    potions.largeDamageBuff,
                 ],
                 imageFileName: "shadow-enemy-hard.png",
                 startingLocation: "e6",
@@ -230,7 +226,6 @@ export default {
                     primary: weapons.largeAxe,
                 } as IWeaponSlots,
                 loot: [
-                    potions.largeDamageBuff,
                 ],
                 imageFileName: "shadow-enemy-hard.png",
                 startingLocation: "c4",
@@ -267,7 +262,6 @@ export default {
                     primary: weapons.largeAxe,
                 } as IWeaponSlots,
                 loot: [
-                    potions.largeDamageBuff,
                 ],
                 imageFileName: "shadow-enemy-hard.png",
                 startingLocation: "c2",
@@ -304,7 +298,7 @@ export default {
                     primary: weapons.largeAxe,
                 } as IWeaponSlots,
                 loot: [
-                    potions.largeDamageBuff,
+                    potions.smallHealthPotion,
                 ],
                 imageFileName: "shadow-enemy-hard.png",
                 startingLocation: "e2",
@@ -339,7 +333,7 @@ export default {
                 startingDirection: Direction.S,
                 isInteractive: true,
                 isLocked: true,
-                lockedDialogue: "The lock looks mangled and a it's clear key won't work",
+                lockedDialogue: "The chest's lock looks mangled and it's held shut by a cheap-looking padlock.",
                 itemReferenceNeeded: "58e99098-ede4-2c2f-813d-40c77ab3ded4",
                 imageFileName: "old-chest.png",
                 soundEffect: "openChest",

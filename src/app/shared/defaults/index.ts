@@ -119,7 +119,7 @@ export default {
         // Not recommended changing this
         allowInGameMenu: true,
         // If we are to show touchscreen controls
-        showControls: true,
+        showControls: false,
         // If we want to show room shadow in game
         // Not recommended changing this
         showRoomShadow: false,
