@@ -25,7 +25,7 @@ https://www.youtube.com/channel/UCmU68D0OK6fXo351hs3qqjQ
 
 # Change Log
 
-v0.19.0b
+v0.19.1b
 
 * Added first fix for landscape mobile devices
 * Reworked demo difficulty and hints
