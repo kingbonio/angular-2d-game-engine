@@ -130,7 +130,7 @@ export default {
                 id: "424745e4-3bfc-452c-8ff6-78c04251a294",
                 maxHp: 20,
                 baseDamage: 2,
-                lowHealthThreshold: 15,
+                lowHealthThreshold: 10,
                 attackPauseDuration: 2,
                 name: "David",
                 startingDirection: Direction.W,

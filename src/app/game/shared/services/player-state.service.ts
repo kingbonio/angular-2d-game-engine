@@ -301,9 +301,9 @@ export class PlayerStateService {
                         // Open message modal
                         this.openMessageModal.emit(targetElement.lockedDialogue);
 
-                        // Play on game dialogue area
+                        // Send failure message to game dialogue area
                         this.dialogueService.displayDialogueMessage({
-                            text: targetElement.lockedDialogue,
+                            text: defaults.dialogue.keyItemNotActive,
                             character: defaults.dialogue.computerCharacterType,
                             name: defaults.dialogue.computerName
                         });

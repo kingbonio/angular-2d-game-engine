@@ -48,7 +48,7 @@ export const keyItems = {
     } as IInventoryItem,
     boltCutters: {
         name: "Bolt Cutters",
-        itemReference: "58e99098-ede4-4c2f-813d-40c77ab304d4",
+        itemReference: "58e99098-ede4-2c2f-813d-40c77ab3ded4",
         class: ItemClass.keyItem,
         destroyedOnUse: true,
         armourSlot: null,
