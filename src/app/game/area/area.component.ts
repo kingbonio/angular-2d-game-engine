@@ -102,7 +102,7 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
 
             // TODO This probably isn't the best way of doing this
             // Select which part of the grid data we want to loot
-            if (target.element) {
+            if (target.element && target.element.type !== ElementClass.player) {
                 modalConfig.data = target.element;
             } else if (target.groundItem) {
                 modalConfig.data = target.groundItem;

@@ -44,7 +44,7 @@ export default {
                 loot: [
                     weapons.sword,
                 ],
-                imageFileName: "shadow-enemy.png",
+                imageFileName: "easy-enemy.png",
                 startingLocation: "g3",
             },
             startingPositionY: "g",
@@ -80,7 +80,7 @@ export default {
                 loot: [
                     potions.smallHealthPotion
                 ],
-                imageFileName: "shadow-enemy.png",
+                imageFileName: "easy-enemy.png",
                 startingLocation: "f3",
             },
             startingPositionY: "f",
@@ -116,7 +116,7 @@ export default {
                 loot: [
                     potions.largeDamageBuff,
                 ],
-                imageFileName: "shadow-enemy.png",
+                imageFileName: "easy-enemy.png",
                 startingLocation: "e3",
             },
             startingPositionY: "e",
@@ -152,7 +152,7 @@ export default {
                 loot: [
                     potions.largeDamageBuff,
                 ],
-                imageFileName: "shadow-enemy.png",
+                imageFileName: "easy-enemy.png",
                 startingLocation: "d3",
             },
             startingPositionY: "d",
@@ -188,7 +188,7 @@ export default {
                 loot: [
                     potions.largeDamageBuff,
                 ],
-                imageFileName: "shadow-enemy.png",
+                imageFileName: "easy-enemy.png",
                 startingLocation: "c3",
             },
             startingPositionY: "c",
@@ -225,7 +225,7 @@ export default {
                 loot: [
                     potions.smallArmourBuff
                 ],
-                imageFileName: "shadow-enemy.png",
+                imageFileName: "easy-enemy.png",
                 startingLocation: "g5",
             },
             startingPositionY: "g",
@@ -262,7 +262,7 @@ export default {
                 loot: [
                     potions.smallHealthPotion,
                 ],
-                imageFileName: "shadow-enemy.png",
+                imageFileName: "easy-enemy.png",
                 startingLocation: "f5",
             },
             startingPositionY: "f",
@@ -297,7 +297,7 @@ export default {
                 } as IWeaponSlots,
                 loot: [
                 ],
-                imageFileName: "shadow-enemy.png",
+                imageFileName: "easy-enemy.png",
                 startingLocation: "e5",
             },
             startingPositionY: "e",
@@ -333,7 +333,7 @@ export default {
                 loot: [
                     weapons.largeAxe,
                 ],
-                imageFileName: "shadow-enemy.png",
+                imageFileName: "easy-enemy.png",
                 startingLocation: "d5",
             },
             startingPositionY: "d",
@@ -368,7 +368,7 @@ export default {
                 } as IWeaponSlots,
                 loot: [
                 ],
-                imageFileName: "shadow-enemy.png",
+                imageFileName: "easy-enemy.png",
                 startingLocation: "c5",
             },
             startingPositionY: "c",

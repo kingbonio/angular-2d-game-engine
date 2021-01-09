@@ -67,7 +67,7 @@ export default {
                 loot: [
                     keyItems.greenDoorKey
                 ],
-                imageFileName: "shadow-enemy.png",
+                imageFileName: "easy-enemy.png",
                 startingLocation: "d7",
             },
             startingPositionY: "d",

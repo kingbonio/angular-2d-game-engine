@@ -44,7 +44,7 @@ export default {
                     armour.ironHelmet,
                     keyItems.fancyKey,
                 ],
-                imageFileName: "shadow-enemy-hard.png",
+                imageFileName: "hard-enemy.png",
                 startingLocation: "c4",
             },
             startingPositionY: "c",
