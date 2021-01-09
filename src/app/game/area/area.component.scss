@@ -196,6 +196,35 @@
                 
                 .element {
                     position: absolute;
+
+                    .shadow-layer {
+
+                        .shadow {
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            -webkit-transform: translate(-50%, -50%);
+                            transform: translate(-50%, -50%);
+                            z-index: -1;
+                            box-shadow: 0px 0px 5px 8px black;
+                            background-color: black;
+                            opacity: 0.35;
+    
+                            &.character {
+                                width: 40px;
+                                height: 40px;
+                                box-shadow: 0px 0px 5px 8px black;
+                                border-radius: 40px;
+                            }
+
+                            &.element {
+                                width: 40px;
+                                height: 40px;
+                                box-shadow: 0px 0px 5px 18px black;
+                                border-radius: 0px;
+                            }
+                        }
+                    }
                     
                     .character-type {
                         width: 80px;
