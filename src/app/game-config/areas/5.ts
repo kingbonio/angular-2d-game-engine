@@ -43,7 +43,7 @@ export default {
                 loot: [
                     keyItems.boltCutters
                 ],
-                imageFileName: "shadow-enemy.png",
+                imageFileName: "easy-enemy.png",
                 startingLocation: "e4",
             },
             startingPositionY: "e",
@@ -79,7 +79,7 @@ export default {
                 loot: [
                     potions.largeArmourBuff
                 ],
-                imageFileName: "shadow-enemy.png",
+                imageFileName: "easy-enemy.png",
                 startingLocation: "c1",
             },
             startingPositionY: "c",

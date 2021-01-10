@@ -23,16 +23,24 @@
             <div class="animation-layer"
                 [ngClass]="{ 'moving-forwards': areaStateService.locations[key].element.isMovingForwards }">
                 <div class="element">
+
                     <div *ngIf="areaStateService.locations[key].element.type === ElementClass.object"
                         class="object">
                         <img [src]="getGridElementImageSource(areaStateService.locations[key].element)"
                             title="{{areaStateService.locations[key].element.name}}" />
+
+                            <div class="shadow-layer">
+                                <span class="shadow element"></span>
+                            </div>
                     </div>
         
                     <div *ngIf="areaStateService.locations[key].element.type !== ElementClass.object"
                         class="character-type"
                         [ngStyle]="{ 'background-image': 'url(' + getGridElementImageSource(areaStateService.locations[key].element) + ')'}">
-        
+
+                        <div class="shadow-layer">
+                            <span class="shadow character"></span>
+                        </div>
         
         
                         <div *ngIf="areaStateService.locations[key].element.isAttacking" class="swing-weapon">

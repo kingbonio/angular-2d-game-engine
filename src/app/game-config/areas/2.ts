@@ -10,7 +10,7 @@ export default {
     backgroundMusic: BackgroundMusic.gameMusic,
     floorImageFileName: "grass.png",
     areaVisited: false,
-    areaLoadMessage: "This enemy is much tougher and fighting him will be difficult. Try to steal his items using Interact (E).",
+    areaLoadMessage: "This enemy is much tougher and fighting him will be difficult. Try to steal his items from behind or the side using Interact (E).",
     areaElements: [
         player,
         {
@@ -18,7 +18,7 @@ export default {
             elementProperties: {
                 id: "535a28ed-da6d-4d84-84df-cd297cb667ef",
                 maxHp: 50,
-                baseDamage: 17,
+                baseDamage: 5,
                 lowHealthThreshold: 6,
                 attackPauseDuration: 1,
                 name: "Strong Awful Gary",
@@ -44,7 +44,7 @@ export default {
                     armour.ironHelmet,
                     keyItems.fancyKey,
                 ],
-                imageFileName: "shadow-enemy-hard.png",
+                imageFileName: "hard-enemy.png",
                 startingLocation: "c4",
             },
             startingPositionY: "c",

@@ -209,6 +209,14 @@ export class PlayerStateService {
         const currentLocation = this.areaStateService.locations[this.locationY + this.locationX];
         const activeItem = this.equipmentManagerService.activeItem;
 
+        // If there are ground items at the player character's feet override next interactions
+        if (currentLocation.groundItem) {
+            this.soundEffectService.playSound(SoundEffects.rustleBag);
+            this.openLootingModal.emit(currentLocation);
+
+            return;
+        }
+
         if (GridHelper.isTargetLocationOutOfBounds(targetReference.locationY + targetReference.locationX)) {
 
             // If target is an area exit:
@@ -249,11 +257,21 @@ export class PlayerStateService {
         const targetElement: any = targetLocation.element;
 
         // If there's no target and there are ground items
-        if (!targetElement && targetLocation.groundItem) {
-            this.soundEffectService.playSound(SoundEffects.rustleBag);
-            this.openLootingModal.emit(targetLocation);
+        if (!targetElement) {
+            if (targetLocation.groundItem) {
+                this.soundEffectService.playSound(SoundEffects.rustleBag);
+                this.openLootingModal.emit(targetLocation);
 
-            return;
+                return;
+            } else {
+                this.dialogueService.displayDialogueMessage(
+                    {
+                        text: defaults.dialogue.nullElementResponse,
+                        character: defaults.dialogue.computerCharacterType,
+                        name: defaults.dialogue.computerName
+                    }
+                );
+            }
         }
 
         if (targetElement) {
@@ -360,7 +378,7 @@ export class PlayerStateService {
         if (nextGridLocation && !GridHelper.isTargetLocationOutOfBounds(nextGridLocation.locationY + nextGridLocation.locationX)) {
             const target = this.areaStateService.locations[nextGridLocation.locationY + nextGridLocation.locationX].element;
 
-            if (target && target.isDead()) {
+            if (target && typeof target.isDead === "function" && target.isDead()) {
                 this.dialogueService.displayDialogueMessage({
                     text: defaults.dialogue.nullElementResponse,
                     character: defaults.dialogue.computerCharacterType,
@@ -378,7 +396,7 @@ export class PlayerStateService {
                         name: defaults.dialogue.computerName
                     }
                 );
-            } else {
+            } else if (typeof target.respond === "function") {
                 this.dialogueService.displayDialogueMessage(
                     {
                         text: target.respond(UserInteractionTypes.speak, GridHelper.getOppositeDirection(this.direction)),

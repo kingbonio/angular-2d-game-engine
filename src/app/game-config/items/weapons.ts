@@ -49,7 +49,7 @@ export const weapons = {
         weaponSlot: WeaponType.primary,
         imageFileName: "axe.png",
         properties: {
-            damage: 12,
+            damage: 9,
         },
     } as IInventoryItem,
 };

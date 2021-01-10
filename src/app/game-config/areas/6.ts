@@ -8,7 +8,7 @@ import { BackgroundMusic } from "../../shared/enums";
 export default {
     room: 6,
     backgroundMusic: BackgroundMusic.bossMusic,
-    floorImageFileName: "pavement.png",
+    floorImageFileName: "wood.png",
     areaVisited: false,
     areaLoadMessage: "Your final test. You must collect the Trophy from the centre chest. You will find some Potions in the chest on your left.",
     areaElements: [
@@ -44,7 +44,7 @@ export default {
                 } as IWeaponSlots,
                 loot: [
                 ],
-                imageFileName: "shadow-enemy-hard.png",
+                imageFileName: "hard-enemy.png",
                 startingLocation: "g2",
             },
             startingPositionY: "g",
@@ -81,7 +81,7 @@ export default {
                 } as IWeaponSlots,
                 loot: [
                 ],
-                imageFileName: "shadow-enemy-hard.png",
+                imageFileName: "hard-enemy.png",
                 startingLocation: "g4",
             },
             startingPositionY: "g",
@@ -118,7 +118,7 @@ export default {
                 loot: [
                     keyItems.boltCutters
                 ],
-                imageFileName: "shadow-enemy-hard.png",
+                imageFileName: "hard-enemy.png",
                 startingLocation: "f6",
             },
             startingPositionY: "f",
@@ -154,7 +154,7 @@ export default {
                 } as IWeaponSlots,
                 loot: [
                 ],
-                imageFileName: "shadow-enemy-hard.png",
+                imageFileName: "hard-enemy.png",
                 startingLocation: "e6",
             },
             startingPositionY: "e",
@@ -191,7 +191,7 @@ export default {
                 loot: [
                     potions.largeDamageBuff,
                 ],
-                imageFileName: "shadow-enemy-hard.png",
+                imageFileName: "hard-enemy.png",
                 startingLocation: "c6",
             },
             startingPositionY: "c",
@@ -227,7 +227,7 @@ export default {
                 } as IWeaponSlots,
                 loot: [
                 ],
-                imageFileName: "shadow-enemy-hard.png",
+                imageFileName: "hard-enemy.png",
                 startingLocation: "c4",
             },
             startingPositionY: "c",
@@ -263,7 +263,7 @@ export default {
                 } as IWeaponSlots,
                 loot: [
                 ],
-                imageFileName: "shadow-enemy-hard.png",
+                imageFileName: "hard-enemy.png",
                 startingLocation: "c2",
             },
             startingPositionY: "c",
@@ -300,7 +300,7 @@ export default {
                 loot: [
                     potions.smallHealthPotion,
                 ],
-                imageFileName: "shadow-enemy-hard.png",
+                imageFileName: "hard-enemy.png",
                 startingLocation: "e2",
             },
             startingPositionY: "e",

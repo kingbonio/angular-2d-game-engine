@@ -25,10 +25,11 @@ https://www.youtube.com/channel/UCmU68D0OK6fXo351hs3qqjQ
 
 # Change Log
 
-v0.19.1b
+v1.0.0
 
-* Added first fix for landscape mobile devices
-* Reworked demo difficulty and hints
+* Updated dispalyed elements assets
+* Updated background music assets
+* Added ability to pick up ground items when stood on them
 
 
 ## To Do
@@ -54,19 +55,19 @@ v0.19.1b
 
 ## Background Music credits
 
-* https://www.youtube.com/watch?v=ykye8Hw1TgA
-* https://freesound.org/people/Magmi.Soundtracks/sounds/475737/
+* https://freesound.org/people/mrrap4food/sounds/493918/ (Altered)
+* https://freesound.org/people/EFlexMusic/sounds/432666/ (Altered)
 
 
 ## Sound credits
 
-* https://freesound.org/people/dkiller2204/sounds/422975/
-* https://freesound.org/people/Slanesh/sounds/31769/
-* https://freesound.org/people/InspectorJ/sounds/431117/
-* https://freesound.org/people/LukeSharples/sounds/209085/
-* https://freesound.org/people/loudernoises/sounds/334169/
-* https://freesound.org/people/Abyssmal/sounds/35213/
-* https://freesound.org/people/rabban625/sounds/436465/
+* https://freesound.org/people/dkiller2204/sounds/422975/ (Altered)
+* https://freesound.org/people/Slanesh/sounds/31769/ (Altered)
+* https://freesound.org/people/InspectorJ/sounds/431117/ (Altered)
+* https://freesound.org/people/LukeSharples/sounds/209085/ (Altered)
+* https://freesound.org/people/loudernoises/sounds/334169/ (Altered)
+* https://freesound.org/people/Abyssmal/sounds/35213/ (Altered)
+* https://freesound.org/people/rabban625/sounds/436465/ (Altered)
 
 
 ## Image credits

@@ -155,7 +155,7 @@ export default {
                     keyItems.rustyOldKey,
                     potions.smallHealthPotion,
                 ],
-                imageFileName: "shadow-npc.png",
+                imageFileName: "npc.png",
                 startingLocation: "a7",
             },
             startingPositionX: 7,
