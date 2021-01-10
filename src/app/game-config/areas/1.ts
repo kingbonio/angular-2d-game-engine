@@ -10,7 +10,7 @@ export default {
     backgroundMusic: BackgroundMusic.gameMusic,
     floorImageFileName: "grass.png",
     areaVisited: false,
-    areaLoadMessage: "Kill this enemy in Turn-Based combat to get the Green Door Key. You can Attack (Space) and Defend (Ctrl). Equip your armour for extra protection.",
+    areaLoadMessage: "Kill this enemy in Turn-Based combat to get the Green Door Key. Equip your armour for extra protection. You can Attack (Space) and Defend (Ctrl). You can also Interact (E) with the dropped loot. Controls can be found in the main Settings menu.",
     areaElements: [
         player,
         {

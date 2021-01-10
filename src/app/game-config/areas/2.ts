@@ -10,7 +10,7 @@ export default {
     backgroundMusic: BackgroundMusic.gameMusic,
     floorImageFileName: "grass.png",
     areaVisited: false,
-    areaLoadMessage: "This enemy is much tougher and fighting him will be difficult. Try to steal his items using Interact (E).",
+    areaLoadMessage: "This enemy is much tougher and fighting him will be difficult. Try to steal his items from behind or the side using Interact (E).",
     areaElements: [
         player,
         {

@@ -25,10 +25,11 @@ https://www.youtube.com/channel/UCmU68D0OK6fXo351hs3qqjQ
 
 # Change Log
 
-v0.19.1b
+v1.0.0
 
-* Added first fix for landscape mobile devices
-* Reworked demo difficulty and hints
+* Updated dispalyed elements assets
+* Updated background music assets
+* Added ability to pick up ground items when stood on them
 
 
 ## To Do
