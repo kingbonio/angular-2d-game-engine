@@ -209,6 +209,14 @@ export class PlayerStateService {
         const currentLocation = this.areaStateService.locations[this.locationY + this.locationX];
         const activeItem = this.equipmentManagerService.activeItem;
 
+        // If there are ground items at the player character's feet override next interactions
+        if (currentLocation.groundItem) {
+            this.soundEffectService.playSound(SoundEffects.rustleBag);
+            this.openLootingModal.emit(currentLocation);
+
+            return;
+        }
+
         if (GridHelper.isTargetLocationOutOfBounds(targetReference.locationY + targetReference.locationX)) {
 
             // If target is an area exit:
@@ -253,11 +261,6 @@ export class PlayerStateService {
             if (targetLocation.groundItem) {
                 this.soundEffectService.playSound(SoundEffects.rustleBag);
                 this.openLootingModal.emit(targetLocation);
-
-                return;
-            } else if (currentLocation.groundItem) {
-                this.soundEffectService.playSound(SoundEffects.rustleBag);
-                this.openLootingModal.emit(currentLocation);
 
                 return;
             } else {

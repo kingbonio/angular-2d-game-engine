@@ -112,10 +112,7 @@ export class AreaComponent implements OnDestroy, AfterViewInit {
 
             this.modalRef.afterClosed().subscribe(returnData => {
 
-                if (target.element) {
-
-                    // Do nothing
-                } else if (target.groundItem && target.groundItem.isEmpty) {
+                if (target.groundItem && target.groundItem.isEmpty) {
 
                     // Get rid of the bag
                     target.groundItem = null;
