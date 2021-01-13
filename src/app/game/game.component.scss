@@ -3,35 +3,35 @@
     width: 762px;
     float: none;
     margin: auto;
+
+    // Blocks double tapping screen to zoom
+    touch-action: manipulation;
     
     &.show-controls {
-        width: 1174px;
+        width: 1374px;
     }
 
     .direction-controls {
-        width: 200px;
+        width: 300px;
         height: 759px;
         position: relative;
         float: left;
-        border: solid #d1cdc6 2px;
         color: white;
       
         .direction-buttons {
-            width: 170px;
-            height: 170px;
+            width: 250px;
+            height: 250px;
             position: absolute;
             bottom: 100px;
-            left: 14px;
-            background-color: grey;
+            right: 14px;
             border: solid #d1cdc6 1px;
-            border-radius: 90px;
+            border-radius: 139px;
             cursor: pointer;
 
             .north, .east, .south, .west {
-                width: 68px;
-                height: 68px;
+                width: 104px;
+                height: 104px;
                 position: absolute;
-                border: solid #d1cdc6 1px;
                 background: url("assets/images/icons/arrow.svg") no-repeat center;
                 background-size: 48px 48px;
             }
@@ -39,24 +39,24 @@
             .north {
                 transform: rotate(45deg);
                 top: 0px;
-                left: 50px;
+                left: 73px;
             }
             
             .east {
                 transform: rotate(135deg);
-                top: 50px;
+                top: 73px;
                 right: 00px;
             }
             
             .south {
                 transform: rotate(225deg);
                 bottom: 00px;
-                right: 50px;
+                right: 73px;
             }
             
             .west {
                 transform: rotate(315deg);
-                bottom: 50px;
+                bottom: 73px;
                 left: 0px;
             }
         }
@@ -160,26 +160,24 @@
     }
         
     .interaction-controls {
-        width: 200px;
+        width: 300px;
         height: 759px;
         position: relative;
         float: left;
-        border: solid #d1cdc6 2px;
         color: white;
 
         .interaction-buttons {
-            width: 170px;
-            height: 170px;
+            width: 250px;
+            height: 250px;
             position: absolute;
             bottom: 100px;
             left: 14px;
-            background-color: grey;
             border: solid #d1cdc6 1px;
-            border-radius: 90px;
+            border-radius: 139px;
 
             .top, .right, .bottom, .left {
-                width: 68px;
-                height: 68px;
+                width: 102px;
+                height: 102px;
                 position: absolute;
                 overflow: visible;
                 transform: rotate(-45deg);
@@ -198,7 +196,7 @@
             .top {
                 transform: rotate(45deg);
                 top: 0px;
-                left: 50px;
+                left: 73px;
                 background: url("assets/images/icons/blue-button.svg") no-repeat center;
                 background-size: 53px 53px;
 
@@ -206,14 +204,14 @@
                     display: block;
                     transform: rotate(-45deg);
                     position: absolute;
-                    top: 49px;
-                    left: 39px;
+                    top: 67px;
+                    left: 57px;
                 }
             }
             
             .right {
                 transform: rotate(135deg);
-                top: 50px;
+                top: 73px;
                 right: 00px;
                 background: url("assets/images/icons/green-button.svg") no-repeat center;
                 background-size: 53px 53px;
@@ -222,15 +220,15 @@
                     display: block;
                     transform: rotate(-135deg);
                     position: absolute;
-                    top: -2px;
-                    left: 39px;
+                    top: 14px;
+                    left: 57px;
                 }
             }
             
             .bottom {
                 transform: rotate(225deg);
                 bottom: 00px;
-                right: 50px;
+                right: 73px;
                 background: url("assets/images/icons/yellow-button.svg") no-repeat center;
                 background-size: 53px 53px;
                 
@@ -238,14 +236,14 @@
                     display: block;
                     transform: rotate(-225deg);
                     position: absolute;
-                    top: -6px;
-                    left: -25px;
+                    top: 16px;
+                    left: -2px;
                 }
             }
             
             .left {
                 transform: rotate(315deg);
-                bottom: 50px;
+                bottom: 73px;
                 left: 0px;
                 background: url("assets/images/icons/pink-button.svg") no-repeat center;
                 background-size: 53px 53px;
@@ -254,8 +252,8 @@
                     display: block;
                     transform: rotate(-315deg);
                     position: absolute;
-                    top: 53px;
-                    left: -11px;
+                    top: 68px;
+                    left: 4px;
                 }
             }
         }

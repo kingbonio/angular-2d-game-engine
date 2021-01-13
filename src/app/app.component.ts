@@ -23,7 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
     ngOnInit() {
 
         // Sets the scale level to fit landscape mobile devices which won't fit the game in otherwise
-        if (screen.height < 763 && (screen.orientation.angle === 90 || screen.orientation.angle === -90)) {
+        if (window.navigator.userAgent.toLowerCase().includes("mobile")) {
             this.meta.removeTag("name=viewport");
             this.meta.addTag({
                 content: "width=device-width,initial-scale=0.45,maximum-scale=1,user-scalable=yes",
