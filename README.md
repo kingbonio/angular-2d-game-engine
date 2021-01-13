@@ -6,14 +6,14 @@ A game engine for creating room-based sneak/action games with puzzle elements
 
 You can play a technical demo of the game engine in its current "master" branch form here:
 
-https://kingbonio.github.io/angular-rpg-game-engine/
+https://kingbonio.github.io/angular-2d-game-engine/
 
 
 # Wiki
 
 To learn how to use the game engine visit the Wiki here:
 
-https://github.com/kingbonio/angular-rpg-game-engine/wiki
+https://github.com/kingbonio/angular-2d-game-engine/wiki
 
 
 # Current Presentation
@@ -25,11 +25,14 @@ https://www.youtube.com/channel/UCmU68D0OK6fXo351hs3qqjQ
 
 # Change Log
 
-v1.0.0
+v1.1.0
 
-* Updated dispalyed elements assets
+* Updated displayed elements assets
 * Updated background music assets
 * Added ability to pick up ground items when stood on them
+* Updated mobile scaling
+* Increased size of handheld buttons
+* Balanced volumes of sounds
 
 
 ## To Do
