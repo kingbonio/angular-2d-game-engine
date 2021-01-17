@@ -4,6 +4,7 @@ import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Subscription } from 'rxjs/Subscription';
 import { GameSettingsService } from './shared/services/game-settings.service';
 import { UserInputService } from './shared/services/user-input.service';
+import { Plugins } from '@capacitor/core';
 
 @Component({
     selector: 'app-root',
