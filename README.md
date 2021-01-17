@@ -25,14 +25,9 @@ https://www.youtube.com/channel/UCmU68D0OK6fXo351hs3qqjQ
 
 # Change Log
 
-v1.1.0
+v1.1.1
 
-* Updated displayed elements assets
-* Updated background music assets
-* Added ability to pick up ground items when stood on them
-* Updated mobile scaling
-* Increased size of handheld buttons
-* Balanced volumes of sounds
+* Added item taken message to dialogue area
 
 
 ## To Do
