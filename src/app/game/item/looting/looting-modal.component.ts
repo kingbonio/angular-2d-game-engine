@@ -38,6 +38,12 @@ export class LootingModalComponent implements OnDestroy {
         this.inventoryManagerService.addItemToInventory(this.targetGridData.inventoryLocations[itemSlot]);
 
         // Only perform this if error not thrown
+        this.dialogueService.displayDialogueMessage({
+          text: defaults.dialogue.takenItem(this.targetGridData.inventoryLocations[itemSlot].name),
+          character: defaults.dialogue.computerCharacterType,
+          name: defaults.dialogue.computerName
+        });
+
         this.targetGridData.inventoryLocations[itemSlot] = null;
         this.soundEffectsService.playSound(SoundEffects.moveItem);
       } catch (err) {
