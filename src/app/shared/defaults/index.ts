@@ -92,6 +92,10 @@ export default {
         consumedBuffPotion: (name, duration) => {
             return `You have consumed a ${name}, this will last for ${duration} seconds`;
         },
+        // When an item is moved to inventory from a loot source
+        takenItem: (itemName) => {
+            return `You have picked up a ${itemName}`;
+        },
         // If you try to add an item to your inventory when the inventory is full
         inventoryFull: "Your inventory is full",
         // If your dice roll for steal success is lower than the required number
