@@ -3,7 +3,7 @@
   "appName": "Project ngIne Tech Demo",
   "bundledWebRuntime": false,
   "npmClient": "npm",
-  "webDir": "www",
+  "webDir": "dist",
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0

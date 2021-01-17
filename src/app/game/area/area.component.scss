@@ -93,7 +93,7 @@
             .left-door {
 
                 left: 0px;
-                background-image: url("assets/images/area-exits/door-left.png");
+                background-image: url("/assets//images/area-exits/door-left.png");
 
                 &.opening {
                     animation-name: openLeftDoor;
@@ -109,7 +109,7 @@
             .right-door {
                 
                 right: 0px;
-                background-image: url("assets/images/area-exits/door-right.png");
+                background-image: url("/assets//images/area-exits/door-right.png");
 
                 &.opening {
                     animation-name: openRightDoor;
@@ -129,7 +129,7 @@
                 position: absolute;
                 width: 100%;
                 height: 100%;
-                background-image: url("assets/images/ground-effects/blood-streak.png");
+                background-image: url("/assets//images/ground-effects/blood-streak.png");
             }
         }
         
@@ -140,7 +140,7 @@
                 width: 100%;
                 height: 100%;
                 border-color: red;
-                background-image: url("assets/images/ground-effects/loot-bag.png");
+                background-image: url("/assets//images/ground-effects/loot-bag.png");
             }
         }
 
@@ -284,7 +284,7 @@
                         }
             
                         .swing-weapon {
-                            background-image: url("assets/images/animations/slash.svg");
+                            background-image: url("/assets//images/animations/slash.svg");
                             animation-name: swing;
                             
                             // Must match the same duration as in defaults config
@@ -294,7 +294,7 @@
                         }
                         
                         .guard {
-                            background-image: url("assets/images/animations/guard.svg");
+                            background-image: url("/assets//images/animations/guard.svg");
                             animation-name: guard;
                             
                             // // Must match the same duration as in defaults config
@@ -304,7 +304,7 @@
                         }
                         
                         .receive-attack {
-                            background-image: url("assets/images/animations/receive-attack.svg");
+                            background-image: url("/assets//images/animations/receive-attack.svg");
                             animation-name: receive-attack;
                             
                             // Must match the same duration as in defaults config
@@ -345,49 +345,49 @@
     
                         &.hunting {
                             color: red;
-                            background: url("assets/images/character-states/hunting.svg") no-repeat center;
+                            background: url("/assets//images/character-states/hunting.svg") no-repeat center;
                             background-size: 20px 20px;
                         }
                         
                         &.patrolling {
                             color: yellow;
-                            background: url("assets/images/character-states/patrolling.svg") no-repeat center;
+                            background: url("/assets//images/character-states/patrolling.svg") no-repeat center;
                             background-size: 20px 20px;
                         }
                         
                         &.returningToPosition {
                             color: orange;
-                            background: url("assets/images/character-states/returning.svg") no-repeat center;
+                            background: url("/assets//images/character-states/returning.svg") no-repeat center;
                             background-size: 20px 20px;
                         }
                         
                         &.asleep {
                             color: white;
-                            background: url("assets/images/character-states/asleep.svg") no-repeat center;
+                            background: url("/assets//images/character-states/asleep.svg") no-repeat center;
                             background-size: 20px 20px;
                         }
                         
                         &.wandering {
                             color: blue;
-                            background: url("assets/images/character-states/wandering.svg") no-repeat center;
+                            background: url("/assets//images/character-states/wandering.svg") no-repeat center;
                             background-size: 20px 20px;
                         }
                         
                         &.afraid {
                             color: blue;
-                            background: url("assets/images/character-states/afraid.svg") no-repeat center;
+                            background: url("/assets//images/character-states/afraid.svg") no-repeat center;
                             background-size: 20px 20px;
                         }
                         
                         &.still {
                             color: blue;
-                            background: url("assets/images/character-states/still.svg") no-repeat center;
+                            background: url("/assets//images/character-states/still.svg") no-repeat center;
                             background-size: 20px 20px;
                         }
                         
                         &.walkingPath {
                             color: blue;
-                            background: url("assets/images/character-states/walking.svg") no-repeat center;
+                            background: url("/assets//images/character-states/walking.svg") no-repeat center;
                             background-size: 20px 20px;
                         }
                     }

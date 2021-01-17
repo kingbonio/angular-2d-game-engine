@@ -6,7 +6,7 @@ import { GameplayComponent } from './gameplay/gameplay.component';
 import { GameSettingsRoutingModule } from './game-settings-routing.module';
 import { FormsModule } from '@angular/forms';
 import { SoundComponent } from './sound/sound.component';
-import { MatSliderModule } from '@angular/material';
+import { MatSliderModule } from '@angular/material/slider';
 import { AccessibilityComponent } from './accessibility/accessibility.component';
 
 @NgModule({

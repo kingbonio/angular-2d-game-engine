@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from "@angular/material";
+import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import defaults from '../../../shared/defaults';
 import { GridObject } from '../../area/grid-object-classes/grid-object';
 import { LootBag } from '../../area/grid-object-classes/loot-bag';

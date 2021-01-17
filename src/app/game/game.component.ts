@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs/Subscription';
 import * as areaConfigs from "../game-config/areas";
 import defaults from '../shared/defaults';
