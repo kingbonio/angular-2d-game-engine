@@ -18,9 +18,9 @@ https://github.com/kingbonio/angular-2d-game-engine/wiki
 
 # Current Presentation
 
-Please check out the following Youtube channel for the most recent additions to functionality:
+Please check out the following Youtube channel for footage of the most recent version:
 
-https://www.youtube.com/channel/UCmU68D0OK6fXo351hs3qqjQ
+https://www.youtube.com/watch?v=HO6gl1oitUU
 
 
 # Change Log
